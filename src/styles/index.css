@@ -1,0 +1,4 @@
+@import './fonts.css';
+@import './tailwind.css';
+@import './theme.css';
+@import url('../../../node_modules/tw-animate-css/dist/tw-animate.css');
