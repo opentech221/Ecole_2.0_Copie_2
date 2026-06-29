@@ -26,6 +26,8 @@ Au Sénégal et dans les pays d'Afrique francophone, **l'orientation scolaire es
 
 Un coach qui ne remplace pas les humains, mais qui **étend leur portée**.
 
+📖 **[Lire la vision complète](VISION_PROJET.md)**
+
 ---
 
 ## 🎯 Fonctionnalités Principales
@@ -50,7 +52,7 @@ Un coach qui ne remplace pas les humains, mais qui **étend leur portée**.
 - Multi-conversations avec historique
 
 ### 🏆 Gamification et Motivation
-- Système de points et niveaux (1–100+)
+- Système de points et niveaux (1-100+)
 - Badges de réussite et d'excellence
 - Compétitions régionales (Afrique de l'Ouest, Nord, Centre, Est, Sud)
 - Classements dynamiques (Top 10, Top 100)
@@ -68,8 +70,8 @@ Un coach qui ne remplace pas les humains, mais qui **étend leur portée**.
 
 ### Frontend
 - **React 18** avec Vite pour des performances optimales
-- **Tailwind CSS** avec design system personnalisé
-- **Motion** pour animations fluides
+- **Tailwind CSS 3** avec design system personnalisé
+- **Framer Motion** pour animations fluides
 - **Recharts** pour visualisations de données
 - **Lucide React** pour icônes modernes
 
@@ -90,7 +92,7 @@ Un coach qui ne remplace pas les humains, mais qui **étend leur portée**.
 ## 📦 Installation
 
 ### Prérequis
-- Node.js 18+
+- Node.js 18+ 
 - npm ou yarn
 - Compte Supabase (gratuit)
 
@@ -117,7 +119,23 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Le site sera accessible sur `http://localhost:5173`
+Le site sera accessible sur `http://localhost:3000`
+
+---
+
+## 📚 Documentation Complète
+
+### Guides Principaux
+
+- **[VISION_PROJET.md](VISION_PROJET.md)** - Mission et impact social ⭐
+- **[ARCHITECTURE.md](ARCHITECTURE.md)** - Architecture technique
+- **[BASE_CONNAISSANCES_IA.md](BASE_CONNAISSANCES_IA.md)** - Documentation IA
+
+### Corrections et Améliorations
+
+- **[CORRECTION_FINALE_SCHEMA_BDD.md](CORRECTION_FINALE_SCHEMA_BDD.md)** - Schéma BDD final
+- **[SESSION_COMPLETE_12_13_OCT_2025.md](SESSION_COMPLETE_12_13_OCT_2025.md)** - Session complète de debug
+- **[CONFIGURATION_NOTIFICATIONS_PUSH.md](CONFIGURATION_NOTIFICATIONS_PUSH.md)** - Configuration push
 
 ---
 
@@ -127,11 +145,11 @@ Ce projet est ouvert aux contributions !
 
 ### Qui peut contribuer ?
 
-- 💻 **Développeurs** — Améliorations techniques
-- 👨‍🏫 **Éducateurs** — Contenu pédagogique
-- 🧭 **Conseillers d'orientation** — Expertise métier
-- 🌍 **Traducteurs** — Langues locales (Wolof, Bambara, etc.)
-- 🧪 **Testeurs** — Retours utilisateurs
+- 💻 **Développeurs** - Améliorations techniques
+- 👨‍🏫 **Éducateurs** - Contenu pédagogique
+- 🧭 **Conseillers d'orientation** - Expertise métier
+- 🌍 **Traducteurs** - Langues locales (Wolof, Bambara, etc.)
+- 🧪 **Testeurs** - Retours utilisateurs
 
 ### Comment Contribuer ?
 
@@ -143,43 +161,10 @@ Ce projet est ouvert aux contributions !
 
 ### Guidelines
 
-- Respecter l'architecture existante
+- Respecter l'architecture existante (voir `ARCHITECTURE.md`)
 - Tester sur mobile ET desktop
 - Documenter les nouvelles fonctionnalités
 - Utiliser le design system (ombres vertes, dark mode)
-
----
-
-## 🚀 Feuille de Route
-
-### ✅ Phase 1 — MVP (Complété)
-- [x] Interface utilisateur responsive
-- [x] Système d'authentification
-- [x] Cours et chapitres
-- [x] Quiz et examens
-- [x] Coach IA contextuel
-- [x] Dashboard et analytics
-- [x] Gamification (points, badges, niveaux)
-- [x] Classements régionaux
-
-### 🔄 Phase 2 — Optimisation (En cours)
-- [x] Push notifications (configuré)
-- [x] Design system unifié (ombres vertes)
-- [x] Dark mode optimisé
-- [ ] Tests utilisateurs (Sénégal)
-- [ ] Optimisations performances
-- [ ] Mode offline avancé
-
-### 🔮 Phase 3 — Expansion (Futur)
-- [ ] Application mobile native
-- [ ] Support multilingue (Wolof, Bambara, etc.)
-- [ ] Partenariats établissements
-- [ ] API ouverte pour développeurs
-
-### 🌍 Phase 4 — Impact (Long terme)
-- [ ] Déploiement dans 5 pays africains
-- [ ] 100 000+ élèves accompagnés
-- [ ] Certification ministères de l'éducation
 
 ---
 
@@ -197,7 +182,7 @@ Pour toute question ou collaboration :
 
 ## 🎖️ Licence
 
-Ce projet est sous licence **MIT** — voir le fichier [LICENSE](LICENSE) pour plus de détails.
+Ce projet est sous licence **MIT** - voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
 Vous êtes libre de :
 - ✅ Utiliser le code pour vos projets
@@ -206,6 +191,39 @@ Vous êtes libre de :
 - ✅ Utiliser commercialement
 
 **Condition :** Inclure la licence et le copyright d'origine.
+
+---
+
+## 🚀 Feuille de Route
+
+### ✅ Phase 1 - MVP (Complété)
+- [x] Interface utilisateur responsive
+- [x] Système d'authentification
+- [x] Cours et chapitres
+- [x] Quiz et examens
+- [x] Coach IA contextuel
+- [x] Dashboard et analytics
+- [x] Gamification (points, badges, niveaux)
+- [x] Classements régionaux
+
+### 🔄 Phase 2 - Optimisation (En cours)
+- [x] Push notifications (configuré)
+- [x] Design system unifié (ombres vertes)
+- [x] Dark mode optimisé
+- [ ] Tests utilisateurs (Sénégal)
+- [ ] Optimisations performances
+- [ ] Mode offline avancé
+
+### 🔮 Phase 3 - Expansion (Futur)
+- [ ] Application mobile native
+- [ ] Support multilingue (Wolof, Bambara, etc.)
+- [ ] Partenariats établissements
+- [ ] API ouverte pour développeurs
+
+### 🌍 Phase 4 - Impact (Long terme)
+- [ ] Déploiement dans 5 pays africains
+- [ ] 100,000+ élèves accompagnés
+- [ ] Certification ministères de l'éducation
 
 ---
 
@@ -230,8 +248,38 @@ Vous êtes libre de :
 > *"Un enfant, un enseignant, un livre et un stylo peuvent changer le monde."*  
 > — Malala Yousafzai
 
+**Et aujourd'hui, ajoutons :**
+
 > *"Un enfant, un coach IA, une plateforme et une vision peuvent changer l'Afrique."* ✨  
 > — E-réussite
+
+---
+
+## 🎓 Messages Clés
+
+### Pour les Élèves
+
+Tu n'es pas seul. Tu as le droit de rêver, d'hésiter, de te tromper, de recommencer.
+
+E-réussite est là pour t'accompagner, pas pour te juger.
+
+**Ton avenir t'appartient.** 🚀
+
+### Pour les Parents
+
+Votre enfant mérite d'être guidé dans ses choix.
+
+E-réussite complète votre rôle en apportant expertise et informations actualisées.
+
+Ensemble, donnons-lui les meilleures chances de réussite. 💪
+
+### Pour les Enseignants et Conseillers
+
+Vous faites un travail extraordinaire avec des moyens limités.
+
+E-réussite est un outil **pour vous**, pas **contre vous**.
+
+Il vous permet de mieux suivre vos élèves et d'identifier ceux qui ont besoin d'un accompagnement humain renforcé. 🤝
 
 ---
 
