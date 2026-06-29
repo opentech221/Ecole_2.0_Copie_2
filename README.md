@@ -1,89 +1,82 @@
-# 🌍 E-réussite
+# 🏫 Ecole 2.0
 
-## Plateforme d'Orientation et d'Accompagnement Scolaire pour l'Afrique Francophone
+## Plateforme de Gestion Scolaire pour les Enseignants d'Afrique Francophone
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![React](https://img.shields.io/badge/React-18.x-blue.svg)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)](https://www.typescriptlang.org/)
 [![Supabase](https://img.shields.io/badge/Supabase-Backend-green.svg)](https://supabase.com/)
-[![Made in Senegal](https://img.shields.io/badge/Made%20in-Senegal%20🇸🇳-green.svg)](https://github.com/opentech221)
+[![Made in Africa](https://img.shields.io/badge/Made%20for-Africa%20🌍-orange.svg)](https://github.com/opentech221)
 
 ---
 
 ## 💡 La Vision
 
-> **"Réduire la distance entre l'élève et son avenir."**
+> **"Donner aux enseignants les outils qu'ils méritent."**
 
-Au Sénégal et dans les pays d'Afrique francophone, **l'orientation scolaire est un luxe réservé à quelques privilégiés**.
+Dans les écoles primaires d'Afrique francophone, les enseignants gèrent des classes entières avec peu ou pas d'outils numériques.
 
-- **1 seul centre d'orientation par région** pour des milliers d'élèves
-- **1 visite par an** des conseillers dans les établissements
-- **Accompagnement insuffisant** au moment des choix décisifs
-- **Inégalité territoriale** : zones rurales délaissées
+- **Cahiers de roulement** tenus à la main, difficiles à archiver
+- **Planification des cours** chronophage et dispersée
+- **Suivi des élèves** peu structuré faute d'outils adaptés
+- **Communication avec la direction** souvent informelle
 
 ### Notre Solution
 
-**E-réussite** est un **coach numérique intelligent** disponible 24h/24, qui accompagne chaque élève tout au long de son parcours scolaire et professionnel.
-
-Un coach qui ne remplace pas les humains, mais qui **étend leur portée**.
+**Ecole 2.0** est une plateforme numérique pensée pour les **directeurs et enseignants du primaire**, qui centralise la gestion de classe, la planification pédagogique et le suivi des élèves — dans une interface simple, accessible et pensée pour le terrain africain.
 
 ---
 
 ## 🎯 Fonctionnalités Principales
 
-### 🧭 Orientation Personnalisée
-- Quiz et tests d'aptitudes interactifs
-- Plan de carrière adapté aux réalités africaines
-- Exploration des opportunités (public, privé, entrepreneuriat)
-- Accompagnement continu, pas une simple visite annuelle
+### 📋 Gestion des Classes
+- Suivi des niveaux CI, CP, CE1, CE2, CM1, CM2
+- Inscription et gestion des élèves par classe
+- Vue d'ensemble par directeur et par enseignant
+- Tableau de bord centralisé multi-rôles
 
-### 📚 Plateforme Éducative Complète
-- Cours structurés par matière et niveau (BFEM, BAC)
-- Exercices et quiz avec correction automatique
-- Examens blancs conformes aux programmes nationaux
-- Suivi de progression détaillé
+### 📝 Éditeur de Leçons
+- Création et structuration de leçons par matière
+- Catalogue de leçons réutilisables
+- Planification hebdomadaire et mensuelle
+- Historique et archivage des séquences pédagogiques
 
-### 🤖 Coach IA Contextuel
-- Assistant disponible 24h/24 sur toutes les pages
-- Compréhension du contexte éducatif africain
-- Conseils personnalisés basés sur les performances
-- Recherche web intégrée (Perplexity)
-- Multi-conversations avec historique
+### 📒 Cahier de Roulement Numérique
+- Saisie des notes et appréciations par élève
+- Suivi des performances dans le temps
+- Génération de documents imprimables
+- Aperçu et export des bulletins
 
-### 🏆 Gamification et Motivation
-- Système de points et niveaux (1–100+)
-- Badges de réussite et d'excellence
-- Compétitions régionales (Afrique de l'Ouest, Nord, Centre, Est, Sud)
-- Classements dynamiques (Top 10, Top 100)
-- Séries quotidiennes (streaks)
+### 📁 Gestion Documentaire
+- Stockage et organisation des documents scolaires
+- Prévisualisation intégrée
+- Partage entre enseignants et direction
+- Archivage structuré par année scolaire
 
-### 📊 Analytics et Suivi
-- Dashboard personnalisé avec statistiques détaillées
-- Graphiques de progression interactifs
-- Analyse des forces et faiblesses
-- Recommandations adaptées
+### 🗓️ Planning et Emploi du Temps
+- Planification des cours par classe et par niveau
+- Vue calendaire hebdomadaire
+- Gestion des événements et activités scolaires
 
 ---
 
 ## 🚀 Technologies Utilisées
 
 ### Frontend
-- **React 18** avec Vite pour des performances optimales
-- **Tailwind CSS** avec design system personnalisé
-- **Motion** pour animations fluides
-- **Recharts** pour visualisations de données
-- **Lucide React** pour icônes modernes
+- **React 18** + **TypeScript** avec Vite pour des performances optimales
+- **Tailwind CSS 4** avec design system personnalisé
+- **Motion** pour des animations fluides
+- **React Router 7** pour la navigation côté client
+- **React Hook Form** pour la gestion des formulaires
+- **React DnD** pour le glisser-déposer
+- **Recharts** pour les visualisations de données
+- **Radix UI** pour les composants accessibles
 
 ### Backend
 - **Supabase** (PostgreSQL + RLS)
-- **Edge Functions** pour logique métier
-- **Real-time subscriptions** pour mises à jour live
-- **Row Level Security** pour sécurité granulaire
-
-### IA et Intégration
-- **Multi-provider AI** (OpenAI, Anthropic, Google, etc.)
-- **Perplexity API** pour recherche web contextuelle
-- **VAPID Push Notifications** (production)
-- **Service Worker** pour expérience offline
+- **Row Level Security** pour isoler les données par établissement
+- **Real-time subscriptions** pour les mises à jour en direct
+- **TanStack React Query** pour la gestion de l'état serveur
 
 ---
 
@@ -98,8 +91,8 @@ Un coach qui ne remplace pas les humains, mais qui **étend leur portée**.
 
 ```bash
 # 1. Cloner le repository
-git clone https://github.com/opentech221/E-reussite.git
-cd E-reussite
+git clone https://github.com/opentech221/ecole2.0.git
+cd ecole2.0
 
 # 2. Installer les dépendances
 npm install
@@ -110,8 +103,6 @@ cp .env.example .env.local
 # 4. Éditer .env.local avec vos clés
 # VITE_SUPABASE_URL=votre_url_supabase
 # VITE_SUPABASE_ANON_KEY=votre_cle_anonyme
-# VITE_OPENAI_API_KEY=votre_cle_openai (optionnel)
-# VITE_PERPLEXITY_API_KEY=votre_cle_perplexity (optionnel)
 
 # 5. Lancer le serveur de développement
 npm run dev
@@ -127,11 +118,11 @@ Ce projet est ouvert aux contributions !
 
 ### Qui peut contribuer ?
 
-- 💻 **Développeurs** — Améliorations techniques
-- 👨‍🏫 **Éducateurs** — Contenu pédagogique
-- 🧭 **Conseillers d'orientation** — Expertise métier
-- 🌍 **Traducteurs** — Langues locales (Wolof, Bambara, etc.)
-- 🧪 **Testeurs** — Retours utilisateurs
+- 💻 **Développeurs** — Améliorations techniques et nouvelles fonctionnalités
+- 👨‍🏫 **Enseignants** — Retours terrain et besoins pédagogiques
+- 🏫 **Directeurs d'école** — Expertise en gestion scolaire
+- 🌍 **Traducteurs** — Adaptation aux langues locales (Wolof, Bambara, etc.)
+- 🧪 **Testeurs** — Retours utilisateurs et rapports de bugs
 
 ### Comment Contribuer ?
 
@@ -143,43 +134,41 @@ Ce projet est ouvert aux contributions !
 
 ### Guidelines
 
-- Respecter l'architecture existante
 - Tester sur mobile ET desktop
+- Respecter l'architecture existante (`src/app/`, `src/services/`, `src/hooks/`)
 - Documenter les nouvelles fonctionnalités
-- Utiliser le design system (ombres vertes, dark mode)
+- Utiliser le design system et les composants Radix UI existants
 
 ---
 
 ## 🚀 Feuille de Route
 
 ### ✅ Phase 1 — MVP (Complété)
-- [x] Interface utilisateur responsive
-- [x] Système d'authentification
-- [x] Cours et chapitres
-- [x] Quiz et examens
-- [x] Coach IA contextuel
-- [x] Dashboard et analytics
-- [x] Gamification (points, badges, niveaux)
-- [x] Classements régionaux
+- [x] Interface enseignant et directeur
+- [x] Authentification et gestion des rôles
+- [x] Gestion des classes et des élèves
+- [x] Éditeur de leçons et catalogue
+- [x] Cahier de roulement numérique
+- [x] Gestion documentaire
+- [x] Planning et emploi du temps
 
 ### 🔄 Phase 2 — Optimisation (En cours)
-- [x] Push notifications (configuré)
-- [x] Design system unifié (ombres vertes)
-- [x] Dark mode optimisé
-- [ ] Tests utilisateurs (Sénégal)
-- [ ] Optimisations performances
-- [ ] Mode offline avancé
+- [x] Design system unifié
+- [x] Dark mode
+- [ ] Tests utilisateurs en conditions réelles
+- [ ] Mode offline pour zones à faible connexion
+- [ ] Optimisations performances mobiles
 
 ### 🔮 Phase 3 — Expansion (Futur)
 - [ ] Application mobile native
 - [ ] Support multilingue (Wolof, Bambara, etc.)
-- [ ] Partenariats établissements
-- [ ] API ouverte pour développeurs
+- [ ] Messagerie interne entre enseignants et direction
+- [ ] Tableau de bord analytique pour les inspecteurs
 
 ### 🌍 Phase 4 — Impact (Long terme)
-- [ ] Déploiement dans 5 pays africains
-- [ ] 100 000+ élèves accompagnés
-- [ ] Certification ministères de l'éducation
+- [ ] Déploiement dans plusieurs pays d'Afrique francophone
+- [ ] Intégration avec les systèmes ministériels
+- [ ] Certification et partenariats institutionnels
 
 ---
 
@@ -190,8 +179,8 @@ Ce projet est ouvert aux contributions !
 **Pays :** Sénégal 🇸🇳
 
 Pour toute question ou collaboration :
-- Ouvrir une [Issue](https://github.com/opentech221/E-reussite/issues)
-- Ou une [Discussion](https://github.com/opentech221/E-reussite/discussions)
+- Ouvrir une [Issue](https://github.com/opentech221/ecole2.0/issues)
+- Ou une [Discussion](https://github.com/opentech221/ecole2.0/discussions)
 
 ---
 
@@ -211,33 +200,20 @@ Vous êtes libre de :
 
 ## 🌟 Remerciements
 
-À tous ceux qui croient en cette vision :
+À tous ceux qui rendent ce projet possible :
 
-- Aux **conseillers d'orientation** qui font de leur mieux avec peu de moyens
-- Aux **élèves** qui osent rêver malgré les obstacles
-- Aux **parents** qui sacrifient tout pour l'éducation de leurs enfants
-- Aux **contributeurs** qui font grandir ce projet
+- Aux **enseignants** qui font avancer l'éducation avec des moyens limités
+- Aux **directeurs d'école** qui portent leurs établissements à bout de bras
+- Aux **familles** qui croient en l'éducation comme levier de développement
+- Aux **contributeurs** qui donnent de leur temps pour ce projet
 
 **Ce projet est pour vous, avec vous.** 🙏
 
 ---
 
-## 📖 Citations Inspirantes
-
-> *"L'éducation est l'arme la plus puissante pour changer le monde."*  
-> — Nelson Mandela
-
-> *"Un enfant, un enseignant, un livre et un stylo peuvent changer le monde."*  
-> — Malala Yousafzai
-
-> *"Un enfant, un coach IA, une plateforme et une vision peuvent changer l'Afrique."* ✨  
-> — E-réussite
-
----
-
 <div align="center">
 
-**Ensemble, transformons l'avenir de la jeunesse africaine !** 🌍✨
+**Ensemble, modernisons l'école africaine !** 🌍✨
 
 Made with ❤️ in Senegal 🇸🇳
 
