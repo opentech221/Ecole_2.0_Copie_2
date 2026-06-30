@@ -1,12 +1,8 @@
 /**
  * useAuth — Supabase session + profile hook.
  *
- * Provides the current authenticated user alongside their profile
- * row (role, class_id, full_name) pulled from public.profiles.
- *
- * Usage:
- *   const { user, profile, loading } = useAuth();
- *   if (profile?.role === 'director') { ... }
+ * Returns the current authenticated session, user, and their full profile
+ * row from public.profiles (including extended school fields).
  */
 
 import { useState, useEffect } from "react";
@@ -16,19 +12,28 @@ import { supabase }            from "../lib/supabase";
 export type UserRole = "teacher" | "director";
 
 export interface UserProfile {
-  id:        string;
-  role:      UserRole;
-  fullName:  string;
-  schoolId?: string;
-  classId?:  string;  // active class for teachers
+  id:           string;
+  role:         UserRole;
+  fullName:     string;
+  schoolId?:    string;
+  classId?:     string;
+  // Extended school / personal info
+  ecoleName?:   string;
+  ief?:         string;
+  telephone?:   string;
+  adresse?:     string;
+  signatureUrl?: string;
+  logoUrl?:     string;
+  classeActive?: string;
 }
 
 interface AuthState {
-  session:  Session | null;
-  user:     User    | null;
-  profile:  UserProfile | null;
-  loading:  boolean;
-  error:    string  | null;
+  session:        Session | null;
+  user:           User    | null;
+  profile:        UserProfile | null;
+  loading:        boolean;
+  error:          string  | null;
+  refreshProfile: () => Promise<void>;
 }
 
 export function useAuth(): AuthState {
@@ -37,11 +42,14 @@ export function useAuth(): AuthState {
   const [loading,  setLoading]  = useState(true);
   const [error,    setError]    = useState<string | null>(null);
 
-  // ── Fetch profile from public.profiles ────────────────────────────────────
   async function fetchProfile(userId: string) {
     const { data, error: err } = await supabase
       .from("profiles")
-      .select("id, role, full_name, school_id, class_id")
+      .select(
+        "id, role, full_name, school_id, class_id, " +
+        "ecole_nom, ief, telephone, adresse, " +
+        "signature_url, logo_url, classe_active"
+      )
       .eq("id", userId)
       .single();
 
@@ -49,17 +57,24 @@ export function useAuth(): AuthState {
       setError(err?.message ?? "Profil introuvable");
       return;
     }
+
     setProfile({
-      id:       data.id,
-      role:     (data.role ?? "teacher") as UserRole,
-      fullName: data.full_name ?? "Inconnu",
-      schoolId: data.school_id ?? undefined,
-      classId:  data.class_id  ?? undefined,
+      id:           data.id,
+      role:         (data.role ?? "teacher") as UserRole,
+      fullName:     data.full_name     ?? "",
+      schoolId:     data.school_id     ?? undefined,
+      classId:      data.class_id      ?? undefined,
+      ecoleName:    data.ecole_nom     ?? undefined,
+      ief:          data.ief           ?? undefined,
+      telephone:    data.telephone     ?? undefined,
+      adresse:      data.adresse       ?? undefined,
+      signatureUrl: data.signature_url ?? undefined,
+      logoUrl:      data.logo_url      ?? undefined,
+      classeActive: data.classe_active ?? undefined,
     });
   }
 
   useEffect(() => {
-    // 1. Restore the existing session (if any)
     supabase.auth.getSession().then(({ data: { session: s } }) => {
       setSession(s);
       if (s?.user) {
@@ -69,7 +84,6 @@ export function useAuth(): AuthState {
       }
     });
 
-    // 2. Subscribe to future auth state changes (login / logout / token refresh)
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (_event, s) => {
         setSession(s);
@@ -91,10 +105,14 @@ export function useAuth(): AuthState {
     profile,
     loading,
     error,
+    refreshProfile: async () => {
+      const uid = session?.user?.id;
+      if (uid) await fetchProfile(uid);
+    },
   };
 }
 
-// ── Convenience sign-in / sign-out helpers ────────────────────────────────────
+// ── Convenience helpers ────────────────────────────────────────────────────────
 
 export async function signInWithEmail(email: string, password: string) {
   const { error } = await supabase.auth.signInWithPassword({ email, password });

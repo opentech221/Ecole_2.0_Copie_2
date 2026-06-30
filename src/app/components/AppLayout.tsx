@@ -1,19 +1,23 @@
 import { useState, useEffect, useRef } from "react";
-import { Outlet, useNavigate, useLocation } from "react-router";
+import { Outlet, useNavigate, useLocation, Navigate } from "react-router";
 import {
   ChevronDown, GraduationCap, X, Check,
   Home, Calendar, Users, BookMarked, FileText, Plus,
+  UserCircle, LogOut,
 } from "lucide-react";
 import { useAppContext, ALL_CLASSES, UserRole } from "../contexts/AppContext";
+import { useAuthContext }                        from "../contexts/AuthContext";
+import { signOut }                               from "../../hooks/useAuth";
 
 // ─── Navigation items ─────────────────────────────────────────────────────────
 
 const NAV_ITEMS = [
-  { path: "/",          Icon: Home,       label: "Accueil"         },
-  { path: "/planning",  Icon: Calendar,   label: "Planification"   },
-  { path: "/eleves",    Icon: Users,      label: "Élèves & Notes"  },
-  { path: "/cahier",    Icon: BookMarked, label: "Cahier Journal"  },
-  { path: "/documents", Icon: FileText,   label: "Documents"       },
+  { path: "/",          Icon: Home,        label: "Accueil"         },
+  { path: "/planning",  Icon: Calendar,    label: "Planification"   },
+  { path: "/eleves",    Icon: Users,       label: "Élèves & Notes"  },
+  { path: "/cahier",    Icon: BookMarked,  label: "Cahier Journal"  },
+  { path: "/documents", Icon: FileText,    label: "Documents"       },
+  { path: "/profil",    Icon: UserCircle,  label: "Mon Profil"      },
 ];
 
 // ─── Desktop Left Sidebar (sticky, inside centered container) ─────────────────
@@ -77,7 +81,7 @@ function DesktopSidebar() {
         })}
       </nav>
 
-      {/* Nouvelle Fiche CTA */}
+      {/* Nouvelle Fiche CTA + Logout */}
       <div style={{ padding: "12px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
         <button
           onClick={() => navigate("/new-fiche")}
@@ -91,10 +95,28 @@ function DesktopSidebar() {
             cursor:      "pointer",
             border:      "none",
             fontFamily:  "'Plus Jakarta Sans', sans-serif",
+            marginBottom: "8px",
           }}
         >
           <Plus style={{ width: 16, height: 16 }} />
           Nouvelle Fiche
+        </button>
+        <button
+          onClick={async () => { await signOut(); navigate("/login", { replace: true }); }}
+          className="w-full flex items-center justify-center gap-2 rounded-xl transition-all active:scale-95"
+          style={{
+            minHeight:       "36px",
+            fontSize:        "12px",
+            fontWeight:      600,
+            backgroundColor: "transparent",
+            color:           "rgba(255,255,255,0.35)",
+            border:          "1px solid rgba(255,255,255,0.10)",
+            cursor:          "pointer",
+            fontFamily:      "'Plus Jakarta Sans', sans-serif",
+          }}
+        >
+          <LogOut style={{ width: 13, height: 13 }} />
+          Déconnexion
         </button>
       </div>
     </aside>
@@ -309,9 +331,28 @@ function ClassDropdown({ onClose }: { onClose: () => void }) {
 // ─── AppLayout ────────────────────────────────────────────────────────────────
 
 export function AppLayout() {
+  const { user, loading: authLoading } = useAuthContext();
   const { activeClass, schoolName, role } = useAppContext();
   const [sheetOpen,    setSheetOpen]    = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  // ── Auth guard ────────────────────────────────────────────────────────────
+  if (authLoading) {
+    return (
+      <div style={{
+        minHeight: "100vh", display: "flex", alignItems: "center",
+        justifyContent: "center", backgroundColor: "#f4f6f9",
+        fontFamily: "'Plus Jakarta Sans', sans-serif",
+      }}>
+        <div style={{ textAlign: "center" }}>
+          <GraduationCap style={{ width: 32, height: 32, color: "#3182ce",
+                                   margin: "0 auto 12px", display: "block" }} />
+          <p style={{ fontSize: "13px", color: "#64748b" }}>Chargement…</p>
+        </div>
+      </div>
+    );
+  }
+  if (!user) return <Navigate to="/login" replace />;
 
   const shortSchool = schoolName.split(" ").slice(-3, -1).join(" ") || schoolName.split(" ")[0];
 

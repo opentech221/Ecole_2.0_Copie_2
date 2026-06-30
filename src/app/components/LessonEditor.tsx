@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect, useMemo } from "react";
-import { createPortal } from "react-dom";
-import { useLocation, useNavigate } from "react-router";
+import { createPortal }                          from "react-dom";
+import { useLocation, useNavigate }              from "react-router";
+import { useProfileGuard }                       from "../../hooks/useProfileGuard";
+import { ProfileGuardLoader }                    from "./ProfileGuardLoader";
 import {
   ArrowLeft, Save, FileDown, Check, Sparkles, Loader2,
   ChevronDown, ChevronUp, BookOpen, Clock, Target,
@@ -574,8 +576,9 @@ function SectionCard({ icon, title, subtitle, open, onToggle, children, error, e
 // ─── Main component ───────────────────────────────────────────────────────────
 
 export function LessonEditor() {
-  const navigate  = useNavigate();
-  const { state } = useLocation() as { state:Record<string,unknown>|null };
+  const navigate               = useNavigate();
+  const { state }              = useLocation() as { state:Record<string,unknown>|null };
+  const { loading, blocked, skip } = useProfileGuard();
 
   // From Screen 2
   const contenus:   string[] = (state?.contenus   as string[]|undefined) ?? ["Les sources de l'histoire locale","Le rôle des anciens et des récits oraux","Les vestiges et monuments du milieu proche"];
@@ -970,6 +973,9 @@ export function LessonEditor() {
   }
 
   // ─────────────────────────────────────────────────────────────────────────
+  if (loading) return <ProfileGuardLoader loading />;
+  if (blocked) return <ProfileGuardLoader blocked onSkip={skip} />;
+
   return (
     <div className="min-h-screen bg-[#f4f6f9] flex flex-col"
          style={{ fontFamily:"'Plus Jakarta Sans',sans-serif" }}>

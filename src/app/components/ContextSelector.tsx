@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate }                 from "react-router";
+import { useProfileGuard }             from "../../hooks/useProfileGuard";
+import { ProfileGuardLoader }          from "./ProfileGuardLoader";
 import { ChevronLeft, ChevronDown, ChevronRight, Info, HelpCircle, Loader2 } from "lucide-react";
 
 // ─── APC Data ─────────────────────────────────────────────────────────────────
@@ -530,7 +532,8 @@ function Dropdown({
 // ─── Main component ───────────────────────────────────────────────────────────
 
 export function ContextSelector() {
-  const navigate = useNavigate();
+  const navigate          = useNavigate();
+  const { loading, blocked, skip } = useProfileGuard();
 
   // Section A
   const [niveau,      setNiveau]      = useState("");
@@ -648,6 +651,9 @@ export function ContextSelector() {
                contenus: [...checked], competence, merged },
     });
   }
+
+  if (loading) return <ProfileGuardLoader loading />;
+  if (blocked) return <ProfileGuardLoader blocked onSkip={skip} />;
 
   return (
     <div className="min-h-screen bg-[#f8f9fc]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>

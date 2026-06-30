@@ -1,5 +1,7 @@
 import React, { useState, useMemo, useCallback, useEffect, useRef } from "react";
-import { useNavigate }    from "react-router";
+import { useNavigate }       from "react-router";
+import { useProfileGuard }   from "../../hooks/useProfileGuard";
+import { ProfileGuardLoader } from "./ProfileGuardLoader";
 import {
   ArrowLeft, Search, Printer, Download, FileText,
   BookOpen, Calendar, Filter, Eye, X, Trash2, Plus, Upload, Loader2, Pencil, Check,
@@ -601,7 +603,8 @@ function AddDocumentModal({
 // ─── Main screen ──────────────────────────────────────────────────────────────
 
 export function DocumentsScreen() {
-  const navigate = useNavigate();
+  const navigate               = useNavigate();
+  const { loading, blocked, skip } = useProfileGuard();
   const [filter,     setFilter]     = useState<Filter>("all");
   const [search,     setSearch]     = useState("");
   const [previewDoc, setPreviewDoc] = useState<Document | null>(null);
@@ -698,6 +701,9 @@ export function DocumentsScreen() {
     { key:"bulletin", label:"Bulletins", count: bulletins.length,  icon:<FileText className="w-3.5 h-3.5"/> },
     { key:"planning", label:"Planning",  count: planning.length,   icon:<Calendar className="w-3.5 h-3.5"/> },
   ];
+
+  if (loading) return <ProfileGuardLoader loading />;
+  if (blocked) return <ProfileGuardLoader blocked onSkip={skip} />;
 
   return (
     <>
