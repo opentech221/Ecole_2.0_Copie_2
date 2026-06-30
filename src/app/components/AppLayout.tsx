@@ -333,6 +333,7 @@ function ClassDropdown({ onClose }: { onClose: () => void }) {
 export function AppLayout() {
   const { user, loading: authLoading } = useAuthContext();
   const { activeClass, schoolName, role } = useAppContext();
+  const navigate                        = useNavigate();
   const [sheetOpen,    setSheetOpen]    = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -414,21 +415,56 @@ export function AppLayout() {
           </div>
         </div>
 
-        {/* Role badge */}
+        {/* Right controls: role badge + profil + logout */}
         <div
-          className="flex items-center shrink-0 h-full border-l"
-          style={{ padding: "0 14px", borderColor: "rgba(255,255,255,0.07)" }}
+          className="flex items-center shrink-0 h-full gap-1 border-l"
+          style={{ padding: "0 10px", borderColor: "rgba(255,255,255,0.07)" }}
         >
-          <span style={{
+          {/* Role badge — hidden on very small screens */}
+          <span className="hidden sm:inline-flex" style={{
             fontSize:        "7.5px", fontWeight: 800,
             padding:         "2px 8px", borderRadius: "999px",
             letterSpacing:   "0.07em", textTransform: "uppercase",
             backgroundColor: role === "director" ? "rgba(59,130,246,0.18)" : "rgba(16,185,129,0.15)",
             color:           role === "director" ? "#93c5fd" : "#6ee7b7",
             border:          `1px solid ${role === "director" ? "rgba(59,130,246,0.28)" : "rgba(16,185,129,0.22)"}`,
+            marginRight:     "4px",
           }}>
             {role === "director" ? "Directeur" : "Enseignant"}
           </span>
+
+          {/* Profil link */}
+          <button
+            onClick={() => navigate("/profil")}
+            title="Mon profil"
+            style={{
+              width: 28, height: 28, borderRadius: "8px",
+              backgroundColor: "rgba(255,255,255,0.07)",
+              border: "1px solid rgba(255,255,255,0.12)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              cursor: "pointer", flexShrink: 0,
+            }}
+          >
+            <UserCircle style={{ width: 14, height: 14, color: "rgba(255,255,255,0.6)" }} />
+          </button>
+
+          {/* Logout button */}
+          <button
+            onClick={async () => {
+              await signOut();
+              navigate("/login", { replace: true });
+            }}
+            title="Déconnexion"
+            style={{
+              width: 28, height: 28, borderRadius: "8px",
+              backgroundColor: "rgba(255,255,255,0.07)",
+              border: "1px solid rgba(255,255,255,0.12)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              cursor: "pointer", flexShrink: 0,
+            }}
+          >
+            <LogOut style={{ width: 13, height: 13, color: "rgba(255,255,255,0.5)" }} />
+          </button>
         </div>
       </div>
 
