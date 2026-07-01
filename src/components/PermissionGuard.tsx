@@ -23,7 +23,8 @@
 
 import React, { type ReactNode } from "react";
 import { Lock } from "lucide-react";
-import { useAuth, type UserRole } from "../hooks/useAuth";
+import { useAuthContext }          from "../app/contexts/AuthContext";
+import type { UserRole }          from "../hooks/useAuth";
 
 // ─── Hook version — useful for conditional logic inside components ─────────────
 
@@ -35,7 +36,7 @@ interface PermissionOptions {
 }
 
 export function usePermission(opts: PermissionOptions = {}): boolean {
-  const { profile } = useAuth();
+  const { profile } = useAuthContext();
   if (!profile) return false;                          // not authenticated → no access
 
   // Directors always have full access

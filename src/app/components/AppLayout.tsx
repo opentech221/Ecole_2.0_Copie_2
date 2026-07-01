@@ -557,27 +557,20 @@ function MobileDrawer({ open, onClose, profile, onLogout }: {
             })}
           </div>
 
-          {/* Role toggle */}
-          <div style={{ display: "flex", gap: "8px", marginBottom: "16px" }}>
-            {(["teacher", "director"] as UserRole[]).map(r => {
-              const a = role === r;
-              return (
-                <button key={r} onClick={() => setRole(r)}
-                  style={{
-                    flex: 1, padding: "9px 8px", borderRadius: "9px",
-                    backgroundColor: a ? "#059669" : "#f8fafc",
-                    border: `1.5px solid ${a ? "#059669" : "#e2e8f0"}`,
-                    color: a ? "#fff" : "#64748b",
-                    fontWeight: 600, fontSize: "12.5px", cursor: "pointer",
-                    display: "flex", alignItems: "center", justifyContent: "center", gap: "5px",
-                    fontFamily: "'Plus Jakarta Sans', sans-serif",
-                  }}
-                >
-                  {a && <Check style={{ width: 12, height: 12 }} />}
-                  {r === "teacher" ? "Enseignant" : "Directeur"}
-                </button>
-              );
-            })}
+          {/* Role badge — read-only, sourced from backend profile (P1.3) */}
+          <div style={{
+            display: "flex", alignItems: "center", gap: "8px",
+            marginBottom: "16px", padding: "8px 12px", borderRadius: "9px",
+            backgroundColor: "#f8fafc", border: "1px solid #e2e8f0",
+          }}>
+            <span style={{ fontSize: "11px", color: "#64748b",
+                           fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              Rôle :
+            </span>
+            <span style={{ fontSize: "12.5px", fontWeight: 700, color: "#1e293b",
+                           fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              {role === "director" ? "Directeur" : "Enseignant"}
+            </span>
           </div>
 
           {/* Logout */}

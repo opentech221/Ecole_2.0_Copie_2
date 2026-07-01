@@ -1,5 +1,6 @@
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
-import { useAuthContext }                                                  from "./AuthContext";
+import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
+import { useAuthContext }  from "./AuthContext";
+import { supabase }        from "../../lib/supabase";
 
 export type UserRole = "teacher" | "director";
 
@@ -19,14 +20,23 @@ const AppContext = createContext<AppContextValue | null>(null);
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const { profile }                       = useAuthContext();
-  const [role,         setRole]           = useState<UserRole>("teacher");
-  const [activeClass,  setActiveClass]    = useState("CE2");
+  const { user } = useAuthContext();
+  const [role,        setRole]      = useState<UserRole>("teacher");
+  const [activeClass, setActiveClassState] = useState("CE2");
 
-  // Sync role and active class from the authenticated profile
+  // Sync role and active class from the authenticated profile (read-only from backend)
   useEffect(() => {
     if (profile?.role)         setRole(profile.role);
-    if (profile?.classeActive) setActiveClass(profile.classeActive);
+    if (profile?.classeActive) setActiveClassState(profile.classeActive);
   }, [profile]);
+
+  // Persist class changes to the profile so the selection survives across devices (P1.3)
+  const setActiveClass = useCallback((c: string) => {
+    setActiveClassState(c);
+    if (user?.id) {
+      supabase.from("profiles").update({ classe_active: c }).eq("id", user.id);
+    }
+  }, [user?.id]);
 
   return (
     <AppContext.Provider value={{

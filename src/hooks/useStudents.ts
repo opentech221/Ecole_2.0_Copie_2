@@ -1,3 +1,7 @@
+/** @deprecated P2.2 — Not imported by any screen. Prefer useDocumentsQuery
+ * (React Query) for documents, or studentsApi directly for students.
+ * Safe to delete after confirming no external integrations depend on it.
+ */
 /**
  * useStudents — CRUD hook for the students table.
  *

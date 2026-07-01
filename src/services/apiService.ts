@@ -236,8 +236,9 @@ export const documentsApi = {
       .upload(path, file, { upsert: true });
     if (uploadError) throw uploadError;
 
-    const { data } = supabase.storage.from(DOCUMENTS_BUCKET).getPublicUrl(path);
-    return data.publicUrl;
+    // Return the bucket-internal path, NOT a public URL.
+    // Callers store this as `file_path`; use getSignedUrl() to render/download.
+    return path;
   },
 
   /** Read — get signed URL for a private file (1-hour expiry) */

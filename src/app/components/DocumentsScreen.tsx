@@ -8,8 +8,9 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { useDocumentsQuery } from "../../hooks/useDocumentsQuery";
-import { type DocumentRow } from "../../services/apiService";
+import { documentsApi, type DocumentRow } from "../../services/apiService";
 import { PermissionGuard } from "../../components/PermissionGuard";
+import { useAppContext }   from "../contexts/AppContext";
 
 // ─── Document types ───────────────────────────────────────────────────────────
 
@@ -300,6 +301,7 @@ function PreviewModal({
 function DocCard({
   doc, onPreview, onPrint, onDelete, isDeleting,
   onStartEdit, isEditing, editValue, onEditChange, onEditSave,
+  ownerClassId,
 }: {
   doc: Document;
   onPreview: () => void;
@@ -311,6 +313,7 @@ function DocCard({
   editValue?: string;
   onEditChange?: (v: string) => void;
   onEditSave?: () => void;
+  ownerClassId: string;
 }) {
   return (
     <div className="bg-white rounded-2xl overflow-hidden transition-all hover:shadow-md"
@@ -368,7 +371,7 @@ function DocCard({
               PermissionGuard: Modifier and Supprimer are only shown to
               the teacher who owns this class (or a director).
             */}
-            <PermissionGuard ownerClassId="CE2" silent>
+            <PermissionGuard ownerClassId={ownerClassId} silent>
               {/* Blue edit pencil — inline title edit */}
               {onStartEdit && !isEditing && (
                 <button
@@ -404,7 +407,7 @@ function DocCard({
             </button>
             {/* Delete button — gated by PermissionGuard */}
             {onDelete && (
-              <PermissionGuard ownerClassId="CE2" silent>
+              <PermissionGuard ownerClassId={ownerClassId} silent>
                 <button
                   onClick={onDelete}
                   disabled={isDeleting}
@@ -605,6 +608,7 @@ function AddDocumentModal({
 export function DocumentsScreen() {
   const navigate               = useNavigate();
   const { loading, blocked, skip } = useProfileGuard();
+  const { activeClass }         = useAppContext();
   const [filter,     setFilter]     = useState<Filter>("all");
   const [search,     setSearch]     = useState("");
   const [previewDoc, setPreviewDoc] = useState<Document | null>(null);
@@ -620,12 +624,11 @@ export function DocumentsScreen() {
   }, []);
 
   const saveDocEdit = useCallback(async (doc: Document) => {
-    if (editingDocTitle.trim() && editingDocTitle !== doc.title) {
-      // In production: await updateDocument(doc.id, { title: editingDocTitle });
-      toast.success(`Titre mis à jour → ${editingDocTitle.trim()}`);
+    if (editingDocTitle.trim() && editingDocTitle !== doc.title && doc.id) {
+      await updateDocument(doc.id, { title: editingDocTitle.trim() });
     }
     setEditingDocId(null);
-  }, [editingDocTitle]);
+  }, [editingDocTitle, updateDocument]);
 
   // ── Delete-with-Undo for documents (5-second window) ──────────────────────
   const [pendingDeleteDocIds, setPendingDeleteDocIds] = useState<Set<string>>(new Set());
@@ -633,9 +636,9 @@ export function DocumentsScreen() {
   const handleDocDeleteWithUndo = useCallback((doc: Document) => {
     setPendingDeleteDocIds(prev => new Set(prev).add(doc.id));
     let undone = false;
-    const timer = setTimeout(() => {
+    const timer = setTimeout(async () => {
       if (!undone) {
-        // In production: await deleteDocument(doc);
+        await deleteDocument(doc as unknown as DocumentRow);
       }
     }, 5000);
     toast.success(`« ${doc.title} » supprimé.`, {
@@ -650,12 +653,13 @@ export function DocumentsScreen() {
         },
       },
     });
-  }, []);
+  }, [deleteDocument]);
   const { printDoc, triggerPrint }  = usePrintDoc();
 
   // ── Live Supabase data (React Query) with mock fallback ────────────────────
   // useDocumentsQuery: cache + background refresh + loading guard on delete
-  const { documents: liveDocuments, deleteDocument, deletingId } = useDocumentsQuery(ALL_DOCS as unknown as DocumentRow[]);
+  // No mock fallback: Supabase is the single source of truth (P1.4).
+  const { documents: liveDocuments, deleteDocument, deletingId, uploadDocument, updateDocument } = useDocumentsQuery([]);
   // Cast back so the rest of the component keeps its Document type
   const allDocs = liveDocuments as unknown as Document[];
 
@@ -673,10 +677,12 @@ export function DocumentsScreen() {
     meta: Pick<Document, "type"|"title"|"subtitle"|"meta">,
     file?: File,
   ) => {
-    // In production, call uploadDocument({ file, meta }) from useDocumentsQuery.
-    // For now, show a confirmation toast (data is local/mock).
-    toast.success(`Document « ${meta.title} » ajouté.`);
-  }, []);
+    if (file) {
+      await uploadDocument({ file, meta: meta as Omit<DocumentRow, "id"|"created_at"|"file_path"|"class_id"> });
+    } else {
+      await (documentsApi as any).create({ ...meta, class_id: activeClass });
+    }
+  }, [uploadDocument, activeClass]);
 
   const filtered = useMemo(() => {
     let docs = filter === "all" ? allDocs : allDocs.filter(d => d.type === filter);
@@ -881,6 +887,7 @@ export function DocumentsScreen() {
                           editValue={editingDocId === d.id ? editingDocTitle : d.title}
                           onEditChange={setEditingDocTitle}
                           onEditSave={() => saveDocEdit(d)}
+                          ownerClassId={activeClass}
                         />
                       ))}
                     </div>
@@ -929,6 +936,7 @@ export function DocumentsScreen() {
                           editValue={editingDocId === d.id ? editingDocTitle : d.title}
                           onEditChange={setEditingDocTitle}
                           onEditSave={() => saveDocEdit(d)}
+                          ownerClassId={activeClass}
                         />
                       ))}
                     </div>

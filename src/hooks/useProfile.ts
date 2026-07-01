@@ -11,15 +11,17 @@ import { supabase }          from "../lib/supabase";
 import { useAuthContext }    from "../app/contexts/AuthContext";
 
 export interface ProfileFormData {
-  full_name?:    string;
-  ecole_nom?:    string;
-  ief?:          string;
-  telephone?:    string;
-  adresse?:      string;
+  full_name?:     string;
+  ecole_nom?:     string;
+  ief?:           string;
+  telephone?:     string;
+  adresse?:       string;
   classe_active?: string;
-  role?:         string;
+  // `role` is intentionally absent: changes require a server-side admin flow.
+  // The DB trigger (migration 004) silently discards any role value sent by
+  // an authenticated client even if it were to slip through.
   signature_url?: string;
-  logo_url?:     string;
+  logo_url?:      string;
 }
 
 export function useProfile() {

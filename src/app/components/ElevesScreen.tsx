@@ -1,8 +1,9 @@
 import React, { useState, useMemo, useEffect, useCallback, useRef } from "react";
-// (no server-side rendering import needed — HTML is built via template strings)
 import { useNavigate } from "react-router";
 import { useGradesMutation } from "../../hooks/useGradesMutation";
 import { PermissionGuard, ReadOnlyBadge } from "../../components/PermissionGuard";
+import { studentsApi } from "../../services/apiService";
+import { useAppContext } from "../contexts/AppContext";
 import {
   ArrowLeft, Users, UserCheck, UserX,
   Plus, Upload, Printer, ChevronDown, ChevronUp,
@@ -308,7 +309,7 @@ function BulletinBody({
           {([
             ["Élève",           `${student.nom} ${student.prenom}`],
             ["Matricule",       student.matricule],
-            ["Classe",          "CE2"],
+            ["Classe",          activeClass],
             ["Trimestre",       `${trimLabel} Trimestre`],
             ["IEF",             "Inspection de Kolda"],
             ["École",           "Ilyaou Mamadou SEYDI"],
@@ -747,7 +748,7 @@ function buildOneBulletinHtml(
   const idRows = [
     ["Élève",           `${student.nom} ${student.prenom}`],
     ["Matricule",       student.matricule],
-    ["Classe",          "CE2"],
+    ["Classe",          activeClass],
     ["Trimestre",       `${trimLabel} Trimestre`],
     ["IEF",             "Inspection de Kolda"],
     ["École",           "Ilyaou Mamadou SEYDI"],
@@ -1305,6 +1306,7 @@ type View = "liste" | "registre" | "bulletin";
 
 export function ElevesScreen() {
   const navigate = useNavigate();
+  const { activeClass } = useAppContext();
   const [view,           setView]          = useState<View>("liste");
   const [selectedId,     setSelectedId]    = useState("1");
   const [showAddStudent, setShowAddStudent] = useState(false);
@@ -1320,9 +1322,7 @@ export function ElevesScreen() {
 
   const saveEdit = useCallback(async (id: string) => {
     if (editingNom.trim()) {
-      // In production: await updateStudent(id, { nom: editingNom });
-      const { toast } = await import("sonner");
-      toast.success(`Nom mis à jour → ${editingNom.trim()}`);
+      await studentsApi.update(id, { nom: editingNom.trim() });
     }
     setEditingId(null);
   }, [editingNom]);
@@ -1340,8 +1340,7 @@ export function ElevesScreen() {
     let undone = false;
     const timer = setTimeout(async () => {
       if (undone) return;
-      // In production: await studentsApi.delete(s.id, label);
-      // Row stays hidden; the cache invalidation would remove it server-side.
+      await studentsApi.delete(s.id, label);
     }, 5000);
 
     import("sonner").then(({ toast }) => {
@@ -1414,7 +1413,7 @@ export function ElevesScreen() {
   const { handleGradeChange } = useGradesMutation({
     gradesMap,
     setGradesMap,
-    activeClass: "CE2",        // replaced by useAppContext().activeClass in production
+    activeClass,               // from useAppContext() (P1.5)
     trimestre,
     gradeSchema,
     onSaveStatus: setSaveStatus,
@@ -1524,10 +1523,17 @@ export function ElevesScreen() {
   ];
 
   const handleAddStudent = async (form: NewStudentForm) => {
-    // In production, call studentsApi.create(...) here.
-    // For now, show a confirmation toast (data is local/mock).
-    const { toast } = await import("sonner");
-    toast.success(`${form.nom} ${form.prenom} ajouté(e) à la liste.`);
+    await studentsApi.create({
+      class_id:       activeClass,
+      matricule:      form.matricule,
+      nom:            form.nom,
+      prenom:         form.prenom,
+      genre:          form.genre as "F" | "M",
+      date_naissance: form.dateNaissance,
+      lieu_naissance: form.lieuNaissance,
+      tuteur_nom:     form.tuteurNom,
+      tuteur_phone:   form.tuteurPhone,
+    });
   };
 
   return (
@@ -2006,7 +2012,7 @@ export function ElevesScreen() {
                                 for the teacher who owns this class (or a director).
                                 Others see the "Lecture seule" badge instead.
                               */}
-                              <PermissionGuard ownerClassId="CE2" fallback={<ReadOnlyBadge />}>
+                              <PermissionGuard ownerClassId={activeClass} fallback={<ReadOnlyBadge />}>
                                 {/* Edit icon — blue pencil */}
                                 <button
                                   onClick={e=>{ e.stopPropagation(); startEdit(s.id, s.nom); }}
