@@ -1,8 +1,7 @@
-import { useState } from "react";
-import { useNavigate, useLocation } from "react-router";
+import { useNavigate } from "react-router";
 import {
   Plus, Eye, Bell, WifiOff, Download,
-  Calendar, Home, BookMarked, ChevronRight, Users,
+  Calendar, BookMarked, ChevronRight, Users,
 } from "lucide-react";
 import { useAppContext } from "../contexts/AppContext";
 
@@ -235,93 +234,13 @@ function FicheTicket({ fiche }: { fiche: FicheCard }) {
   );
 }
 
-// ─── Bottom navigation bar ────────────────────────────────────────────────────
-
-type NavTab = "accueil" | "planning";
-
-function BottomNav({ active, onTab }: { active: NavTab; onTab: (t: NavTab) => void }) {
-  return (
-    <div
-      className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md z-30 bg-white"
-      style={{ boxShadow:"0 -1px 0 #e5e7eb, 0 -4px 20px rgba(0,0,0,0.07)" }}
-    >
-      <div className="grid grid-cols-3 px-2 pb-safe">
-
-        {/* Accueil */}
-        <button
-          onClick={() => onTab("accueil")}
-          className="flex flex-col items-center justify-center gap-0.5 py-3 transition-all"
-          style={{ minHeight:"56px" }}
-        >
-          <Home
-            className="w-5 h-5"
-            style={{ color: active==="accueil" ? "#1a365d" : "#94a3b8" }}
-          />
-          <span
-            className="text-[10px] font-bold"
-            style={{ color: active==="accueil" ? "#1a365d" : "#94a3b8" }}
-          >
-            Accueil
-          </span>
-          {active==="accueil" && (
-            <span className="w-1 h-1 rounded-full bg-[#1a365d]"/>
-          )}
-        </button>
-
-        {/* Centre FAB — Nouvelle fiche */}
-        <div className="flex items-center justify-center py-2">
-          <button
-            className="w-14 h-14 rounded-2xl flex flex-col items-center justify-center gap-0.5 text-white transition-all active:scale-95"
-            style={{
-              background:"linear-gradient(135deg, #1a365d, #3182ce)",
-              boxShadow:"0 4px 16px rgba(26,54,93,0.35)",
-              marginTop:"-12px",
-            }}
-            onClick={() => { /* navigate to new fiche handled by parent */ }}
-          >
-            <Plus className="w-5 h-5 text-white" strokeWidth={2.5}/>
-            <span className="text-[8px] font-bold text-white/90 leading-none">Nouvelle</span>
-          </button>
-        </div>
-
-        {/* Planification */}
-        <button
-          onClick={() => onTab("planning")}
-          className="flex flex-col items-center justify-center gap-0.5 py-3 transition-all"
-          style={{ minHeight:"56px" }}
-        >
-          <Calendar
-            className="w-5 h-5"
-            style={{ color: active==="planning" ? "#3182ce" : "#94a3b8" }}
-          />
-          <span
-            className="text-[10px] font-bold"
-            style={{ color: active==="planning" ? "#3182ce" : "#94a3b8" }}
-          >
-            Planification
-          </span>
-          {active==="planning" && (
-            <span className="w-1 h-1 rounded-full bg-[#3182ce]"/>
-          )}
-        </button>
-
-      </div>
-    </div>
-  );
-}
+// BottomNav removed — AppLayout owns mobile navigation.
 
 // ─── Dashboard ────────────────────────────────────────────────────────────────
 
 export function Dashboard() {
   const navigate   = useNavigate();
-  const location   = useLocation();
   const { activeClass, role, userName, schoolName } = useAppContext();
-  const activeTab: NavTab = location.pathname === "/planning" ? "planning" : "accueil";
-
-  function handleTab(t: NavTab) {
-    if (t === "planning") navigate("/planning");
-    else navigate("/");
-  }
 
   return (
     <div className="min-h-screen bg-slate-100 lg:bg-[#f4f6f9]" style={{ fontFamily:"'Plus Jakarta Sans',sans-serif" }}>
@@ -403,7 +322,7 @@ export function Dashboard() {
               accent="#3182ce"
               title="Planification"
               description="Planifiez vos semaines, suivez le taux de couverture du programme et accédez au référentiel officiel du CEB."
-              ctaLabel="Ouvrir le calendrier"
+              ctaLabel="Préparer ma semaine"
               onClick={() => navigate("/planning")}
             />
 
@@ -416,7 +335,7 @@ export function Dashboard() {
               accent="#0891b2"
               title="Gestion administrative et suivi des performances"
               description="Gérez la liste des élèves, suivez les présences au quotidien et générez les bulletins de notes trimestriels."
-              ctaLabel="Accéder au module"
+              ctaLabel="Piloter ma classe"
               onClick={() => navigate("/eleves")}
             />
 
@@ -429,7 +348,7 @@ export function Dashboard() {
               accent="#64748b"
               title="Cahier Journal et Registre d'Appel"
               description="Renseignez votre journal de classe quotidien et évaluez vos élèves avec la grille de maîtrise intégrée."
-              ctaLabel="Ouvrir le journal"
+              ctaLabel="Tenir mon journal"
               onClick={() => navigate("/cahier")}
             />
 
@@ -442,39 +361,41 @@ export function Dashboard() {
               accent="#ea580c"
               title="Documents générés"
               description="Consultez, imprimez et partagez vos fiches de préparation, bulletins et rapports trimestriels générés."
-              ctaLabel="Voir les documents"
+              ctaLabel="Consulter mes archives"
               onClick={() => navigate("/documents")}
             />
 
           </div>
         </div>
 
-        {/* ── BOTTOM NAV — mobile only ─────────────────────────────── */}
-        <div className="lg:hidden">
-          <BottomNav active={activeTab} onTab={handleTab}/>
-        </div>
-
-        {/* ── FAB (centre, mobile only) ────────────────────────────── */}
-        <div
-          className="lg:hidden fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md z-40 pointer-events-none"
-          style={{ height:"68px" }}
+        {/* ── FAB "Nouvelle Fiche" — mobile only, floats above AppLayout's 64px bottom nav ── */}
+        <button
+          onClick={() => navigate("/new-fiche")}
+          className="lg:hidden"
+          style={{
+            position:  "fixed",
+            bottom:    "76px",          /* 64px nav + 12px gap */
+            right:     "20px",
+            zIndex:    300,
+            display:   "flex",
+            alignItems:      "center",
+            gap:             "7px",
+            padding:         "12px 18px",
+            borderRadius:    "50px",
+            background:      "linear-gradient(135deg, #059669 0%, #0d9488 100%)",
+            color:           "#fff",
+            fontWeight:      700,
+            fontSize:        "13px",
+            border:          "none",
+            cursor:          "pointer",
+            boxShadow:       "0 6px 24px rgba(5,150,105,0.40)",
+            fontFamily:      "'Plus Jakarta Sans', sans-serif",
+          }}
+          aria-label="Préparer une nouvelle fiche"
         >
-          <div className="pointer-events-auto absolute left-1/2 -translate-x-1/2"
-               style={{ bottom:"10px" }}>
-            <button
-              onClick={() => navigate("/new-fiche")}
-              className="w-14 h-14 rounded-2xl flex flex-col items-center justify-center gap-0.5 text-white transition-all active:scale-95"
-              style={{
-                background:"linear-gradient(135deg, #1a365d, #3182ce)",
-                boxShadow:"0 6px 20px rgba(26,54,93,0.40)",
-              }}
-              aria-label="Préparer une nouvelle fiche"
-            >
-              <Plus className="w-5 h-5 text-white" strokeWidth={2.5}/>
-              <span className="text-[7.5px] font-bold text-white/90 leading-tight text-center">Nouvelle<br/>fiche</span>
-            </button>
-          </div>
-        </div>
+          <Plus style={{ width: 16, height: 16, strokeWidth: 2.5 }} />
+          Nouvelle Fiche
+        </button>
 
       </div>
     </div>
