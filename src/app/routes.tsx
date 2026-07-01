@@ -12,14 +12,16 @@ import { DocumentsScreen }        from "./components/DocumentsScreen";
 import { LoginScreen }            from "./components/LoginScreen";
 import { SignupScreen }           from "./components/SignupScreen";
 import { ProfilScreen }           from "./components/ProfilScreen";
+import { AbonnementScreen }       from "./components/AbonnementScreen";
+import { ParametresScreen }       from "./components/ParametresScreen";
 import ErrorBoundary              from "./components/ErrorBoundary";
 
 export const router = createBrowserRouter([
-  // ── Public auth routes (standalone, no AppLayout) ──────────────────────────
+  // ── Public auth routes ────────────────────────────────────────────────────
   { path: "/login",  element: <LoginScreen  />, errorElement: <ErrorBoundary /> },
   { path: "/signup", element: <SignupScreen />, errorElement: <ErrorBoundary /> },
 
-  // ── Protected app routes (AppLayout contains the auth guard) ───────────────
+  // ── Protected app routes (AppLayout contains auth + profile guards) ────────
   {
     path:         "/",
     element:      <AppLayout />,
@@ -35,6 +37,8 @@ export const router = createBrowserRouter([
       { path:    "preview",       element: <PreviewScreen />,         errorElement: <ErrorBoundary /> },
       { path:    "success",       element: <SuccessScreen />,         errorElement: <ErrorBoundary /> },
       { path:    "profil",        element: <ProfilScreen />,          errorElement: <ErrorBoundary /> },
+      { path:    "abonnement",    element: <AbonnementScreen />,      errorElement: <ErrorBoundary /> },
+      { path:    "parametres",    element: <ParametresScreen />,      errorElement: <ErrorBoundary /> },
     ],
   },
 ]);
