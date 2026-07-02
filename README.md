@@ -2,7 +2,7 @@
 
 ## Plateforme de Gestion Scolaire pour les Enseignants d'Afrique Francophone
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![License](https://img.shields.io/badge/License-%C3%A0%20d%C3%A9finir-lightgrey.svg)](ATTRIBUTIONS.md)
 [![React](https://img.shields.io/badge/React-18.x-blue.svg)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)](https://www.typescriptlang.org/)
 [![Supabase](https://img.shields.io/badge/Supabase-Backend-green.svg)](https://supabase.com/)
@@ -37,7 +37,7 @@ Dans les écoles primaires d'Afrique francophone, les enseignants gèrent des cl
 
 ### 📝 Éditeur de Leçons
 - Création et structuration de leçons par matière
-- Catalogue de leçons réutilisables
+- Workflow guidé via sélection de contexte + éditeur
 - Planification hebdomadaire et mensuelle
 - Historique et archivage des séquences pédagogiques
 
@@ -65,17 +65,14 @@ Dans les écoles primaires d'Afrique francophone, les enseignants gèrent des cl
 ### Frontend
 - **React 18** + **TypeScript** avec Vite pour des performances optimales
 - **Tailwind CSS 4** avec design system personnalisé
-- **Motion** pour des animations fluides
+- **Thématisation avancée** (light, dark, emerald, ocean)
 - **React Router 7** pour la navigation côté client
-- **React Hook Form** pour la gestion des formulaires
-- **React DnD** pour le glisser-déposer
-- **Recharts** pour les visualisations de données
 - **Radix UI** pour les composants accessibles
 
 ### Backend
 - **Supabase** (PostgreSQL + RLS)
 - **Row Level Security** pour isoler les données par établissement
-- **Real-time subscriptions** pour les mises à jour en direct
+- **Policies Storage durcies** par classe/propriétaire
 - **TanStack React Query** pour la gestion de l'état serveur
 
 ---
@@ -84,29 +81,25 @@ Dans les écoles primaires d'Afrique francophone, les enseignants gèrent des cl
 
 ### Prérequis
 - Node.js 18+
-- npm ou yarn
+- npm (ou pnpm)
 - Compte Supabase (gratuit)
 
 ### Étapes
 
 ```bash
 # 1. Cloner le repository
-git clone https://github.com/opentech221/ecole2.0.git
-cd ecole2.0
+git clone https://github.com/opentech221/Ecole_2.0_Copie_2.git
+cd Ecole_2.0_Copie_2
 
 # 2. Installer les dépendances
 npm install
 
-# 3. Configurer les variables d'environnement
-cp .env.example .env.local
-
-# 4. Éditer .env.local avec vos clés
-# VITE_SUPABASE_URL=votre_url_supabase
-# VITE_SUPABASE_ANON_KEY=votre_cle_anonyme
-
-# 5. Lancer le serveur de développement
+# 3. Lancer le serveur de développement
 npm run dev
 ```
+
+Note: le client Supabase utilise actuellement `utils/supabase/info.tsx`.
+Pour un déploiement standard, externaliser ensuite les clés en variables d'environnement.
 
 Le site sera accessible sur `http://localhost:5173`
 
@@ -212,6 +205,7 @@ Ce projet est ouvert aux contributions !
 ### 🔄 Phase 2 — Optimisation (En cours)
 - [x] Design system unifié
 - [x] Dark mode
+- [x] Workflow migrations local/distant (Supabase CLI)
 - [ ] Tests utilisateurs en conditions réelles
 - [ ] Mode offline pour zones à faible connexion
 - [ ] Optimisations performances mobiles
@@ -236,14 +230,15 @@ Ce projet est ouvert aux contributions !
 **Pays :** Sénégal 🇸🇳
 
 Pour toute question ou collaboration :
-- Ouvrir une [Issue](https://github.com/opentech221/ecole2.0/issues)
-- Ou une [Discussion](https://github.com/opentech221/ecole2.0/discussions)
+- Ouvrir une [Issue](https://github.com/opentech221/Ecole_2.0_Copie_2/issues)
+- Ou une [Discussion](https://github.com/opentech221/Ecole_2.0_Copie_2/discussions)
 
 ---
 
 ## 🎖️ Licence
 
-Ce projet est sous licence **MIT** — voir le fichier [LICENSE](LICENSE) pour plus de détails.
+La licence du projet applicatif n'est pas encore formalisée dans un fichier `LICENSE` dédié.
+Les attributions et licences tierces utilisées sont documentées dans [ATTRIBUTIONS.md](ATTRIBUTIONS.md).
 
 Vous êtes libre de :
 - ✅ Utiliser le code pour vos projets
@@ -251,7 +246,7 @@ Vous êtes libre de :
 - ✅ Distribuer avec ou sans modifications
 - ✅ Utiliser commercialement
 
-**Condition :** Inclure la licence et le copyright d'origine.
+**Condition :** Clarifier et ajouter une licence projet explicite avant diffusion publique large.
 
 ---
 
