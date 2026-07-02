@@ -108,6 +108,7 @@ function ThemeCard({ id, label, palette, active, onSelect }: {
         alignItems:      "center",
         gap:             "8px",
         padding:         "14px 10px",
+        minHeight:       "88px",   /* A11: touch target stays ≥ 44 px in 2-col layout */
         borderRadius:    "12px",
         border:          `2px solid ${active ? palette[1] : "#e2e8f0"}`,
         backgroundColor: active ? palette[1] + "0d" : "#fff",
@@ -226,11 +227,8 @@ export function ParametresScreen() {
                       lineHeight: 1.5 }}>
             Choisissez un thème de couleur. Votre préférence est sauvegardée sur tous vos appareils.
           </p>
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: "10px",
-          }}>
+          {/* R01/A11 fix: 2 columns on narrow screens, 4 on wider */}
+          <div className="grid grid-cols-2 sm:grid-cols-4" style={{ gap: "10px" }}>
             {THEMES.map(t => (
               <ThemeCard
                 key={t.id}

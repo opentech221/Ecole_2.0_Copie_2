@@ -838,10 +838,19 @@ export function DocumentsScreen() {
               ))}
             </div>
 
-            {/* Search */}
+            {/* Search — A06 fix: label sr-only + type="search" */}
             <div className="relative mb-4">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <label
+                htmlFor="docs-search"
+                className="sr-only"
+              >
+                Rechercher un document
+              </label>
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
+                      aria-hidden="true" />
               <input
+                id="docs-search"
+                type="search"
                 value={search}
                 onChange={e => setSearch(e.target.value)}
                 placeholder="Rechercher un document…"

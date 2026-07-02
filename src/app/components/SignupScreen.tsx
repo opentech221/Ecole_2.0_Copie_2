@@ -213,7 +213,9 @@ export function SignupScreen() {
                 onBlur={e  => (e.target.style.borderColor = "#e2e8f0")}
               />
               <button
-                type="button" onClick={() => setShowPw(p => !p)}
+                type="button"
+                aria-label={showPw ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+                onClick={() => setShowPw(p => !p)}
                 style={{ position: "absolute", right: "12px", top: "50%",
                          transform: "translateY(-50%)", background: "none",
                          border: "none", cursor: "pointer", color: "#94a3b8",

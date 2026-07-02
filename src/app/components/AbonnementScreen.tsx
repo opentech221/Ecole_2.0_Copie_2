@@ -179,16 +179,23 @@ function PlanCard({ plan, isCurrent }: { plan: typeof PLANS[0]; isCurrent: boole
 
 // ─── FAQ item ──────────────────────────────────────────────────────────────────
 
+let _faqCounter = 0;
+
 function FaqItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
+  // Stable unique ID for aria-controls / id pairing
+  const [panelId]       = useState(() => `faq-panel-${++_faqCounter}`);
   const FF = "'Plus Jakarta Sans', sans-serif";
   return (
     <div style={{
       borderRadius: "12px", border: "1px solid #e2e8f0",
       backgroundColor: "#fff", overflow: "hidden",
     }}>
+      {/* A09 fix: aria-expanded + aria-controls for screen-reader state */}
       <button
         onClick={() => setOpen(o => !o)}
+        aria-expanded={open}
+        aria-controls={panelId}
         style={{
           width: "100%", padding: "14px 16px",
           display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px",
@@ -198,17 +205,21 @@ function FaqItem({ q, a }: { q: string; a: string }) {
       >
         <span style={{ fontSize: "13px", fontWeight: 600, color: "#1e293b" }}>{q}</span>
         {open
-          ? <ChevronUp   style={{ width: 16, height: 16, color: "#94a3b8", flexShrink: 0 }} />
-          : <ChevronDown style={{ width: 16, height: 16, color: "#94a3b8", flexShrink: 0 }} />}
+          ? <ChevronUp   style={{ width: 16, height: 16, color: "#94a3b8", flexShrink: 0 }}
+                         aria-hidden="true" />
+          : <ChevronDown style={{ width: 16, height: 16, color: "#94a3b8", flexShrink: 0 }}
+                         aria-hidden="true" />}
       </button>
-      {open && (
-        <div style={{ padding: "0 16px 14px" }}>
-          <p style={{ fontSize: "12.5px", color: "#64748b", lineHeight: 1.65,
-                      margin: 0, fontFamily: FF }}>
-            {a}
-          </p>
-        </div>
-      )}
+      <div
+        id={panelId}
+        hidden={!open}
+        style={{ padding: open ? "0 16px 14px" : undefined }}
+      >
+        <p style={{ fontSize: "12.5px", color: "#64748b", lineHeight: 1.65,
+                    margin: 0, fontFamily: FF }}>
+          {a}
+        </p>
+      </div>
     </div>
   );
 }

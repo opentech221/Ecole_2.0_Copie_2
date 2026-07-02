@@ -372,7 +372,8 @@ function MobileBottomNav() {
   return (
     <div style={{
       position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 200,
-      height: "64px", backgroundColor: "#fff", borderTop: "1px solid #e2e8f0",
+      height: "max(64px, calc(64px + env(safe-area-inset-bottom)))",
+      backgroundColor: "#fff", borderTop: "1px solid #e2e8f0",
       display: "flex", alignItems: "center",
       fontFamily: "'Plus Jakarta Sans', sans-serif",
     }}>
@@ -425,6 +426,16 @@ function MobileDrawer({ open, onClose, profile, onLogout }: {
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
+  // A05/A08 fix: close drawer on Escape key
+  useEffect(() => {
+    if (!open) return;
+    function handleEscape(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [open, onClose]);
+
   function goTo(path: string) { navigate(path); onClose(); }
 
   return (
@@ -435,15 +446,20 @@ function MobileDrawer({ open, onClose, profile, onLogout }: {
         opacity: open ? 1 : 0, pointerEvents: open ? "auto" : "none",
         transition: "opacity 240ms ease",
       }} />
-      <div style={{
-        position: "fixed", left: 0, right: 0, bottom: 0, zIndex: 400,
-        backgroundColor: "#fff", borderRadius: "20px 20px 0 0",
-        boxShadow: "0 -8px 40px rgba(0,0,0,0.14)",
-        transform: open ? "translateY(0)" : "translateY(105%)",
-        transition: "transform 280ms cubic-bezier(0.32,0.72,0,1)",
-        maxHeight: "88vh", display: "flex", flexDirection: "column",
-        fontFamily: "'Plus Jakarta Sans', sans-serif",
-      }}>
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menu de navigation"
+        style={{
+          position: "fixed", left: 0, right: 0, bottom: 0, zIndex: 400,
+          backgroundColor: "#fff", borderRadius: "20px 20px 0 0",
+          boxShadow: "0 -8px 40px rgba(0,0,0,0.14)",
+          transform: open ? "translateY(0)" : "translateY(105%)",
+          transition: "transform 280ms cubic-bezier(0.32,0.72,0,1)",
+          maxHeight: "88vh", display: "flex", flexDirection: "column",
+          fontFamily: "'Plus Jakarta Sans', sans-serif",
+        }}
+      >
         {/* Handle */}
         <div style={{ display: "flex", justifyContent: "center", padding: "10px 0 4px" }}>
           <div style={{ width: 40, height: 4, borderRadius: 999, backgroundColor: "#e2e8f0" }} />
@@ -662,7 +678,7 @@ export function AppLayout() {
         {/* Main content */}
         <div className="flex-1 min-w-0" style={{ minWidth: 0 }}>
           <div className="md:hidden"
-               style={{ paddingTop: "48px", paddingBottom: "64px" }}>
+               style={{ paddingTop: "48px", paddingBottom: "max(64px, calc(64px + env(safe-area-inset-bottom)))" }}>
             <Outlet />
           </div>
           <div className="hidden md:block">
