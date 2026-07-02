@@ -110,6 +110,63 @@ npm run dev
 
 Le site sera accessible sur `http://localhost:5173`
 
+## 🗄️ Workflow Supabase Local Et Distant
+
+### Initialisation (une seule fois)
+
+```bash
+npx supabase init
+```
+
+### Local: developper et tester les migrations sans dashboard distant
+
+```bash
+# Demarrer Postgres local Supabase
+npm run db:local:start
+
+# Rejouer toutes les migrations locales (000, 001, 002, ...)
+npm run db:local:reset
+
+# Executer une requete SQL locale
+npm run db:local:query -- "select * from supabase_migrations.schema_migrations order by version;"
+
+# Arreter les services locaux
+npm run db:local:stop
+```
+
+### Distant: pousser les migrations depuis le terminal
+
+```bash
+# 1) Se connecter (token perso Supabase)
+npx supabase login
+
+# 2) Lier le repo au projet distant
+export SUPABASE_PROJECT_REF="votre_project_ref"
+npm run db:remote:link
+
+# 3) Pousser les migrations vers la base distante
+npm run db:remote:push
+```
+
+### Astuce equipe
+
+Avant chaque PR backend:
+1. `npm run db:local:reset`
+2. verifier que les migrations passent de zero sans erreur
+3. seulement ensuite faire `npm run db:remote:push`
+
+Option automatisée en une commande:
+
+```bash
+npm run db:preflight
+```
+
+Ce preflight exécute:
+1. start DB locale
+2. reset complet des migrations
+3. verification des versions appliquees
+4. build frontend
+
 ---
 
 ## 🤝 Contribuer

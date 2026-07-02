@@ -5,7 +5,15 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "dev": "vite"
+    "dev": "vite",
+    "db:local:start": "npx supabase db start",
+    "db:local:reset": "npx supabase db reset",
+    "db:local:rebuild": "npx supabase db start && npx supabase db reset",
+    "db:local:query": "npx supabase db query",
+    "db:local:stop": "npx supabase stop",
+    "db:preflight": "bash scripts/db-preflight.sh",
+    "db:remote:link": "npx supabase link --project-ref $SUPABASE_PROJECT_REF",
+    "db:remote:push": "npx supabase db push"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",
