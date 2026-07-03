@@ -1,18 +1,42 @@
 import { useState }               from "react";
 import { useNavigate, Navigate }  from "react-router";
-import { GraduationCap, Eye, EyeOff, UserPlus, CheckCircle } from "lucide-react";
+import { GraduationCap, CheckCircle, MessageCircle, ShieldCheck } from "lucide-react";
 import { supabase }               from "../../lib/supabase";
 import { useAuthContext }         from "../contexts/AuthContext";
 import type { UserRole }          from "../../hooks/useAuth";
 
 function toFrench(msg: string): string {
   if (msg.includes("User already registered") || msg.includes("already been registered"))
-    return "Cet email est déjà utilisé. Veuillez vous connecter.";
-  if (msg.includes("Password should be at least"))
-    return "Le mot de passe doit contenir au moins 6 caractères.";
-  if (msg.includes("Unable to validate email"))
-    return "Adresse email invalide.";
+    return "Ce numéro est déjà utilisé. Veuillez vous connecter.";
+  if (msg.includes("Invalid phone number"))
+    return "Numéro WhatsApp invalide. Utilisez le format +221...";
+  if (msg.includes("Unsupported channel"))
+    return "Le canal WhatsApp n'est pas activé côté Supabase/Twilio.";
+  if (msg.includes("Token has expired") || msg.includes("expired"))
+    return "Le code a expiré. Demandez un nouveau code.";
+  if (msg.includes("Invalid token") || msg.includes("invalid"))
+    return "Code invalide. Vérifiez le code reçu sur WhatsApp.";
+  if (msg.includes("Too many requests"))
+    return "Trop de tentatives. Réessayez dans quelques minutes.";
   return "Une erreur est survenue. Veuillez réessayer.";
+}
+
+function normalizePhone(raw: string): string | null {
+  const trimmed = raw.trim();
+  if (!trimmed) return null;
+
+  const startsWithPlus = trimmed.startsWith("+");
+  const digitsOnly = trimmed.replace(/\D/g, "");
+
+  let candidate = startsWithPlus ? `+${digitsOnly}` : digitsOnly;
+  if (candidate.startsWith("00")) {
+    candidate = `+${candidate.slice(2)}`;
+  } else if (!candidate.startsWith("+")) {
+    candidate = `+${candidate}`;
+  }
+
+  if (!/^\+[1-9]\d{7,14}$/.test(candidate)) return null;
+  return candidate;
 }
 
 const INPUT: React.CSSProperties = {
@@ -25,52 +49,84 @@ export function SignupScreen() {
   const navigate                       = useNavigate();
   const { user, loading: authLoading } = useAuthContext();
   const [fullName,  setFullName]       = useState("");
-  const [email,     setEmail]          = useState("");
-  const [password,  setPassword]       = useState("");
-  const [confirm,   setConfirm]        = useState("");
+  const [phoneInput, setPhoneInput]    = useState("");
+  const [normalizedPhone, setNormalizedPhone] = useState<string | null>(null);
+  const [otpCode, setOtpCode]          = useState("");
   const [role,      setRole]           = useState<UserRole>("teacher");
-  const [showPw,    setShowPw]         = useState(false);
-  const [loading,   setLoading]        = useState(false);
+  const [sendingCode, setSendingCode]  = useState(false);
+  const [verifyingCode, setVerifyingCode] = useState(false);
   const [error,     setError]          = useState<string | null>(null);
-  const [emailSent, setEmailSent]      = useState(false);
+  const [codeSent,  setCodeSent]       = useState(false);
 
   if (!authLoading && user) return <Navigate to="/" replace />;
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSendCode(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
 
-    if (password !== confirm) {
-      setError("Les mots de passe ne correspondent pas.");
-      return;
-    }
-    if (password.length < 6) {
-      setError("Le mot de passe doit contenir au moins 6 caractères.");
+    if (!fullName.trim()) {
+      setError("Veuillez renseigner votre nom complet.");
       return;
     }
 
-    setLoading(true);
+    const phone = normalizePhone(phoneInput);
+    if (!phone) {
+      setError("Entrez un numéro WhatsApp valide au format international (ex: +221771234567).");
+      return;
+    }
+
+    setSendingCode(true);
     try {
-      const { data, error: err } = await supabase.auth.signUp({
-        email,
-        password,
-        options: { data: { role, full_name: fullName } },
+      const { error: err } = await supabase.auth.signInWithOtp({
+        phone,
+        options: {
+          channel: "whatsapp",
+          shouldCreateUser: true,
+          data: { role, full_name: fullName.trim() },
+        },
       });
       if (err) throw err;
 
-      if (data.session) {
-        navigate("/profil", { replace: true });
-      } else {
-        setEmailSent(true);
-      }
+      setNormalizedPhone(phone);
+      setCodeSent(true);
     } catch (err) {
       setError(toFrench(err instanceof Error ? err.message : ""));
     } finally {
-      setLoading(false);
+      setSendingCode(false);
     }
   }
 
-  if (emailSent) {
+  async function handleVerifyCode(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+
+    if (!normalizedPhone) {
+      setError("Numéro WhatsApp introuvable. Redemandez un code.");
+      return;
+    }
+    if (!/^\d{6}$/.test(otpCode.trim())) {
+      setError("Le code doit contenir 6 chiffres.");
+      return;
+    }
+
+    setVerifyingCode(true);
+    try {
+      const { error: verifyErr } = await supabase.auth.verifyOtp({
+        phone: normalizedPhone,
+        token: otpCode.trim(),
+        type: "sms",
+      });
+      if (verifyErr) throw verifyErr;
+
+      navigate("/profil", { replace: true });
+    } catch (err) {
+      setError(toFrench(err instanceof Error ? err.message : ""));
+    } finally {
+      setVerifyingCode(false);
+    }
+  }
+
+  if (codeSent) {
     return (
       <div style={{
         minHeight: "100vh",
@@ -85,22 +141,68 @@ export function SignupScreen() {
         }}>
           <CheckCircle style={{ width: 52, height: 52, color: "#10b981", margin: "0 auto 16px" }} />
           <h2 style={{ fontSize: "20px", fontWeight: 800, color: "#1a365d", margin: "0 0 10px" }}>
-            Vérifiez votre email
+            Vérification WhatsApp
           </h2>
-          <p style={{ fontSize: "14px", color: "#64748b", lineHeight: 1.6, marginBottom: "24px" }}>
-            Un lien de confirmation a été envoyé à <strong>{email}</strong>.
-            Cliquez sur le lien pour activer votre compte.
+          <p style={{ fontSize: "14px", color: "#64748b", lineHeight: 1.6, marginBottom: "18px" }}>
+            Un code a été envoyé sur <strong>{normalizedPhone}</strong>.
+            Saisissez-le pour finaliser votre inscription.
           </p>
+
+          <form onSubmit={handleVerifyCode} style={{ textAlign: "left" }}>
+            <div style={{ marginBottom: "14px" }}>
+              <label style={{ display: "block", fontSize: "12px", fontWeight: 700,
+                              color: "#374151", marginBottom: "6px" }}>
+                Code de vérification
+              </label>
+              <input
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]{6}"
+                maxLength={6}
+                required
+                value={otpCode}
+                onChange={e => setOtpCode(e.target.value.replace(/\D/g, ""))}
+                placeholder="123456"
+                style={INPUT}
+              />
+            </div>
+
+            {error && (
+              <div style={{ backgroundColor: "#fef2f2", border: "1px solid #fecaca",
+                            borderRadius: "8px", padding: "10px 14px", marginBottom: "16px" }}>
+                <p style={{ fontSize: "13px", color: "#dc2626", margin: 0 }}>{error}</p>
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={verifyingCode}
+              style={{
+                width: "100%", padding: "12px 20px", borderRadius: "12px", backgroundColor: "#1a365d",
+                color: "#fff", fontWeight: 700, fontSize: "14px",
+                border: "none", cursor: verifyingCode ? "not-allowed" : "pointer",
+                fontFamily: "'Plus Jakarta Sans', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
+              }}
+            >
+              <ShieldCheck style={{ width: 16, height: 16 }} />
+              {verifyingCode ? "Vérification…" : "Valider mon code"}
+            </button>
+          </form>
+
           <button
-            onClick={() => navigate("/login")}
+            onClick={() => {
+              setCodeSent(false);
+              setOtpCode("");
+              setError(null);
+            }}
             style={{
-              padding: "12px 28px", borderRadius: "12px", backgroundColor: "#1a365d",
-              color: "#fff", fontWeight: 700, fontSize: "14px",
-              border: "none", cursor: "pointer",
+              marginTop: "10px", width: "100%", padding: "11px 16px",
+              borderRadius: "10px", backgroundColor: "#fff", color: "#334155", fontWeight: 700,
+              fontSize: "13px", border: "1px solid #cbd5e1", cursor: "pointer",
               fontFamily: "'Plus Jakarta Sans', sans-serif",
             }}
           >
-            Retour à la connexion
+            Changer de numéro
           </button>
         </div>
       </div>
@@ -136,7 +238,7 @@ export function SignupScreen() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSendCode}>
           {/* Full name */}
           <div style={{ marginBottom: "14px" }}>
             <label style={{ display: "block", fontSize: "12px", fontWeight: 700,
@@ -181,71 +283,23 @@ export function SignupScreen() {
             </div>
           </div>
 
-          {/* Email */}
+          {/* WhatsApp phone */}
           <div style={{ marginBottom: "14px" }}>
             <label style={{ display: "block", fontSize: "12px", fontWeight: 700,
                             color: "#374151", marginBottom: "6px" }}>
-              Adresse email
+              Numéro WhatsApp
             </label>
             <input
-              type="email" required autoComplete="email"
-              value={email} onChange={e => setEmail(e.target.value)}
-              placeholder="vous@exemple.com"
+              type="tel" required autoComplete="tel"
+              value={phoneInput} onChange={e => setPhoneInput(e.target.value)}
+              placeholder="+221771234567"
               style={INPUT}
               onFocus={e => (e.target.style.borderColor = "#3182ce")}
               onBlur={e  => (e.target.style.borderColor = "#e2e8f0")}
             />
-          </div>
-
-          {/* Password */}
-          <div style={{ marginBottom: "14px" }}>
-            <label style={{ display: "block", fontSize: "12px", fontWeight: 700,
-                            color: "#374151", marginBottom: "6px" }}>
-              Mot de passe
-            </label>
-            <div style={{ position: "relative" }}>
-              <input
-                type={showPw ? "text" : "password"} required autoComplete="new-password"
-                value={password} onChange={e => setPassword(e.target.value)}
-                placeholder="Minimum 6 caractères"
-                style={{ ...INPUT, paddingRight: "44px" }}
-                onFocus={e => (e.target.style.borderColor = "#3182ce")}
-                onBlur={e  => (e.target.style.borderColor = "#e2e8f0")}
-              />
-              <button
-                type="button"
-                aria-label={showPw ? "Masquer le mot de passe" : "Afficher le mot de passe"}
-                onClick={() => setShowPw(p => !p)}
-                style={{ position: "absolute", right: "12px", top: "50%",
-                         transform: "translateY(-50%)", background: "none",
-                         border: "none", cursor: "pointer", color: "#94a3b8",
-                         display: "flex", alignItems: "center", padding: 0 }}
-              >
-                {showPw
-                  ? <EyeOff style={{ width: 16, height: 16 }} />
-                  : <Eye    style={{ width: 16, height: 16 }} />}
-              </button>
-            </div>
-          </div>
-
-          {/* Confirm password */}
-          <div style={{ marginBottom: "24px" }}>
-            <label style={{ display: "block", fontSize: "12px", fontWeight: 700,
-                            color: "#374151", marginBottom: "6px" }}>
-              Confirmer le mot de passe
-            </label>
-            <input
-              type={showPw ? "text" : "password"} required autoComplete="new-password"
-              value={confirm} onChange={e => setConfirm(e.target.value)}
-              placeholder="Répétez le mot de passe"
-              style={{
-                ...INPUT,
-                borderColor: confirm && confirm !== password ? "#fca5a5" : "#e2e8f0",
-              }}
-              onFocus={e => (e.target.style.borderColor = "#3182ce")}
-              onBlur={e  => (e.target.style.borderColor =
-                confirm && confirm !== password ? "#fca5a5" : "#e2e8f0")}
-            />
+            <p style={{ fontSize: "12px", color: "#64748b", margin: "8px 0 0" }}>
+              Nous enverrons le code d'inscription sur WhatsApp Business.
+            </p>
           </div>
 
           {/* Error banner */}
@@ -258,19 +312,19 @@ export function SignupScreen() {
 
           {/* Submit */}
           <button
-            type="submit" disabled={loading}
+            type="submit" disabled={sendingCode}
             style={{
               width: "100%", padding: "13px", borderRadius: "12px",
-              backgroundColor: loading ? "#94a3b8" : "#1a365d",
+              backgroundColor: sendingCode ? "#94a3b8" : "#1a365d",
               color: "#fff", fontWeight: 700, fontSize: "14px",
-              border: "none", cursor: loading ? "not-allowed" : "pointer",
+              border: "none", cursor: sendingCode ? "not-allowed" : "pointer",
               display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
               boxShadow: "0 4px 16px rgba(26,54,93,0.28)",
               fontFamily: "'Plus Jakarta Sans', sans-serif",
             }}
           >
-            <UserPlus style={{ width: 16, height: 16 }} />
-            {loading ? "Création du compte…" : "Créer mon compte"}
+            <MessageCircle style={{ width: 16, height: 16 }} />
+            {sendingCode ? "Envoi du code…" : "Recevoir le code WhatsApp"}
           </button>
         </form>
 
