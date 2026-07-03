@@ -5,11 +5,19 @@ import { supabase }               from "../../lib/supabase";
 import { useAuthContext }         from "../contexts/AuthContext";
 import type { UserRole }          from "../../hooks/useAuth";
 
-function toFrench(msg: string): string {
+function toFrench(msg: string, code?: string): string {
+  if (code === "otp_disabled")
+    return "L'authentification par code OTP est désactivée dans Supabase (Auth > Phone).";
+  if (code === "phone_provider_disabled")
+    return "Le fournisseur téléphone/WhatsApp n'est pas configuré dans Supabase (Auth > Phone > Provider).";
   if (msg.includes("User already registered") || msg.includes("already been registered"))
     return "Ce numéro est déjà utilisé. Veuillez vous connecter.";
   if (msg.includes("Invalid phone number"))
     return "Numéro WhatsApp invalide. Utilisez le format +221...";
+  if (msg.includes("otp_disabled"))
+    return "L'authentification par code OTP est désactivée dans Supabase (Auth > Phone).";
+  if (msg.includes("phone_provider_disabled"))
+    return "Le fournisseur téléphone/WhatsApp n'est pas configuré dans Supabase (Auth > Phone > Provider).";
   if (msg.includes("Unsupported channel"))
     return "Le canal WhatsApp n'est pas activé côté Supabase/Twilio.";
   if (msg.includes("Token has expired") || msg.includes("expired"))
@@ -19,6 +27,17 @@ function toFrench(msg: string): string {
   if (msg.includes("Too many requests"))
     return "Trop de tentatives. Réessayez dans quelques minutes.";
   return "Une erreur est survenue. Veuillez réessayer.";
+}
+
+function toFrenchFromError(err: unknown): string {
+  if (typeof err !== "object" || err === null) {
+    return toFrench("");
+  }
+
+  const maybeError = err as { message?: string; code?: string };
+  const message = maybeError.message ?? "";
+  const code = maybeError.code;
+  return toFrench(message, code);
 }
 
 function normalizePhone(raw: string): string | null {
@@ -90,7 +109,7 @@ export function SignupScreen() {
       setNormalizedPhone(phone);
       setCodeSent(true);
     } catch (err) {
-      setError(toFrench(err instanceof Error ? err.message : ""));
+      setError(toFrenchFromError(err));
     } finally {
       setSendingCode(false);
     }
@@ -120,7 +139,7 @@ export function SignupScreen() {
 
       navigate("/profil", { replace: true });
     } catch (err) {
-      setError(toFrench(err instanceof Error ? err.message : ""));
+      setError(toFrenchFromError(err));
     } finally {
       setVerifyingCode(false);
     }
