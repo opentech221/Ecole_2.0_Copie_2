@@ -1,6 +1,6 @@
 import { useState }               from "react";
 import { useNavigate, Navigate }  from "react-router";
-import { GraduationCap, LogIn, MessageCircle, ShieldCheck } from "lucide-react";
+import { GraduationCap, LogIn, Mail, MessageCircle, ShieldCheck } from "lucide-react";
 import { supabase }               from "../../lib/supabase";
 import { useAuthContext }         from "../contexts/AuthContext";
 
@@ -65,6 +65,25 @@ const INPUT: React.CSSProperties = {
   width: "100%", padding: "11px 14px", borderRadius: "10px",
   border: "1.5px solid #e2e8f0", fontSize: "14px", outline: "none",
   backgroundColor: "#f8fafc", boxSizing: "border-box",
+};
+
+const AUTH_THEME = {
+  whatsapp: {
+    border: "#86efac",
+    bg: "#f0fdf4",
+    fg: "#166534",
+    solid: "#16a34a",
+    solidHover: "#15803d",
+    shadow: "0 6px 18px rgba(22,163,74,0.28)",
+  },
+  email: {
+    border: "#bfdbfe",
+    bg: "#eff6ff",
+    fg: "#1e3a8a",
+    solid: "#1e3a8a",
+    solidHover: "#1e40af",
+    shadow: "0 6px 18px rgba(30,58,138,0.24)",
+  },
 };
 
 export function LoginScreen() {
@@ -227,11 +246,15 @@ export function LoginScreen() {
                 setError(null);
               }}
               style={{
-                padding: "10px", borderRadius: "10px", border: authMethod === "whatsapp" ? "2px solid #1a365d" : "1px solid #cbd5e1",
-                backgroundColor: authMethod === "whatsapp" ? "#eff6ff" : "#fff", color: "#1e293b", fontWeight: 700,
+                padding: "10px", borderRadius: "10px",
+                border: authMethod === "whatsapp" ? `2px solid ${AUTH_THEME.whatsapp.border}` : "1px solid #cbd5e1",
+                backgroundColor: authMethod === "whatsapp" ? AUTH_THEME.whatsapp.bg : "#fff",
+                color: authMethod === "whatsapp" ? AUTH_THEME.whatsapp.fg : "#1e293b", fontWeight: 700,
                 cursor: "pointer", fontSize: "13px", fontFamily: "'Plus Jakarta Sans', sans-serif",
+                display: "flex", alignItems: "center", justifyContent: "center", gap: "6px",
               }}
             >
+              <MessageCircle style={{ width: 14, height: 14 }} />
               WhatsApp OTP
             </button>
             <button
@@ -241,11 +264,15 @@ export function LoginScreen() {
                 setError(null);
               }}
               style={{
-                padding: "10px", borderRadius: "10px", border: authMethod === "email" ? "2px solid #1a365d" : "1px solid #cbd5e1",
-                backgroundColor: authMethod === "email" ? "#eff6ff" : "#fff", color: "#1e293b", fontWeight: 700,
+                padding: "10px", borderRadius: "10px",
+                border: authMethod === "email" ? `2px solid ${AUTH_THEME.email.border}` : "1px solid #cbd5e1",
+                backgroundColor: authMethod === "email" ? AUTH_THEME.email.bg : "#fff",
+                color: authMethod === "email" ? AUTH_THEME.email.fg : "#1e293b", fontWeight: 700,
                 cursor: "pointer", fontSize: "13px", fontFamily: "'Plus Jakarta Sans', sans-serif",
+                display: "flex", alignItems: "center", justifyContent: "center", gap: "6px",
               }}
             >
+              <Mail style={{ width: 14, height: 14 }} />
               Email + mot de passe
             </button>
           </div>
@@ -285,11 +312,11 @@ export function LoginScreen() {
             type="submit" disabled={sendingCode}
             style={{
               width: "100%", padding: "13px", borderRadius: "12px",
-              backgroundColor: sendingCode ? "#94a3b8" : "#1a365d",
+              backgroundColor: sendingCode ? "#94a3b8" : AUTH_THEME.whatsapp.solid,
               color: "#fff", fontWeight: 700, fontSize: "14px",
               border: "none", cursor: sendingCode ? "not-allowed" : "pointer",
               display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
-              boxShadow: "0 4px 16px rgba(26,54,93,0.28)",
+              boxShadow: AUTH_THEME.whatsapp.shadow,
               fontFamily: "'Plus Jakarta Sans', sans-serif",
             }}
           >
@@ -340,11 +367,11 @@ export function LoginScreen() {
             disabled={passwordLoading}
             style={{
               width: "100%", padding: "13px", borderRadius: "12px",
-              backgroundColor: passwordLoading ? "#94a3b8" : "#1a365d",
+              backgroundColor: passwordLoading ? "#94a3b8" : AUTH_THEME.email.solid,
               color: "#fff", fontWeight: 700, fontSize: "14px",
               border: "none", cursor: passwordLoading ? "not-allowed" : "pointer",
               display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
-              boxShadow: "0 4px 16px rgba(26,54,93,0.28)",
+              boxShadow: AUTH_THEME.email.shadow,
               fontFamily: "'Plus Jakarta Sans', sans-serif",
             }}
           >
@@ -437,11 +464,13 @@ export function LoginScreen() {
                 disabled={oauthLoading !== null}
                 onClick={() => handleOAuthLogin("google")}
                 style={{
-                  width: "100%", padding: "11px", borderRadius: "10px", border: "1px solid #cbd5e1",
-                  backgroundColor: "#fff", color: "#0f172a", fontWeight: 700, fontSize: "13px",
+                  width: "100%", padding: "11px", borderRadius: "10px", border: "1px solid #d1d5db",
+                  backgroundColor: "#fff", color: "#111827", fontWeight: 700, fontSize: "13px",
                   cursor: oauthLoading !== null ? "not-allowed" : "pointer", fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
                 }}
               >
+                <span style={{ width: "18px", height: "18px", borderRadius: "999px", background: "conic-gradient(#ea4335 0 25%, #fbbc05 25% 50%, #34a853 50% 75%, #4285f4 75% 100%)", display: "inline-block" }} />
                 {oauthLoading === "google" ? "Redirection…" : "Continuer avec Google"}
               </button>
               <button
@@ -449,11 +478,13 @@ export function LoginScreen() {
                 disabled={oauthLoading !== null}
                 onClick={() => handleOAuthLogin("facebook")}
                 style={{
-                  width: "100%", padding: "11px", borderRadius: "10px", border: "1px solid #cbd5e1",
-                  backgroundColor: "#fff", color: "#0f172a", fontWeight: 700, fontSize: "13px",
+                  width: "100%", padding: "11px", borderRadius: "10px", border: "1px solid #1d4ed8",
+                  backgroundColor: "#1877F2", color: "#fff", fontWeight: 700, fontSize: "13px",
                   cursor: oauthLoading !== null ? "not-allowed" : "pointer", fontFamily: "'Plus Jakarta Sans', sans-serif",
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
                 }}
               >
+                <span style={{ width: "18px", height: "18px", borderRadius: "999px", backgroundColor: "#fff", color: "#1877F2", display: "inline-flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: "12px" }}>f</span>
                 {oauthLoading === "facebook" ? "Redirection…" : "Continuer avec Facebook"}
               </button>
             </div>
