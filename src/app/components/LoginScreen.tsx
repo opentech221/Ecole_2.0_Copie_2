@@ -1,6 +1,6 @@
 import { useState }               from "react";
 import { useNavigate, Navigate }  from "react-router";
-import { GraduationCap, MessageCircle, ShieldCheck } from "lucide-react";
+import { GraduationCap, LogIn, MessageCircle, ShieldCheck } from "lucide-react";
 import { supabase }               from "../../lib/supabase";
 import { useAuthContext }         from "../contexts/AuthContext";
 
@@ -19,6 +19,10 @@ function toFrench(msg: string, code?: string): string {
     return "Le canal WhatsApp n'est pas activé côté Supabase/Twilio.";
   if (msg.includes("User not found"))
     return "Aucun compte trouvé avec ce numéro. Créez un compte d'abord.";
+  if (msg.includes("Invalid login credentials"))
+    return "Email ou mot de passe incorrect.";
+  if (msg.includes("Email not confirmed"))
+    return "Veuillez confirmer votre email avant de vous connecter.";
   if (msg.includes("Token has expired") || msg.includes("expired"))
     return "Le code a expiré. Demandez un nouveau code.";
   if (msg.includes("Invalid token") || msg.includes("invalid"))
@@ -66,15 +70,65 @@ const INPUT: React.CSSProperties = {
 export function LoginScreen() {
   const navigate                  = useNavigate();
   const { user, loading: authLoading } = useAuthContext();
+  const [authMethod, setAuthMethod] = useState<"whatsapp" | "email">("whatsapp");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [phoneInput, setPhoneInput] = useState("");
   const [normalizedPhone, setNormalizedPhone] = useState<string | null>(null);
   const [otpCode, setOtpCode] = useState("");
   const [codeSent, setCodeSent] = useState(false);
   const [sendingCode, setSendingCode] = useState(false);
   const [verifyingCode, setVerifyingCode] = useState(false);
+  const [passwordLoading, setPasswordLoading] = useState(false);
+  const [oauthLoading, setOauthLoading] = useState<null | "google" | "facebook">(null);
   const [error, setError] = useState<string | null>(null);
 
   if (!authLoading && user) return <Navigate to="/" replace />;
+
+  async function routeAfterAuth(userId: string) {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("ecole_nom")
+      .eq("id", userId)
+      .single();
+
+    const hasSchool = !!profile?.ecole_nom?.trim();
+    navigate(hasSchool ? "/" : "/profil", { replace: true });
+  }
+
+  async function handleEmailLogin(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+    setPasswordLoading(true);
+
+    try {
+      const { data, error: signInErr } = await supabase.auth.signInWithPassword({
+        email: email.trim(),
+        password,
+      });
+      if (signInErr) throw signInErr;
+      if (data.user) await routeAfterAuth(data.user.id);
+    } catch (err) {
+      setError(toFrenchFromError(err));
+    } finally {
+      setPasswordLoading(false);
+    }
+  }
+
+  async function handleOAuthLogin(provider: "google" | "facebook") {
+    setError(null);
+    setOauthLoading(provider);
+    try {
+      const { error: oauthErr } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: { redirectTo: `${window.location.origin}/` },
+      });
+      if (oauthErr) throw oauthErr;
+    } catch (err) {
+      setError(toFrenchFromError(err));
+      setOauthLoading(null);
+    }
+  }
 
   async function handleSendCode(e: React.FormEvent) {
     e.preventDefault();
@@ -127,18 +181,7 @@ export function LoginScreen() {
         type: "sms",
       });
       if (verifyErr) throw verifyErr;
-
-      let hasSchool = false;
-      if (data.user) {
-        const { data: profile } = await supabase
-          .from("profiles")
-          .select("ecole_nom")
-          .eq("id", data.user.id)
-          .single();
-        hasSchool = !!profile?.ecole_nom?.trim();
-      }
-
-      navigate(hasSchool ? "/" : "/profil", { replace: true });
+      if (data.user) await routeAfterAuth(data.user.id);
     } catch (err) {
       setError(toFrenchFromError(err));
     } finally {
@@ -175,7 +218,40 @@ export function LoginScreen() {
           </p>
         </div>
 
-        {!codeSent ? (
+        {!codeSent && (
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", marginBottom: "18px" }}>
+            <button
+              type="button"
+              onClick={() => {
+                setAuthMethod("whatsapp");
+                setError(null);
+              }}
+              style={{
+                padding: "10px", borderRadius: "10px", border: authMethod === "whatsapp" ? "2px solid #1a365d" : "1px solid #cbd5e1",
+                backgroundColor: authMethod === "whatsapp" ? "#eff6ff" : "#fff", color: "#1e293b", fontWeight: 700,
+                cursor: "pointer", fontSize: "13px", fontFamily: "'Plus Jakarta Sans', sans-serif",
+              }}
+            >
+              WhatsApp OTP
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setAuthMethod("email");
+                setError(null);
+              }}
+              style={{
+                padding: "10px", borderRadius: "10px", border: authMethod === "email" ? "2px solid #1a365d" : "1px solid #cbd5e1",
+                backgroundColor: authMethod === "email" ? "#eff6ff" : "#fff", color: "#1e293b", fontWeight: 700,
+                cursor: "pointer", fontSize: "13px", fontFamily: "'Plus Jakarta Sans', sans-serif",
+              }}
+            >
+              Email + mot de passe
+            </button>
+          </div>
+        )}
+
+        {!codeSent && authMethod === "whatsapp" ? (
         <form onSubmit={handleSendCode}>
           {/* WhatsApp phone */}
           <div style={{ marginBottom: "16px" }}>
@@ -219,6 +295,61 @@ export function LoginScreen() {
           >
             <MessageCircle style={{ width: 16, height: 16 }} />
             {sendingCode ? "Envoi du code…" : "Recevoir le code WhatsApp"}
+          </button>
+        </form>
+        ) : !codeSent && authMethod === "email" ? (
+        <form onSubmit={handleEmailLogin}>
+          <div style={{ marginBottom: "14px" }}>
+            <label style={{ display: "block", fontSize: "12px", fontWeight: 700,
+                            color: "#374151", marginBottom: "6px" }}>
+              Adresse email
+            </label>
+            <input
+              type="email" required autoComplete="email"
+              value={email} onChange={e => setEmail(e.target.value)}
+              placeholder="vous@exemple.com"
+              style={INPUT}
+              onFocus={e  => (e.target.style.borderColor = "#3182ce")}
+              onBlur={e   => (e.target.style.borderColor = "#e2e8f0")}
+            />
+          </div>
+          <div style={{ marginBottom: "16px" }}>
+            <label style={{ display: "block", fontSize: "12px", fontWeight: 700,
+                            color: "#374151", marginBottom: "6px" }}>
+              Mot de passe
+            </label>
+            <input
+              type="password" required autoComplete="current-password"
+              value={password} onChange={e => setPassword(e.target.value)}
+              placeholder="••••••••"
+              style={INPUT}
+              onFocus={e  => (e.target.style.borderColor = "#3182ce")}
+              onBlur={e   => (e.target.style.borderColor = "#e2e8f0")}
+            />
+          </div>
+
+          {error && (
+            <div style={{ backgroundColor: "#fef2f2", border: "1px solid #fecaca",
+                          borderRadius: "8px", padding: "10px 14px", marginBottom: "16px" }}>
+              <p style={{ fontSize: "13px", color: "#dc2626", margin: 0 }}>{error}</p>
+            </div>
+          )}
+
+          <button
+            type="submit"
+            disabled={passwordLoading}
+            style={{
+              width: "100%", padding: "13px", borderRadius: "12px",
+              backgroundColor: passwordLoading ? "#94a3b8" : "#1a365d",
+              color: "#fff", fontWeight: 700, fontSize: "14px",
+              border: "none", cursor: passwordLoading ? "not-allowed" : "pointer",
+              display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
+              boxShadow: "0 4px 16px rgba(26,54,93,0.28)",
+              fontFamily: "'Plus Jakarta Sans', sans-serif",
+            }}
+          >
+            <LogIn style={{ width: 16, height: 16 }} />
+            {passwordLoading ? "Connexion…" : "Se connecter"}
           </button>
         </form>
         ) : (
@@ -290,6 +421,43 @@ export function LoginScreen() {
             Changer de numéro
           </button>
         </form>
+        )}
+
+        {!codeSent && (
+          <>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px", margin: "18px 0" }}>
+              <div style={{ height: "1px", flex: 1, backgroundColor: "#e2e8f0" }} />
+              <span style={{ fontSize: "12px", color: "#64748b" }}>ou</span>
+              <div style={{ height: "1px", flex: 1, backgroundColor: "#e2e8f0" }} />
+            </div>
+
+            <div style={{ display: "grid", gap: "10px" }}>
+              <button
+                type="button"
+                disabled={oauthLoading !== null}
+                onClick={() => handleOAuthLogin("google")}
+                style={{
+                  width: "100%", padding: "11px", borderRadius: "10px", border: "1px solid #cbd5e1",
+                  backgroundColor: "#fff", color: "#0f172a", fontWeight: 700, fontSize: "13px",
+                  cursor: oauthLoading !== null ? "not-allowed" : "pointer", fontFamily: "'Plus Jakarta Sans', sans-serif",
+                }}
+              >
+                {oauthLoading === "google" ? "Redirection…" : "Continuer avec Google"}
+              </button>
+              <button
+                type="button"
+                disabled={oauthLoading !== null}
+                onClick={() => handleOAuthLogin("facebook")}
+                style={{
+                  width: "100%", padding: "11px", borderRadius: "10px", border: "1px solid #cbd5e1",
+                  backgroundColor: "#fff", color: "#0f172a", fontWeight: 700, fontSize: "13px",
+                  cursor: oauthLoading !== null ? "not-allowed" : "pointer", fontFamily: "'Plus Jakarta Sans', sans-serif",
+                }}
+              >
+                {oauthLoading === "facebook" ? "Redirection…" : "Continuer avec Facebook"}
+              </button>
+            </div>
+          </>
         )}
 
         <p style={{ textAlign: "center", fontSize: "13px", color: "#64748b",
