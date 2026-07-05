@@ -11,6 +11,8 @@ import { ElevesScreen }           from "./components/ElevesScreen";
 import { DocumentsScreen }        from "./components/DocumentsScreen";
 import { LoginScreen }            from "./components/LoginScreen";
 import { SignupScreen }           from "./components/SignupScreen";
+import { PrivacyPolicyPage }      from "./components/PrivacyPolicyPage";
+import { DataDeletionPage }       from "./components/DataDeletionPage";
 import { ProfilScreen }           from "./components/ProfilScreen";
 import { AbonnementScreen }       from "./components/AbonnementScreen";
 import { ParametresScreen }       from "./components/ParametresScreen";
@@ -20,6 +22,8 @@ export const router = createBrowserRouter([
   // ── Public auth routes ────────────────────────────────────────────────────
   { path: "/login",  element: <LoginScreen  />, errorElement: <ErrorBoundary /> },
   { path: "/signup", element: <SignupScreen />, errorElement: <ErrorBoundary /> },
+  { path: "/privacy-policy", element: <PrivacyPolicyPage />, errorElement: <ErrorBoundary /> },
+  { path: "/data-deletion", element: <DataDeletionPage />, errorElement: <ErrorBoundary /> },
 
   // ── Protected app routes (AppLayout contains auth + profile guards) ────────
   {

@@ -1,6 +1,8 @@
 import { useState }               from "react";
-import { useNavigate, Navigate }  from "react-router";
+import { useNavigate, Navigate, Link }  from "react-router";
 import { GraduationCap, LogIn, Mail, MessageCircle, ShieldCheck } from "lucide-react";
+import GoogleIcon from "@mui/icons-material/Google";
+import FacebookIcon from "@mui/icons-material/Facebook";
 import { supabase }               from "../../lib/supabase";
 import { useAuthContext }         from "../contexts/AuthContext";
 
@@ -470,7 +472,7 @@ export function LoginScreen() {
                   display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
                 }}
               >
-                <span style={{ width: "18px", height: "18px", borderRadius: "999px", background: "conic-gradient(#ea4335 0 25%, #fbbc05 25% 50%, #34a853 50% 75%, #4285f4 75% 100%)", display: "inline-block" }} />
+                <GoogleIcon sx={{ fontSize: 18 }} />
                 {oauthLoading === "google" ? "Redirection…" : "Continuer avec Google"}
               </button>
               <button
@@ -484,12 +486,45 @@ export function LoginScreen() {
                   display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
                 }}
               >
-                <span style={{ width: "18px", height: "18px", borderRadius: "999px", backgroundColor: "#fff", color: "#1877F2", display: "inline-flex", alignItems: "center", justifyContent: "center", fontWeight: 900, fontSize: "12px" }}>f</span>
+                <FacebookIcon sx={{ fontSize: 18, color: "#fff" }} />
                 {oauthLoading === "facebook" ? "Redirection…" : "Continuer avec Facebook"}
               </button>
             </div>
           </>
         )}
+
+        <div style={{ marginTop: "18px", display: "flex", gap: "8px", flexWrap: "wrap" }}>
+          <Link
+            to="/privacy-policy"
+            style={{
+              padding: "8px 10px",
+              borderRadius: "8px",
+              border: "1px solid #bfdbfe",
+              backgroundColor: "#eff6ff",
+              color: "#1d4ed8",
+              textDecoration: "none",
+              fontSize: "12px",
+              fontWeight: 700,
+            }}
+          >
+            Politique de confidentialite
+          </Link>
+          <Link
+            to="/data-deletion"
+            style={{
+              padding: "8px 10px",
+              borderRadius: "8px",
+              border: "1px solid #86efac",
+              backgroundColor: "#f0fdf4",
+              color: "#166534",
+              textDecoration: "none",
+              fontSize: "12px",
+              fontWeight: 700,
+            }}
+          >
+            Suppression des donnees
+          </Link>
+        </div>
 
         <p style={{ textAlign: "center", fontSize: "13px", color: "#64748b",
                     marginTop: "24px", marginBottom: 0 }}>
