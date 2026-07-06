@@ -2,14 +2,14 @@ import { useState }       from "react";
 import { useNavigate }    from "react-router";
 import {
   Settings, Bell, BellOff, Building2, Shield,
-  Sun, Moon, Leaf, Waves, ChevronRight,
+  Sun, Moon, ChevronRight,
 } from "lucide-react";
 import { toast }          from "sonner";
 import { useTheme, THEMES, type Theme } from "../contexts/ThemeContext";
 import { useAuthContext } from "../contexts/AuthContext";
 import { supabase }       from "../../lib/supabase";
 
-const FF = "'Plus Jakarta Sans', sans-serif";
+const FF = "var(--font-sans)";
 
 // ─── Reusable section card ─────────────────────────────────────────────────────
 
@@ -93,8 +93,6 @@ function ToggleRow({ label, hint, value, onChange }: {
 const THEME_ICONS: Record<Theme, React.ReactNode> = {
   light:   <Sun   style={{ width: 16, height: 16 }} />,
   dark:    <Moon  style={{ width: 16, height: 16 }} />,
-  emerald: <Leaf  style={{ width: 16, height: 16 }} />,
-  ocean:   <Waves style={{ width: 16, height: 16 }} />,
 };
 
 function ThemeCard({ id, label, palette, active, onSelect }: {
@@ -112,8 +110,8 @@ function ThemeCard({ id, label, palette, active, onSelect }: {
         padding:         "14px 10px",
         minHeight:       "88px",   /* A11: touch target stays ≥ 44 px in 2-col layout */
         borderRadius:    "12px",
-        border:          `2px solid ${active ? palette[1] : "#e2e8f0"}`,
-        backgroundColor: active ? palette[1] + "0d" : "#fff",
+        border:          `2px solid ${active ? palette[2] : "var(--border)"}`,
+        backgroundColor: active ? "var(--accent)" : "var(--card)",
         cursor:          "pointer",
         transition:      "all 160ms",
         fontFamily:      FF,
@@ -125,14 +123,14 @@ function ThemeCard({ id, label, palette, active, onSelect }: {
           <div key={i} style={{
             width: 18, height: 18, borderRadius: "50%",
             backgroundColor: c,
-            border: "1.5px solid rgba(0,0,0,0.08)",
+            border: "1.5px solid color-mix(in srgb, var(--foreground) 10%, transparent)",
           }} />
         ))}
       </div>
 
       {/* Icon + label */}
       <div style={{
-        color: active ? palette[1] : "#64748b",
+        color: active ? "var(--foreground)" : "var(--muted-foreground)",
         display: "flex", flexDirection: "column", alignItems: "center", gap: "3px",
       }}>
         {THEME_ICONS[id]}
@@ -144,7 +142,7 @@ function ThemeCard({ id, label, palette, active, onSelect }: {
       {active && (
         <div style={{
           width: 6, height: 6, borderRadius: "50%",
-          backgroundColor: palette[1],
+          backgroundColor: palette[2],
         }} />
       )}
     </button>
@@ -318,8 +316,8 @@ export function ParametresScreen() {
               onChange={e => setNewPw(e.target.value)}
               placeholder="Minimum 6 caractères"
               style={{ ...INPUT, marginBottom: "10px" }}
-              onFocus={e  => (e.target.style.borderColor = "#3182ce")}
-              onBlur={e   => (e.target.style.borderColor = "#e2e8f0")}
+              onFocus={e  => (e.target.style.borderColor = "var(--primary)")}
+              onBlur={e   => (e.target.style.borderColor = "var(--border)")}
             />
             <p style={{ fontSize: "12px", fontWeight: 700, color: "var(--foreground)",
                         margin: "0 0 6px" }}>
@@ -332,11 +330,11 @@ export function ParametresScreen() {
               placeholder="Répétez le mot de passe"
               style={{
                 ...INPUT, marginBottom: "14px",
-                borderColor: confirm && confirm !== newPw ? "#fca5a5" : "#e2e8f0",
+                borderColor: confirm && confirm !== newPw ? "var(--destructive)" : "var(--border)",
               }}
-              onFocus={e  => (e.target.style.borderColor = "#3182ce")}
+              onFocus={e  => (e.target.style.borderColor = "var(--primary)")}
               onBlur={e   => (e.target.style.borderColor =
-                confirm && confirm !== newPw ? "#fca5a5" : "#e2e8f0")}
+                confirm && confirm !== newPw ? "var(--destructive)" : "var(--border)")}
             />
             <button
               type="submit"

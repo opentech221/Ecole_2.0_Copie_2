@@ -2,10 +2,27 @@ import { RouterProvider }      from "react-router";
 import { Toaster }             from "sonner";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { router }              from "./routes";
-import { ThemeProvider }       from "./contexts/ThemeContext";
+import { ThemeProvider, useTheme }       from "./contexts/ThemeContext";
 import { AuthProvider }        from "./contexts/AuthContext";
 import { AppProvider }         from "./contexts/AppContext";
 import { queryClient }         from "../lib/queryClient";
+
+function AppShell() {
+  const { theme } = useTheme();
+
+  return (
+    <>
+      <RouterProvider router={router} />
+      <Toaster
+        position="bottom-center"
+        richColors
+        closeButton
+        theme={theme}
+        toastOptions={{ style: { fontFamily: "var(--font-sans)" } }}
+      />
+    </>
+  );
+}
 
 export default function App() {
   return (
@@ -15,13 +32,7 @@ export default function App() {
       <ThemeProvider>
         <AuthProvider>
           <AppProvider>
-            <RouterProvider router={router} />
-            <Toaster
-              position="bottom-center"
-              richColors
-              closeButton
-              toastOptions={{ style: { fontFamily: "'Plus Jakarta Sans', sans-serif" } }}
-            />
+            <AppShell />
           </AppProvider>
         </AuthProvider>
       </ThemeProvider>
