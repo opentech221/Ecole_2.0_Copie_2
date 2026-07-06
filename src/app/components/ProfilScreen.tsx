@@ -34,9 +34,9 @@ function Card({ title, icon, children }: {
         borderBottom: "1px solid var(--border)",
       }}>
         <span style={{ color: "var(--muted-foreground)" }}>{icon}</span>
-        <span style={{ fontSize: "11px", fontWeight: 700, color: "var(--muted-foreground)",
+        <span style={{ fontSize: "11px", fontWeight: 700, color: "var(--foreground)",
                        textTransform: "uppercase", letterSpacing: "0.08em",
-                       fontFamily: FF, color: "var(--foreground)" }}>
+                       fontFamily: FF }}>
           {title}
         </span>
       </div>
@@ -56,7 +56,7 @@ function Field({
   return (
     <div style={{ marginBottom: "12px" }}>
       <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
-                      color: "var(--muted-foreground)", marginBottom: "5px", fontFamily: FF, color: "var(--foreground)" }}>
+                      color: "var(--foreground)", marginBottom: "5px", fontFamily: FF }}>
         {label}{required && <span style={{ color: "var(--destructive)", marginLeft: "2px" }}>*</span>}
       </label>
       <input
@@ -105,9 +105,9 @@ function ImageTile({ label, hint, currentUrl, onUpload, uploading }: {
         : <ImageIcon style={{ width: 32, height: 32, color: "var(--border)",
                                margin: "0 auto 6px", display: "block" }} />}
       <p style={{ fontSize: "11.5px", fontWeight: 700, color: "var(--foreground)",
-                  margin: "0 0 2px", fontFamily: FF, color: "var(--foreground)" }}>{label}</p>
-      <p style={{ fontSize: "10.5px", color: "var(--muted-foreground)", margin: "0 0 8px",
-                  fontFamily: FF, color: "var(--foreground)" }}>{hint}</p>
+          margin: "0 0 2px", fontFamily: FF }}>{label}</p>
+      <p style={{ fontSize: "10.5px", color: "var(--foreground)", margin: "0 0 8px",
+          fontFamily: FF }}>{hint}</p>
       <button
         type="button" onClick={() => ref.current?.click()} disabled={uploading}
         style={{
@@ -241,11 +241,11 @@ export function ProfilScreen() {
   const ALL_CLASSES = ["CI", "CP", "CE1", "CE2", "CM1", "CM2"];
 
   return (
-    <div style={{ backgroundColor: "var(--background)", minHeight: "100vh", fontFamily: FF, color: "var(--foreground)" }}>
+    <div style={{ backgroundColor: "var(--muted)", minHeight: "100vh", fontFamily: FF, color: "var(--foreground)" }}>
 
       {/* ── Hero card ── */}
       <div style={{
-        background:    "linear-gradient(135deg, var(--primary) 0%, var(--secondary) 60%, color-mix(in srgb, var(--secondary) 70%, var(--primary)) 100%)",
+        background:    "linear-gradient(135deg, #0f172a 0%, #1e3a5f 60%, #2d4a7a 100%)",
         padding:       "28px 20px 60px",
         position:      "relative",
       }}>
@@ -253,7 +253,7 @@ export function ProfilScreen() {
           {/* Avatar */}
           <div style={{
             width: 72, height: 72, borderRadius: "50%",
-            background: "linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)",
+            background: "linear-gradient(135deg, #059669 0%, #0d9488 100%)",
             display: "flex", alignItems: "center", justifyContent: "center",
             fontSize: "24px", fontWeight: 800, color: "var(--primary-foreground)",
             margin: "0 auto 12px",
@@ -284,7 +284,7 @@ export function ProfilScreen() {
                        margin: "0 0 3px" }}>
             {fullName || "Mon Profil"}
           </h2>
-          <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.70)", margin: 0 }}>
+          <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.55)", margin: 0 }}>
             {role === "director" ? "Directeur" : "Enseignant"} · {displayEmail}
           </p>
 
@@ -293,12 +293,12 @@ export function ProfilScreen() {
             ? <div style={{
                 display: "inline-flex", alignItems: "center", gap: "5px",
                 marginTop: "10px", padding: "3px 12px", borderRadius: "999px",
-                backgroundColor: "color-mix(in srgb, var(--secondary) 20%, transparent)",
-                border: "1px solid color-mix(in srgb, var(--secondary) 35%, transparent)",
+                backgroundColor: "rgba(5,150,105,0.20)",
+                border: "1px solid rgba(5,150,105,0.35)",
               }}>
-                <CheckCircle style={{ width: 11, height: 11, color: "#bbf7d0" }} />
+                <CheckCircle style={{ width: 11, height: 11, color: "#6ee7b7" }} />
                 <span style={{ fontSize: "10px", fontWeight: 700,
-                               color: "#bbf7d0" }}>
+                               color: "#6ee7b7" }}>
                   Profil complet
                 </span>
               </div>
@@ -334,7 +334,7 @@ export function ProfilScreen() {
             {/* Email — utilisé pour la connexion Email + mot de passe */}
             <div style={{ marginBottom: "12px", paddingBottom: "12px", borderBottom: "1px solid var(--border)" }}>
               <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
-                              color: "var(--muted-foreground)", marginBottom: "5px", fontFamily: FF, color: "var(--foreground)" }}>
+                              color: "var(--foreground)", marginBottom: "5px", fontFamily: FF }}>
                 Adresse email (connexion email)
               </label>
               <div style={{ display: "flex", gap: "6px", alignItems: "flex-end" }}>
@@ -355,8 +355,8 @@ export function ProfilScreen() {
                   type="button" onClick={handleUpdateEmail} disabled={emailUpdating || email === user?.email}
                   style={{
                     padding: "9px 12px", borderRadius: "8px",
-                    backgroundColor: emailUpdating || email === user?.email ? "var(--muted)" : "var(--secondary)",
-                    color: emailUpdating || email === user?.email ? "var(--muted-foreground)" : "#fff",
+                    backgroundColor: emailUpdating || email === user?.email ? "#e2e8f0" : "#3182ce",
+                    color: emailUpdating || email === user?.email ? "#94a3b8" : "#fff",
                     fontSize: "11.5px", fontWeight: 700, border: "none",
                     cursor: emailUpdating || email === user?.email ? "not-allowed" : "pointer",
                     fontFamily: FF, whiteSpace: "nowrap",
@@ -365,8 +365,8 @@ export function ProfilScreen() {
                   {emailUpdating ? "Mise à jour…" : emailChanged ? "✓ Mis à jour" : "Mettre à jour"}
                 </button>
               </div>
-              <p style={{ fontSize: "11px", color: "var(--muted-foreground)", marginTop: "4px",
-                          fontFamily: FF, color: "var(--foreground)" }}>
+              <p style={{ fontSize: "11px", color: "var(--foreground)", marginTop: "4px",
+                          fontFamily: FF }}>
                 Utilisé pour vous connecter via Email + mot de passe. Vérification par email sera envoyée.
               </p>
             </div>
@@ -377,14 +377,14 @@ export function ProfilScreen() {
               value={telephone} onChange={setTelephone}
               placeholder="+221771234567" type="tel"
             />
-            <p style={{ fontSize: "11px", color: "var(--muted-foreground)", marginTop: "-8px",
-                        marginBottom: "12px", fontFamily: FF, color: "var(--foreground)" }}>
+            <p style={{ fontSize: "11px", color: "var(--foreground)", marginTop: "-8px",
+                        marginBottom: "12px", fontFamily: FF }}>
               Format international requis (+221…). Utilisé pour recevoir le code WhatsApp.
             </p>
 
             <div style={{ marginBottom: "6px" }}>
               <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
-                              color: "var(--muted-foreground)", marginBottom: "8px", fontFamily: FF, color: "var(--foreground)" }}>
+                              color: "var(--foreground)", marginBottom: "8px", fontFamily: FF }}>
                 Rôle
               </label>
               <div style={{ display: "flex", gap: "8px" }}>
@@ -394,9 +394,9 @@ export function ProfilScreen() {
                     <button key={r} type="button" onClick={() => setRole(r)}
                       style={{
                         flex: 1, padding: "9px 8px", borderRadius: "8px",
-                        backgroundColor: a ? "var(--primary)" : "var(--card)",
-                        border: `2px solid ${a ? "var(--primary)" : "var(--border)"}`,
-                        color: a ? "#fff" : "var(--muted-foreground)",
+                        backgroundColor: a ? "#1a365d" : "#f8fafc",
+                        border: `2px solid ${a ? "#1a365d" : "#e2e8f0"}`,
+                        color: a ? "#fff" : "#64748b",
                         fontWeight: 700, fontSize: "12.5px", cursor: "pointer",
                         fontFamily: FF,
                       }}
@@ -421,7 +421,7 @@ export function ProfilScreen() {
                      placeholder="Kolda" />
               <div style={{ marginBottom: "12px" }}>
                 <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
-                                color: "var(--muted-foreground)", marginBottom: "5px", fontFamily: FF, color: "var(--foreground)" }}>
+                                color: "var(--foreground)", marginBottom: "5px", fontFamily: FF }}>
                   Classe active
                 </label>
                 <select
@@ -438,7 +438,7 @@ export function ProfilScreen() {
             </div>
             <div>
               <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
-                              color: "var(--muted-foreground)", marginBottom: "5px", fontFamily: FF, color: "var(--foreground)" }}>
+                              color: "var(--foreground)", marginBottom: "5px", fontFamily: FF }}>
                 <MapPin style={{ width: 11, height: 11, display: "inline",
                                   marginRight: "4px" }} />
                 Adresse
@@ -508,7 +508,7 @@ export function ProfilScreen() {
             {user?.email && (
               <div style={{ marginBottom: "12px" }}>
                 <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
-                                color: "var(--muted-foreground)", marginBottom: "5px", fontFamily: FF, color: "var(--foreground)" }}>
+                                color: "var(--foreground)", marginBottom: "5px", fontFamily: FF }}>
                   Mot de passe actuel <span style={{ color: "var(--destructive)" }}>*</span>
                 </label>
                 <input
@@ -523,8 +523,8 @@ export function ProfilScreen() {
                   onFocus={e => (e.target.style.borderColor = "var(--secondary)")}
                   onBlur={e  => (e.target.style.borderColor = "var(--border)")}
                 />
-                <p style={{ fontSize: "10.5px", color: "var(--muted-foreground)", marginTop: "4px",
-                            fontFamily: FF, color: "var(--foreground)" }}>
+                <p style={{ fontSize: "10.5px", color: "var(--foreground)", marginTop: "4px",
+                            fontFamily: FF }}>
                   Requis pour vérifier votre identité avant de changer le mot de passe.
                 </p>
               </div>
@@ -532,7 +532,7 @@ export function ProfilScreen() {
             
             <div style={{ marginBottom: "12px" }}>
               <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
-                              color: "var(--muted-foreground)", marginBottom: "5px", fontFamily: FF, color: "var(--foreground)" }}>
+                              color: "var(--foreground)", marginBottom: "5px", fontFamily: FF }}>
                 Nouveau mot de passe <span style={{ color: "var(--destructive)" }}>*</span>
               </label>
               <div style={{ position: "relative" }}>
@@ -565,7 +565,7 @@ export function ProfilScreen() {
 
             <div style={{ marginBottom: "14px" }}>
               <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
-                              color: "var(--muted-foreground)", marginBottom: "5px", fontFamily: FF, color: "var(--foreground)" }}>
+                              color: "var(--foreground)", marginBottom: "5px", fontFamily: FF }}>
                 Confirmer le mot de passe <span style={{ color: "var(--destructive)" }}>*</span>
               </label>
               <input

@@ -2,7 +2,7 @@ import { Link } from "react-router";
 
 const shell: React.CSSProperties = {
   minHeight: "100vh",
-  background: "linear-gradient(145deg, var(--primary) 0%, var(--secondary) 60%, color-mix(in srgb, var(--secondary) 70%, var(--primary)) 100%)",
+  background: "linear-gradient(145deg, #0d1f3c 0%, #1a365d 60%, #2d4a7a 100%)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -13,7 +13,7 @@ const shell: React.CSSProperties = {
 const card: React.CSSProperties = {
   width: "100%",
   maxWidth: "860px",
-  backgroundColor: "var(--card)",
+  backgroundColor: "#fff",
   borderRadius: "20px",
   padding: "32px",
   boxShadow: "0 24px 64px rgba(0,0,0,0.35)",
@@ -22,13 +22,13 @@ const card: React.CSSProperties = {
 const h2: React.CSSProperties = {
   fontSize: "17px",
   fontWeight: 800,
-  color: "var(--secondary)",
+  color: "#14532d",
   margin: "22px 0 8px",
 };
 
 const p: React.CSSProperties = {
   margin: "0 0 10px",
-  color: "var(--foreground)",
+  color: "#334155",
   lineHeight: 1.7,
   fontSize: "14px",
 };
@@ -92,9 +92,9 @@ export function DataDeletionPage() {
             style={{
               padding: "10px 14px",
               borderRadius: "10px",
-              backgroundColor: "var(--accent)",
-              border: "1px solid var(--border)",
-              color: "var(--secondary)",
+              backgroundColor: "#f0fdf4",
+              border: "1px solid #86efac",
+              color: "#166534",
               textDecoration: "none",
               fontSize: "13px",
               fontWeight: 700,
@@ -107,8 +107,8 @@ export function DataDeletionPage() {
             style={{
               padding: "10px 14px",
               borderRadius: "10px",
-              backgroundColor: "var(--primary)",
-              border: "1px solid var(--primary)",
+              backgroundColor: "#0f172a",
+              border: "1px solid #0f172a",
               color: "#fff",
               textDecoration: "none",
               fontSize: "13px",

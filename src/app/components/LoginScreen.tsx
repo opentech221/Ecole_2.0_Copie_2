@@ -213,7 +213,7 @@ export function LoginScreen() {
   return (
     <div style={{
       minHeight: "100vh",
-      background: "linear-gradient(145deg, var(--primary) 0%, var(--secondary) 60%, color-mix(in srgb, var(--secondary) 70%, var(--primary)) 100%)",
+      background: "linear-gradient(145deg, #0d1f3c 0%, #1a365d 60%, #2d4a7a 100%)",
       display: "flex", alignItems: "center", justifyContent: "center",
       padding: "24px", fontFamily: "'Plus Jakarta Sans', sans-serif",
     }}>
@@ -227,7 +227,7 @@ export function LoginScreen() {
         <div style={{ textAlign: "center", marginBottom: "32px" }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: "10px",
                         marginBottom: "10px", padding: "10px 20px", borderRadius: "14px",
-                        backgroundColor: "var(--accent)", border: "1px solid var(--border)" }}>
+                        backgroundColor: "#f0f7ff", border: "1px solid #bfdbfe" }}>
             <GraduationCap style={{ width: 24, height: 24, color: "var(--secondary)" }} />
             <span style={{ fontSize: "18px", fontWeight: 900, color: "var(--primary)",
                            letterSpacing: "0.1em", textTransform: "uppercase" }}>
