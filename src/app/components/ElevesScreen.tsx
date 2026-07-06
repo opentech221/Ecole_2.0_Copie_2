@@ -491,7 +491,7 @@ function BulletinBody({
         {statsRows.map(m => (
           <div key={m.label} className="bi-stat-cell"
                style={{ padding:"3px 6px", borderRadius:"4px",
-                        backgroundColor:"#f8fafc", border:"1px solid #e2e8f0" }}>
+                        backgroundColor:"var(--muted)", border:"1px solid var(--border)" }}>
             <p className="bi-stat-label"
                style={{ fontSize:"6.5px", color:"#64748b", fontWeight:700,
                         textTransform:"uppercase", letterSpacing:"0.05em", margin:0 }}>
@@ -1068,11 +1068,11 @@ function BatchPreviewModal({
               </div>
               {/* Visual bulletin card */}
               <div style={{
-                backgroundColor: "#fff",
+                backgroundColor: "var(--card)",
                 borderRadius:    "6px",
                 padding:         "0 10px 10px",
                 boxShadow:       "0 2px 14px rgba(0,0,0,0.10)",
-                border:          "1px solid #e2e8f0",
+                border:          "1px solid var(--border)",
                 width:           "100%",
                 fontFamily:      "Arial, Helvetica, sans-serif",
               }}>
@@ -1086,8 +1086,8 @@ function BatchPreviewModal({
       </div>
 
       {/* ── Bottom action bar ── */}
-      <div className="bg-white shrink-0 flex items-center justify-between gap-3 px-4 py-3"
-           style={{ borderTop:"1px solid #e5e7eb", boxShadow:"0 -2px 10px rgba(0,0,0,0.07)" }}>
+       <div className="bg-card shrink-0 flex items-center justify-between gap-3 px-4 py-3"
+         style={{ borderTop:"1px solid var(--border)", boxShadow:"0 -2px 10px rgba(0,0,0,0.07)" }}>
         <div className="min-w-0">
           <p className="text-[12px] font-semibold truncate" style={{ color:"#1a365d" }}>
             {students.length} bulletins
@@ -1153,12 +1153,12 @@ function AddStudentModal({
 
   const inputStyle: React.CSSProperties = {
     width:"100%", padding:"8px 12px", borderRadius:"10px",
-    border:"1.5px solid #e2e8f0", fontSize:"13px",
+    border:"1.5px solid var(--border)", fontSize:"13px",
     fontFamily:"'Plus Jakarta Sans',sans-serif", outline:"none",
-    backgroundColor:"#fff", color:"#1a365d",
+    backgroundColor:"var(--card)", color:"var(--foreground)",
   };
   const labelStyle: React.CSSProperties = {
-    fontSize:"10px", fontWeight:700, color:"#64748b",
+    fontSize:"10px", fontWeight:700, color:"var(--muted-foreground)",
     textTransform:"uppercase", letterSpacing:"0.06em",
     display:"block", marginBottom:"4px",
   };
@@ -1171,32 +1171,32 @@ function AddStudentModal({
            onClick={onClose} />
 
       {/* Sheet */}
-      <div className="fixed bottom-0 left-0 right-0 z-[460] bg-white"
+      <div className="fixed bottom-0 left-0 right-0 z-[460] bg-card"
            style={{ borderRadius:"20px 20px 0 0", maxHeight:"90vh",
                     display:"flex", flexDirection:"column",
                     boxShadow:"0 -8px 40px rgba(0,0,0,0.18)",
                     fontFamily:"'Plus Jakarta Sans',sans-serif" }}>
         {/* Handle */}
         <div style={{ display:"flex", justifyContent:"center", padding:"12px 0 4px" }}>
-          <div style={{ width:36, height:4, borderRadius:999, backgroundColor:"#e2e8f0" }} />
+          <div style={{ width:36, height:4, borderRadius:999, backgroundColor:"var(--border)" }} />
         </div>
 
         {/* Header */}
         <div className="flex items-center justify-between px-5 pb-3"
-             style={{ borderBottom:"1px solid #f1f5f9" }}>
+             style={{ borderBottom:"1px solid var(--border)" }}>
           <div>
-            <p style={{ fontSize:"17px", fontWeight:800, color:"#1a365d", margin:0 }}>
+            <p style={{ fontSize:"17px", fontWeight:800, color:"var(--foreground)", margin:0 }}>
               Ajouter un élève
             </p>
-            <p style={{ fontSize:"11px", color:"#94a3b8", margin:0 }}>
+            <p style={{ fontSize:"11px", color:"var(--muted-foreground)", margin:0 }}>
               Les champs Nom et Prénom sont obligatoires.
             </p>
           </div>
           <button onClick={onClose}
-                  style={{ width:32, height:32, borderRadius:"50%", backgroundColor:"#f1f5f9",
+                  style={{ width:32, height:32, borderRadius:"50%", backgroundColor:"var(--muted)",
                            display:"flex", alignItems:"center", justifyContent:"center",
                            border:"none", cursor:"pointer" }}>
-            <X style={{ width:16, height:16, color:"#475569" }} />
+            <X style={{ width:16, height:16, color:"var(--muted-foreground)" }} />
           </button>
         </div>
 
@@ -1237,9 +1237,9 @@ function AddStudentModal({
                           style={{
                             padding:"7px 16px", borderRadius:"10px", fontWeight:700,
                             fontSize:"13px", cursor:"pointer", border:"1.5px solid",
-                            backgroundColor: form.genre===g ? "#1a365d" : "#f8fafc",
+                            backgroundColor: form.genre===g ? "#1a365d" : "var(--muted)",
                             color: form.genre===g ? "#fff" : "#475569",
-                            borderColor: form.genre===g ? "#1a365d" : "#e2e8f0",
+                            borderColor: form.genre===g ? "#1a365d" : "var(--border)",
                           }}>
                     {g}
                   </button>
@@ -1861,7 +1861,7 @@ export function ElevesScreen() {
                   { label:"Nombre de Garçons",value:garcons,         color:"#2563eb", icon:"👦" },
                   { label:"Taux de Parité",   value:`${tauxParite}%`,color:"#059669", icon:"⚖️" },
                 ].map(m => (
-                  <div key={m.label} className="bg-white rounded-2xl p-4"
+                     <div key={m.label} className="bg-card rounded-2xl p-4"
                        style={{ boxShadow:"0 1px 6px rgba(0,0,0,0.06)" }}>
                     <div className="flex items-center gap-2 mb-1">
                       <span style={{ fontSize:"18px" }}>{m.icon}</span>
@@ -1884,13 +1884,13 @@ export function ElevesScreen() {
                     placeholder="Rechercher un élève…"
                     className="w-full rounded-xl outline-none font-medium"
                     style={{ minHeight:"40px", padding:"0 12px 0 36px",
-                             fontSize:"13px", border:"1.5px solid #e2e8f0",
-                             backgroundColor:"#fff", fontFamily:"'Plus Jakarta Sans',sans-serif" }}/>
+                             fontSize:"13px", border:"1.5px solid var(--border)",
+                             backgroundColor:"var(--card)", color:"var(--foreground)", fontFamily:"'Plus Jakarta Sans',sans-serif" }}/>
                 </div>
                 {[
                   { icon:<Plus className="w-4 h-4"/>,   label:"Ajouter",   bg:"#1a365d", fg:"#fff" },
-                  { icon:<Upload className="w-4 h-4"/>, label:"Import CSV", bg:"#f1f5f9", fg:"#475569" },
-                  { icon:<Printer className="w-4 h-4"/>,label:"Export PDF", bg:"#f1f5f9", fg:"#475569" },
+                  { icon:<Upload className="w-4 h-4"/>, label:"Import CSV", bg:"var(--muted)", fg:"var(--muted-foreground)" },
+                  { icon:<Printer className="w-4 h-4"/>,label:"Export PDF", bg:"var(--muted)", fg:"var(--muted-foreground)" },
                 ].map(a => (
                   <button key={a.label}
                     className="inline-flex items-center gap-1.5 rounded-xl font-semibold transition-all active:scale-95"
@@ -1902,13 +1902,13 @@ export function ElevesScreen() {
               </div>
 
               {/* Table — full columns on desktop, scrollable on mobile */}
-              <div style={{ borderRadius:"16px", boxShadow:"0 2px 12px rgba(0,0,0,0.07)", background:"#fff" }}>
+              <div style={{ borderRadius:"16px", boxShadow:"0 2px 12px rgba(0,0,0,0.07)", background:"var(--card)" }}>
                 <div style={{ overflowX:"auto", WebkitOverflowScrolling:"touch" as "touch" }}>
                   <table style={{ borderCollapse:"separate", borderSpacing:0, width:"100%",
                                   /* On desktop, no fixed min-width forces scroll; on mobile we keep it */
                                   minWidth:"680px", tableLayout:"auto" }}>
                     <thead>
-                      <tr style={{ backgroundColor:"#f8fafc" }}>
+                      <tr style={{ backgroundColor:"var(--muted)" }}>
                         {[
                           { h:"#",                  w:"40px"  },
                           { h:"Matricule",          w:"100px" },
@@ -1938,12 +1938,12 @@ export function ElevesScreen() {
                         <tr key={s.id}
                           onClick={() => { if (!isEditing) { setSelectedId(s.id); setView("bulletin"); } }}
                           style={{
-                            backgroundColor: selectedId===s.id ? "#eff6ff" : i%2===0 ? "#fff" : "#fafafa",
+                            backgroundColor: selectedId===s.id ? "var(--accent)" : i%2===0 ? "var(--card)" : "var(--muted)",
                             cursor: isEditing ? "default" : "pointer",
                             transition:"background 150ms",
                           }}
-                          onMouseEnter={e=>{ if (!isEditing) (e.currentTarget as HTMLElement).style.backgroundColor="#f0f4ff"; }}
-                          onMouseLeave={e=>{ if (!isEditing) (e.currentTarget as HTMLElement).style.backgroundColor=selectedId===s.id?"#eff6ff":i%2===0?"#fff":"#fafafa"; }}>
+                          onMouseEnter={e=>{ if (!isEditing) (e.currentTarget as HTMLElement).style.backgroundColor="var(--muted)"; }}
+                          onMouseLeave={e=>{ if (!isEditing) (e.currentTarget as HTMLElement).style.backgroundColor=selectedId===s.id?"var(--accent)":i%2===0?"var(--card)":"var(--muted)"; }}>
                           <td style={{ padding:"10px 8px", fontSize:"11px", color:"#94a3b8", fontWeight:600 }}>{i+1}</td>
                           <td style={{ padding:"10px 8px", fontSize:"11px", color:"#475569", fontWeight:700, fontFamily:"monospace", whiteSpace:"nowrap" }}>{s.matricule}</td>
                           {/* ── Name cell — switches to input when editing ── */}
@@ -2044,7 +2044,7 @@ export function ElevesScreen() {
                     </tbody>
                   </table>
                 </div>
-                <div style={{ padding:"10px 16px", borderTop:"1px solid #f1f5f9",
+                <div style={{ padding:"10px 16px", borderTop:"1px solid var(--border)",
                               fontSize:"10px", color:"#94a3b8" }}>
                   {filtered.length} élève{filtered.length>1?"s":""} affiché{filtered.length>1?"s":""}
                   {search ? ` sur ${STUDENTS.length} total` : ""}
@@ -2098,7 +2098,7 @@ export function ElevesScreen() {
                 </span>
               </div>
 
-              <div className="bg-white rounded-2xl overflow-hidden"
+                  <div className="bg-card rounded-2xl overflow-hidden"
                    style={{ boxShadow:"0 2px 12px rgba(0,0,0,0.07)", overflowX:"auto" }}>
                 <table style={{ borderCollapse:"collapse", minWidth:"900px", width:"100%" }}>
                   <thead>
@@ -2137,7 +2137,7 @@ export function ElevesScreen() {
                     {STUDENTS.map((s, ri) => {
                       const att = getStudentAtt(s.id);
                       const nj  = att.filter(a=>a==="ANJ").length;
-                      const rowBg = ri%2===0 ? "#fff" : "#f8fafc";
+                      const rowBg = ri%2===0 ? "var(--card)" : "var(--muted)";
                       return (
                         <tr key={s.id} style={{ backgroundColor:rowBg }}>
                           <td style={{
@@ -2220,8 +2220,8 @@ export function ElevesScreen() {
                   <select value={selectedId} onChange={e=>setSelectedId(e.target.value)}
                     style={{ minHeight:"40px", padding:"0 32px 0 12px", fontSize:"13px",
                              fontWeight:600, fontFamily:"'Plus Jakarta Sans',sans-serif",
-                             borderRadius:"10px", border:"1.5px solid #e2e8f0",
-                             backgroundColor:"#fff", color:"#1a365d", appearance:"none", cursor:"pointer" }}>
+                             borderRadius:"10px", border:"1.5px solid var(--border)",
+                             backgroundColor:"var(--card)", color:"var(--foreground)", appearance:"none", cursor:"pointer" }}>
                     {STUDENTS.map(s => (
                       <option key={s.id} value={s.id}>{s.nom} {s.prenom} ({s.matricule})</option>
                     ))}
@@ -2274,8 +2274,8 @@ export function ElevesScreen() {
                   onClick={() => setConfigMode(o => !o)}
                   className="inline-flex items-center gap-1.5 rounded-xl font-bold transition-all active:scale-95"
                   style={{ minHeight:"40px", padding:"0 14px", fontSize:"12px",
-                           backgroundColor: configMode ? "#f59e0b" : "#f1f5f9",
-                           color: configMode ? "#fff" : "#475569" }}
+                           backgroundColor: configMode ? "#f59e0b" : "var(--muted)",
+                           color: configMode ? "#fff" : "var(--muted-foreground)" }}
                 >
                   <Settings className="w-3.5 h-3.5 shrink-0"/>
                   Barème
@@ -2288,7 +2288,7 @@ export function ElevesScreen() {
                          fontSize:"11px", fontWeight:700,
                          backgroundColor:
                            saveStatus === "saved"  ? "#f0fdf4" :
-                           saveStatus === "error"  ? "#fef2f2" : "#f1f5f9",
+                           saveStatus === "error"  ? "#fef2f2" : "var(--muted)",
                          color:
                            saveStatus === "saved"  ? "#059669" :
                            saveStatus === "error"  ? "#dc2626" : "#94a3b8",
@@ -2388,11 +2388,11 @@ export function ElevesScreen() {
               )}
 
               {/* ── A4 Bulletin Preview — interactive grade inputs ── */}
-              <div className="no-print bg-white mx-auto"
+                  <div className="no-print bg-card mx-auto"
                    style={{ maxWidth:"794px", padding:"0 10px 10px",
                             boxShadow:"0 4px 24px rgba(0,0,0,0.12)",
                             fontFamily:"Arial, Helvetica, sans-serif",
-                            border:"1px solid #e2e8f0" }}>
+                       border:"1px solid var(--border)" }}>
                 <BulletinBody
                   student={student} grades={grades} trimestre={trimestre}
                   moyT3={moyT3} absNJ={absNJ} decision={decision}
@@ -2449,7 +2449,7 @@ export function ElevesScreen() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                   {/* Average distribution bar chart */}
-                  <div className="bg-white rounded-2xl p-5"
+                     <div className="bg-card rounded-2xl p-5"
                        style={{ boxShadow:"0 2px 12px rgba(0,0,0,0.07)" }}>
                     <h3 className="font-bold text-[#1a365d] mb-4" style={{ fontSize:"13px" }}>
                       Distribution des moyennes — T{trimestre}
@@ -2464,7 +2464,7 @@ export function ElevesScreen() {
                           <span style={{ fontSize:"10px", color:"#475569", minWidth:"100px", fontWeight:600 }}>
                             {s.nom} {s.prenom.charAt(0)}.
                           </span>
-                          <div style={{ flex:1, height:"8px", backgroundColor:"#f1f5f9", borderRadius:"999px", overflow:"hidden" }}>
+                          <div style={{ flex:1, height:"8px", backgroundColor:"var(--muted)", borderRadius:"999px", overflow:"hidden" }}>
                             <div style={{ width:`${pct}%`, height:"100%", backgroundColor:col,
                                           borderRadius:"999px", transition:"width 500ms ease" }}/>
                           </div>
@@ -2485,7 +2485,7 @@ export function ElevesScreen() {
                       const best     = Math.max(...avgs);
                       const admis    = avgs.filter(m => m >= 5).length;
                       return (
-                        <div className="bg-white rounded-2xl p-5"
+                            <div className="bg-card rounded-2xl p-5"
                              style={{ boxShadow:"0 2px 12px rgba(0,0,0,0.07)" }}>
                           <h3 className="font-bold text-[#1a365d] mb-4" style={{ fontSize:"13px" }}>
                             Vue d'ensemble — Trimestre {trimestre}
@@ -2498,7 +2498,7 @@ export function ElevesScreen() {
                               { label:"Taux de réussite",     value:`${((admis/STUDENTS.length)*100).toFixed(0)}%`, color:admis/STUDENTS.length>=0.7?"#059669":"#d97706" },
                             ].map(m => (
                               <div key={m.label} style={{ padding:"10px 12px", borderRadius:"10px",
-                                                           backgroundColor:"#f8fafc", border:"1px solid #e2e8f0" }}>
+                                                           backgroundColor:"var(--muted)", border:"1px solid var(--border)" }}>
                                 <p style={{ fontSize:"9px", color:"#64748b", fontWeight:700,
                                             textTransform:"uppercase", margin:"0 0 4px" }}>{m.label}</p>
                                 <p style={{ fontSize:"20px", fontWeight:900, color:m.color, margin:0 }}>{m.value}</p>
@@ -2510,7 +2510,7 @@ export function ElevesScreen() {
                     })()}
 
                     {/* Domain breakdown */}
-                    <div className="bg-white rounded-2xl p-5"
+                    <div className="bg-card rounded-2xl p-5"
                          style={{ boxShadow:"0 2px 12px rgba(0,0,0,0.07)" }}>
                       <h3 className="font-bold text-[#1a365d] mb-3" style={{ fontSize:"13px" }}>
                         Moyenne par domaine
@@ -2534,7 +2534,7 @@ export function ElevesScreen() {
                                 {domAvg.toFixed(2)}/10
                               </span>
                             </div>
-                            <div style={{ height:"6px", backgroundColor:"#f1f5f9", borderRadius:"999px", overflow:"hidden" }}>
+                            <div style={{ height:"6px", backgroundColor:"var(--muted)", borderRadius:"999px", overflow:"hidden" }}>
                               <div style={{ width:`${pct}%`, height:"100%", backgroundColor:dom.color,
                                             borderRadius:"999px" }}/>
                             </div>

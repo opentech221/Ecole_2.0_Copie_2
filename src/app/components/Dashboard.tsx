@@ -317,9 +317,9 @@ export function Dashboard() {
             <ModuleCard
               badge="Module 1"
               badgeIcon={<Calendar className="w-3.5 h-3.5 text-white/80"/>}
-              gradient="linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)"
-              shadowColor="color-mix(in srgb, var(--primary) 32%, transparent)"
-              accent="var(--secondary)"
+              gradient="linear-gradient(135deg, #0b3a67 0%, #125a93 52%, #1b79b8 100%)"
+              shadowColor="rgba(11,58,103,0.34)"
+              accent="#2ea3e6"
               title="Planification"
               description="Planifiez vos semaines, suivez le taux de couverture du programme et accédez au référentiel officiel du CEB."
               ctaLabel="Préparer ma semaine"

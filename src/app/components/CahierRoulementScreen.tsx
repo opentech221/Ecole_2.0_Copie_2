@@ -494,7 +494,7 @@ export function CahierRoulementScreen() {
   return (
     <div
       className="flex flex-col overflow-hidden"
-      style={{ height:"calc(100vh - 36px)", fontFamily: "'Plus Jakarta Sans', sans-serif", backgroundColor: "#f4f6f9" }}
+      style={{ height:"calc(100vh - 36px)", fontFamily: "'Plus Jakarta Sans', sans-serif", backgroundColor: "var(--background)" }}
     >
       {/* ── Print CSS ── */}
       <style>{`
@@ -509,9 +509,9 @@ export function CahierRoulementScreen() {
 
       {/* ══ COLLAPSIBLE HEADER ══════════════════════════════════════════════════ */}
       <div
-        className="bg-white flex-shrink-0"
+        className="bg-card flex-shrink-0"
         style={{
-          boxShadow: "0 1px 0 #e5e7eb, 0 2px 10px rgba(0,0,0,0.06)",
+          boxShadow: "0 1px 0 var(--border), 0 2px 10px rgba(0,0,0,0.06)",
           zIndex: 50, position: "relative",
         }}
       >
@@ -520,7 +520,7 @@ export function CahierRoulementScreen() {
           {/* Nav row — always visible */}
           <div
             className="flex items-center gap-3"
-            style={{ paddingTop: "14px", paddingBottom: "8px", borderBottom: "1px solid #f1f5f9" }}
+            style={{ paddingTop: "14px", paddingBottom: "8px", borderBottom: "1px solid var(--border)" }}
           >
             <button
               onClick={() => navigate("/")}
@@ -578,8 +578,8 @@ export function CahierRoulementScreen() {
                         fontSize: "11px", fontWeight: 700,
                         fontFamily: "'Plus Jakarta Sans', sans-serif",
                         cursor: "pointer",
-                        backgroundColor: selectedDay === day ? "#1a365d" : "transparent",
-                        color: selectedDay === day ? "#fff" : "#64748b",
+                        backgroundColor: selectedDay === day ? "var(--primary)" : "transparent",
+                        color: selectedDay === day ? "var(--primary-foreground)" : "var(--muted-foreground)",
                         boxShadow: selectedDay === day ? "0 2px 8px rgba(26,54,93,0.22)" : "none",
                         transition: "all 180ms ease",
                       }}
@@ -648,7 +648,7 @@ export function CahierRoulementScreen() {
           {/* Toggle tab */}
           <div
             className="no-print flex justify-center"
-            style={{ paddingBottom: "4px", paddingTop: "2px", borderTop: "1px solid #f1f5f9" }}
+            style={{ paddingBottom: "4px", paddingTop: "2px", borderTop: "1px solid var(--border)" }}
           >
             <button
               onClick={() => setHeaderCollapsed(o => !o)}
@@ -671,9 +671,9 @@ export function CahierRoulementScreen() {
 
       {/* ══ SEGMENTED PILL CONTROL ══════════════════════════════════════════════ */}
       <div
-        className="no-print bg-white flex-shrink-0"
+        className="no-print bg-card flex-shrink-0"
         style={{
-          borderBottom: "1px solid #e5e7eb",
+          borderBottom: "1px solid var(--border)",
           boxShadow: "0 1px 6px rgba(0,0,0,0.05)",
           zIndex: 40, position: "relative",
         }}
@@ -693,7 +693,7 @@ export function CahierRoulementScreen() {
               top: "3px", bottom: "3px",
               left: view === "cahier" ? "3px" : "calc(50% + 1px)",
               width: "calc(50% - 4px)",
-              backgroundColor: "#1e293b",
+              backgroundColor: "var(--primary)",
               borderRadius: "999px",
               transition: "left 220ms cubic-bezier(0.4,0,0.2,1)",
               boxShadow: "0 2px 8px rgba(30,41,59,0.25)",
@@ -871,7 +871,7 @@ export function CahierRoulementScreen() {
                           }} />
                           {!isLast && (
                             <div style={{
-                              flex: 1, width: "2px", backgroundColor: "#e2e8f0",
+                              flex: 1, width: "2px", backgroundColor: "var(--border)",
                               marginTop: "4px", marginBottom: "4px", minHeight: "24px",
                             }} />
                           )}
@@ -899,7 +899,7 @@ export function CahierRoulementScreen() {
               <div
                 style={{
                   position: "sticky", top: 0, zIndex: 30,
-                  backgroundColor: "#f4f6f9",
+                  backgroundColor: "var(--background)",
                   paddingTop: "12px", paddingBottom: "10px",
                   borderBottom: "1px solid var(--border)",
                 }}
