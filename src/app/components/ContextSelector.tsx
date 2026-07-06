@@ -1108,7 +1108,6 @@ export function ContextSelector() {
                     }}
                   />
 
-                  <p className="text-[11px] font-bold text-[#1a365d] uppercase tracking-wider mb-3">
                   <p className="text-[11px] font-bold uppercase tracking-wider mb-3" style={{ color: "var(--foreground)" }}>
                     Comment ça marche ?
                   </p>
