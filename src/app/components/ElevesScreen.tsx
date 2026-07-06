@@ -968,7 +968,7 @@ function BatchPreviewModal({
       style={{ backgroundColor:"#f4f6f9", fontFamily:"'Plus Jakarta Sans', sans-serif" }}
     >
       {/* ── Header ── */}
-      <div className="bg-[#1a365d] shrink-0"
+      <div className="bg-primary shrink-0"
            style={{ boxShadow:"0 2px 12px rgba(0,0,0,0.22)" }}>
 
         {/* Row 1: back, title, print CTA */}
@@ -1558,7 +1558,7 @@ export function ElevesScreen() {
       computedRanks={computedRanks}
     />
 
-    <div className="bg-[#f4f6f9] flex flex-col overflow-hidden"
+    <div className="bg-background flex flex-col overflow-hidden"
          style={{ height:"calc(100vh - 36px)", fontFamily:"'Plus Jakarta Sans',sans-serif" }}>
 
       {/* ══ PRINT CSS — one bulletin per A4 portrait page ═══════════════════
@@ -1764,37 +1764,37 @@ export function ElevesScreen() {
       `}</style>
 
       {/* ── STICKY HEADER ──────────────────────────────────────────────────── */}
-      <div className="no-print bg-white flex-shrink-0"
-           style={{ boxShadow:"0 1px 0 #e5e7eb, 0 2px 8px rgba(0,0,0,0.06)", zIndex:50 }}>
+       <div className="no-print bg-card flex-shrink-0"
+         style={{ boxShadow:"0 1px 0 var(--border), 0 2px 8px rgba(0,0,0,0.06)", zIndex:50 }}>
         <div className="max-w-6xl mx-auto px-4">
 
           {/* Nav row */}
           <div className="flex items-center gap-3 pt-3 pb-2">
             <button onClick={() => navigate("/")}
-              className="inline-flex items-center gap-1.5 font-semibold text-[#1a365d]
-                         hover:text-[#3182ce] transition-colors shrink-0"
+              className="inline-flex items-center gap-1.5 font-semibold text-primary
+                         hover:text-secondary transition-colors shrink-0"
               style={{ fontSize:"13px", minHeight:"40px" }}>
               <ArrowLeft className="w-4 h-4"/>
               <span className="hidden sm:inline">Accueil</span>
             </button>
             <div className="flex-1 min-w-0">
-              <h1 className="font-bold text-[#1a365d] truncate" style={{ fontSize:"15px" }}>
+              <h1 className="font-bold text-primary truncate" style={{ fontSize:"15px" }}>
                 Gestion des Élèves — CE2
               </h1>
-              <p className="text-gray-400 mt-0.5 hidden sm:block" style={{ fontSize:"10px" }}>
+              <p className="text-[var(--muted-foreground)] mt-0.5 hidden sm:block" style={{ fontSize:"10px" }}>
                 École Ilyaou Mamadou SEYDI · IEF Kolda · CE2
               </p>
             </div>
             {/* Trimestre selector */}
             <div className="flex items-center gap-1 p-0.5 rounded-lg shrink-0"
-                 style={{ backgroundColor:"#f1f5f9" }}>
+                 style={{ backgroundColor:"var(--muted)" }}>
               {([1,2,3] as (1|2|3)[]).map(t => (
                 <button key={t} onClick={() => setTrimestre(t)}
                   className="rounded-md font-bold transition-all"
                   style={{
                     minHeight:"32px", padding:"0 10px", fontSize:"11px",
-                    backgroundColor: trimestre===t ? "#1a365d" : "transparent",
-                    color:           trimestre===t ? "#fff" : "#64748b",
+                    backgroundColor: trimestre===t ? "var(--primary)" : "transparent",
+                    color:           trimestre===t ? "#fff" : "var(--muted-foreground)",
                   }}>
                   T{t}
                 </button>
@@ -1807,7 +1807,7 @@ export function ElevesScreen() {
               className="inline-flex items-center gap-1.5 rounded-xl font-bold transition-all active:scale-95 shrink-0"
               title="Ajouter un élève"
               style={{ minHeight:"36px", padding:"0 12px", fontSize:"12px",
-                       backgroundColor:"#3182ce", color:"#fff",
+                       backgroundColor:"var(--secondary)", color:"#fff",
                        boxShadow:"0 2px 8px rgba(49,130,206,0.30)" }}>
               <Plus className="w-4 h-4 shrink-0"/>
               <span className="hidden sm:inline">Ajouter</span>

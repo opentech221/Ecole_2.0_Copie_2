@@ -230,11 +230,11 @@ function EditField({ label, value, onChange, type="text", placeholder="", icon }
         {icon && <span className="text-gray-400 shrink-0 text-[13px]">{icon}</span>}
         <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{label}</span>
       </div>
-      <input type={type} value={value} onChange={e=>onChange(e.target.value)}
+         <input type={type} value={value} onChange={e=>onChange(e.target.value)}
         placeholder={placeholder}
-        className="text-[13px] font-semibold text-[#1a365d] px-3 py-2.5 rounded-xl outline-none w-full"
-        style={{ fontFamily:"'Plus Jakarta Sans',sans-serif", minHeight:"44px",
-                 backgroundColor:"#fff", border:`1.5px solid ${focused?"#3182ce":"#e2e8f0"}`,
+           className="text-[13px] font-semibold text-primary px-3 py-2.5 rounded-xl outline-none w-full"
+           style={{ fontFamily:"'Plus Jakarta Sans',sans-serif", minHeight:"44px",
+                    backgroundColor:"var(--card)", border:`1.5px solid ${focused?"var(--primary)":"var(--border)"}`,
                  transition:"border-color 150ms" }}
         onFocus={()=>setFocused(true)} onBlur={()=>setFocused(false)}/>
     </div>
@@ -243,9 +243,9 @@ function EditField({ label, value, onChange, type="text", placeholder="", icon }
 
 type Tone = "blue"|"amber"|"slate";
 const TONE: Record<Tone,{bg:string;border:string;text:string;dot:string}> = {
-  blue:  { bg:"#eff6ff", border:"#bfdbfe", text:"#1e3a8a", dot:"#2563eb" },
-  amber: { bg:"#fffbeb", border:"#fde68a", text:"#78350f", dot:"#d97706" },
-  slate: { bg:"#f8fafc", border:"#e2e8f0", text:"#1a365d", dot:"#64748b" },
+  blue:  { bg:"var(--accent)", border:"var(--border)", text:"var(--primary)", dot:"var(--secondary)" },
+  amber: { bg:"var(--muted)", border:"var(--border)", text:"var(--foreground)", dot:"var(--secondary)" },
+  slate: { bg:"var(--card)", border:"var(--border)", text:"var(--primary)", dot:"var(--muted-foreground)" },
 };
 
 function HighlightField({ label, value, tone, icon }: {
@@ -265,7 +265,6 @@ function HighlightField({ label, value, tone, icon }: {
     </div>
   );
 }
-
 // ─── OO callout — mini sparkle button in header, textarea always editable ─────
 
 function OOCallout({ value, onChange, onGenerate, generating, genCount }: {
@@ -557,7 +556,7 @@ function SectionCard({ icon, title, subtitle, open, onToggle, children, error, e
             <span className="text-white">{error ? <AlertCircle className="w-4 h-4"/> : icon}</span>
           </div>
           <div>
-            <p className="text-[13px] font-bold leading-tight" style={{ color: error?"#b91c1c":"#1a365d" }}>
+            <p className="text-[13px] font-bold leading-tight" style={{ color: error?"#b91c1c":"var(--primary)" }}>
               {title}
             </p>
             {error && errorMsg
@@ -977,7 +976,7 @@ export function LessonEditor() {
   if (blocked) return <ProfileGuardLoader blocked onSkip={skip} />;
 
   return (
-    <div className="min-h-screen bg-[#f4f6f9] flex flex-col"
+    <div className="min-h-screen bg-background flex flex-col"
          style={{ fontFamily:"'Plus Jakarta Sans',sans-serif" }}>
 
       {/* ══ VALIDATION TOAST ════════════════════════════════════════════════ */}
@@ -1023,14 +1022,14 @@ export function LessonEditor() {
         {/* Nav */}
         <div className="max-w-7xl mx-auto px-4 md:px-6 pt-3 pb-2 flex items-center gap-3">
           <button onClick={handleBack}
-            className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#1a365d] hover:text-[#3182ce] transition-colors shrink-0"
+            className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-primary hover:text-secondary transition-colors shrink-0"
             style={{ minHeight:"44px" }}>
             <ArrowLeft className="w-4 h-4"/>
             <span className="hidden sm:inline">Retour aux contenus</span>
             <span className="sm:hidden">Retour</span>
           </button>
           <div className="flex-1 text-center">
-            <h1 className="text-[14px] md:text-[16px] font-bold text-[#1a365d] truncate">
+            <h1 className="text-[14px] md:text-[16px] font-bold text-primary truncate">
               Édition de la démarche pédagogique
             </h1>
           </div>
@@ -1064,7 +1063,7 @@ export function LessonEditor() {
                            border:`1.5px solid ${headerOpen?"#bfdbfe":"#e2e8f0"}` }}>
             <div className="flex items-center gap-2 min-w-0">
               <Check className="w-3.5 h-3.5 shrink-0" style={{ color:"#3182ce" }}/>
-              <span className="text-[12px] font-semibold text-[#1a365d] truncate">Contenus sélectionnés</span>
+                <span className="text-[12px] font-semibold text-primary truncate">Contenus sélectionnés</span>
               <span className="inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold text-white shrink-0"
                     style={{ backgroundColor:"#3182ce" }}>{contenus.length}</span>
             </div>
@@ -1138,8 +1137,8 @@ export function LessonEditor() {
                   </span>
                 ))}
               </div>
-              <span className="text-[10px] font-bold px-2 py-1 rounded-full shrink-0"
-                    style={{ backgroundColor:"#eef4ff", color:"#3182ce" }}>
+                <span className="text-[10px] font-bold px-2 py-1 rounded-full shrink-0"
+                  style={{ backgroundColor:"var(--accent)", color:"var(--primary)" }}>
                 Fiche unifiée
               </span>
             </div>

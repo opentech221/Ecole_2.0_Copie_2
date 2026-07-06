@@ -844,7 +844,7 @@ export function PlanningScreen() {
   const minWidth = hndW + sdW + actW + WEEK_W * 4;
 
   return (
-    <div className="bg-[#f4f6f9] flex flex-col overflow-hidden"
+    <div className="bg-background flex flex-col overflow-hidden"
          style={{ height:"calc(100vh - 36px)", fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
 
       {/* ══ PRINT CSS ════════════════════════════════════════════════════════
@@ -914,21 +914,21 @@ export function PlanningScreen() {
            • Controls block — collapses via max-height transition.
            • Toggle tab — always visible between controls and the table.
          ═══════════════════════════════════════════════════════════════════════ */}
-      <div className="bg-white flex-shrink-0"
-           style={{ boxShadow: "0 1px 0 #e5e7eb, 0 2px 10px rgba(0,0,0,0.06)",
+       <div className="bg-card flex-shrink-0"
+         style={{ boxShadow: "0 1px 0 var(--border), 0 2px 10px rgba(0,0,0,0.06)",
                     zIndex: 50, position: "relative" }}>
         <div className="max-w-4xl mx-auto px-4">
 
           {/* Nav */}
-          <div className="flex items-center gap-3 pt-3.5 pb-2 border-b border-gray-50">
+          <div className="flex items-center gap-3 pt-3.5 pb-2 border-b border-border">
             <button onClick={() => navigate("/")}
-              className="no-print inline-flex items-center gap-1.5 font-semibold text-[#1a365d]
-                         hover:text-[#3182ce] transition-colors shrink-0"
+              className="no-print inline-flex items-center gap-1.5 font-semibold text-primary
+                         hover:text-secondary transition-colors shrink-0"
               style={{ minHeight: "40px", fontSize: "13px" }}>
               <ArrowLeft className="w-4 h-4" />
               <span className="hidden sm:inline">Accueil</span>
             </button>
-            <p className="font-bold text-[#1a365d] flex-1 truncate" style={{ fontSize: "14px" }}>
+            <p className="font-bold text-primary flex-1 truncate" style={{ fontSize: "14px" }}>
               Planification Trimestrielle
             </p>
           </div>

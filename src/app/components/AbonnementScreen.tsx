@@ -14,9 +14,9 @@ const PLANS = [
     name:     "Découverte",
     price:    "0",
     period:   "Gratuit",
-    color:    "#64748b",
-    bg:       "#f8fafc",
-    border:   "#e2e8f0",
+    color:    "var(--muted-foreground)",
+    bg:       "var(--card)",
+    border:   "var(--border)",
     badge:    null,
     features: [
       { label: "5 fiches de préparation/mois",      ok: true  },
@@ -33,9 +33,9 @@ const PLANS = [
     name:     "Enseignant Pro",
     price:    "2 500",
     period:   "FCFA / mois",
-    color:    "#1a365d",
-    bg:       "#eff6ff",
-    border:   "#1a365d",
+    color:    "var(--primary)",
+    bg:       "var(--accent)",
+    border:   "var(--primary)",
     badge:    "Recommandé",
     features: [
       { label: "Fiches illimitées",                  ok: true  },
@@ -52,9 +52,9 @@ const PLANS = [
     name:     "École Premium",
     price:    "7 500",
     period:   "FCFA / mois",
-    color:    "#7c3aed",
-    bg:       "#faf5ff",
-    border:   "#7c3aed",
+    color:    "var(--accent-foreground)",
+    bg:       "var(--muted)",
+    border:   "var(--accent-foreground)",
     badge:    "Complet",
     features: [
       { label: "Fiches illimitées",                  ok: true  },
@@ -148,9 +148,9 @@ function PlanCard({ plan, isCurrent }: { plan: typeof PLANS[0]; isCurrent: boole
         {plan.features.map((f, i) => (
           <li key={i} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             {f.ok
-              ? <Check style={{ width: 14, height: 14, color: "#059669", flexShrink: 0 }} />
-              : <X    style={{ width: 14, height: 14, color: "#cbd5e1", flexShrink: 0 }} />}
-            <span style={{ fontSize: "12.5px", color: f.ok ? "#334155" : "#94a3b8",
+              ? <Check style={{ width: 14, height: 14, color: "var(--secondary)", flexShrink: 0 }} />
+              : <X    style={{ width: 14, height: 14, color: "var(--muted-foreground)", flexShrink: 0 }} />}
+            <span style={{ fontSize: "12.5px", color: f.ok ? "var(--foreground)" : "var(--muted-foreground)",
                            fontFamily: FF }}>
               {f.label}
             </span>
@@ -167,8 +167,8 @@ function PlanCard({ plan, isCurrent }: { plan: typeof PLANS[0]; isCurrent: boole
         fontWeight:      700,
         cursor:          isCurrent ? "default" : "pointer",
         border:          "none",
-        backgroundColor: isCurrent ? "#f1f5f9" : plan.color,
-        color:           isCurrent ? "#94a3b8" : "#fff",
+        backgroundColor: isCurrent ? "var(--muted)" : plan.color,
+        color:           isCurrent ? "var(--muted-foreground)" : "#fff",
         fontFamily:      FF,
       }}>
         {isCurrent ? "Offre actuelle" : "Passer à ce niveau"}

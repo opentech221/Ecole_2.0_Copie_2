@@ -38,9 +38,9 @@ export function ProfileGuardLoader({ loading, blocked, onSkip }: Props) {
             width="56" height="56" viewBox="0 0 56 56"
             style={{ position: "absolute", inset: 0, animation: "pgSpin 1.1s linear infinite" }}
           >
-            <circle cx="28" cy="28" r="24" fill="none" stroke="#e2e8f0" strokeWidth="3" />
+            <circle cx="28" cy="28" r="24" fill="none" stroke="var(--border)" strokeWidth="3" />
             <circle
-              cx="28" cy="28" r="24" fill="none" stroke="#3182ce" strokeWidth="3"
+              cx="28" cy="28" r="24" fill="none" stroke="var(--secondary)" strokeWidth="3"
               strokeDasharray="40 110" strokeLinecap="round"
             />
           </svg>
@@ -48,10 +48,10 @@ export function ProfileGuardLoader({ loading, blocked, onSkip }: Props) {
             position: "absolute", inset: 0,
             display: "flex", alignItems: "center", justifyContent: "center",
           }}>
-            <GraduationCap style={{ width: 24, height: 24, color: "#1a365d" }} />
+            <GraduationCap style={{ width: 24, height: 24, color: "var(--primary)" }} />
           </div>
         </div>
-        <p style={{ fontSize: "13px", fontWeight: 600, color: "#64748b", margin: 0 }}>
+        <p style={{ fontSize: "13px", fontWeight: 600, color: "var(--muted-foreground)", margin: 0 }}>
           Vérification du profil…
         </p>
         <style>{`@keyframes pgSpin { to { transform: rotate(360deg); } }`}</style>
@@ -70,27 +70,27 @@ export function ProfileGuardLoader({ loading, blocked, onSkip }: Props) {
       }}>
         <div style={{
           width: "100%", maxWidth: "420px",
-          backgroundColor: "#fff", borderRadius: "20px",
-          border: "1px solid #e2e8f0",
-          boxShadow: "0 8px 32px rgba(26,54,93,0.10)",
+          backgroundColor: "var(--card)", borderRadius: "20px",
+          border: "1px solid var(--border)",
+          boxShadow: "0 8px 32px color-mix(in srgb, var(--primary) 10%, transparent)",
           overflow: "hidden",
         }}>
           {/* Header strip */}
           <div style={{
-            backgroundColor: "#fffbeb",
-            borderBottom: "1px solid #fde68a",
+            backgroundColor: "var(--accent)",
+            borderBottom: "1px solid var(--border)",
             padding: "16px 20px",
             display: "flex", alignItems: "center", gap: "10px",
           }}>
-            <AlertTriangle style={{ width: 20, height: 20, color: "#d97706", flexShrink: 0 }} />
-            <p style={{ fontSize: "14px", fontWeight: 800, color: "#92400e", margin: 0 }}>
+            <AlertTriangle style={{ width: 20, height: 20, color: "var(--secondary)", flexShrink: 0 }} />
+            <p style={{ fontSize: "14px", fontWeight: 800, color: "var(--secondary)", margin: 0 }}>
               Profil incomplet
             </p>
           </div>
 
           {/* Body */}
           <div style={{ padding: "20px" }}>
-            <p style={{ fontSize: "13px", color: "#475569", lineHeight: 1.65, margin: "0 0 20px" }}>
+            <p style={{ fontSize: "13px", color: "var(--foreground)", lineHeight: 1.65, margin: "0 0 20px" }}>
               Le <strong>nom de l'école</strong> et votre <strong>nom complet</strong> sont
               nécessaires pour générer des documents officiels avec un en-tête correct.
             </p>
@@ -100,11 +100,11 @@ export function ProfileGuardLoader({ loading, blocked, onSkip }: Props) {
               onClick={() => navigate("/profil")}
               style={{
                 width: "100%", padding: "12px 16px", borderRadius: "12px",
-                backgroundColor: "#1a365d", color: "#fff",
+                backgroundColor: "var(--primary)", color: "#fff",
                 fontWeight: 700, fontSize: "14px",
                 border: "none", cursor: "pointer",
                 display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
-                boxShadow: "0 3px 12px rgba(26,54,93,0.25)",
+                boxShadow: "0 3px 12px color-mix(in srgb, var(--primary) 25%, transparent)",
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
                 marginBottom: "10px",
               }}

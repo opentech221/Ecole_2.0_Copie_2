@@ -8,28 +8,32 @@ import {
 // ─── Activity color map (matches PlanningScreen) ──────────────────────────────
 
 const ACTIVITY_COLORS: Record<string, string> = {
-  "Activités Numériques":    "#059669",
-  "Activités Géométriques":  "#1d4ed8",
-  "Activités de Mesure":     "#0891b2",
-  "Résolution de Problèmes": "#7c3aed",
-  "Lecture":                 "#dc2626",
-  "Grammaire":               "#2563eb",
-  "Conjugaison":             "#9333ea",
-  "Orthographe":             "#be185d",
-  "Expression orale":        "#ea580c",
-  "Récitation":              "#c026d3",
-  "Histoire":                "#b45309",
-  "IST (Initiation Scientifique et Technologique)": "#0e7490",
-  "Géographie":              "#15803d",
-  "Vivre dans son milieu":   "#166534",
-  "Vivre ensemble":          "#4338ca",
-  "EPS":                     "#ef4444",
-  "Arts plastiques":         "#f97316",
-  "Éducation Musicale":      "#8b5cf6",
+  "Activités Numériques":    "var(--secondary)",
+  "Activités Géométriques":  "var(--primary)",
+  "Activités de Mesure":     "var(--accent-foreground)",
+  "Résolution de Problèmes": "var(--secondary)",
+  "Lecture":                 "var(--primary)",
+  "Grammaire":               "var(--secondary)",
+  "Conjugaison":             "var(--accent-foreground)",
+  "Orthographe":             "var(--destructive)",
+  "Expression orale":        "var(--secondary)",
+  "Récitation":              "var(--accent-foreground)",
+  "Histoire":                "var(--primary)",
+  "IST (Initiation Scientifique et Technologique)": "var(--accent-foreground)",
+  "Géographie":              "var(--secondary)",
+  "Vivre dans son milieu":   "var(--secondary)",
+  "Vivre ensemble":          "var(--primary)",
+  "EPS":                     "var(--destructive)",
+  "Arts plastiques":         "var(--accent-foreground)",
+  "Éducation Musicale":      "var(--primary)",
 };
 
 function getColor(name: string): string {
-  return ACTIVITY_COLORS[name] ?? "#6366f1";
+  return ACTIVITY_COLORS[name] ?? "var(--secondary)";
+}
+
+function tint(color: string, amount: number, background = "transparent"): string {
+  return `color-mix(in srgb, ${color} ${amount}%, ${background})`;
 }
 
 // ─── Timetable data ───────────────────────────────────────────────────────────
@@ -137,43 +141,43 @@ interface EvalDomain { label: string; color: string; osList: EvalOS[] }
 
 const EVAL_DOMAINS: EvalDomain[] = [
   {
-    label: "Mathématiques", color: "#2563eb",
+    label: "Mathématiques", color: "var(--primary)",
     osList: [
-      { label: "OS1.1 · Lire et écrire les nombres de 0 à 100",         color: "#059669" },
-      { label: "OS1.2 · Décomposer les nombres (C, D, U)",               color: "#059669" },
-      { label: "OS2.1 · Calculer des additions avec retenue",            color: "#059669" },
-      { label: "OS1.1 · Identifier le carré et le rectangle",            color: "#1d4ed8" },
-      { label: "OS1.1 · Mesurer un segment avec la règle",               color: "#0891b2" },
-      { label: "OS1.1 · Identifier les données d'un problème",           color: "#7c3aed" },
+      { label: "OS1.1 · Lire et écrire les nombres de 0 à 100",         color: "var(--secondary)" },
+      { label: "OS1.2 · Décomposer les nombres (C, D, U)",               color: "var(--secondary)" },
+      { label: "OS2.1 · Calculer des additions avec retenue",            color: "var(--secondary)" },
+      { label: "OS1.1 · Identifier le carré et le rectangle",            color: "var(--primary)" },
+      { label: "OS1.1 · Mesurer un segment avec la règle",               color: "var(--accent-foreground)" },
+      { label: "OS1.1 · Identifier les données d'un problème",           color: "var(--destructive)" },
     ],
   },
   {
-    label: "Langue & Communication", color: "#7c3aed",
+    label: "Langue & Communication", color: "var(--secondary)",
     osList: [
-      { label: "OS1.2 · Lire à voix haute avec intonation",              color: "#dc2626" },
-      { label: "OS1.3 · Répondre à des questions de compréhension",      color: "#dc2626" },
-      { label: "OS1.1 · Reconnaître noms communs et propres",            color: "#2563eb" },
-      { label: "OS1.1 · Conjuguer au présent de l'indicatif",            color: "#9333ea" },
-      { label: "OS1.1 · Appliquer les règles d'accord",                  color: "#be185d" },
-      { label: "OS1.1 · Se présenter et décrire oralement",              color: "#ea580c" },
+      { label: "OS1.2 · Lire à voix haute avec intonation",              color: "var(--destructive)" },
+      { label: "OS1.3 · Répondre à des questions de compréhension",      color: "var(--destructive)" },
+      { label: "OS1.1 · Reconnaître noms communs et propres",            color: "var(--primary)" },
+      { label: "OS1.1 · Conjuguer au présent de l'indicatif",            color: "var(--accent-foreground)" },
+      { label: "OS1.1 · Appliquer les règles d'accord",                  color: "var(--secondary)" },
+      { label: "OS1.1 · Se présenter et décrire oralement",              color: "var(--accent-foreground)" },
     ],
   },
   {
-    label: "ESVS", color: "#059669",
+    label: "ESVS", color: "var(--accent-foreground)",
     osList: [
-      { label: "OS1.1 · Nommer des événements clés (Histoire)",          color: "#b45309" },
-      { label: "OS1.1 · Nommer les fleuves principaux",                  color: "#15803d" },
-      { label: "OS1.1 · Formuler une hypothèse (IST)",                   color: "#0e7490" },
-      { label: "OS1.1 · Identifier sources de pollution",                color: "#166534" },
-      { label: "OS1.1 · Identifier les valeurs civiques",                color: "#4338ca" },
+      { label: "OS1.1 · Nommer des événements clés (Histoire)",          color: "var(--primary)" },
+      { label: "OS1.1 · Nommer les fleuves principaux",                  color: "var(--secondary)" },
+      { label: "OS1.1 · Formuler une hypothèse (IST)",                   color: "var(--accent-foreground)" },
+      { label: "OS1.1 · Identifier sources de pollution",                color: "var(--secondary)" },
+      { label: "OS1.1 · Identifier les valeurs civiques",                color: "var(--primary)" },
     ],
   },
   {
-    label: "EPSA", color: "#ea580c",
+    label: "EPSA", color: "var(--destructive)",
     osList: [
-      { label: "OS1.1 · Pratiquer des jeux collectifs (EPS)",            color: "#ef4444" },
-      { label: "OS1.1 · Chanter en groupe avec justesse",                color: "#8b5cf6" },
-      { label: "OS1.1 · Réaliser une production plastique",              color: "#f97316" },
+      { label: "OS1.1 · Pratiquer des jeux collectifs (EPS)",            color: "var(--destructive)" },
+      { label: "OS1.1 · Chanter en groupe avec justesse",                color: "var(--accent-foreground)" },
+      { label: "OS1.1 · Réaliser une production plastique",              color: "var(--secondary)" },
     ],
   },
 ];
@@ -241,24 +245,24 @@ function ActivityCard({
       className="rounded-2xl overflow-hidden"
       style={{
         backgroundColor: "var(--card)",
-        borderTop:    `1px solid ${color}28`,
-        borderRight:  `1px solid ${color}28`,
-        borderBottom: `1px solid ${color}28`,
+        borderTop:    `1px solid ${tint(color, 28)}`,
+        borderRight:  `1px solid ${tint(color, 28)}`,
+        borderBottom: `1px solid ${tint(color, 28)}`,
         borderLeft:   `5px solid ${color}`,
-        boxShadow: `0 2px 10px ${color}14`,
+        boxShadow: `0 2px 10px ${tint(color, 14)}`,
       }}
     >
       {/* Card header row */}
       <div
         className="flex items-center gap-2 px-3 py-2.5 flex-wrap"
-        style={{ backgroundColor: `${color}0d`, borderBottom: `1px solid ${color}18` }}
+        style={{ backgroundColor: tint(color, 6, "var(--background)"), borderBottom: `1px solid ${tint(color, 18)}` }}
       >
         {/* Time badge */}
         <span
           style={{
             fontSize: "11px", fontWeight: 800,
             padding: "3px 10px", borderRadius: "999px",
-            backgroundColor: `${color}1a`, color,
+            backgroundColor: tint(color, 16, "var(--background)"), color,
             flexShrink: 0,
           }}
         >
@@ -270,7 +274,7 @@ function ActivityCard({
           style={{
             fontSize: "9px", fontWeight: 900,
             padding: "2px 8px", borderRadius: "6px",
-            backgroundColor: color, color: "#fff",
+            backgroundColor: color, color: "var(--primary-foreground)",
             flexShrink: 0, letterSpacing: "0.04em",
           }}
         >
@@ -299,19 +303,19 @@ function ActivityCard({
       <div className="px-3 pb-2 flex gap-2 flex-wrap">
         <StatusPill
           label="✓ Fait"
-          color="#059669"
+          color="var(--secondary)"
           active={state.status === "fait"}
           onClick={() => onChange({ status: state.status === "fait" ? null : "fait" })}
         />
         <StatusPill
           label="⏳ En cours"
-          color="#d97706"
+          color="var(--accent-foreground)"
           active={state.status === "en-cours"}
           onClick={() => onChange({ status: state.status === "en-cours" ? null : "en-cours" })}
         />
         <StatusPill
           label="↩ À reporter"
-          color="#dc2626"
+          color="var(--destructive)"
           active={state.status === "a-reporter"}
           onClick={() => onChange({ status: state.status === "a-reporter" ? null : "a-reporter" })}
         />
@@ -361,9 +365,9 @@ function ActivityCard({
               padding: "10px 12px",
               fontSize: "12px",
               fontFamily: "'Plus Jakarta Sans', sans-serif",
-              color: "#374151",
+              color: "var(--foreground)",
               backgroundColor: "var(--muted)",
-              border: `1.5px solid ${color}30`,
+              border: `1.5px solid ${tint(color, 30)}`,
               outline: "none",
               lineHeight: 1.5,
               boxSizing: "border-box",
@@ -383,7 +387,7 @@ function MarkPastille({
   mark: EvalMark; value: EvalMark; color: string; onClick: () => void;
 }) {
   const LABELS: Record<NonNullable<EvalMark>, string> = { NM: "NM", A: "A", M: "M" };
-  const COLORS: Record<NonNullable<EvalMark>, string> = { NM: "#dc2626", A: "#d97706", M: "#059669" };
+  const COLORS: Record<NonNullable<EvalMark>, string> = { NM: "var(--destructive)", A: "var(--accent-foreground)", M: "var(--secondary)" };
   const active = mark === value;
   const c = COLORS[value!];
 
@@ -395,9 +399,9 @@ function MarkPastille({
         borderRadius: "50%",
         fontSize: "11px", fontWeight: 800,
         fontFamily: "'Plus Jakarta Sans', sans-serif",
-        backgroundColor: active ? c : `${c}18`,
-        color: active ? "#fff" : c,
-        border: `2px solid ${active ? c : `${c}40`}`,
+        backgroundColor: active ? c : tint(c, 18, "var(--background)"),
+        color: active ? "var(--primary-foreground)" : c,
+        border: `2px solid ${active ? c : tint(c, 40, "var(--background)")}`,
         cursor: "pointer",
         transition: "all 180ms ease",
         flexShrink: 0,

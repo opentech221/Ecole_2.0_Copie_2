@@ -489,14 +489,14 @@ export function PreviewScreen() {
            style={{ fontFamily:"'Plus Jakarta Sans',sans-serif", backgroundColor:"#dde1e7" }}>
 
         {/* ══ STICKY HEADER ═══════════════════════════════════════════════════ */}
-        <div className="no-print sticky top-0 z-30 bg-white"
-             style={{ boxShadow:"0 1px 0 #e5e7eb, 0 2px 12px rgba(0,0,0,0.07)" }}>
+           <div className="no-print sticky top-0 z-30 bg-card"
+             style={{ boxShadow:"0 1px 0 var(--border), 0 2px 12px rgba(0,0,0,0.07)" }}>
           <div className="max-w-5xl mx-auto px-4 md:px-6">
 
             {/* Title row */}
             <div className="flex items-center gap-3 pt-3 pb-2 flex-wrap">
               <button onClick={() => navigate(-1)}
-                className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#1a365d] hover:text-[#3182ce] transition-colors shrink-0"
+                className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-primary hover:text-secondary transition-colors shrink-0"
                 style={{ minHeight:"44px" }}>
                 <ArrowLeft className="w-4 h-4"/>
                 <span className="hidden sm:inline">← Éditeur</span>
@@ -504,10 +504,10 @@ export function PreviewScreen() {
               </button>
 
               <div className="flex-1 min-w-0">
-                <h1 className="text-[15px] md:text-[17px] font-bold text-[#1a365d] truncate">
+                <h1 className="text-[15px] md:text-[17px] font-bold text-primary truncate">
                   {isMulti ? `${contenus.length} fiches générées` : "Fiche Prête à l'usage"}
                 </h1>
-                <p className="text-[11px] text-gray-400 mt-0.5 hidden md:block">
+                <p className="text-[11px] text-[var(--muted-foreground)] mt-0.5 hidden md:block">
                   {isMulti
                     ? `Mode fiches indépendantes · ${discipline}`
                     : `${contenus.length} séquence${contenus.length>1?"s":""} · ${discipline}`}
@@ -516,10 +516,10 @@ export function PreviewScreen() {
 
               {/* Offline badge */}
               <div className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 shrink-0"
-                   style={{ backgroundColor:"#f0fdf4", border:"1px solid #86efac" }}>
-                <WifiOff className="w-3 h-3" style={{ color:"#16a34a" }}/>
-                <Check   className="w-3 h-3" style={{ color:"#16a34a" }}/>
-                <span className="text-[10px] font-bold hidden sm:inline" style={{ color:"#15803d" }}>
+                   style={{ backgroundColor:"var(--accent)", border:"1px solid var(--border)" }}>
+                 <WifiOff className="w-3 h-3" style={{ color:"var(--secondary)" }}/>
+                 <Check   className="w-3 h-3" style={{ color:"var(--secondary)" }}/>
+                 <span className="text-[10px] font-bold hidden sm:inline" style={{ color:"var(--secondary)" }}>
                   Enregistré hors-ligne
                 </span>
               </div>
@@ -538,8 +538,8 @@ export function PreviewScreen() {
                   title={!hasEcoleNom ? "Renseignez le nom de l'école dans votre profil" : undefined}
                   className="w-full inline-flex items-center justify-center gap-2 rounded-xl text-[14px] font-bold text-white transition-all active:scale-[0.98]"
                   style={{ minHeight:"48px",
-                           backgroundColor: !hasEcoleNom ? "#cbd5e1" : downloaded?"#059669":"#1a365d",
-                           boxShadow: !hasEcoleNom ? "none" : "0 3px 14px rgba(26,54,93,0.28)",
+                           backgroundColor: !hasEcoleNom ? "var(--muted)" : downloaded?"var(--secondary)":"var(--primary)",
+                           boxShadow: !hasEcoleNom ? "none" : "0 3px 14px color-mix(in srgb, var(--primary) 28%, transparent)",
                            cursor: !hasEcoleNom ? "not-allowed" : "pointer",
                            transition:"background-color 200ms" }}>
                   {downloaded?<Check className="w-5 h-5 shrink-0"/>:<Download className="w-5 h-5 shrink-0"/>}
@@ -559,9 +559,9 @@ export function PreviewScreen() {
                       className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl text-[12px] font-semibold transition-all active:scale-95"
                       style={{ minHeight:"44px",
                                cursor: !hasEcoleNom ? "not-allowed" : "pointer",
-                               color: !hasEcoleNom ? "#94a3b8" : batchDone?"#059669":"#1a365d",
-                               backgroundColor: !hasEcoleNom ? "#f1f5f9" : batchDone?"#f0fdf4":"#eef4ff",
-                               border:`1.5px solid ${!hasEcoleNom ? "#e2e8f0" : batchDone?"#86efac":"#bfdbfe"}` }}>
+                               color: !hasEcoleNom ? "var(--muted-foreground)" : batchDone?"var(--secondary)":"var(--primary)",
+                               backgroundColor: !hasEcoleNom ? "var(--muted)" : batchDone?"var(--accent)":"var(--accent)",
+                               border:`1.5px solid var(--border)` }}>
                       {batchDone?<Check className="w-4 h-4 shrink-0"/>:<FileDown className="w-4 h-4 shrink-0"/>}
                       {batchDone ? "Lot prêt !" : "Tout imprimer"}
                     </button>
@@ -572,17 +572,17 @@ export function PreviewScreen() {
                       className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl text-[13px] font-semibold transition-all active:scale-95"
                       style={{ minHeight:"44px",
                                cursor: !hasEcoleNom ? "not-allowed" : "pointer",
-                               color: !hasEcoleNom ? "#94a3b8" : "#1a365d",
-                               backgroundColor:"#f1f5f9", border:"1.5px solid #e2e8f0" }}>
+                               color: !hasEcoleNom ? "var(--muted-foreground)" : "var(--primary)",
+                               backgroundColor:"var(--muted)", border:"1.5px solid var(--border)" }}>
                       <Printer className="w-4 h-4 shrink-0"/>Imprimer
                     </button>
                   )}
                   <button onClick={handleShare}
                     className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl text-[13px] font-semibold transition-all active:scale-95"
                     style={{ minHeight:"44px",
-                             color: shared?"#059669":"#1a365d",
-                             backgroundColor: shared?"#f0fdf4":"#f1f5f9",
-                             border:`1.5px solid ${shared?"#86efac":"#e2e8f0"}` }}>
+                             color: shared?"var(--secondary)":"var(--primary)",
+                             backgroundColor: shared?"var(--accent)":"var(--muted)",
+                             border:`1.5px solid var(--border)` }}>
                     {shared?<Check className="w-4 h-4 shrink-0"/>:<Share2 className="w-4 h-4 shrink-0"/>}
                     {shared?"Partagé !":isMulti?"Partager la fiche":"Partager"}
                   </button>

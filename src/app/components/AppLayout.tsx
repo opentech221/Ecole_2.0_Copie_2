@@ -48,9 +48,9 @@ function navItemStyle(active: boolean): React.CSSProperties {
     width: "100%", padding: "9px 12px 9px 14px",
     borderRadius: "10px", fontSize: "13px",
     fontWeight:      active ? 600 : 400,
-    color:           active ? "#059669" : "#475569",
-    backgroundColor: active ? "#ecfdf5" : "transparent",
-    boxShadow:       active ? "inset 3px 0 0 #059669" : "inset 3px 0 0 transparent",
+    color:           active ? "var(--primary)" : "var(--muted-foreground)",
+    backgroundColor: active ? "var(--accent)" : "transparent",
+    boxShadow:       active ? "inset 3px 0 0 var(--primary)" : "inset 3px 0 0 transparent",
     cursor: "pointer", border: "none",
     fontFamily: "'Plus Jakarta Sans', sans-serif",
     transition: "background-color 140ms, color 140ms",
@@ -111,7 +111,7 @@ function UserCard({ profile, onLogout }: { profile: UserProfile | null; onLogout
                     padding: "6px 8px", marginBottom: "6px" }}>
         <div style={{
           width: 32, height: 32, borderRadius: "50%", flexShrink: 0,
-          background: "linear-gradient(135deg, #059669 0%, #0d9488 100%)",
+          background: "linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)",
           display: "flex", alignItems: "center", justifyContent: "center",
           fontSize: "11px", fontWeight: 700, color: "#fff",
           fontFamily: "'Plus Jakarta Sans', sans-serif",
@@ -139,9 +139,9 @@ function UserCard({ profile, onLogout }: { profile: UserProfile | null; onLogout
           display: "flex", alignItems: "center", justifyContent: "center", gap: "6px",
           width: "100%", padding: "7px 12px", borderRadius: "8px",
           fontSize: "12px", fontWeight: 500,
-          color:           hover ? "#ef4444" : "#94a3b8",
+          color:           hover ? "#ef4444" : "var(--muted-foreground)",
           backgroundColor: hover ? "#fff1f2" : "transparent",
-          border:          `1px solid ${hover ? "#fecaca" : "#f1f5f9"}`,
+          border:          `1px solid ${hover ? "#fecaca" : "var(--border)"}`,
           cursor: "pointer", transition: "all 160ms ease",
           fontFamily: "'Plus Jakarta Sans', sans-serif",
         }}
@@ -188,7 +188,7 @@ function DesktopSidebar({ profile, onLogout }: {
       }}>
         <div style={{
           width: 32, height: 32, borderRadius: "8px", flexShrink: 0,
-          background: "linear-gradient(135deg, #0d1f3c 0%, #3182ce 100%)",
+          background: "linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)",
           display: "flex", alignItems: "center", justifyContent: "center",
         }}>
           <GraduationCap style={{ width: 16, height: 16, color: "#fff" }} />
@@ -213,10 +213,10 @@ function DesktopSidebar({ profile, onLogout }: {
           style={{
             display: "flex", alignItems: "center", justifyContent: "center", gap: "7px",
             width: "100%", padding: "10px 14px", borderRadius: "10px",
-            background: "linear-gradient(135deg, #059669 0%, #0d9488 100%)",
+            background: "linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)",
             color: "#fff", fontWeight: 700, fontSize: "13px",
             border: "none", cursor: "pointer",
-            boxShadow: "0 3px 10px rgba(5,150,105,0.28)",
+            boxShadow: "0 3px 10px color-mix(in srgb, var(--primary) 28%, transparent)",
             fontFamily: "'Plus Jakarta Sans', sans-serif",
           }}
         >
@@ -240,8 +240,8 @@ function DesktopSidebar({ profile, onLogout }: {
             Classe active :
           </span>
           <span style={{
-            fontSize: "12px", fontWeight: 800, color: "#059669",
-            backgroundColor: "#ecfdf5", border: "1px solid #a7f3d0",
+            fontSize: "12px", fontWeight: 800, color: "var(--primary)",
+            backgroundColor: "var(--accent)", border: "1px solid var(--border)",
             borderRadius: "5px", padding: "1px 8px",
           }}>
             {activeClass}
@@ -259,9 +259,9 @@ function DesktopSidebar({ profile, onLogout }: {
                 <button key={c} onClick={() => { setActiveClass(c); setClassOpen(false); }}
                   style={{
                     padding: "7px 4px", borderRadius: "7px",
-                    backgroundColor: a ? "#059669" : "#fff",
-                    border: `1.5px solid ${a ? "#059669" : "#e2e8f0"}`,
-                    color: a ? "#fff" : "#475569",
+                    backgroundColor: a ? "var(--primary)" : "var(--card)",
+                    border: `1.5px solid ${a ? "var(--primary)" : "var(--border)"}`,
+                    color: a ? "#fff" : "var(--foreground)",
                     fontSize: "12px", fontWeight: 700, cursor: "pointer",
                     fontFamily: "'Plus Jakarta Sans', sans-serif",
                   }}
@@ -281,7 +281,7 @@ function DesktopSidebar({ profile, onLogout }: {
 
       {/* Navigation */}
       <nav style={{ flex: 1, overflowY: "auto", padding: "8px 12px" }}>
-        <p style={{ fontSize: "10px", fontWeight: 700, color: "#cbd5e1",
+        <p style={{ fontSize: "10px", fontWeight: 700, color: "var(--muted-foreground)",
                     textTransform: "uppercase", letterSpacing: "0.08em",
                     margin: "6px 4px 6px",
                     fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -308,7 +308,7 @@ function DesktopSidebar({ profile, onLogout }: {
         })}
 
         {/* Separator before logout */}
-        <div style={{ height: "1px", backgroundColor: "var(--muted)", margin: "8px 4px" }} />
+        <div style={{ height: "1px", backgroundColor: "var(--border)", margin: "8px 4px" }} />
       </nav>
 
       {/* User card + logout */}
@@ -332,7 +332,7 @@ function MobileTopBar({ activeClass, onMenuOpen }: {
       <div style={{ display: "flex", alignItems: "center", gap: "6px", flex: 1 }}>
         <div style={{
           width: 26, height: 26, borderRadius: "6px",
-          background: "linear-gradient(135deg, #0d1f3c 0%, #3182ce 100%)",
+          background: "linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)",
           display: "flex", alignItems: "center", justifyContent: "center",
         }}>
           <GraduationCap style={{ width: 13, height: 13, color: "#fff" }} />
@@ -343,8 +343,8 @@ function MobileTopBar({ activeClass, onMenuOpen }: {
         </span>
       </div>
       <span style={{
-        fontSize: "11px", fontWeight: 700, color: "#059669",
-        backgroundColor: "#ecfdf5", border: "1px solid #a7f3d0",
+        fontSize: "11px", fontWeight: 700, color: "var(--primary)",
+        backgroundColor: "var(--accent)", border: "1px solid var(--border)",
         borderRadius: "6px", padding: "2px 10px",
       }}>
         {activeClass}
@@ -373,7 +373,7 @@ function MobileBottomNav() {
     <div style={{
       position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 200,
       height: "max(64px, calc(64px + env(safe-area-inset-bottom)))",
-      backgroundColor: "var(--card)", borderTop: "1px solid #e2e8f0",
+      backgroundColor: "var(--card)", borderTop: "1px solid var(--border)",
       display: "flex", alignItems: "center",
       fontFamily: "'Plus Jakarta Sans', sans-serif",
     }}>
@@ -386,7 +386,7 @@ function MobileBottomNav() {
               alignItems: "center", justifyContent: "center",
               gap: "3px", height: "100%", border: "none",
               backgroundColor: "transparent", cursor: "pointer",
-              color: active ? "#059669" : "#94a3b8", position: "relative",
+              color: active ? "var(--primary)" : "var(--muted-foreground)", position: "relative",
             }}
           >
             {active && (
@@ -394,7 +394,7 @@ function MobileBottomNav() {
                 position: "absolute", top: 0, left: "50%",
                 transform: "translateX(-50%)",
                 width: 24, height: 2, borderRadius: "0 0 4px 4px",
-                backgroundColor: "#059669",
+                backgroundColor: "var(--primary)",
               }} />
             )}
             <Icon style={{ width: 20, height: 20, strokeWidth: 1.75 }} />
@@ -462,7 +462,7 @@ function MobileDrawer({ open, onClose, profile, onLogout }: {
       >
         {/* Handle */}
         <div style={{ display: "flex", justifyContent: "center", padding: "10px 0 4px" }}>
-          <div style={{ width: 40, height: 4, borderRadius: 999, backgroundColor: "#e2e8f0" }} />
+          <div style={{ width: 40, height: 4, borderRadius: 999, backgroundColor: "var(--border)" }} />
         </div>
         {/* Header */}
         <div style={{ display: "flex", alignItems: "center",
@@ -471,7 +471,7 @@ function MobileDrawer({ open, onClose, profile, onLogout }: {
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <div style={{
               width: 36, height: 36, borderRadius: "50%", flexShrink: 0,
-              background: "linear-gradient(135deg, #059669 0%, #0d9488 100%)",
+              background: "linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)",
               display: "flex", alignItems: "center", justifyContent: "center",
               fontSize: "13px", fontWeight: 700, color: "#fff",
             }}>
@@ -509,7 +509,7 @@ function MobileDrawer({ open, onClose, profile, onLogout }: {
             style={{
               display: "flex", alignItems: "center", justifyContent: "center", gap: "7px",
               width: "100%", padding: "12px", borderRadius: "12px", marginBottom: "14px",
-              background: "linear-gradient(135deg, #059669 0%, #0d9488 100%)",
+              background: "linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)",
               color: "#fff", fontWeight: 700, fontSize: "14px",
               border: "none", cursor: "pointer",
               boxShadow: "0 4px 14px rgba(5,150,105,0.30)",
@@ -521,7 +521,7 @@ function MobileDrawer({ open, onClose, profile, onLogout }: {
           </button>
 
           {/* Class selector */}
-          <p style={{ fontSize: "10px", fontWeight: 700, color: "#cbd5e1",
+          <p style={{ fontSize: "10px", fontWeight: 700, color: "var(--muted-foreground)",
                       textTransform: "uppercase", letterSpacing: "0.08em",
                       margin: "0 4px 8px", fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             Classe active
@@ -534,9 +534,9 @@ function MobileDrawer({ open, onClose, profile, onLogout }: {
                 <button key={c} onClick={() => setActiveClass(c)}
                   style={{
                     padding: "7px 4px", borderRadius: "7px",
-                    backgroundColor: a ? "#059669" : "#f8fafc",
-                    border: `1.5px solid ${a ? "#059669" : "#e2e8f0"}`,
-                    color: a ? "#fff" : "#475569",
+                    backgroundColor: a ? "var(--primary)" : "var(--card)",
+                    border: `1.5px solid ${a ? "var(--primary)" : "var(--border)"}`,
+                    color: a ? "#fff" : "var(--foreground)",
                     fontSize: "12px", fontWeight: 700, cursor: "pointer",
                     fontFamily: "'Plus Jakarta Sans', sans-serif",
                   }}>{c}</button>

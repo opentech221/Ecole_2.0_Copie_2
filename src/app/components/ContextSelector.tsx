@@ -458,7 +458,7 @@ const CHIP_COLORS: ChipColor[] = [
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
-function SectionLabel({ step, label, color = "#1a365d" }: { step: string; label: string; color?: string }) {
+function SectionLabel({ step, label, color = "var(--primary)" }: { step: string; label: string; color?: string }) {
   return (
     <div className="flex items-center gap-2.5 mb-4">
       <div
@@ -467,8 +467,8 @@ function SectionLabel({ step, label, color = "#1a365d" }: { step: string; label:
       >
         {step}
       </div>
-      <span className="text-[13px] font-bold text-[#1a365d] uppercase tracking-wider">{label}</span>
-      <div className="flex-1 h-px bg-[#1a365d]/10" />
+      <span className="text-[13px] font-bold text-primary uppercase tracking-wider">{label}</span>
+      <div className="flex-1 h-px bg-primary/10" />
     </div>
   );
 }
@@ -488,9 +488,9 @@ function Dropdown({
   return (
     <div className={`transition-opacity duration-200 ${isLocked && !loading ? "opacity-50" : "opacity-100"}`}>
       <div className="flex items-center justify-between mb-1.5">
-        <label className="text-[11px] font-bold text-[#2d3748] uppercase tracking-wider">{label}</label>
+        <label className="text-[11px] font-bold text-foreground uppercase tracking-wider">{label}</label>
         <div className="flex items-center gap-1.5">
-          {loading && <Loader2 className="w-3.5 h-3.5 text-[#3182ce] animate-spin"/>}
+          {loading && <Loader2 className="w-3.5 h-3.5 text-primary animate-spin"/>}
           {hint && !loading && <span className="text-[10px] text-gray-400">{hint}</span>}
         </div>
       </div>
@@ -503,10 +503,10 @@ function Dropdown({
             ${isLocked
               ? "bg-gray-50 border-gray-200 text-gray-400 cursor-not-allowed"
               : filled
-                ? "bg-[#eef4ff] border-[#3182ce] text-[#1a365d]"
-                : "bg-white border-gray-200 text-gray-400 hover:border-gray-300 focus:border-[#3182ce] cursor-pointer"
+                ? "bg-accent border-primary text-primary"
+                  : "bg-card border-border text-muted-foreground hover:border-primary focus:border-primary cursor-pointer"
             }`}
-          style={filled ? { boxShadow: "0 0 0 3px rgba(49,130,206,0.10)" } : {}}
+            style={filled ? { boxShadow: "0 0 0 3px color-mix(in srgb, var(--primary) 10%, transparent)" } : {}}
         >
           <option value="">{loading ? "Mise à jour…" : placeholder}</option>
           {options.map((o) => (
@@ -515,8 +515,8 @@ function Dropdown({
         </select>
         <span className="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none">
           {loading
-            ? <Loader2 className="w-4 h-4 text-[#3182ce] animate-spin"/>
-            : <ChevronDown className={`w-4 h-4 transition-colors ${filled ? "text-[#3182ce]" : "text-gray-300"}`}/>}
+            ? <Loader2 className="w-4 h-4 text-primary animate-spin"/>
+            : <ChevronDown className={`w-4 h-4 transition-colors ${filled ? "text-primary" : "text-gray-300"}`}/>} 
         </span>
       </div>
       {disabled && !loading && disabledReason && (
@@ -656,12 +656,12 @@ export function ContextSelector() {
   if (blocked) return <ProfileGuardLoader blocked onSkip={skip} />;
 
   return (
-    <div className="min-h-screen bg-[#f8f9fc]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+    <div className="min-h-screen bg-background" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       {/* Mobile: max-w-md card. Desktop: wider container, no shadow */}
-      <div className="max-w-md lg:max-w-4xl mx-auto bg-[#f8f9fc] min-h-screen shadow-2xl lg:shadow-none flex flex-col relative">
+      <div className="max-w-md lg:max-w-4xl mx-auto bg-card min-h-screen shadow-2xl lg:shadow-none flex flex-col relative">
 
         {/* ── Sticky header ─────────────────────────────────── */}
-        <div className="sticky top-0 z-20 bg-[#1a365d] shadow-md overflow-hidden">
+        <div className="sticky top-0 z-20 bg-primary shadow-md overflow-hidden">
           <div className="flex items-center gap-1 px-3 py-4 lg:px-6">
             <button
               onClick={() => navigate("/")}
@@ -671,7 +671,7 @@ export function ContextSelector() {
               <ChevronLeft className="w-5 h-5 text-white" />
             </button>
             <div className="flex-1 min-w-0">
-              <p className="text-blue-300 text-[10px] font-bold uppercase tracking-widest leading-none mb-0.5">
+              <p className="text-[10px] font-bold uppercase tracking-widest leading-none mb-0.5" style={{ color: "var(--accent-foreground)" }}>
                 Nouvelle Fiche · Étape 1 sur 2
               </p>
               <h1 className="text-white text-[16px] font-bold leading-tight truncate">
@@ -691,7 +691,7 @@ export function ContextSelector() {
           {/* Progress bar */}
           <div className="h-1 bg-white/10">
             <div
-              className="h-full bg-[#3182ce] transition-all duration-500 ease-out"
+              className="h-full bg-secondary transition-all duration-500 ease-out"
               style={{ width: `${progressPct}%` }}
             />
           </div>
@@ -701,9 +701,9 @@ export function ContextSelector() {
         <div className="flex-1 overflow-y-auto pb-36 px-4 lg:px-6 pt-4 space-y-4">
 
           {/* Intro pill */}
-          <div className="flex items-start gap-2.5 bg-[#eef4ff] border border-[#3182ce]/20 rounded-xl px-4 py-3">
-            <Info className="w-4 h-4 text-[#3182ce] shrink-0 mt-0.5" />
-            <p className="text-[#1a365d] text-[12px] lg:text-[13px] leading-relaxed">
+          <div className="flex items-start gap-2.5 bg-accent border border-border rounded-xl px-4 py-3">
+            <Info className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+            <p className="text-foreground text-[12px] lg:text-[13px] leading-relaxed">
               Aucune saisie manuelle — sélectionnez chaque paramètre dans l'ordre. Les listes sont issues du programme officiel DEMSG.
             </p>
           </div>
@@ -793,20 +793,20 @@ export function ContextSelector() {
 
             {/* Compétence de Base — read-only info box */}
             <div className="mb-4">
-              <p className="text-[11px] font-bold text-[#2d3748] uppercase tracking-wider mb-1.5">
+              <p className="text-[11px] font-bold uppercase tracking-wider mb-1.5" style={{ color: "var(--foreground)" }}>
                 Compétence de Base (CB)
               </p>
               <div
                 className={`rounded-xl px-4 py-3 flex gap-2.5 transition-all duration-300 ${
                   competence
-                    ? "bg-[#eef4ff] border-2 border-[#3182ce]/30"
+                    ? "bg-accent border-2 border-primary/30"
                     : "bg-gray-50 border-2 border-dashed border-gray-200"
                 }`}
               >
-                <Info className={`w-4 h-4 shrink-0 mt-0.5 ${competence ? "text-[#3182ce]" : "text-gray-300"}`} />
+                <Info className={`w-4 h-4 shrink-0 mt-0.5 ${competence ? "text-primary" : "text-gray-300"}`} />
                 <p
                   className={`text-[12px] leading-relaxed ${
-                    competence ? "text-[#1a365d] font-medium" : "text-gray-400 italic"
+                    competence ? "text-foreground font-medium" : "text-gray-400 italic"
                   }`}
                 >
                   {competence || "Sélectionnez une discipline (Section A) pour afficher la compétence de base officielle."}
@@ -829,11 +829,11 @@ export function ContextSelector() {
               {/* OA — native select; locked until palier is chosen */}
               <div className={`transition-opacity duration-200 ${!palier ? "opacity-50" : "opacity-100"}`}>
                 <div className="flex items-center justify-between mb-1.5">
-                  <p className="text-[11px] font-bold text-[#2d3748] uppercase tracking-wider">
+                  <p className="text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--foreground)" }}>
                     Objectif d'Apprentissage (OA)
                   </p>
                   {loadingStep === "oa" && (
-                    <Loader2 className="w-3.5 h-3.5 text-[#3182ce] animate-spin"/>
+                    <Loader2 className="w-3.5 h-3.5 text-primary animate-spin"/>
                   )}
                 </div>
                 <div className="relative">
@@ -849,10 +849,10 @@ export function ContextSelector() {
                       ${!palier || oaList.length === 0 || loadingStep === "oa"
                         ? "bg-gray-50 border-gray-200 text-gray-400 cursor-not-allowed"
                         : oaIdx !== ""
-                          ? "bg-[#eef4ff] border-[#3182ce] text-[#1a365d]"
-                          : "bg-white border-gray-200 text-gray-400 hover:border-gray-300 focus:border-[#3182ce] cursor-pointer"
+                          ? "bg-accent border-primary text-foreground"
+                          : "bg-white border-gray-200 text-gray-400 hover:border-gray-300 focus:border-primary cursor-pointer"
                       }`}
-                    style={oaIdx !== "" ? { boxShadow: "0 0 0 3px rgba(49,130,206,0.10)" } : {}}
+                    style={oaIdx !== "" ? { boxShadow: "0 0 0 3px color-mix(in srgb, var(--primary) 10%, transparent)" } : {}}
                   >
                     <option value="">
                       {loadingStep === "oa" ? "Mise à jour…" : "Sélectionner l'objectif d'apprentissage…"}
@@ -863,8 +863,8 @@ export function ContextSelector() {
                   </select>
                   <span className="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none">
                     {loadingStep === "oa"
-                      ? <Loader2 className="w-4 h-4 text-[#3182ce] animate-spin"/>
-                      : <ChevronDown className={`w-4 h-4 ${oaIdx !== "" ? "text-[#3182ce]" : "text-gray-300"}`}/>}
+                      ? <Loader2 className="w-4 h-4 text-primary animate-spin"/>
+                      : <ChevronDown className={`w-4 h-4 ${oaIdx !== "" ? "text-primary" : "text-gray-300"}`}/>} 
                   </span>
                 </div>
                 {oaIdx === "" && palier && oaList.length === 0 && (
@@ -875,11 +875,11 @@ export function ContextSelector() {
               {/* OS — locked until an OA is chosen; changing it clears the panier */}
               <div className={`transition-opacity duration-200 ${oaIdx === "" ? "opacity-50" : "opacity-100"}`}>
                 <div className="flex items-center justify-between mb-1.5">
-                  <p className="text-[11px] font-bold text-[#2d3748] uppercase tracking-wider">
+                  <p className="text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--foreground)" }}>
                     Objectif Spécifique (OS)
                   </p>
                   {loadingStep === "os" && (
-                    <Loader2 className="w-3.5 h-3.5 text-[#3182ce] animate-spin"/>
+                    <Loader2 className="w-3.5 h-3.5 text-primary animate-spin"/>
                   )}
                 </div>
                 <div className="relative">
@@ -891,10 +891,10 @@ export function ContextSelector() {
                       ${oaIdx === "" || osOpts.length === 0 || loadingStep === "os"
                         ? "bg-gray-50 border-gray-200 text-gray-400 cursor-not-allowed"
                         : selectedOS
-                          ? "bg-[#eef4ff] border-[#3182ce] text-[#1a365d]"
-                          : "bg-white border-gray-200 text-gray-400 hover:border-gray-300 focus:border-[#3182ce] cursor-pointer"
+                          ? "bg-accent border-primary text-foreground"
+                          : "bg-white border-gray-200 text-gray-400 hover:border-gray-300 focus:border-primary cursor-pointer"
                       }`}
-                    style={selectedOS ? { boxShadow: "0 0 0 3px rgba(49,130,206,0.10)" } : {}}
+                    style={selectedOS ? { boxShadow: "0 0 0 3px color-mix(in srgb, var(--primary) 10%, transparent)" } : {}}
                   >
                     <option value="">
                       {loadingStep === "os" ? "Mise à jour…" : "Sélectionner l'objectif spécifique…"}
@@ -905,12 +905,12 @@ export function ContextSelector() {
                   </select>
                   <span className="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none">
                     {loadingStep === "os"
-                      ? <Loader2 className="w-4 h-4 text-[#3182ce] animate-spin"/>
-                      : <ChevronDown className={`w-4 h-4 ${selectedOS ? "text-[#3182ce]" : "text-gray-300"}`}/>}
+                      ? <Loader2 className="w-4 h-4 text-primary animate-spin"/>
+                      : <ChevronDown className={`w-4 h-4 ${selectedOS ? "text-primary" : "text-gray-300"}`}/>} 
                   </span>
                 </div>
                 {selectedOS && (
-                  <p className="mt-1 text-[10px] text-[#3182ce] font-semibold flex items-center gap-1">
+                  <p className="mt-1 text-[10px] font-semibold flex items-center gap-1" style={{ color: "var(--primary)" }}>
                     <Info className="w-3 h-3"/>
                     Le panier ci-dessous affiche uniquement les contenus liés à cet OS.
                   </p>
@@ -941,26 +941,26 @@ export function ContextSelector() {
                   className="flex-1 flex items-center gap-2 rounded-lg px-3 py-1.5"
                   style={{
                     transition: "background-color 250ms ease, border-color 250ms ease",
-                    backgroundColor: checked.size > 0 ? "#f0fdf4" : "#f8fafc",
-                    border: `1.5px solid ${checked.size > 0 ? "#86efac" : "#e2e8f0"}`,
+                    backgroundColor: checked.size > 0 ? "color-mix(in srgb, var(--secondary) 12%, var(--background))" : "var(--muted)",
+                    border: `1.5px solid ${checked.size > 0 ? "color-mix(in srgb, var(--secondary) 28%, transparent)" : "var(--border)"}`,
                   }}
                 >
                   <span
                     className="w-1.5 h-1.5 rounded-full shrink-0"
                     style={{
                       transition: "background-color 250ms ease",
-                      backgroundColor: checked.size > 0 ? "#22c55e" : "#cbd5e1",
+                      backgroundColor: checked.size > 0 ? "var(--secondary)" : "#cbd5e1",
                     }}
                   />
                   <span
                     className="text-[11px] font-semibold"
                     style={{
                       transition: "color 250ms ease",
-                      color: checked.size > 0 ? "#15803d" : "#94a3b8",
+                      color: checked.size > 0 ? "var(--secondary)" : "#94a3b8",
                     }}
                   >
                     Sélection&nbsp;:&nbsp;
-                    <span style={{ fontWeight: 700, color: checked.size > 0 ? "#16a34a" : "#94a3b8" }}>
+                    <span style={{ fontWeight: 700, color: checked.size > 0 ? "var(--secondary)" : "#94a3b8" }}>
                       {checked.size} contenu{checked.size > 1 ? "s" : ""} choisi{checked.size > 1 ? "s" : ""}
                     </span>
                   </span>
@@ -980,19 +980,19 @@ export function ContextSelector() {
             {loadingStep === "contenus" ? (
               /* Micro-loading spinner while OS filter is being applied */
               <div className="flex flex-col items-center justify-center py-8 gap-2.5">
-                <Loader2 className="w-6 h-6 text-[#3182ce] animate-spin"/>
-                <p className="text-[11px] text-[#3182ce] font-semibold">
+                <Loader2 className="w-6 h-6 text-primary animate-spin"/>
+                <p className="text-[11px] font-semibold" style={{ color: "var(--primary)" }}>
                   Filtrage des contenus…
                 </p>
               </div>
             ) : contenus.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-8 gap-2.5">
-                <div className="w-10 h-10 rounded-xl bg-[#f1f5f9] flex items-center justify-center">
-                  <svg viewBox="0 0 24 24" className="w-5 h-5 text-[#cbd5e1]" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <div className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth="1.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25" />
                   </svg>
                 </div>
-                <p className="text-[11px] text-[#94a3b8] text-center leading-relaxed">
+                <p className="text-[11px] text-center leading-relaxed text-muted-foreground">
                   {selectedOS
                     ? <>Aucun contenu trouvé pour cet OS.<br/>Vérifiez la base de données curriculaire.</>
                     : <>Sélectionnez un Objectif Spécifique (OS)<br/>pour afficher ses contenus.</>}
@@ -1109,6 +1109,7 @@ export function ContextSelector() {
                   />
 
                   <p className="text-[11px] font-bold text-[#1a365d] uppercase tracking-wider mb-3">
+                  <p className="text-[11px] font-bold uppercase tracking-wider mb-3" style={{ color: "var(--foreground)" }}>
                     Comment ça marche ?
                   </p>
 
@@ -1116,17 +1117,17 @@ export function ContextSelector() {
                   <div className="flex items-start gap-2.5 mb-2.5">
                     <div
                       className="w-5 h-5 rounded-md flex items-center justify-center shrink-0 mt-0.5"
-                      style={{ backgroundColor: "#eef4ff", border: "1.5px solid #3182ce" }}
+                      style={{ backgroundColor: "var(--accent)", border: "1.5px solid var(--primary)" }}
                     >
                       <svg viewBox="0 0 10 8" style={{ width:9, height:9 }} fill="none">
-                        <path d="M1 4l3 3 5-6" stroke="#3182ce" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M1 4l3 3 5-6" stroke="var(--primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </div>
                     <div>
-                      <p className="text-[12px] font-bold text-[#1a365d] leading-none mb-1">COCHÉ</p>
+                      <p className="text-[12px] font-bold leading-none mb-1" style={{ color: "var(--foreground)" }}>COCHÉ</p>
                       <p className="text-[11px] text-gray-500 leading-relaxed">
                         Regroupe toutes vos séquences sélectionnées dans un seul grand déroulé continu
-                        <span className="font-semibold text-[#1a365d]"> (recommandé pour les séances consolidées)</span>.
+                        <span className="font-semibold" style={{ color: "var(--foreground)" }}> (recommandé pour les séances consolidées)</span>.
                       </p>
                     </div>
                   </div>
@@ -1137,12 +1138,12 @@ export function ContextSelector() {
                       className="w-5 h-5 rounded-md flex items-center justify-center shrink-0 mt-0.5"
                       style={{ backgroundColor: "var(--muted)", border: "1.5px solid var(--border)" }}
                     >
-                      <div className="w-2 h-2 rounded-sm" style={{ backgroundColor: "#cbd5e1" }}/>
+                      <div className="w-2 h-2 rounded-sm" style={{ backgroundColor: "var(--muted-foreground)" }}/>
                     </div>
                     <div>
-                      <p className="text-[12px] font-bold text-[#2d3748] leading-none mb-1">DÉCOCHÉ</p>
+                      <p className="text-[12px] font-bold leading-none mb-1" style={{ color: "var(--foreground)" }}>DÉCOCHÉ</p>
                       <p className="text-[11px] text-gray-500 leading-relaxed">
-                        Crée des onglets distincts <span className="font-semibold text-[#2d3748]">(Multi-Tabs)</span> sur
+                        Crée des onglets distincts <span className="font-semibold" style={{ color: "var(--foreground)" }}>(Multi-Tabs)</span> sur
                         l'écran d'édition, vous permettant de préparer une fiche indépendante pour chaque contenu.
                       </p>
                     </div>
@@ -1154,8 +1155,8 @@ export function ContextSelector() {
               <div
                 className="w-full flex items-start gap-3 px-4 py-3 rounded-2xl transition-all cursor-pointer active:scale-[0.99]"
                 style={{
-                  backgroundColor: merged ? "#eef4ff" : "#f8fafc",
-                  border: `1.5px solid ${merged ? "#3182ce" : "#e2e8f0"}`,
+                  backgroundColor: merged ? "var(--accent)" : "var(--background)",
+                  border: `1.5px solid ${merged ? "var(--primary)" : "var(--border)"}`,
                 }}
                 onClick={() => { setMerged(o => !o); setTooltipOpen(false); }}
               >
@@ -1163,8 +1164,8 @@ export function ContextSelector() {
                 <div
                   className="w-5 h-5 rounded-md border-2 flex items-center justify-center shrink-0 mt-0.5 transition-all duration-150"
                   style={{
-                    backgroundColor: merged ? "#3182ce" : "#fff",
-                    borderColor:     merged ? "#3182ce" : "#d1d5db",
+                    backgroundColor: merged ? "var(--primary)" : "var(--background)",
+                    borderColor:     merged ? "var(--primary)" : "var(--border)",
                   }}
                 >
                   {merged && (
@@ -1177,7 +1178,7 @@ export function ContextSelector() {
                 {/* Label + info icon */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start gap-1.5 flex-wrap">
-                    <p className="text-[13px] font-semibold text-[#1a365d] leading-snug">
+                    <p className="text-[13px] font-semibold leading-snug" style={{ color: "var(--foreground)" }}>
                       Fusionner les contenus sélectionnés dans une seule fiche de préparation
                     </p>
                     {/* Info / tooltip trigger — stops propagation so it doesn't toggle checkbox */}
@@ -1189,12 +1190,12 @@ export function ContextSelector() {
                     >
                       <HelpCircle
                         className="w-4 h-4"
-                        style={{ color: tooltipOpen ? "#3182ce" : "#94a3b8" }}
+                        style={{ color: tooltipOpen ? "var(--primary)" : "#94a3b8" }}
                       />
                     </button>
                   </div>
                   <p className="text-[11px] mt-0.5 leading-tight"
-                     style={{ color: merged ? "#3182ce" : "#94a3b8" }}>
+                    style={{ color: merged ? "var(--primary)" : "#94a3b8" }}>
                     {merged
                       ? "Un seul tableau continu · toutes les séquences à la suite"
                       : "Par défaut : fiches indépendantes, un onglet par contenu"}
@@ -1205,8 +1206,8 @@ export function ContextSelector() {
                 <span
                   className="shrink-0 text-[10px] font-bold px-2 py-1 rounded-full mt-0.5"
                   style={{
-                    backgroundColor: merged ? "#3182ce" : "#e5e7eb",
-                    color:           merged ? "#fff"    : "#64748b",
+                    backgroundColor: merged ? "var(--primary)" : "var(--muted)",
+                    color:           merged ? "var(--primary-foreground)" : "var(--muted-foreground)",
                   }}
                 >
                   {merged ? "Fusionné" : "Onglets"}
@@ -1223,8 +1224,8 @@ export function ContextSelector() {
               canProceed
                 ? {
                     backgroundColor: "var(--primary)",
-                    color: "#ffffff",
-                    boxShadow: "0 6px 24px rgba(26,54,93,0.35), 0 2px 6px rgba(26,54,93,0.2)",
+                    color: "var(--primary-foreground)",
+                    boxShadow: "0 6px 24px color-mix(in srgb, var(--primary) 35%, transparent), 0 2px 6px color-mix(in srgb, var(--primary) 20%, transparent)",
                     opacity: 1,
                   }
                 : { backgroundColor: "#e5e7eb", color: "#9ca3af", opacity: 0.5, cursor: "not-allowed" }

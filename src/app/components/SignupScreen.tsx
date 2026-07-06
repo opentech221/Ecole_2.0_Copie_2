@@ -238,7 +238,7 @@ export function SignupScreen() {
     return (
       <div style={{
         minHeight: "100vh",
-        background: "linear-gradient(145deg, #0d1f3c 0%, #1a365d 60%, #2d4a7a 100%)",
+        background: "linear-gradient(145deg, var(--primary) 0%, var(--secondary) 60%, color-mix(in srgb, var(--secondary) 70%, var(--primary)) 100%)",
         display: "flex", alignItems: "center", justifyContent: "center",
         padding: "24px", fontFamily: "'Plus Jakarta Sans', sans-serif",
       }}>
@@ -321,7 +321,7 @@ export function SignupScreen() {
     return (
       <div style={{
         minHeight: "100vh",
-        background: "linear-gradient(145deg, #0d1f3c 0%, #1a365d 60%, #2d4a7a 100%)",
+        background: "linear-gradient(145deg, var(--primary) 0%, var(--secondary) 60%, color-mix(in srgb, var(--secondary) 70%, var(--primary)) 100%)",
         display: "flex", alignItems: "center", justifyContent: "center",
         padding: "24px", fontFamily: "'Plus Jakarta Sans', sans-serif",
       }}>
@@ -357,7 +357,7 @@ export function SignupScreen() {
   return (
     <div style={{
       minHeight: "100vh",
-      background: "linear-gradient(145deg, #0d1f3c 0%, #1a365d 60%, #2d4a7a 100%)",
+      background: "linear-gradient(145deg, var(--primary) 0%, var(--secondary) 60%, color-mix(in srgb, var(--secondary) 70%, var(--primary)) 100%)",
       display: "flex", alignItems: "center", justifyContent: "center",
       padding: "24px", fontFamily: "'Plus Jakarta Sans', sans-serif",
     }}>
@@ -371,7 +371,7 @@ export function SignupScreen() {
         <div style={{ textAlign: "center", marginBottom: "28px" }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: "10px",
                         marginBottom: "10px", padding: "10px 20px", borderRadius: "14px",
-                        backgroundColor: "#f0f7ff", border: "1px solid #bfdbfe" }}>
+                        backgroundColor: "var(--accent)", border: "1px solid var(--border)" }}>
             <GraduationCap style={{ width: 24, height: 24, color: "var(--secondary)" }} />
             <span style={{ fontSize: "18px", fontWeight: 900, color: "var(--primary)",
                            letterSpacing: "0.1em", textTransform: "uppercase" }}>
@@ -453,9 +453,9 @@ export function SignupScreen() {
                     key={r} type="button" onClick={() => setRole(r)}
                     style={{
                       flex: 1, padding: "10px 8px", borderRadius: "10px",
-                      backgroundColor: active ? "#1a365d" : "#f8fafc",
-                      border: `2px solid ${active ? "#1a365d" : "#e2e8f0"}`,
-                      color: active ? "#fff" : "#64748b",
+                      backgroundColor: active ? "var(--primary)" : "var(--card)",
+                      border: `2px solid ${active ? "var(--primary)" : "var(--border)"}`,
+                      color: active ? "#fff" : "var(--muted-foreground)",
                       fontWeight: 700, fontSize: "13px", cursor: "pointer",
                       fontFamily: "'Plus Jakarta Sans', sans-serif",
                     }}

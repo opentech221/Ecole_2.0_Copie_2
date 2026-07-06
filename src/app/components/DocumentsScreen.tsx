@@ -28,36 +28,69 @@ interface Document {
   badgeBg: string;
 }
 
+type DocTone = {
+  badgeColor: string;
+  badgeBg: string;
+  accentBar: string;
+  headerColor: string;
+};
+
+const DOC_TONES: Record<DocType, DocTone> = {
+  fiche: {
+    badgeColor: "var(--primary)",
+    badgeBg: "color-mix(in srgb, var(--primary) 12%, var(--background))",
+    accentBar: "var(--primary)",
+    headerColor: "var(--primary)",
+  },
+  bulletin: {
+    badgeColor: "var(--secondary)",
+    badgeBg: "color-mix(in srgb, var(--secondary) 12%, var(--background))",
+    accentBar: "var(--secondary)",
+    headerColor: "var(--secondary)",
+  },
+  planning: {
+    badgeColor: "var(--accent-foreground)",
+    badgeBg: "color-mix(in srgb, var(--accent-foreground) 10%, var(--background))",
+    accentBar: "var(--accent-foreground)",
+    headerColor: "var(--accent-foreground)",
+  },
+};
+
+function makeDocument(doc: Omit<Document, "badgeColor" | "badgeBg">): Document {
+  const tone = DOC_TONES[doc.type];
+  return { ...doc, badgeColor: tone.badgeColor, badgeBg: tone.badgeBg };
+}
+
 // ─── Mock data ────────────────────────────────────────────────────────────────
 
 const MOCK_FICHES: Document[] = [
-  { id:"f1", type:"fiche", title:"Activités Numériques — Décomposition du nombre 4",     subtitle:"Mathématiques · CE2",             meta:"OA1 · OS1.2 · 45 min", date:"20/06/2026", badge:"Fiche Pédagogique", badgeColor:"#1d4ed8", badgeBg:"#dbeafe" },
-  { id:"f2", type:"fiche", title:"Grammaire — Accord du participe passé",                subtitle:"Langue et Communication · CE1",    meta:"OA2 · OS2.1 · 45 min", date:"19/06/2026", badge:"Fiche Pédagogique", badgeColor:"#6d28d9", badgeBg:"#ede9fe" },
-  { id:"f3", type:"fiche", title:"Histoire-Géographie — Le Fleuve Sénégal",             subtitle:"ESVS · CE2",                       meta:"OA1 · OS1.1 · 30 min", date:"18/06/2026", badge:"Fiche Pédagogique", badgeColor:"#065f46", badgeBg:"#d1fae5" },
-  { id:"f4", type:"fiche", title:"Lecture — La lettre « b » en cursive",                 subtitle:"Langue et Communication · CI",     meta:"OA1 · OS1.1 · 30 min", date:"17/06/2026", badge:"Fiche Pédagogique", badgeColor:"#6d28d9", badgeBg:"#ede9fe" },
-  { id:"f5", type:"fiche", title:"Activités Géométriques — Le carré et le rectangle",   subtitle:"Mathématiques · CE2",             meta:"OA1 · OS1.3 · 45 min", date:"15/06/2026", badge:"Fiche Pédagogique", badgeColor:"#1d4ed8", badgeBg:"#dbeafe" },
-  { id:"f6", type:"fiche", title:"Résolution de Problèmes — Monnaie CFA",               subtitle:"Mathématiques · CE2",             meta:"OA2 · OS2.3 · 45 min", date:"12/06/2026", badge:"Fiche Pédagogique", badgeColor:"#1d4ed8", badgeBg:"#dbeafe" },
+  makeDocument({ id:"f1", type:"fiche", title:"Activités Numériques — Décomposition du nombre 4",     subtitle:"Mathématiques · CE2",             meta:"OA1 · OS1.2 · 45 min", date:"20/06/2026", badge:"Fiche Pédagogique" }),
+  makeDocument({ id:"f2", type:"fiche", title:"Grammaire — Accord du participe passé",                subtitle:"Langue et Communication · CE1",    meta:"OA2 · OS2.1 · 45 min", date:"19/06/2026", badge:"Fiche Pédagogique" }),
+  makeDocument({ id:"f3", type:"fiche", title:"Histoire-Géographie — Le Fleuve Sénégal",             subtitle:"ESVS · CE2",                       meta:"OA1 · OS1.1 · 30 min", date:"18/06/2026", badge:"Fiche Pédagogique" }),
+  makeDocument({ id:"f4", type:"fiche", title:"Lecture — La lettre « b » en cursive",                 subtitle:"Langue et Communication · CI",     meta:"OA1 · OS1.1 · 30 min", date:"17/06/2026", badge:"Fiche Pédagogique" }),
+  makeDocument({ id:"f5", type:"fiche", title:"Activités Géométriques — Le carré et le rectangle",   subtitle:"Mathématiques · CE2",             meta:"OA1 · OS1.3 · 45 min", date:"15/06/2026", badge:"Fiche Pédagogique" }),
+  makeDocument({ id:"f6", type:"fiche", title:"Résolution de Problèmes — Monnaie CFA",               subtitle:"Mathématiques · CE2",             meta:"OA2 · OS2.3 · 45 min", date:"12/06/2026", badge:"Fiche Pédagogique" }),
 ];
 
 const MOCK_BULLETINS: Document[] = [
-  { id:"b1",  type:"bulletin", title:"DIALLO Aminata",     subtitle:"CE2 · Trimestre 3", meta:"Moy. T3 : 7.50/10 · Admis(e) CM1", date:"30/06/2026", badge:"Bulletin", badgeColor:"#065f46", badgeBg:"#d1fae5" },
-  { id:"b2",  type:"bulletin", title:"SOW Moussa",         subtitle:"CE2 · Trimestre 3", meta:"Moy. T3 : 6.20/10 · Admis(e) CM1", date:"30/06/2026", badge:"Bulletin", badgeColor:"#065f46", badgeBg:"#d1fae5" },
-  { id:"b3",  type:"bulletin", title:"NDIAYE Fatou",       subtitle:"CE2 · Trimestre 3", meta:"Moy. T3 : 6.75/10 · Admis(e) CM1", date:"30/06/2026", badge:"Bulletin", badgeColor:"#065f46", badgeBg:"#d1fae5" },
-  { id:"b4",  type:"bulletin", title:"BA Ibrahima",        subtitle:"CE2 · Trimestre 3", meta:"Moy. T3 : 5.90/10 · Admis(e) CM1", date:"30/06/2026", badge:"Bulletin", badgeColor:"#065f46", badgeBg:"#d1fae5" },
-  { id:"b5",  type:"bulletin", title:"TRAORÉ Mariama",     subtitle:"CE2 · Trimestre 3", meta:"Moy. T3 : 7.10/10 · Admis(e) CM1", date:"30/06/2026", badge:"Bulletin", badgeColor:"#065f46", badgeBg:"#d1fae5" },
-  { id:"b6",  type:"bulletin", title:"DIOP Abdou",         subtitle:"CE2 · Trimestre 3", meta:"Moy. T3 : 4.30/10 · Redoublement", date:"30/06/2026", badge:"Bulletin", badgeColor:"#991b1b", badgeBg:"#fee2e2" },
-  { id:"b7",  type:"bulletin", title:"FALL Aissatou",      subtitle:"CE2 · Trimestre 3", meta:"Moy. T3 : 6.50/10 · Admis(e) CM1", date:"30/06/2026", badge:"Bulletin", badgeColor:"#065f46", badgeBg:"#d1fae5" },
-  { id:"b8",  type:"bulletin", title:"KANE Cheikh",        subtitle:"CE2 · Trimestre 3", meta:"Moy. T3 : 5.10/10 · Admis(e) CM1", date:"30/06/2026", badge:"Bulletin", badgeColor:"#065f46", badgeBg:"#d1fae5" },
-  { id:"b9",  type:"bulletin", title:"MBAYE Rokhaya",      subtitle:"CE2 · Trimestre 3", meta:"Moy. T3 : 7.80/10 · Admis(e) CM1", date:"30/06/2026", badge:"Bulletin", badgeColor:"#065f46", badgeBg:"#d1fae5" },
-  { id:"b10", type:"bulletin", title:"SARR Omar",          subtitle:"CE2 · Trimestre 3", meta:"Moy. T3 : 4.75/10 · Test passage",  date:"30/06/2026", badge:"Bulletin", badgeColor:"#92400e", badgeBg:"#fef3c7" },
-  { id:"b11", type:"bulletin", title:"THIAM Ndèye",        subtitle:"CE2 · Trimestre 3", meta:"Moy. T3 : 6.00/10 · Admis(e) CM1", date:"30/06/2026", badge:"Bulletin", badgeColor:"#065f46", badgeBg:"#d1fae5" },
-  { id:"b12", type:"bulletin", title:"KONATÉ Mamadou",     subtitle:"CE2 · Trimestre 3", meta:"Moy. T3 : 5.50/10 · Admis(e) CM1", date:"30/06/2026", badge:"Bulletin", badgeColor:"#065f46", badgeBg:"#d1fae5" },
+  makeDocument({ id:"b1",  type:"bulletin", title:"DIALLO Aminata",     subtitle:"CE2 · Trimestre 3", meta:"Moy. T3 : 7.50/10 · Admis(e) CM1", date:"30/06/2026", badge:"Bulletin" }),
+  makeDocument({ id:"b2",  type:"bulletin", title:"SOW Moussa",         subtitle:"CE2 · Trimestre 3", meta:"Moy. T3 : 6.20/10 · Admis(e) CM1", date:"30/06/2026", badge:"Bulletin" }),
+  makeDocument({ id:"b3",  type:"bulletin", title:"NDIAYE Fatou",       subtitle:"CE2 · Trimestre 3", meta:"Moy. T3 : 6.75/10 · Admis(e) CM1", date:"30/06/2026", badge:"Bulletin" }),
+  makeDocument({ id:"b4",  type:"bulletin", title:"BA Ibrahima",        subtitle:"CE2 · Trimestre 3", meta:"Moy. T3 : 5.90/10 · Admis(e) CM1", date:"30/06/2026", badge:"Bulletin" }),
+  makeDocument({ id:"b5",  type:"bulletin", title:"TRAORÉ Mariama",     subtitle:"CE2 · Trimestre 3", meta:"Moy. T3 : 7.10/10 · Admis(e) CM1", date:"30/06/2026", badge:"Bulletin" }),
+  makeDocument({ id:"b6",  type:"bulletin", title:"DIOP Abdou",         subtitle:"CE2 · Trimestre 3", meta:"Moy. T3 : 4.30/10 · Redoublement", date:"30/06/2026", badge:"Bulletin" }),
+  makeDocument({ id:"b7",  type:"bulletin", title:"FALL Aissatou",      subtitle:"CE2 · Trimestre 3", meta:"Moy. T3 : 6.50/10 · Admis(e) CM1", date:"30/06/2026", badge:"Bulletin" }),
+  makeDocument({ id:"b8",  type:"bulletin", title:"KANE Cheikh",        subtitle:"CE2 · Trimestre 3", meta:"Moy. T3 : 5.10/10 · Admis(e) CM1", date:"30/06/2026", badge:"Bulletin" }),
+  makeDocument({ id:"b9",  type:"bulletin", title:"MBAYE Rokhaya",      subtitle:"CE2 · Trimestre 3", meta:"Moy. T3 : 7.80/10 · Admis(e) CM1", date:"30/06/2026", badge:"Bulletin" }),
+  makeDocument({ id:"b10", type:"bulletin", title:"SARR Omar",          subtitle:"CE2 · Trimestre 3", meta:"Moy. T3 : 4.75/10 · Test passage",  date:"30/06/2026", badge:"Bulletin" }),
+  makeDocument({ id:"b11", type:"bulletin", title:"THIAM Ndèye",        subtitle:"CE2 · Trimestre 3", meta:"Moy. T3 : 6.00/10 · Admis(e) CM1", date:"30/06/2026", badge:"Bulletin" }),
+  makeDocument({ id:"b12", type:"bulletin", title:"KONATÉ Mamadou",     subtitle:"CE2 · Trimestre 3", meta:"Moy. T3 : 5.50/10 · Admis(e) CM1", date:"30/06/2026", badge:"Bulletin" }),
 ];
 
 const MOCK_PLANNING: Document[] = [
-  { id:"p1", type:"planning", title:"Répartition Trimestrielle — Trimestre 1", subtitle:"CE2 · Octobre → Décembre 2025", meta:"Mathématiques · Langue · ESVS · EPSA", date:"01/10/2025", badge:"Planning", badgeColor:"#1a365d", badgeBg:"#e0e7ff" },
-  { id:"p2", type:"planning", title:"Répartition Trimestrielle — Trimestre 2", subtitle:"CE2 · Janvier → Mars 2026",    meta:"Mathématiques · Langue · ESVS · EPSA", date:"06/01/2026", badge:"Planning", badgeColor:"#1a365d", badgeBg:"#e0e7ff" },
-  { id:"p3", type:"planning", title:"Répartition Trimestrielle — Trimestre 3", subtitle:"CE2 · Avril → Juin 2026",      meta:"Mathématiques · Langue · ESVS · EPSA", date:"07/04/2026", badge:"Planning", badgeColor:"#1a365d", badgeBg:"#e0e7ff" },
+  makeDocument({ id:"p1", type:"planning", title:"Répartition Trimestrielle — Trimestre 1", subtitle:"CE2 · Octobre → Décembre 2025", meta:"Mathématiques · Langue · ESVS · EPSA", date:"01/10/2025", badge:"Planning" }),
+  makeDocument({ id:"p2", type:"planning", title:"Répartition Trimestrielle — Trimestre 2", subtitle:"CE2 · Janvier → Mars 2026",    meta:"Mathématiques · Langue · ESVS · EPSA", date:"06/01/2026", badge:"Planning" }),
+  makeDocument({ id:"p3", type:"planning", title:"Répartition Trimestrielle — Trimestre 3", subtitle:"CE2 · Avril → Juin 2026",      meta:"Mathématiques · Langue · ESVS · EPSA", date:"07/04/2026", badge:"Planning" }),
 ];
 
 const ALL_DOCS: Document[] = [...MOCK_PLANNING, ...MOCK_FICHES, ...MOCK_BULLETINS];
@@ -116,7 +149,7 @@ function DocPrintPortal({ doc }: { doc: Document }) {
          style={{ fontFamily: "Arial, Helvetica, sans-serif", color: "#111827", padding: "0 15mm" }}>
       {/* A4 header */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start",
-                    borderBottom: "2px solid #1a365d", paddingBottom: "6px", marginBottom: "10px" }}>
+                    borderBottom: "2px solid var(--primary)", paddingBottom: "6px", marginBottom: "10px" }}>
         <div>
           <p style={{ fontSize: "8pt", color: "var(--muted-foreground)", margin: 0, lineHeight: 1.4 }}>IA : Inspection Académique de Kolda</p>
           <p style={{ fontSize: "8pt", color: "var(--muted-foreground)", margin: 0, lineHeight: 1.4 }}>IEF : Inspection de l'Éducation et de la Formation de Kolda</p>
@@ -156,14 +189,14 @@ function PreviewModal({
   doc, onClose, onPrint,
 }: { doc: Document; onClose: () => void; onPrint: () => void }) {
   const typeColor: Record<DocType, string> = {
-    fiche: "#6d28d9", bulletin: "#065f46", planning: "#1a365d",
+    fiche: "var(--accent-foreground)", bulletin: "var(--secondary)", planning: "var(--primary)",
   };
   const color = typeColor[doc.type];
 
   return (
     <div
       className="fixed inset-0 z-[500] flex flex-col"
-      style={{ backgroundColor: "#f4f6f9", fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+      style={{ backgroundColor: "var(--background)", fontFamily: "'Plus Jakarta Sans', sans-serif" }}
     >
       {/* Header bar */}
       <div className="bg-white flex-shrink-0 flex items-center gap-3 px-4 py-3"
@@ -206,7 +239,7 @@ function PreviewModal({
         >
           {/* Institution header */}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start",
-                        borderBottom: "2px solid #1a365d", paddingBottom: "8px", marginBottom: "12px" }}>
+                        borderBottom: "2px solid var(--primary)", paddingBottom: "8px", marginBottom: "12px" }}>
             <div>
               <p style={{ fontSize: "8px", color: "var(--muted-foreground)", margin: 0, lineHeight: 1.4 }}>
                 IA : Inspection Académique de Kolda
@@ -315,12 +348,13 @@ function DocCard({
   onEditSave?: () => void;
   ownerClassId: string;
 }) {
+  const tone = DOC_TONES[doc.type];
   return (
     <div className="bg-white rounded-2xl overflow-hidden transition-all hover:shadow-md"
          style={{ boxShadow: "0 1px 8px rgba(26,54,93,0.08)" }}>
       <div className="flex">
         {/* Accent bar */}
-        <div className="w-[4px] shrink-0" style={{ backgroundColor: doc.badgeColor }} />
+        <div className="w-[4px] shrink-0" style={{ backgroundColor: tone.accentBar }} />
         <div className="flex-1 min-w-0 p-3 lg:p-4">
           {/* Header */}
           <div className="flex items-start justify-between gap-2 mb-1.5">
@@ -345,25 +379,25 @@ function DocCard({
                 className="flex-1"
                 style={{
                   padding:"3px 8px", borderRadius:"6px", fontSize:"12.5px",
-                  fontWeight:700, color:"#1a365d", border:"1.5px solid #3182ce",
+                  fontWeight:700, color:"var(--primary)", border:"1.5px solid var(--secondary)",
                   outline:"none", fontFamily:"'Plus Jakarta Sans',sans-serif",
                   minWidth:0,
                 }}
               />
               <button onClick={() => onEditSave?.()} title="Valider"
                       style={{ border:"none", background:"none", cursor:"pointer",
-                               color:"#059669", padding:"2px", flexShrink:0 }}>
+                               color:"var(--secondary)", padding:"2px", flexShrink:0 }}>
                 <Check style={{ width:14, height:14 }} />
               </button>
             </div>
           ) : (
-            <p className="font-bold text-[#1a365d] leading-snug mb-0.5"
+            <p className="font-bold text-primary leading-snug mb-0.5"
                style={{ fontSize: "12.5px" }}>
               {doc.title}
             </p>
           )}
-          <p className="text-[11px] text-[#475569] mb-0.5">{doc.subtitle}</p>
-          <p className="text-[10px] text-[#94a3b8]">{doc.meta}</p>
+          <p className="text-[11px] text-[var(--foreground)] mb-0.5">{doc.subtitle}</p>
+          <p className="text-[10px] text-[var(--muted-foreground)]">{doc.meta}</p>
 
           {/* Actions */}
           <div className="flex items-center gap-2 mt-3 flex-wrap">
@@ -378,21 +412,21 @@ function DocCard({
                   onClick={onStartEdit}
                   title="Modifier le titre"
                   className="inline-flex items-center gap-1 rounded-lg text-[10px] font-semibold transition-all active:scale-95"
-                  style={{ padding:"6px 10px", backgroundColor:"#dbeafe", color:"#1d4ed8" }}>
+                  style={{ padding:"6px 10px", backgroundColor:"var(--accent)", color:"var(--secondary)" }}>
                   <Pencil className="w-3 h-3" />Modifier
                 </button>
               )}
             </PermissionGuard>
             <button
               onClick={onPreview}
-              className="inline-flex items-center gap-1 rounded-lg text-[10px] font-semibold transition-all active:scale-95 hover:bg-[#eef4ff]"
+              className="inline-flex items-center gap-1 rounded-lg text-[10px] font-semibold transition-all active:scale-95 hover:bg-accent"
               style={{ padding: "6px 12px", backgroundColor: "var(--muted)", color: "var(--muted-foreground)" }}
             >
               <Eye className="w-3 h-3" />Aperçu
             </button>
             <button
               onClick={onPrint}
-              className="inline-flex items-center gap-1 rounded-lg text-[10px] font-semibold transition-all active:scale-95 hover:bg-[#f0fdf4]"
+              className="inline-flex items-center gap-1 rounded-lg text-[10px] font-semibold transition-all active:scale-95 hover:bg-accent"
               style={{ padding: "6px 12px", backgroundColor: "var(--muted)", color: "var(--muted-foreground)" }}
             >
               <Printer className="w-3 h-3" />Imprimer
@@ -401,7 +435,7 @@ function DocCard({
               onClick={onPrint}
               className="inline-flex items-center gap-1 rounded-lg text-[10px] font-semibold transition-all active:scale-95"
               style={{ padding: "6px 12px", backgroundColor: "var(--primary)", color: "#fff",
-                       boxShadow: "0 2px 6px rgba(26,54,93,0.22)" }}
+                       boxShadow: "0 2px 6px color-mix(in srgb, var(--primary) 22%, transparent)" }}
             >
               <Download className="w-3 h-3" />PDF
             </button>
@@ -415,8 +449,8 @@ function DocCard({
                   className="inline-flex items-center gap-1 rounded-lg text-[10px] font-semibold transition-all active:scale-95 ml-auto"
                   style={{
                     padding: "6px 10px",
-                    backgroundColor: isDeleting ? "#f3f4f6" : "#fef2f2",
-                    color: isDeleting ? "#9ca3af" : "#dc2626",
+                    backgroundColor: isDeleting ? "var(--muted)" : "color-mix(in srgb, var(--destructive) 10%, var(--background))",
+                    color: isDeleting ? "var(--muted-foreground)" : "var(--destructive)",
                     cursor: isDeleting ? "not-allowed" : "pointer",
                   }}
                 >
@@ -623,6 +657,13 @@ export function DocumentsScreen() {
     setEditingDocTitle(doc.title);
   }, []);
 
+  // ── Live Supabase data (React Query) with mock fallback ────────────────────
+  // useDocumentsQuery: cache + background refresh + loading guard on delete
+  // No mock fallback: Supabase is the single source of truth (P1.4).
+  const { documents: liveDocuments, deleteDocument, deletingId, uploadDocument, updateDocument } = useDocumentsQuery([]);
+  // Cast back so the rest of the component keeps its Document type
+  const allDocs = liveDocuments as unknown as Document[];
+
   const saveDocEdit = useCallback(async (doc: Document) => {
     if (editingDocTitle.trim() && editingDocTitle !== doc.title && doc.id) {
       await updateDocument(doc.id, { title: editingDocTitle.trim() });
@@ -655,13 +696,6 @@ export function DocumentsScreen() {
     });
   }, [deleteDocument]);
   const { printDoc, triggerPrint }  = usePrintDoc();
-
-  // ── Live Supabase data (React Query) with mock fallback ────────────────────
-  // useDocumentsQuery: cache + background refresh + loading guard on delete
-  // No mock fallback: Supabase is the single source of truth (P1.4).
-  const { documents: liveDocuments, deleteDocument, deletingId, uploadDocument, updateDocument } = useDocumentsQuery([]);
-  // Cast back so the rest of the component keeps its Document type
-  const allDocs = liveDocuments as unknown as Document[];
 
   const handlePrint = useCallback((doc: Document) => {
     triggerPrint(doc);
@@ -744,7 +778,7 @@ export function DocumentsScreen() {
         />
       )}
 
-      <div className="bg-[#f4f6f9] flex flex-col overflow-hidden"
+      <div className="bg-background flex flex-col overflow-hidden"
            style={{ height: "calc(100vh - 36px)", fontFamily: "'Plus Jakarta Sans',sans-serif" }}>
 
         {/* ── STICKY HEADER ─────────────────────────────────────────────────── */}
@@ -755,7 +789,7 @@ export function DocumentsScreen() {
             {/* Nav row */}
             <div className="flex items-center gap-3 pt-3 pb-2">
               <button onClick={() => navigate("/")}
-                className="inline-flex items-center gap-1.5 font-semibold text-[#1a365d] hover:text-[#3182ce] transition-colors shrink-0"
+                className="inline-flex items-center gap-1.5 font-semibold text-primary hover:text-secondary transition-colors shrink-0"
                 style={{ fontSize: "13px", minHeight: "40px" }}>
                 <ArrowLeft className="w-4 h-4" />
                 <span className="hidden sm:inline">Accueil</span>

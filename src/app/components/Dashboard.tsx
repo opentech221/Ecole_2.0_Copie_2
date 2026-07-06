@@ -181,7 +181,7 @@ function FicheTicket({ fiche }: { fiche: FicheCard }) {
               <BookMarked className="w-3.5 h-3.5" style={{ color:dc.bar }}/>
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="font-bold leading-snug text-[#1a365d] break-words text-[13px]">
+              <h3 className="font-bold leading-snug text-[var(--foreground)] break-words text-[13px]">
                 {fiche.domaine}
                 <span className="mx-1.5 font-normal opacity-40">·</span>
                 {fiche.discipline}
@@ -198,15 +198,15 @@ function FicheTicket({ fiche }: { fiche: FicheCard }) {
             <div className="flex items-start gap-1.5 mb-2">
               <span className="text-[10px] font-bold uppercase tracking-widest shrink-0 mt-0.5"
                     style={{ color:dc.bar, opacity:0.75 }}>Objet</span>
-              <span className="text-[10px] font-bold shrink-0 mt-0.5" style={{ color:"#64748b" }}>:</span>
-              <p className="text-[12px] leading-snug text-[#2d3748] font-medium break-words">
+              <span className="text-[10px] font-bold shrink-0 mt-0.5" style={{ color:"var(--muted-foreground)" }}>:</span>
+              <p className="text-[12px] leading-snug text-[var(--foreground)] font-medium break-words">
                 {fiche.objet}
               </p>
             </div>
             <div className="flex items-center gap-1.5">
-              <Calendar className="w-3 h-3 shrink-0" style={{ color:"#94a3b8" }}/>
-              <span className="text-[11px] text-gray-400">
-                Généré le : <span className="font-semibold text-gray-500">{fiche.date}</span>
+              <Calendar className="w-3 h-3 shrink-0" style={{ color:"var(--muted-foreground)" }}/>
+              <span className="text-[11px] text-[var(--muted-foreground)]">
+                Généré le : <span className="font-semibold text-[var(--foreground)]">{fiche.date}</span>
               </span>
             </div>
           </div>
@@ -215,15 +215,15 @@ function FicheTicket({ fiche }: { fiche: FicheCard }) {
           <div className="ml-9 flex gap-2">
             <button
               className="flex-1 flex items-center justify-center gap-1.5 rounded-xl py-2.5 text-[12px] font-semibold border-2 transition-all active:scale-95"
-              style={{ borderColor:"#1a365d", color:"#1a365d", backgroundColor:"transparent" }}
-              onMouseEnter={e=>{ (e.currentTarget as HTMLElement).style.backgroundColor="#1a365d"; (e.currentTarget as HTMLElement).style.color="#fff"; }}
-              onMouseLeave={e=>{ (e.currentTarget as HTMLElement).style.backgroundColor="transparent"; (e.currentTarget as HTMLElement).style.color="#1a365d"; }}
+              style={{ borderColor:"var(--primary)", color:"var(--primary)", backgroundColor:"transparent" }}
+              onMouseEnter={e=>{ (e.currentTarget as HTMLElement).style.backgroundColor="var(--primary)"; (e.currentTarget as HTMLElement).style.color="#fff"; }}
+              onMouseLeave={e=>{ (e.currentTarget as HTMLElement).style.backgroundColor="transparent"; (e.currentTarget as HTMLElement).style.color="var(--primary)"; }}
             >
               <Eye className="w-3.5 h-3.5 shrink-0"/>Modifier
             </button>
             <button
               className="flex items-center justify-center gap-1.5 rounded-xl px-4 py-2.5 text-[12px] font-semibold text-white transition-all active:scale-95"
-              style={{ backgroundColor:"#1a365d", boxShadow:"0 2px 8px rgba(26,54,93,0.25)" }}
+              style={{ backgroundColor:"var(--primary)", boxShadow:"0 2px 8px color-mix(in srgb, var(--primary) 25%, transparent)" }}
             >
               <Download className="w-3.5 h-3.5 shrink-0"/>PDF
             </button>
@@ -243,19 +243,19 @@ export function Dashboard() {
   const { activeClass, role, userName, schoolName } = useAppContext();
 
   return (
-    <div className="min-h-screen bg-slate-100 lg:bg-[#f4f6f9]" style={{ fontFamily:"'Plus Jakarta Sans',sans-serif" }}>
+    <div className="min-h-screen bg-background lg:bg-background" style={{ fontFamily:"'Plus Jakarta Sans',sans-serif" }}>
       {/* Mobile: centered card. Desktop: full-width, no card shadow */}
-      <div className="max-w-md lg:max-w-none mx-auto bg-[#f8f9fc] min-h-screen shadow-2xl lg:shadow-none flex flex-col relative">
+      <div className="max-w-md lg:max-w-none mx-auto bg-card min-h-screen shadow-2xl lg:shadow-none flex flex-col relative">
 
         {/* ── Header ──────────────────────────────────────────────── */}
-        <div className="bg-[#1a365d] px-4 lg:px-8 pt-5 pb-3">
+        <div className="bg-[var(--primary)] px-4 lg:px-8 pt-5 pb-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-[#3182ce] flex items-center justify-center text-white font-extrabold text-[10px] shrink-0">
+              <div className="w-8 h-8 rounded-full bg-[var(--secondary)] flex items-center justify-center text-white font-extrabold text-[10px] shrink-0">
                 {userName.replace(/\./g,"").split(" ").map((w:string)=>w[0]).join("").slice(0,2).toUpperCase()}
               </div>
               <div>
-                <p className="text-blue-300/60 text-[9px] font-semibold uppercase tracking-widest leading-none">
+                <p className="text-white/70 text-[9px] font-semibold uppercase tracking-widest leading-none">
                   {role === "director" ? "Direction — Vue Globale" : "Bonjour"}
                 </p>
                 <h1 className="text-white text-[13px] font-bold leading-tight">
@@ -268,22 +268,22 @@ export function Dashboard() {
             </div>
             <div className="flex items-center gap-1.5">
               <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full"
-                   style={{ backgroundColor:"rgba(16,185,129,0.18)" }}>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-pulse shrink-0"/>
-                <span className="text-[9px] font-semibold text-[#10b981]">Hors ligne</span>
+                     style={{ backgroundColor:"color-mix(in srgb, var(--secondary) 18%, transparent)" }}>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--secondary)] animate-pulse shrink-0"/>
+                  <span className="text-[9px] font-semibold text-white">Hors ligne</span>
               </div>
               <button className="relative p-1.5 rounded-lg bg-white/10 active:scale-95"
                       aria-label="Notifications">
                 <Bell className="w-4 h-4 text-white"/>
-                <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-[#25d366] rounded-full"/>
+                  <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-[var(--secondary)] rounded-full"/>
               </button>
             </div>
           </div>
         </div>
 
         {/* Wave */}
-        <div className="h-3 bg-[#1a365d]">
-          <div className="h-full bg-[#f8f9fc] rounded-t-[14px]"/>
+          <div className="h-3 bg-[var(--primary)]">
+            <div className="h-full bg-card rounded-t-[14px]"/>
         </div>
 
         {/* ── Content ──────────────────────────────────────────────── */}
@@ -291,18 +291,18 @@ export function Dashboard() {
 
           {/* Section label */}
           <div className="flex items-center justify-between">
-            <p className="text-[12px] font-bold text-[#64748b] uppercase tracking-widest">
+            <p className="text-[12px] font-bold text-[var(--muted-foreground)] uppercase tracking-widest">
               Accès rapide
             </p>
             {/* Desktop quick-stat bar */}
             <div className="hidden lg:flex items-center gap-4">
               {[
-                { label:"Classe active", value:activeClass, color:"#1a365d" },
-                { label:"Trimestre",     value:"T3 · 2026", color:"#0f766e" },
-                { label:"Mode",          value:role === "director" ? "Direction" : "Enseignant", color:"#7c3aed" },
+                { label:"Classe active", value:activeClass, color:"var(--primary)" },
+                { label:"Trimestre",     value:"T3 · 2026", color:"var(--secondary)" },
+                { label:"Mode",          value:role === "director" ? "Direction" : "Enseignant", color:"var(--accent-foreground)" },
               ].map(s => (
                 <div key={s.label} className="flex items-center gap-1.5">
-                  <span style={{ fontSize:"9px", color:"#94a3b8", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em" }}>{s.label}</span>
+                  <span style={{ fontSize:"9px", color:"var(--muted-foreground)", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em" }}>{s.label}</span>
                   <span style={{ fontSize:"12px", fontWeight:800, color:s.color }}>{s.value}</span>
                 </div>
               ))}
@@ -317,9 +317,9 @@ export function Dashboard() {
             <ModuleCard
               badge="Module 1"
               badgeIcon={<Calendar className="w-3.5 h-3.5 text-white/80"/>}
-              gradient="linear-gradient(135deg, #1a365d 0%, #2d4a8a 50%, #1e4976 100%)"
-              shadowColor="rgba(26,54,93,0.32)"
-              accent="#3182ce"
+              gradient="linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, color-mix(in srgb, var(--secondary) 80%, var(--primary)) 100%)"
+              shadowColor="color-mix(in srgb, var(--primary) 32%, transparent)"
+              accent="var(--secondary)"
               title="Planification"
               description="Planifiez vos semaines, suivez le taux de couverture du programme et accédez au référentiel officiel du CEB."
               ctaLabel="Préparer ma semaine"
