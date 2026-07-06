@@ -1080,8 +1080,8 @@ export function ContextSelector() {
                   className="absolute left-0 right-0 rounded-2xl p-4 pointer-events-auto"
                   style={{
                     bottom: "calc(100% + 10px)",
-                    backgroundColor: "#fff",
-                    border: "1.5px solid #e2e8f0",
+                    backgroundColor: "var(--card)",
+                    border: "1.5px solid var(--border)",
                     boxShadow: "0 -4px 24px rgba(26,54,93,0.10), 0 2px 8px rgba(0,0,0,0.06)",
                     zIndex: 50,
                   }}
@@ -1135,7 +1135,7 @@ export function ContextSelector() {
                   <div className="flex items-start gap-2.5">
                     <div
                       className="w-5 h-5 rounded-md flex items-center justify-center shrink-0 mt-0.5"
-                      style={{ backgroundColor: "#f8fafc", border: "1.5px solid #e2e8f0" }}
+                      style={{ backgroundColor: "var(--muted)", border: "1.5px solid var(--border)" }}
                     >
                       <div className="w-2 h-2 rounded-sm" style={{ backgroundColor: "#cbd5e1" }}/>
                     </div>
@@ -1222,7 +1222,7 @@ export function ContextSelector() {
             style={
               canProceed
                 ? {
-                    backgroundColor: "#1a365d",
+                    backgroundColor: "var(--primary)",
                     color: "#ffffff",
                     boxShadow: "0 6px 24px rgba(26,54,93,0.35), 0 2px 6px rgba(26,54,93,0.2)",
                     opacity: 1,

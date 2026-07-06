@@ -134,10 +134,10 @@ function PlanCard({ plan, isCurrent }: { plan: typeof PLANS[0]; isCurrent: boole
         {plan.name}
       </p>
       <div style={{ display: "flex", alignItems: "baseline", gap: "4px", marginBottom: "16px" }}>
-        <span style={{ fontSize: "28px", fontWeight: 900, color: "#0f172a", fontFamily: FF }}>
+        <span style={{ fontSize: "28px", fontWeight: 900, color: "var(--foreground)", fontFamily: FF }}>
           {plan.price}
         </span>
-        <span style={{ fontSize: "12px", color: "#64748b", fontFamily: FF }}>
+        <span style={{ fontSize: "12px", color: "var(--muted-foreground)", fontFamily: FF }}>
           {plan.period}
         </span>
       </div>
@@ -188,8 +188,8 @@ function FaqItem({ q, a }: { q: string; a: string }) {
   const FF = "'Plus Jakarta Sans', sans-serif";
   return (
     <div style={{
-      borderRadius: "12px", border: "1px solid #e2e8f0",
-      backgroundColor: "#fff", overflow: "hidden",
+      borderRadius: "12px", border: "1px solid var(--border)",
+      backgroundColor: "var(--card)", overflow: "hidden",
     }}>
       {/* A09 fix: aria-expanded + aria-controls for screen-reader state */}
       <button
@@ -205,9 +205,9 @@ function FaqItem({ q, a }: { q: string; a: string }) {
       >
         <span style={{ fontSize: "13px", fontWeight: 600, color: "#1e293b" }}>{q}</span>
         {open
-          ? <ChevronUp   style={{ width: 16, height: 16, color: "#94a3b8", flexShrink: 0 }}
+          ? <ChevronUp   style={{ width: 16, height: 16, color: "var(--muted-foreground)", flexShrink: 0 }}
                          aria-hidden="true" />
-          : <ChevronDown style={{ width: 16, height: 16, color: "#94a3b8", flexShrink: 0 }}
+          : <ChevronDown style={{ width: 16, height: 16, color: "var(--muted-foreground)", flexShrink: 0 }}
                          aria-hidden="true" />}
       </button>
       <div
@@ -215,7 +215,7 @@ function FaqItem({ q, a }: { q: string; a: string }) {
         hidden={!open}
         style={{ padding: open ? "0 16px 14px" : undefined }}
       >
-        <p style={{ fontSize: "12.5px", color: "#64748b", lineHeight: 1.65,
+        <p style={{ fontSize: "12.5px", color: "var(--muted-foreground)", lineHeight: 1.65,
                     margin: 0, fontFamily: FF }}>
           {a}
         </p>
@@ -230,11 +230,11 @@ export function AbonnementScreen() {
   const FF = "'Plus Jakarta Sans', sans-serif";
 
   return (
-    <div style={{ backgroundColor: "#f8fafc", minHeight: "100vh",
+    <div style={{ backgroundColor: "var(--muted)", minHeight: "100vh",
                   fontFamily: FF }}>
 
       {/* Page header */}
-      <div style={{ backgroundColor: "#fff", borderBottom: "1px solid #e2e8f0",
+      <div style={{ backgroundColor: "var(--card)", borderBottom: "1px solid var(--border)",
                     padding: "16px 20px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <div style={{
@@ -245,10 +245,10 @@ export function AbonnementScreen() {
             <CreditCard style={{ width: 18, height: 18, color: "#fff" }} />
           </div>
           <div>
-            <h1 style={{ fontSize: "16px", fontWeight: 800, color: "#0f172a", margin: 0 }}>
+            <h1 style={{ fontSize: "16px", fontWeight: 800, color: "var(--foreground)", margin: 0 }}>
               Mon Abonnement
             </h1>
-            <p style={{ fontSize: "11px", color: "#64748b", margin: 0 }}>
+            <p style={{ fontSize: "11px", color: "var(--muted-foreground)", margin: 0 }}>
               Gérez votre offre et votre facturation
             </p>
           </div>
@@ -267,7 +267,7 @@ export function AbonnementScreen() {
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
             <div style={{
               width: 40, height: 40, borderRadius: "10px",
-              backgroundColor: "#1a365d",
+              backgroundColor: "var(--primary)",
               display: "flex", alignItems: "center", justifyContent: "center",
             }}>
               <Zap style={{ width: 18, height: 18, color: "#fff" }} />
@@ -282,7 +282,7 @@ export function AbonnementScreen() {
             </div>
           </div>
           <div style={{ textAlign: "right" }}>
-            <p style={{ fontSize: "11px", color: "#64748b", margin: "0 0 2px" }}>
+            <p style={{ fontSize: "11px", color: "var(--muted-foreground)", margin: "0 0 2px" }}>
               Renouvellement
             </p>
             <p style={{ fontSize: "13px", fontWeight: 700, color: "#1e293b", margin: 0 }}>
@@ -292,7 +292,7 @@ export function AbonnementScreen() {
         </div>
 
         {/* Pricing grid */}
-        <p style={{ fontSize: "11px", fontWeight: 700, color: "#94a3b8",
+        <p style={{ fontSize: "11px", fontWeight: 700, color: "var(--muted-foreground)",
                     textTransform: "uppercase", letterSpacing: "0.08em",
                     margin: "0 0 12px 4px" }}>
           Choisir une offre
@@ -310,8 +310,8 @@ export function AbonnementScreen() {
 
         {/* Usage stats */}
         <div style={{
-          backgroundColor: "#fff", borderRadius: "14px",
-          border: "1px solid #e2e8f0", padding: "20px",
+          backgroundColor: "var(--card)", borderRadius: "14px",
+          border: "1px solid var(--border)", padding: "20px",
           marginBottom: "24px",
         }}>
           <p style={{ fontSize: "13px", fontWeight: 700, color: "#1e293b",
@@ -320,19 +320,19 @@ export function AbonnementScreen() {
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
             {[
-              { label: "Fiches créées",    value: 3,  max: 5,   color: "#3182ce" },
+              { label: "Fiches créées",    value: 3,  max: 5,   color: "var(--secondary)" },
               { label: "Élèves enregistrés", value: 28, max: 40, color: "#059669" },
             ].map(({ label, value, max, color }) => (
               <div key={label}>
                 <div style={{ display: "flex", justifyContent: "space-between",
                               marginBottom: "5px" }}>
-                  <span style={{ fontSize: "12px", color: "#475569" }}>{label}</span>
+                  <span style={{ fontSize: "12px", color: "var(--muted-foreground)" }}>{label}</span>
                   <span style={{ fontSize: "12px", fontWeight: 700, color: "#1e293b" }}>
                     {value} / {max}
                   </span>
                 </div>
                 <div style={{ height: "6px", borderRadius: "999px",
-                              backgroundColor: "#f1f5f9", overflow: "hidden" }}>
+                              backgroundColor: "var(--muted)", overflow: "hidden" }}>
                   <div style={{
                     height: "100%", borderRadius: "999px",
                     backgroundColor: color,
@@ -347,7 +347,7 @@ export function AbonnementScreen() {
 
         {/* FAQ */}
         <div style={{ marginBottom: "24px" }}>
-          <p style={{ fontSize: "11px", fontWeight: 700, color: "#94a3b8",
+          <p style={{ fontSize: "11px", fontWeight: 700, color: "var(--muted-foreground)",
                       textTransform: "uppercase", letterSpacing: "0.08em",
                       margin: "0 0 12px 4px" }}>
             Questions fréquentes

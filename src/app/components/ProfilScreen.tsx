@@ -24,19 +24,19 @@ function Card({ title, icon, children }: {
 }) {
   return (
     <div style={{
-      backgroundColor: "#fff", borderRadius: "14px",
-      border: "1px solid #e2e8f0", overflow: "hidden",
+      backgroundColor: "var(--card)", borderRadius: "14px",
+      border: "1px solid var(--border)", overflow: "hidden",
       marginBottom: "16px",
     }}>
       <div style={{
         display: "flex", alignItems: "center", gap: "8px",
-        padding: "12px 18px", backgroundColor: "#f8fafc",
-        borderBottom: "1px solid #f1f5f9",
+        padding: "12px 18px", backgroundColor: "var(--muted)",
+        borderBottom: "1px solid var(--border)",
       }}>
-        <span style={{ color: "#64748b" }}>{icon}</span>
-        <span style={{ fontSize: "11px", fontWeight: 700, color: "#64748b",
+        <span style={{ color: "var(--muted-foreground)" }}>{icon}</span>
+        <span style={{ fontSize: "11px", fontWeight: 700, color: "var(--muted-foreground)",
                        textTransform: "uppercase", letterSpacing: "0.08em",
-                       fontFamily: FF }}>
+                       fontFamily: FF, color: "var(--foreground)" }}>
           {title}
         </span>
       </div>
@@ -56,19 +56,19 @@ function Field({
   return (
     <div style={{ marginBottom: "12px" }}>
       <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
-                      color: "#475569", marginBottom: "5px", fontFamily: FF }}>
-        {label}{required && <span style={{ color: "#ef4444", marginLeft: "2px" }}>*</span>}
+                      color: "var(--muted-foreground)", marginBottom: "5px", fontFamily: FF, color: "var(--foreground)" }}>
+        {label}{required && <span style={{ color: "var(--destructive)", marginLeft: "2px" }}>*</span>}
       </label>
       <input
         type={type} value={value} onChange={e => onChange(e.target.value)}
         placeholder={placeholder}
         style={{
           width: "100%", padding: "9px 12px", borderRadius: "8px",
-          border: "1.5px solid #e2e8f0", fontSize: "13px", outline: "none",
-          backgroundColor: "#f8fafc", boxSizing: "border-box", fontFamily: FF,
+          border: "1.5px solid var(--border)", fontSize: "13px", outline: "none",
+          backgroundColor: "var(--muted)", boxSizing: "border-box", fontFamily: FF,
         }}
-        onFocus={e => (e.target.style.borderColor = "#3182ce")}
-        onBlur={e  => (e.target.style.borderColor = "#e2e8f0")}
+        onFocus={e => (e.target.style.borderColor = "var(--secondary)")}
+        onBlur={e  => (e.target.style.borderColor = "var(--border)")}
       />
     </div>
   );
@@ -94,20 +94,20 @@ function ImageTile({ label, hint, currentUrl, onUpload, uploading }: {
   }
   return (
     <div style={{
-      border: "1.5px dashed #cbd5e1", borderRadius: "12px",
-      padding: "14px", textAlign: "center", backgroundColor: "#f8fafc",
+      border: "1.5px dashed var(--border)", borderRadius: "12px",
+      padding: "14px", textAlign: "center", backgroundColor: "var(--muted)",
     }}>
       {currentUrl
         ? <img src={currentUrl} alt={label} style={{
             maxHeight: "70px", maxWidth: "100%", objectFit: "contain",
             borderRadius: "6px", margin: "0 auto 8px", display: "block",
           }} />
-        : <ImageIcon style={{ width: 32, height: 32, color: "#cbd5e1",
+        : <ImageIcon style={{ width: 32, height: 32, color: "var(--border)",
                                margin: "0 auto 6px", display: "block" }} />}
-      <p style={{ fontSize: "11.5px", fontWeight: 700, color: "#374151",
-                  margin: "0 0 2px", fontFamily: FF }}>{label}</p>
-      <p style={{ fontSize: "10.5px", color: "#94a3b8", margin: "0 0 8px",
-                  fontFamily: FF }}>{hint}</p>
+      <p style={{ fontSize: "11.5px", fontWeight: 700, color: "var(--foreground)",
+                  margin: "0 0 2px", fontFamily: FF, color: "var(--foreground)" }}>{label}</p>
+      <p style={{ fontSize: "10.5px", color: "var(--muted-foreground)", margin: "0 0 8px",
+                  fontFamily: FF, color: "var(--foreground)" }}>{hint}</p>
       <button
         type="button" onClick={() => ref.current?.click()} disabled={uploading}
         style={{
@@ -241,7 +241,7 @@ export function ProfilScreen() {
   const ALL_CLASSES = ["CI", "CP", "CE1", "CE2", "CM1", "CM2"];
 
   return (
-    <div style={{ backgroundColor: "#f8fafc", minHeight: "100vh", fontFamily: FF }}>
+    <div style={{ backgroundColor: "var(--muted)", minHeight: "100vh", fontFamily: FF, color: "var(--foreground)" }}>
 
       {/* ── Hero card ── */}
       <div style={{
@@ -255,7 +255,7 @@ export function ProfilScreen() {
             width: 72, height: 72, borderRadius: "50%",
             background: "linear-gradient(135deg, #059669 0%, #0d9488 100%)",
             display: "flex", alignItems: "center", justifyContent: "center",
-            fontSize: "24px", fontWeight: 800, color: "#fff",
+            fontSize: "24px", fontWeight: 800, color: "var(--primary-foreground)",
             margin: "0 auto 12px",
             border: "3px solid rgba(255,255,255,0.25)",
             boxShadow: "0 6px 24px rgba(0,0,0,0.30)",
@@ -272,15 +272,15 @@ export function ProfilScreen() {
             <div style={{
               position: "absolute", bottom: -2, right: -2,
               width: 22, height: 22, borderRadius: "50%",
-              backgroundColor: "#fff",
+              backgroundColor: "var(--card)",
               display: "flex", alignItems: "center", justifyContent: "center",
-              border: "1.5px solid #e2e8f0",
+              border: "1.5px solid var(--border)",
             }}>
-              <Camera style={{ width: 11, height: 11, color: "#475569" }} />
+              <Camera style={{ width: 11, height: 11, color: "var(--muted-foreground)" }} />
             </div>
           </div>
 
-          <h2 style={{ fontSize: "18px", fontWeight: 800, color: "#fff",
+          <h2 style={{ fontSize: "18px", fontWeight: 800, color: "var(--primary-foreground)",
                        margin: "0 0 3px" }}>
             {fullName || "Mon Profil"}
           </h2>
@@ -332,9 +332,9 @@ export function ProfilScreen() {
                    placeholder="M. Abdou DIALLO" />
 
             {/* Email — utilisé pour la connexion Email + mot de passe */}
-            <div style={{ marginBottom: "12px", paddingBottom: "12px", borderBottom: "1px solid #f1f5f9" }}>
+            <div style={{ marginBottom: "12px", paddingBottom: "12px", borderBottom: "1px solid var(--border)" }}>
               <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
-                              color: "#475569", marginBottom: "5px", fontFamily: FF }}>
+                              color: "var(--muted-foreground)", marginBottom: "5px", fontFamily: FF, color: "var(--foreground)" }}>
                 Adresse email (connexion email)
               </label>
               <div style={{ display: "flex", gap: "6px", alignItems: "flex-end" }}>
@@ -344,11 +344,11 @@ export function ProfilScreen() {
                     placeholder="vous@exemple.com"
                     style={{
                       width: "100%", padding: "9px 12px", borderRadius: "8px",
-                      border: "1.5px solid #e2e8f0", fontSize: "13px", outline: "none",
-                      backgroundColor: "#f8fafc", boxSizing: "border-box", fontFamily: FF,
+                      border: "1.5px solid var(--border)", fontSize: "13px", outline: "none",
+                      backgroundColor: "var(--muted)", boxSizing: "border-box", fontFamily: FF,
                     }}
-                    onFocus={e => (e.target.style.borderColor = "#3182ce")}
-                    onBlur={e  => (e.target.style.borderColor = "#e2e8f0")}
+                    onFocus={e => (e.target.style.borderColor = "var(--secondary)")}
+                    onBlur={e  => (e.target.style.borderColor = "var(--border)")}
                   />
                 </div>
                 <button
@@ -365,8 +365,8 @@ export function ProfilScreen() {
                   {emailUpdating ? "Mise à jour…" : emailChanged ? "✓ Mis à jour" : "Mettre à jour"}
                 </button>
               </div>
-              <p style={{ fontSize: "11px", color: "#64748b", marginTop: "4px",
-                          fontFamily: FF }}>
+              <p style={{ fontSize: "11px", color: "var(--muted-foreground)", marginTop: "4px",
+                          fontFamily: FF, color: "var(--foreground)" }}>
                 Utilisé pour vous connecter via Email + mot de passe. Vérification par email sera envoyée.
               </p>
             </div>
@@ -377,14 +377,14 @@ export function ProfilScreen() {
               value={telephone} onChange={setTelephone}
               placeholder="+221771234567" type="tel"
             />
-            <p style={{ fontSize: "11px", color: "#64748b", marginTop: "-8px",
-                        marginBottom: "12px", fontFamily: FF }}>
+            <p style={{ fontSize: "11px", color: "var(--muted-foreground)", marginTop: "-8px",
+                        marginBottom: "12px", fontFamily: FF, color: "var(--foreground)" }}>
               Format international requis (+221…). Utilisé pour recevoir le code WhatsApp.
             </p>
 
             <div style={{ marginBottom: "6px" }}>
               <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
-                              color: "#475569", marginBottom: "8px", fontFamily: FF }}>
+                              color: "var(--muted-foreground)", marginBottom: "8px", fontFamily: FF, color: "var(--foreground)" }}>
                 Rôle
               </label>
               <div style={{ display: "flex", gap: "8px" }}>
@@ -421,15 +421,15 @@ export function ProfilScreen() {
                      placeholder="Kolda" />
               <div style={{ marginBottom: "12px" }}>
                 <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
-                                color: "#475569", marginBottom: "5px", fontFamily: FF }}>
+                                color: "var(--muted-foreground)", marginBottom: "5px", fontFamily: FF, color: "var(--foreground)" }}>
                   Classe active
                 </label>
                 <select
                   value={classeActive} onChange={e => setClasseActive(e.target.value)}
                   style={{
                     width: "100%", padding: "9px 12px", borderRadius: "8px",
-                    border: "1.5px solid #e2e8f0", fontSize: "13px", outline: "none",
-                    backgroundColor: "#f8fafc", fontFamily: FF, color: "#1a365d",
+                    border: "1.5px solid var(--border)", fontSize: "13px", outline: "none",
+                    backgroundColor: "var(--muted)", fontFamily: FF, color: "var(--primary)",
                   }}
                 >
                   {ALL_CLASSES.map(c => <option key={c} value={c}>{c}</option>)}
@@ -438,7 +438,7 @@ export function ProfilScreen() {
             </div>
             <div>
               <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
-                              color: "#475569", marginBottom: "5px", fontFamily: FF }}>
+                              color: "var(--muted-foreground)", marginBottom: "5px", fontFamily: FF, color: "var(--foreground)" }}>
                 <MapPin style={{ width: 11, height: 11, display: "inline",
                                   marginRight: "4px" }} />
                 Adresse
@@ -448,11 +448,11 @@ export function ProfilScreen() {
                 placeholder="Quartier, Commune, Région"
                 style={{
                   width: "100%", padding: "9px 12px", borderRadius: "8px",
-                  border: "1.5px solid #e2e8f0", fontSize: "13px", outline: "none",
-                  backgroundColor: "#f8fafc", fontFamily: FF, boxSizing: "border-box",
+                  border: "1.5px solid var(--border)", fontSize: "13px", outline: "none",
+                  backgroundColor: "var(--muted)", fontFamily: FF, boxSizing: "border-box",
                 }}
-                onFocus={e => (e.target.style.borderColor = "#3182ce")}
-                onBlur={e  => (e.target.style.borderColor = "#e2e8f0")}
+                onFocus={e => (e.target.style.borderColor = "var(--secondary)")}
+                onBlur={e  => (e.target.style.borderColor = "var(--border)")}
               />
             </div>
           </Card>
@@ -460,7 +460,7 @@ export function ProfilScreen() {
           {/* ── Médias ── */}
           <Card title="Médias de l'école"
                 icon={<ImageIcon style={{ width: 14, height: 14 }} />}>
-            <p style={{ fontSize: "12px", color: "#64748b", margin: "0 0 14px",
+            <p style={{ fontSize: "12px", color: "var(--muted-foreground)", margin: "0 0 14px",
                         lineHeight: 1.6 }}>
               Ces images apparaissent dans l'en-tête de vos fiches de préparation et bulletins.
             </p>
@@ -484,7 +484,7 @@ export function ProfilScreen() {
             style={{
               width: "100%", padding: "13px", borderRadius: "12px",
               backgroundColor: saving ? "#94a3b8" : "#1a365d",
-              color: "#fff", fontWeight: 800, fontSize: "14px",
+              color: "var(--primary-foreground)", fontWeight: 800, fontSize: "14px",
               border: "none", cursor: saving ? "not-allowed" : "pointer",
               display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
               boxShadow: "0 4px 16px rgba(26,54,93,0.25)",
@@ -500,7 +500,7 @@ export function ProfilScreen() {
         {/* ── Mot de passe ── */}
         <Card title="Sécurité"
               icon={<Lock style={{ width: 14, height: 14 }} />}>
-          <p style={{ fontSize: "12px", color: "#64748b", marginBottom: "14px", fontFamily: FF, lineHeight: 1.5 }}>
+          <p style={{ fontSize: "12px", color: "var(--muted-foreground)", marginBottom: "14px", fontFamily: FF, lineHeight: 1.5 }}>
             Gérez votre mot de passe pour sécuriser votre compte et vous connecter via Email + mot de passe.
           </p>
           <form onSubmit={handlePasswordChange}>
@@ -508,8 +508,8 @@ export function ProfilScreen() {
             {user?.email && (
               <div style={{ marginBottom: "12px" }}>
                 <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
-                                color: "#475569", marginBottom: "5px", fontFamily: FF }}>
-                  Mot de passe actuel <span style={{ color: "#ef4444" }}>*</span>
+                                color: "var(--muted-foreground)", marginBottom: "5px", fontFamily: FF, color: "var(--foreground)" }}>
+                  Mot de passe actuel <span style={{ color: "var(--destructive)" }}>*</span>
                 </label>
                 <input
                   type="password"
@@ -517,14 +517,14 @@ export function ProfilScreen() {
                   placeholder="Votre mot de passe actuel"
                   style={{
                     width: "100%", padding: "9px 12px", borderRadius: "8px",
-                    border: "1.5px solid #e2e8f0", fontSize: "13px", outline: "none",
-                    backgroundColor: "#f8fafc", fontFamily: FF, boxSizing: "border-box",
+                    border: "1.5px solid var(--border)", fontSize: "13px", outline: "none",
+                    backgroundColor: "var(--muted)", fontFamily: FF, boxSizing: "border-box",
                   }}
-                  onFocus={e => (e.target.style.borderColor = "#3182ce")}
-                  onBlur={e  => (e.target.style.borderColor = "#e2e8f0")}
+                  onFocus={e => (e.target.style.borderColor = "var(--secondary)")}
+                  onBlur={e  => (e.target.style.borderColor = "var(--border)")}
                 />
-                <p style={{ fontSize: "10.5px", color: "#64748b", marginTop: "4px",
-                            fontFamily: FF }}>
+                <p style={{ fontSize: "10.5px", color: "var(--muted-foreground)", marginTop: "4px",
+                            fontFamily: FF, color: "var(--foreground)" }}>
                   Requis pour vérifier votre identité avant de changer le mot de passe.
                 </p>
               </div>
@@ -532,8 +532,8 @@ export function ProfilScreen() {
             
             <div style={{ marginBottom: "12px" }}>
               <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
-                              color: "#475569", marginBottom: "5px", fontFamily: FF }}>
-                Nouveau mot de passe <span style={{ color: "#ef4444" }}>*</span>
+                              color: "var(--muted-foreground)", marginBottom: "5px", fontFamily: FF, color: "var(--foreground)" }}>
+                Nouveau mot de passe <span style={{ color: "var(--destructive)" }}>*</span>
               </label>
               <div style={{ position: "relative" }}>
                 <input
@@ -542,11 +542,11 @@ export function ProfilScreen() {
                   placeholder="Minimum 6 caractères"
                   style={{
                     width: "100%", padding: "9px 40px 9px 12px", borderRadius: "8px",
-                    border: "1.5px solid #e2e8f0", fontSize: "13px", outline: "none",
-                    backgroundColor: "#f8fafc", fontFamily: FF, boxSizing: "border-box",
+                    border: "1.5px solid var(--border)", fontSize: "13px", outline: "none",
+                    backgroundColor: "var(--muted)", fontFamily: FF, boxSizing: "border-box",
                   }}
-                  onFocus={e => (e.target.style.borderColor = "#3182ce")}
-                  onBlur={e  => (e.target.style.borderColor = "#e2e8f0")}
+                  onFocus={e => (e.target.style.borderColor = "var(--secondary)")}
+                  onBlur={e  => (e.target.style.borderColor = "var(--border)")}
                 />
                 <button
                   type="button"
@@ -554,7 +554,7 @@ export function ProfilScreen() {
                   onClick={() => setShowPw(p => !p)}
                   style={{ position: "absolute", right: "10px", top: "50%",
                            transform: "translateY(-50%)", background: "none",
-                           border: "none", cursor: "pointer", color: "#94a3b8",
+                           border: "none", cursor: "pointer", color: "var(--muted-foreground)",
                            display: "flex", padding: 0 }}>
                   {showPw
                     ? <EyeOff style={{ width: 15, height: 15 }} />
@@ -565,8 +565,8 @@ export function ProfilScreen() {
 
             <div style={{ marginBottom: "14px" }}>
               <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
-                              color: "#475569", marginBottom: "5px", fontFamily: FF }}>
-                Confirmer le mot de passe <span style={{ color: "#ef4444" }}>*</span>
+                              color: "var(--muted-foreground)", marginBottom: "5px", fontFamily: FF, color: "var(--foreground)" }}>
+                Confirmer le mot de passe <span style={{ color: "var(--destructive)" }}>*</span>
               </label>
               <input
                 type={showPw ? "text" : "password"}
@@ -575,15 +575,15 @@ export function ProfilScreen() {
                 style={{
                   width: "100%", padding: "9px 12px", borderRadius: "8px",
                   border: `1.5px solid ${confirmPw && confirmPw !== newPw ? "#fca5a5" : "#e2e8f0"}`,
-                  fontSize: "13px", outline: "none", backgroundColor: "#f8fafc",
+                  fontSize: "13px", outline: "none", backgroundColor: "var(--muted)",
                   fontFamily: FF, boxSizing: "border-box",
                 }}
-                onFocus={e => (e.target.style.borderColor = "#3182ce")}
+                onFocus={e => (e.target.style.borderColor = "var(--secondary)")}
                 onBlur={e  => (e.target.style.borderColor =
-                  confirmPw && confirmPw !== newPw ? "#fca5a5" : "#e2e8f0")}
+                  confirmPw && confirmPw !== newPw ? "var(--destructive)" : "var(--border)")}
               />
               {confirmPw && confirmPw !== newPw && (
-                <p style={{ fontSize: "10.5px", color: "#ef4444", marginTop: "4px", fontFamily: FF }}>
+                <p style={{ fontSize: "10.5px", color: "var(--destructive)", marginTop: "4px", fontFamily: FF }}>
                   ❌ Les mots de passe ne correspondent pas.
                 </p>
               )}

@@ -118,14 +118,14 @@ function DocPrintPortal({ doc }: { doc: Document }) {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start",
                     borderBottom: "2px solid #1a365d", paddingBottom: "6px", marginBottom: "10px" }}>
         <div>
-          <p style={{ fontSize: "8pt", color: "#475569", margin: 0, lineHeight: 1.4 }}>IA : Inspection Académique de Kolda</p>
-          <p style={{ fontSize: "8pt", color: "#475569", margin: 0, lineHeight: 1.4 }}>IEF : Inspection de l'Éducation et de la Formation de Kolda</p>
-          <p style={{ fontSize: "10pt", fontWeight: 700, color: "#1a365d", margin: 0 }}>École : Ilyaou Mamadou SEYDI</p>
+          <p style={{ fontSize: "8pt", color: "var(--muted-foreground)", margin: 0, lineHeight: 1.4 }}>IA : Inspection Académique de Kolda</p>
+          <p style={{ fontSize: "8pt", color: "var(--muted-foreground)", margin: 0, lineHeight: 1.4 }}>IEF : Inspection de l'Éducation et de la Formation de Kolda</p>
+          <p style={{ fontSize: "10pt", fontWeight: 700, color: "var(--primary)", margin: 0 }}>École : Ilyaou Mamadou SEYDI</p>
         </div>
         <div style={{ textAlign: "right" }}>
-          <p style={{ fontSize: "10pt", fontWeight: 800, color: "#1a365d", textTransform: "uppercase", margin: 0, lineHeight: 1.4 }}>République du Sénégal</p>
-          <p style={{ fontSize: "8pt", color: "#64748b", margin: 0 }}>Un Peuple – Un But – Une Foi</p>
-          <p style={{ fontSize: "8pt", color: "#64748b", margin: 0 }}>Année Scolaire 2025–2026</p>
+          <p style={{ fontSize: "10pt", fontWeight: 800, color: "var(--primary)", textTransform: "uppercase", margin: 0, lineHeight: 1.4 }}>République du Sénégal</p>
+          <p style={{ fontSize: "8pt", color: "var(--muted-foreground)", margin: 0 }}>Un Peuple – Un But – Une Foi</p>
+          <p style={{ fontSize: "8pt", color: "var(--muted-foreground)", margin: 0 }}>Année Scolaire 2025–2026</p>
         </div>
       </div>
       <span style={{ display: "inline-block", padding: "2px 10px", borderRadius: "999px",
@@ -134,11 +134,11 @@ function DocPrintPortal({ doc }: { doc: Document }) {
                      marginBottom: "8px" }}>
         {typeLabel[doc.type]}
       </span>
-      <p style={{ fontSize: "16pt", fontWeight: 800, color: "#1a365d", textTransform: "uppercase",
+      <p style={{ fontSize: "16pt", fontWeight: 800, color: "var(--primary)", textTransform: "uppercase",
                   letterSpacing: "0.05em", margin: "0 0 4px" }}>{doc.title}</p>
-      <p style={{ fontSize: "11pt", color: "#475569", margin: "0 0 2px" }}>{doc.subtitle}</p>
-      <p style={{ fontSize: "9pt", color: "#94a3b8", margin: "0 0 18px" }}>{doc.meta} · {doc.date}</p>
-      <p style={{ fontSize: "9pt", color: "#475569", marginTop: "20mm" }}>
+      <p style={{ fontSize: "11pt", color: "var(--muted-foreground)", margin: "0 0 2px" }}>{doc.subtitle}</p>
+      <p style={{ fontSize: "9pt", color: "var(--muted-foreground)", margin: "0 0 18px" }}>{doc.meta} · {doc.date}</p>
+      <p style={{ fontSize: "9pt", color: "var(--muted-foreground)", marginTop: "20mm" }}>
         Généré avec École 2.0 · Programme Officiel DEMSG Sénégal
       </p>
       <div style={{ marginTop: "24mm", borderTop: "1px solid #e5e7eb", paddingTop: "6px",
@@ -171,21 +171,21 @@ function PreviewModal({
         <button
           onClick={onClose}
           className="flex items-center justify-center rounded-xl transition-all active:scale-95"
-          style={{ width: 36, height: 36, backgroundColor: "#f1f5f9" }}
+          style={{ width: 36, height: 36, backgroundColor: "var(--muted)" }}
         >
-          <X style={{ width: 18, height: 18, color: "#475569" }} />
+          <X style={{ width: 18, height: 18, color: "var(--muted-foreground)" }} />
         </button>
         <div className="flex-1 min-w-0">
-          <p className="font-bold truncate" style={{ fontSize: "13px", color: "#1a365d" }}>
+          <p className="font-bold truncate" style={{ fontSize: "13px", color: "var(--primary)" }}>
             {doc.title}
           </p>
-          <p style={{ fontSize: "10px", color: "#94a3b8" }}>{doc.badge} · {doc.date}</p>
+          <p style={{ fontSize: "10px", color: "var(--muted-foreground)" }}>{doc.badge} · {doc.date}</p>
         </div>
         <button
           onClick={onPrint}
           className="flex items-center gap-1.5 rounded-xl font-bold transition-all active:scale-95"
           style={{ minHeight: 36, padding: "0 14px", fontSize: "12px",
-                   backgroundColor: "#1a365d", color: "#fff" }}
+                   backgroundColor: "var(--primary)", color: "#fff" }}
         >
           <Printer style={{ width: 14, height: 14 }} />
           Imprimer
@@ -208,23 +208,23 @@ function PreviewModal({
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start",
                         borderBottom: "2px solid #1a365d", paddingBottom: "8px", marginBottom: "12px" }}>
             <div>
-              <p style={{ fontSize: "8px", color: "#475569", margin: 0, lineHeight: 1.4 }}>
+              <p style={{ fontSize: "8px", color: "var(--muted-foreground)", margin: 0, lineHeight: 1.4 }}>
                 IA : Inspection Académique de Kolda
               </p>
-              <p style={{ fontSize: "8px", color: "#475569", margin: 0, lineHeight: 1.4 }}>
+              <p style={{ fontSize: "8px", color: "var(--muted-foreground)", margin: 0, lineHeight: 1.4 }}>
                 IEF : Inspection de l'Éducation et de la Formation de Kolda
               </p>
-              <p style={{ fontSize: "10px", fontWeight: 700, color: "#1a365d", margin: 0 }}>
+              <p style={{ fontSize: "10px", fontWeight: 700, color: "var(--primary)", margin: 0 }}>
                 École : Ilyaou Mamadou SEYDI
               </p>
             </div>
             <div style={{ textAlign: "right" }}>
-              <p style={{ fontSize: "10px", fontWeight: 800, color: "#1a365d",
+              <p style={{ fontSize: "10px", fontWeight: 800, color: "var(--primary)",
                           textTransform: "uppercase", margin: 0, lineHeight: 1.4 }}>
                 République du Sénégal
               </p>
-              <p style={{ fontSize: "8px", color: "#64748b", margin: 0 }}>Un Peuple – Un But – Une Foi</p>
-              <p style={{ fontSize: "8px", color: "#64748b", margin: 0 }}>Année 2025–2026</p>
+              <p style={{ fontSize: "8px", color: "var(--muted-foreground)", margin: 0 }}>Un Peuple – Un But – Une Foi</p>
+              <p style={{ fontSize: "8px", color: "var(--muted-foreground)", margin: 0 }}>Année 2025–2026</p>
             </div>
           </div>
 
@@ -244,10 +244,10 @@ function PreviewModal({
                       margin: "0 0 4px" }}>
             {doc.title}
           </p>
-          <p style={{ fontSize: "11pt", color: "#475569", margin: "0 0 2px" }}>
+          <p style={{ fontSize: "11pt", color: "var(--muted-foreground)", margin: "0 0 2px" }}>
             {doc.subtitle}
           </p>
-          <p style={{ fontSize: "9pt", color: "#94a3b8", margin: "0 0 20px" }}>
+          <p style={{ fontSize: "9pt", color: "var(--muted-foreground)", margin: "0 0 20px" }}>
             {doc.meta} · {doc.date}
           </p>
 
@@ -386,21 +386,21 @@ function DocCard({
             <button
               onClick={onPreview}
               className="inline-flex items-center gap-1 rounded-lg text-[10px] font-semibold transition-all active:scale-95 hover:bg-[#eef4ff]"
-              style={{ padding: "6px 12px", backgroundColor: "#f1f5f9", color: "#475569" }}
+              style={{ padding: "6px 12px", backgroundColor: "var(--muted)", color: "var(--muted-foreground)" }}
             >
               <Eye className="w-3 h-3" />Aperçu
             </button>
             <button
               onClick={onPrint}
               className="inline-flex items-center gap-1 rounded-lg text-[10px] font-semibold transition-all active:scale-95 hover:bg-[#f0fdf4]"
-              style={{ padding: "6px 12px", backgroundColor: "#f1f5f9", color: "#475569" }}
+              style={{ padding: "6px 12px", backgroundColor: "var(--muted)", color: "var(--muted-foreground)" }}
             >
               <Printer className="w-3 h-3" />Imprimer
             </button>
             <button
               onClick={onPrint}
               className="inline-flex items-center gap-1 rounded-lg text-[10px] font-semibold transition-all active:scale-95"
-              style={{ padding: "6px 12px", backgroundColor: "#1a365d", color: "#fff",
+              style={{ padding: "6px 12px", backgroundColor: "var(--primary)", color: "#fff",
                        boxShadow: "0 2px 6px rgba(26,54,93,0.22)" }}
             >
               <Download className="w-3 h-3" />PDF
@@ -782,9 +782,9 @@ export function DocumentsScreen() {
 
               {/* Total count */}
               <div className="hidden sm:flex items-center gap-1 shrink-0 rounded-full px-3 py-1"
-                   style={{ backgroundColor: "#f1f5f9" }}>
+                   style={{ backgroundColor: "var(--muted)" }}>
                 <FileText className="w-3.5 h-3.5 text-[#64748b]" />
-                <span style={{ fontSize: "12px", fontWeight: 700, color: "#475569" }}>
+                <span style={{ fontSize: "12px", fontWeight: 700, color: "var(--muted-foreground)" }}>
                   {ALL_DOCS.length} docs
                 </span>
               </div>
@@ -831,7 +831,7 @@ export function DocumentsScreen() {
                      style={{ boxShadow: "0 1px 6px rgba(0,0,0,0.06)" }}>
                   <p className="font-black" style={{ fontSize: "22px", color: s.color }}>{s.value}</p>
                   <p className="font-semibold leading-tight"
-                     style={{ fontSize: "9px", color: "#64748b" }}>
+                     style={{ fontSize: "9px", color: "var(--muted-foreground)" }}>
                     {s.label}
                   </p>
                 </div>
@@ -857,8 +857,8 @@ export function DocumentsScreen() {
                 className="w-full rounded-xl outline-none font-medium"
                 style={{
                   minHeight: "42px", padding: "0 12px 0 38px",
-                  fontSize: "13px", border: "1.5px solid #e2e8f0",
-                  backgroundColor: "#fff", fontFamily: "'Plus Jakarta Sans',sans-serif",
+                  fontSize: "13px", border: "1.5px solid var(--border)",
+                  backgroundColor: "var(--card)", fontFamily: "'Plus Jakarta Sans',sans-serif",
                 }}
               />
             </div>

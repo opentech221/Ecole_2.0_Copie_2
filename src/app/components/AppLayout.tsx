@@ -124,7 +124,7 @@ function UserCard({ profile, onLogout }: { profile: UserProfile | null; onLogout
                       whiteSpace: "nowrap", fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             {displayName}
           </p>
-          <p style={{ fontSize: "10.5px", color: "#64748b", margin: 0,
+          <p style={{ fontSize: "10.5px", color: "var(--muted-foreground)", margin: 0,
                       fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             {displayRole}
           </p>
@@ -177,7 +177,7 @@ function DesktopSidebar({ profile, onLogout }: {
   return (
     <aside style={{
       width: "260px", minWidth: "260px",
-      backgroundColor: "#ffffff", borderRight: "1px solid #e2e8f0",
+      backgroundColor: "var(--card)", borderRight: "1px solid var(--border)",
       display: "flex", flexDirection: "column",
       height: "100vh", position: "sticky", top: 0, overflowY: "auto",
     }}>
@@ -194,12 +194,12 @@ function DesktopSidebar({ profile, onLogout }: {
           <GraduationCap style={{ width: 16, height: 16, color: "#fff" }} />
         </div>
         <div>
-          <p style={{ fontSize: "14px", fontWeight: 800, color: "#0f172a",
+          <p style={{ fontSize: "14px", fontWeight: 800, color: "var(--foreground)",
                       margin: 0, letterSpacing: "-0.01em",
                       fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             École 2.0
           </p>
-          <p style={{ fontSize: "10.5px", color: "#94a3b8", margin: 0,
+          <p style={{ fontSize: "10.5px", color: "var(--muted-foreground)", margin: 0,
                       fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             {profile?.ecoleName || "Plateforme scolaire"}
           </p>
@@ -232,11 +232,11 @@ function DesktopSidebar({ profile, onLogout }: {
           style={{
             display: "flex", alignItems: "center", justifyContent: "space-between",
             width: "100%", padding: "7px 11px", borderRadius: "8px",
-            backgroundColor: "#f8fafc", border: "1px solid #e2e8f0",
+            backgroundColor: "var(--muted)", border: "1px solid var(--border)",
             cursor: "pointer", fontFamily: "'Plus Jakarta Sans', sans-serif",
           }}
         >
-          <span style={{ fontSize: "11px", color: "#64748b", fontWeight: 500 }}>
+          <span style={{ fontSize: "11px", color: "var(--muted-foreground)", fontWeight: 500 }}>
             Classe active :
           </span>
           <span style={{
@@ -251,7 +251,7 @@ function DesktopSidebar({ profile, onLogout }: {
           <div style={{
             display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "5px",
             marginTop: "6px", padding: "8px",
-            backgroundColor: "#f8fafc", borderRadius: "10px", border: "1px solid #e2e8f0",
+            backgroundColor: "var(--muted)", borderRadius: "10px", border: "1px solid var(--border)",
           }}>
             {ALL_CLASSES.map(c => {
               const a = activeClass === c;
@@ -308,7 +308,7 @@ function DesktopSidebar({ profile, onLogout }: {
         })}
 
         {/* Separator before logout */}
-        <div style={{ height: "1px", backgroundColor: "#f1f5f9", margin: "8px 4px" }} />
+        <div style={{ height: "1px", backgroundColor: "var(--muted)", margin: "8px 4px" }} />
       </nav>
 
       {/* User card + logout */}
@@ -325,7 +325,7 @@ function MobileTopBar({ activeClass, onMenuOpen }: {
   return (
     <div style={{
       position: "fixed", top: 0, left: 0, right: 0, zIndex: 200,
-      height: "48px", backgroundColor: "#fff", borderBottom: "1px solid #e2e8f0",
+      height: "48px", backgroundColor: "var(--card)", borderBottom: "1px solid var(--border)",
       display: "flex", alignItems: "center", padding: "0 16px", gap: "12px",
       fontFamily: "'Plus Jakarta Sans', sans-serif",
     }}>
@@ -337,7 +337,7 @@ function MobileTopBar({ activeClass, onMenuOpen }: {
         }}>
           <GraduationCap style={{ width: 13, height: 13, color: "#fff" }} />
         </div>
-        <span style={{ fontSize: "13px", fontWeight: 800, color: "#0f172a",
+        <span style={{ fontSize: "13px", fontWeight: 800, color: "var(--foreground)",
                        letterSpacing: "-0.01em" }}>
           École 2.0
         </span>
@@ -353,12 +353,12 @@ function MobileTopBar({ activeClass, onMenuOpen }: {
         onClick={onMenuOpen}
         style={{
           width: 34, height: 34, borderRadius: "8px",
-          backgroundColor: "#f8fafc", border: "1px solid #e2e8f0",
+          backgroundColor: "var(--muted)", border: "1px solid var(--border)",
           display: "flex", alignItems: "center", justifyContent: "center",
           cursor: "pointer", flexShrink: 0,
         }}
       >
-        <Menu style={{ width: 16, height: 16, color: "#475569", strokeWidth: 1.75 }} />
+        <Menu style={{ width: 16, height: 16, color: "var(--muted-foreground)", strokeWidth: 1.75 }} />
       </button>
     </div>
   );
@@ -373,7 +373,7 @@ function MobileBottomNav() {
     <div style={{
       position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 200,
       height: "max(64px, calc(64px + env(safe-area-inset-bottom)))",
-      backgroundColor: "#fff", borderTop: "1px solid #e2e8f0",
+      backgroundColor: "var(--card)", borderTop: "1px solid #e2e8f0",
       display: "flex", alignItems: "center",
       fontFamily: "'Plus Jakarta Sans', sans-serif",
     }}>
@@ -452,7 +452,7 @@ function MobileDrawer({ open, onClose, profile, onLogout }: {
         aria-label="Menu de navigation"
         style={{
           position: "fixed", left: 0, right: 0, bottom: 0, zIndex: 400,
-          backgroundColor: "#fff", borderRadius: "20px 20px 0 0",
+          backgroundColor: "var(--card)", borderRadius: "20px 20px 0 0",
           boxShadow: "0 -8px 40px rgba(0,0,0,0.14)",
           transform: open ? "translateY(0)" : "translateY(105%)",
           transition: "transform 280ms cubic-bezier(0.32,0.72,0,1)",
@@ -478,20 +478,20 @@ function MobileDrawer({ open, onClose, profile, onLogout }: {
               {initials}
             </div>
             <div>
-              <p style={{ fontSize: "13px", fontWeight: 600, color: "#0f172a", margin: 0 }}>
+              <p style={{ fontSize: "13px", fontWeight: 600, color: "var(--foreground)", margin: 0 }}>
                 {profile?.fullName || "Enseignant"}
               </p>
-              <p style={{ fontSize: "11px", color: "#64748b", margin: 0 }}>
+              <p style={{ fontSize: "11px", color: "var(--muted-foreground)", margin: 0 }}>
                 {profile?.role === "director" ? "Directeur" : "Enseignant"}
               </p>
             </div>
           </div>
           <button onClick={onClose}
             style={{ width: 32, height: 32, borderRadius: "8px",
-                     backgroundColor: "#f8fafc", border: "1px solid #e2e8f0",
+                     backgroundColor: "var(--muted)", border: "1px solid var(--border)",
                      display: "flex", alignItems: "center", justifyContent: "center",
                      cursor: "pointer" }}>
-            <X style={{ width: 15, height: 15, color: "#475569", strokeWidth: 1.75 }} />
+            <X style={{ width: 15, height: 15, color: "var(--muted-foreground)", strokeWidth: 1.75 }} />
           </button>
         </div>
 
@@ -577,9 +577,9 @@ function MobileDrawer({ open, onClose, profile, onLogout }: {
           <div style={{
             display: "flex", alignItems: "center", gap: "8px",
             marginBottom: "16px", padding: "8px 12px", borderRadius: "9px",
-            backgroundColor: "#f8fafc", border: "1px solid #e2e8f0",
+            backgroundColor: "var(--muted)", border: "1px solid var(--border)",
           }}>
-            <span style={{ fontSize: "11px", color: "#64748b",
+            <span style={{ fontSize: "11px", color: "var(--muted-foreground)",
                            fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Rôle :
             </span>
@@ -629,7 +629,7 @@ export function AppLayout() {
     return (
       <div style={{
         minHeight: "100vh", display: "flex", alignItems: "center",
-        justifyContent: "center", backgroundColor: "#f8fafc",
+        justifyContent: "center", backgroundColor: "var(--muted)",
         fontFamily: "'Plus Jakarta Sans', sans-serif",
       }}>
         <div style={{ textAlign: "center" }}>
@@ -640,7 +640,7 @@ export function AppLayout() {
           }}>
             <GraduationCap style={{ width: 22, height: 22, color: "#fff" }} />
           </div>
-          <p style={{ fontSize: "13px", color: "#94a3b8", margin: 0 }}>Chargement…</p>
+          <p style={{ fontSize: "13px", color: "var(--muted-foreground)", margin: 0 }}>Chargement…</p>
         </div>
       </div>
     );

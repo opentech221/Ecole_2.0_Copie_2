@@ -66,8 +66,8 @@ function normalizePhone(raw: string): string | null {
 
 const INPUT: React.CSSProperties = {
   width: "100%", padding: "11px 14px", borderRadius: "10px",
-  border: "1.5px solid #e2e8f0", fontSize: "14px", outline: "none",
-  backgroundColor: "#f8fafc", boxSizing: "border-box",
+  border: "1.5px solid var(--border)", fontSize: "14px", outline: "none",
+  backgroundColor: "var(--muted)", boxSizing: "border-box",
 };
 
 const AUTH_THEME = {
@@ -243,15 +243,15 @@ export function SignupScreen() {
         padding: "24px", fontFamily: "'Plus Jakarta Sans', sans-serif",
       }}>
         <div style={{
-          width: "100%", maxWidth: "420px", backgroundColor: "#fff",
+          width: "100%", maxWidth: "420px", backgroundColor: "var(--card)",
           borderRadius: "20px", padding: "40px 32px",
           boxShadow: "0 24px 64px rgba(0,0,0,0.4)", textAlign: "center",
         }}>
           <CheckCircle style={{ width: 52, height: 52, color: "#10b981", margin: "0 auto 16px" }} />
-          <h2 style={{ fontSize: "20px", fontWeight: 800, color: "#1a365d", margin: "0 0 10px" }}>
+          <h2 style={{ fontSize: "20px", fontWeight: 800, color: "var(--primary)", margin: "0 0 10px" }}>
             Vérification WhatsApp
           </h2>
-          <p style={{ fontSize: "14px", color: "#64748b", lineHeight: 1.6, marginBottom: "18px" }}>
+          <p style={{ fontSize: "14px", color: "var(--muted-foreground)", lineHeight: 1.6, marginBottom: "18px" }}>
             Un code a été envoyé sur <strong>{normalizedPhone}</strong>.
             Saisissez-le pour finaliser votre inscription.
           </p>
@@ -286,7 +286,7 @@ export function SignupScreen() {
               type="submit"
               disabled={verifyingCode}
               style={{
-                width: "100%", padding: "12px 20px", borderRadius: "12px", backgroundColor: "#1a365d",
+                width: "100%", padding: "12px 20px", borderRadius: "12px", backgroundColor: "var(--primary)",
                 color: "#fff", fontWeight: 700, fontSize: "14px",
                 border: "none", cursor: verifyingCode ? "not-allowed" : "pointer",
                 fontFamily: "'Plus Jakarta Sans', sans-serif", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
@@ -305,7 +305,7 @@ export function SignupScreen() {
             }}
             style={{
               marginTop: "10px", width: "100%", padding: "11px 16px",
-              borderRadius: "10px", backgroundColor: "#fff", color: "#334155", fontWeight: 700,
+              borderRadius: "10px", backgroundColor: "var(--card)", color: "#334155", fontWeight: 700,
               fontSize: "13px", border: "1px solid #cbd5e1", cursor: "pointer",
               fontFamily: "'Plus Jakarta Sans', sans-serif",
             }}
@@ -326,22 +326,22 @@ export function SignupScreen() {
         padding: "24px", fontFamily: "'Plus Jakarta Sans', sans-serif",
       }}>
         <div style={{
-          width: "100%", maxWidth: "420px", backgroundColor: "#fff",
+          width: "100%", maxWidth: "420px", backgroundColor: "var(--card)",
           borderRadius: "20px", padding: "40px 32px",
           boxShadow: "0 24px 64px rgba(0,0,0,0.4)", textAlign: "center",
         }}>
           <CheckCircle style={{ width: 52, height: 52, color: "#10b981", margin: "0 auto 16px" }} />
-          <h2 style={{ fontSize: "20px", fontWeight: 800, color: "#1a365d", margin: "0 0 10px" }}>
+          <h2 style={{ fontSize: "20px", fontWeight: 800, color: "var(--primary)", margin: "0 0 10px" }}>
             Vérifiez votre email
           </h2>
-          <p style={{ fontSize: "14px", color: "#64748b", lineHeight: 1.6, marginBottom: "24px" }}>
+          <p style={{ fontSize: "14px", color: "var(--muted-foreground)", lineHeight: 1.6, marginBottom: "24px" }}>
             Un lien de confirmation a été envoyé à <strong>{email}</strong>.
             Ouvrez ce lien pour finaliser votre inscription.
           </p>
           <button
             onClick={() => navigate("/login")}
             style={{
-              padding: "12px 28px", borderRadius: "12px", backgroundColor: "#1a365d",
+              padding: "12px 28px", borderRadius: "12px", backgroundColor: "var(--primary)",
               color: "#fff", fontWeight: 700, fontSize: "14px",
               border: "none", cursor: "pointer",
               fontFamily: "'Plus Jakarta Sans', sans-serif",
@@ -362,7 +362,7 @@ export function SignupScreen() {
       padding: "24px", fontFamily: "'Plus Jakarta Sans', sans-serif",
     }}>
       <div style={{
-        width: "100%", maxWidth: "440px", backgroundColor: "#fff",
+        width: "100%", maxWidth: "440px", backgroundColor: "var(--card)",
         borderRadius: "20px", padding: "40px 32px",
         boxShadow: "0 24px 64px rgba(0,0,0,0.4)",
       }}>
@@ -372,13 +372,13 @@ export function SignupScreen() {
           <div style={{ display: "inline-flex", alignItems: "center", gap: "10px",
                         marginBottom: "10px", padding: "10px 20px", borderRadius: "14px",
                         backgroundColor: "#f0f7ff", border: "1px solid #bfdbfe" }}>
-            <GraduationCap style={{ width: 24, height: 24, color: "#3182ce" }} />
-            <span style={{ fontSize: "18px", fontWeight: 900, color: "#1a365d",
+            <GraduationCap style={{ width: 24, height: 24, color: "var(--secondary)" }} />
+            <span style={{ fontSize: "18px", fontWeight: 900, color: "var(--primary)",
                            letterSpacing: "0.1em", textTransform: "uppercase" }}>
               École 2.0
             </span>
           </div>
-          <p style={{ fontSize: "13px", color: "#64748b", margin: 0 }}>
+          <p style={{ fontSize: "13px", color: "var(--muted-foreground)", margin: 0 }}>
             Créez votre espace enseignant gratuitement
           </p>
         </div>
@@ -481,7 +481,7 @@ export function SignupScreen() {
                 onFocus={e => (e.target.style.borderColor = "#3182ce")}
                 onBlur={e  => (e.target.style.borderColor = "#e2e8f0")}
               />
-              <p style={{ fontSize: "12px", color: "#64748b", margin: "8px 0 0" }}>
+              <p style={{ fontSize: "12px", color: "var(--muted-foreground)", margin: "8px 0 0" }}>
                 Nous enverrons le code d'inscription sur WhatsApp Business.
               </p>
             </div>
@@ -577,7 +577,7 @@ export function SignupScreen() {
 
         <div style={{ display: "flex", alignItems: "center", gap: "10px", margin: "18px 0" }}>
           <div style={{ height: "1px", flex: 1, backgroundColor: "#e2e8f0" }} />
-          <span style={{ fontSize: "12px", color: "#64748b" }}>ou</span>
+          <span style={{ fontSize: "12px", color: "var(--muted-foreground)" }}>ou</span>
           <div style={{ height: "1px", flex: 1, backgroundColor: "#e2e8f0" }} />
         </div>
 
@@ -588,7 +588,7 @@ export function SignupScreen() {
             onClick={() => handleOAuthSignup("google")}
             style={{
               width: "100%", padding: "11px", borderRadius: "10px", border: "1px solid #cbd5e1",
-              backgroundColor: "#fff", color: "#0f172a", fontWeight: 700, fontSize: "13px",
+              backgroundColor: "var(--card)", color: "var(--foreground)", fontWeight: 700, fontSize: "13px",
               cursor: oauthLoading !== null ? "not-allowed" : "pointer", fontFamily: "'Plus Jakarta Sans', sans-serif",
               display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
             }}
@@ -645,12 +645,12 @@ export function SignupScreen() {
           </Link>
         </div>
 
-        <p style={{ textAlign: "center", fontSize: "13px", color: "#64748b",
+        <p style={{ textAlign: "center", fontSize: "13px", color: "var(--muted-foreground)",
                     marginTop: "24px", marginBottom: 0 }}>
           Déjà un compte ?{" "}
           <button
             onClick={() => navigate("/login")}
-            style={{ color: "#3182ce", fontWeight: 700, background: "none",
+            style={{ color: "var(--secondary)", fontWeight: 700, background: "none",
                      border: "none", cursor: "pointer", fontSize: "13px", padding: 0 }}
           >
             Se connecter

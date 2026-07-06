@@ -484,9 +484,9 @@ function ChipSelect({ label, icon, options, selected, onAdd, onRemove, chipBg }:
             maxHeight: `${MENU_HEIGHT}px`,
             overflowY: "auto",
             borderRadius: "12px",
-            backgroundColor: "#fff",
+            backgroundColor: "var(--card)",
             boxShadow: "0 12px 40px rgba(0,0,0,0.15), 0 4px 12px rgba(0,0,0,0.08)",
-            border: "1.5px solid #e2e8f0",
+            border: "1.5px solid var(--border)",
             scrollbarWidth: "none",
           }}
         >
@@ -1614,9 +1614,9 @@ export function LessonEditor() {
                 className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl text-[13px] font-semibold transition-all active:scale-95"
                 style={{
                   minHeight:"44px",
-                  color: "#1a365d",
-                  backgroundColor: "#f1f5f9",
-                  border: "1.5px solid #e2e8f0",
+                  color: "var(--primary)",
+                  backgroundColor: "var(--muted)",
+                  border: "1.5px solid var(--border)",
                 }}
               >
                 <Eye className="w-4 h-4 shrink-0"/>
@@ -1630,7 +1630,7 @@ export function LessonEditor() {
               className="w-full inline-flex items-center justify-center gap-2 rounded-xl text-[14px] font-bold text-white transition-all active:scale-[0.98]"
               style={{
                 minHeight:"48px",
-                backgroundColor: "#1a365d",
+                backgroundColor: "var(--primary)",
                 boxShadow: "0 4px 16px rgba(26,54,93,0.30)",
               }}
             >
@@ -1668,9 +1668,9 @@ export function LessonEditor() {
                 className="inline-flex items-center gap-2 rounded-xl px-4 text-[13px] font-semibold transition-all active:scale-95"
                 style={{
                   minHeight:"44px",
-                  color: "#1a365d",
-                  backgroundColor: "#f8fafc",
-                  border: "1.5px solid #e2e8f0",
+                  color: "var(--primary)",
+                  backgroundColor: "var(--muted)",
+                  border: "1.5px solid var(--border)",
                 }}
                 onMouseEnter={e=>{
                   (e.currentTarget as HTMLElement).style.backgroundColor="#eef4ff";
@@ -1728,7 +1728,7 @@ export function LessonEditor() {
                 className="inline-flex items-center gap-2 text-[13px] font-bold text-white rounded-xl px-5 active:scale-[0.97] transition-all"
                 style={{
                   minHeight:"44px",
-                  backgroundColor: "#1a365d",
+                  backgroundColor: "var(--primary)",
                   boxShadow: "0 4px 16px rgba(26,54,93,0.30)",
                 }}
               >

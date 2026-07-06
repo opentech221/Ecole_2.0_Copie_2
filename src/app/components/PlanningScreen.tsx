@@ -372,8 +372,8 @@ function CascadeSelect({
         <div style={{
           fontSize: "11px", fontWeight: 600, lineHeight: 1.4,
           color: "#374151",
-          backgroundColor: "#f8fafc",
-          border: "1px solid #e2e8f0",
+          backgroundColor: "var(--muted)",
+          border: "1px solid var(--border)",
           borderLeft: `3px solid ${color}`,
           borderRadius: "8px",
           padding: "6px 10px",
@@ -946,7 +946,7 @@ export function PlanningScreen() {
 
           {/* ROW 1 — Trimestre */}
           <div className="py-1.5">
-            <div className="flex gap-0.5 p-0.5 rounded-lg" style={{ backgroundColor: "#f1f5f9" }}>
+            <div className="flex gap-0.5 p-0.5 rounded-lg" style={{ backgroundColor: "var(--muted)" }}>
               {["Trimestre 1", "Trimestre 2", "Trimestre 3"].map((t, i) => (
                 <button key={t} onClick={() => changeTerm(i)}
                   className="flex-1 rounded-md font-bold transition-all"
@@ -1057,7 +1057,7 @@ export function PlanningScreen() {
               className="inline-flex items-center gap-1 rounded-full font-semibold
                          transition-all active:scale-95 hover:bg-gray-50"
               style={{
-                fontSize: "10px", color: "#94a3b8",
+                fontSize: "10px", color: "var(--muted-foreground)",
                 padding: "3px 12px", minHeight: "24px",
               }}
             >
@@ -1082,7 +1082,7 @@ export function PlanningScreen() {
         <div className="max-w-4xl mx-auto px-4 py-2">
           <div style={{
             display: "flex",
-            backgroundColor: "#f1f5f9",
+            backgroundColor: "var(--muted)",
             borderRadius: "999px",
             padding: "3px",
             position: "relative",
@@ -1172,7 +1172,7 @@ export function PlanningScreen() {
                 <div style={{
                   width: `${HANDLE_W}px`, minWidth: `${HANDLE_W}px`,
                   position: "sticky", left: 0, zIndex: 40,
-                  backgroundColor: "#fff",
+                  backgroundColor: "var(--card)",
                   borderRight: `2px solid ${domain.color}`,
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>
@@ -1191,7 +1191,7 @@ export function PlanningScreen() {
                 <div style={{
                   width: `${SD_FULL}px`, minWidth: `${SD_FULL}px`,
                   position: "sticky", left: 0, zIndex: 40,
-                  backgroundColor: "#f8fafc",
+                  backgroundColor: "var(--muted)",
                   borderRight: "1px solid #e5e7eb",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   overflow: "hidden",
@@ -1200,7 +1200,7 @@ export function PlanningScreen() {
                   <span style={{
                     writingMode: "vertical-rl",
                     transform: "rotate(180deg)",  // reads bottom → top
-                    fontSize: "10px", fontWeight: 900, color: "#64748b",
+                    fontSize: "10px", fontWeight: 900, color: "var(--muted-foreground)",
                     textTransform: "uppercase", letterSpacing: "0.1em",
                     userSelect: "none", whiteSpace: "nowrap",
                   }}>
@@ -1214,14 +1214,14 @@ export function PlanningScreen() {
                 <div style={{
                   width: `${ACT_FULL}px`, minWidth: `${ACT_FULL}px`,
                   position: "sticky", left: `${SD_FULL}px`, zIndex: 40,
-                  backgroundColor: "#f8fafc",
+                  backgroundColor: "var(--muted)",
                   borderRight: "1px solid #e5e7eb",
                   display: "flex", alignItems: "center",
                   justifyContent: "space-between",
                   padding: "0 10px", overflow: "hidden",
                 }}>
                   <span style={{ fontSize: "8px", fontWeight: 800,
-                                 color: "#94a3b8", textTransform: "uppercase",
+                                 color: "var(--muted-foreground)", textTransform: "uppercase",
                                  letterSpacing: "0.08em" }}>
                     Activité
                   </span>
@@ -1229,7 +1229,7 @@ export function PlanningScreen() {
                     className="flex items-center justify-center rounded-lg
                                hover:bg-gray-200 transition-colors"
                     style={{ width: "26px", height: "26px",
-                             border: "1.5px solid #e2e8f0", backgroundColor: "#fff" }}
+                             border: "1.5px solid var(--border)", backgroundColor: "var(--card)" }}
                     title="Réduire">
                     <ChevronLeft className="w-3.5 h-3.5 text-gray-400" />
                   </button>
@@ -1246,10 +1246,10 @@ export function PlanningScreen() {
                   borderRight: "1px solid #e5e7eb",
                   backgroundColor: `${domain.color}07`,
                 }}>
-                  <span style={{ fontSize: "12px", fontWeight: 700, color: "#1a365d" }}>
+                  <span style={{ fontSize: "12px", fontWeight: 700, color: "var(--primary)" }}>
                     Semaine {w + 1}
                   </span>
-                  <span style={{ fontSize: "9px", color: "#94a3b8", marginTop: "2px" }}>
+                  <span style={{ fontSize: "9px", color: "var(--muted-foreground)", marginTop: "2px" }}>
                     {month.label} · S{w + 1}
                   </span>
                 </div>
@@ -1309,7 +1309,7 @@ export function PlanningScreen() {
                           style={{
                             width: `${hndW}px`,
                             position: "sticky", left: 0, zIndex: 20,
-                            padding: 0, backgroundColor: "#fff",
+                            padding: 0, backgroundColor: "var(--card)",
                             borderRight: taxRetracted ? `2px solid ${domain.color}` : "none",
                             transition: "width 250ms cubic-bezier(.4,0,.2,1), border 250ms",
                             overflow: "hidden", verticalAlign: "top",

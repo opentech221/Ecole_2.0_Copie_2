@@ -240,7 +240,7 @@ function ActivityCard({
     <div
       className="rounded-2xl overflow-hidden"
       style={{
-        backgroundColor: "#fff",
+        backgroundColor: "var(--card)",
         borderTop:    `1px solid ${color}28`,
         borderRight:  `1px solid ${color}28`,
         borderBottom: `1px solid ${color}28`,
@@ -281,7 +281,7 @@ function ActivityCard({
         <span
           style={{
             fontSize: "12px", fontWeight: 700,
-            color: "#1a365d", flex: 1, minWidth: 0,
+            color: "var(--primary)", flex: 1, minWidth: 0,
           }}
         >
           {slot.activity}
@@ -290,7 +290,7 @@ function ActivityCard({
 
       {/* OA/OS subtitle */}
       <div className="px-3 pt-2 pb-1">
-        <p style={{ fontSize: "11px", color: "#64748b", lineHeight: 1.5 }}>
+        <p style={{ fontSize: "11px", color: "var(--muted-foreground)", lineHeight: 1.5 }}>
           {slot.oaOs}
         </p>
       </div>
@@ -327,8 +327,8 @@ function ActivityCard({
             fontWeight: 700,
             fontFamily: "'Plus Jakarta Sans', sans-serif",
             backgroundColor: "transparent",
-            color: "#94a3b8",
-            border: "1.5px solid #e2e8f0",
+            color: "var(--muted-foreground)",
+            border: "1.5px solid var(--border)",
             cursor: "pointer",
             display: "flex", alignItems: "center", gap: "4px",
             flexShrink: 0,
@@ -362,7 +362,7 @@ function ActivityCard({
               fontSize: "12px",
               fontFamily: "'Plus Jakarta Sans', sans-serif",
               color: "#374151",
-              backgroundColor: "#f8fafc",
+              backgroundColor: "var(--muted)",
               border: `1.5px solid ${color}30`,
               outline: "none",
               lineHeight: 1.5,
@@ -523,14 +523,14 @@ export function CahierRoulementScreen() {
               className="no-print inline-flex items-center gap-1.5 font-semibold"
               style={{
                 minHeight: "44px", fontSize: "13px",
-                color: "#1a365d", background: "none", border: "none", cursor: "pointer",
+                color: "var(--primary)", background: "none", border: "none", cursor: "pointer",
                 flexShrink: 0,
               }}
             >
               <ArrowLeft style={{ width: "16px", height: "16px" }} />
               <span>Accueil</span>
             </button>
-            <p style={{ fontSize: "14px", fontWeight: 700, color: "#1a365d", flex: 1, margin: 0 }}>
+            <p style={{ fontSize: "14px", fontWeight: 700, color: "var(--primary)", flex: 1, margin: 0 }}>
               Cahier de Roulement
             </p>
             <button
@@ -539,8 +539,8 @@ export function CahierRoulementScreen() {
               style={{
                 minHeight: "44px", minWidth: "44px",
                 display: "flex", alignItems: "center", justifyContent: "center",
-                borderRadius: "10px", backgroundColor: "#f1f5f9",
-                border: "none", cursor: "pointer", color: "#475569",
+                borderRadius: "10px", backgroundColor: "var(--muted)",
+                border: "none", cursor: "pointer", color: "var(--muted-foreground)",
               }}
               title="Imprimer / PDF"
             >
@@ -560,7 +560,7 @@ export function CahierRoulementScreen() {
                 <div
                   style={{
                     display: "flex", gap: "4px",
-                    backgroundColor: "#f1f5f9",
+                    backgroundColor: "var(--muted)",
                     borderRadius: "14px", padding: "3px",
                   }}
                 >
@@ -595,8 +595,8 @@ export function CahierRoulementScreen() {
               }}
             >
               <div style={{ flex: 1, minWidth: 0 }}>
-                <p style={{ fontSize: "12px", color: "#94a3b8", margin: 0 }}>
-                  <span style={{ fontWeight: 700, color: "#1a365d", fontSize: "14px" }}>
+                <p style={{ fontSize: "12px", color: "var(--muted-foreground)", margin: 0 }}>
+                  <span style={{ fontWeight: 700, color: "var(--primary)", fontSize: "14px" }}>
                     {view === "cahier" ? selectedDay : "Grille d'évaluations"}
                   </span>
                   {view === "cahier" && (
@@ -630,11 +630,11 @@ export function CahierRoulementScreen() {
                   </div>
                   <div style={{
                     display: "flex", alignItems: "center", gap: "4px",
-                    backgroundColor: "#f1f5f9", borderRadius: "999px",
+                    backgroundColor: "var(--muted)", borderRadius: "999px",
                     padding: "4px 10px",
                   }}>
-                    <Users style={{ width: "12px", height: "12px", color: "#64748b" }} />
-                    <span style={{ fontSize: "11px", fontWeight: 700, color: "#64748b" }}>25 élèves</span>
+                    <Users style={{ width: "12px", height: "12px", color: "var(--muted-foreground)" }} />
+                    <span style={{ fontSize: "11px", fontWeight: 700, color: "var(--muted-foreground)" }}>25 élèves</span>
                   </div>
                 </div>
               )}
@@ -650,7 +650,7 @@ export function CahierRoulementScreen() {
               onClick={() => setHeaderCollapsed(o => !o)}
               style={{
                 display: "inline-flex", alignItems: "center", gap: "6px",
-                fontSize: "11px", color: "#64748b", fontWeight: 600,
+                fontSize: "11px", color: "var(--muted-foreground)", fontWeight: 600,
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
                 padding: "4px 14px", minHeight: "28px",
                 borderRadius: "999px", border: "none",
@@ -677,7 +677,7 @@ export function CahierRoulementScreen() {
         <div style={{ maxWidth: isDesktop ? "1100px" : "680px", margin: "0 auto", padding: "8px 16px" }}>
           <div style={{
             display: "flex",
-            backgroundColor: "#f1f5f9",
+            backgroundColor: "var(--muted)",
             borderRadius: "999px",
             padding: "3px",
             position: "relative",
@@ -760,7 +760,7 @@ export function CahierRoulementScreen() {
                           marginBottom: "8px",
                           padding: "8px 10px",
                           borderRadius: "10px",
-                          backgroundColor: "#1a365d",
+                          backgroundColor: "var(--primary)",
                           display: "flex", alignItems: "center", justifyContent: "space-between",
                         }}>
                           <span style={{ fontSize: "12px", fontWeight: 800, color: "#fff" }}>{day}</span>
@@ -787,7 +787,7 @@ export function CahierRoulementScreen() {
                                 style={{
                                   borderRadius: "10px",
                                   overflow: "hidden",
-                                  backgroundColor: "#fff",
+                                  backgroundColor: "var(--card)",
                                   borderLeft:   `4px solid ${color}`,
                                   borderTop:    `1px solid ${color}22`,
                                   borderRight:  `1px solid ${color}22`,
@@ -806,7 +806,7 @@ export function CahierRoulementScreen() {
                                   <span style={{ fontSize: "10px", fontWeight: 800,
                                                  color, flexShrink: 0 }}>{slot.time}</span>
                                   <span style={{ fontSize: "11px", fontWeight: 700,
-                                                 color: "#1a365d", flex: 1, minWidth: 0,
+                                                 color: "var(--primary)", flex: 1, minWidth: 0,
                                                  overflow: "hidden", textOverflow: "ellipsis",
                                                  whiteSpace: "nowrap" }}>
                                     {slot.activity}
@@ -897,12 +897,12 @@ export function CahierRoulementScreen() {
                   position: "sticky", top: 0, zIndex: 30,
                   backgroundColor: "#f4f6f9",
                   paddingTop: "12px", paddingBottom: "10px",
-                  borderBottom: "1px solid #e2e8f0",
+                  borderBottom: "1px solid var(--border)",
                 }}
               >
                 {/* Domain collapse toggle */}
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "8px" }}>
-                  <p style={{ fontSize: "11px", fontWeight: 700, color: "#64748b", margin: 0, textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                  <p style={{ fontSize: "11px", fontWeight: 700, color: "var(--muted-foreground)", margin: 0, textTransform: "uppercase", letterSpacing: "0.06em" }}>
                     Filtres
                   </p>
                   <button
@@ -910,11 +910,11 @@ export function CahierRoulementScreen() {
                     className="no-print"
                     style={{
                       display: "inline-flex", alignItems: "center", gap: "4px",
-                      fontSize: "11px", color: "#64748b", fontWeight: 600,
+                      fontSize: "11px", color: "var(--muted-foreground)", fontWeight: 600,
                       fontFamily: "'Plus Jakarta Sans', sans-serif",
                       padding: "4px 10px", minHeight: "28px",
-                      borderRadius: "999px", border: "1px solid #e2e8f0",
-                      backgroundColor: "#fff", cursor: "pointer",
+                      borderRadius: "999px", border: "1px solid var(--border)",
+                      backgroundColor: "var(--card)", cursor: "pointer",
                     }}
                   >
                     {evalHeaderCollapsed
@@ -930,7 +930,7 @@ export function CahierRoulementScreen() {
                 }}>
                   {/* Domain selector */}
                   <div style={{ marginBottom: "8px" }}>
-                    <p style={{ fontSize: "10px", fontWeight: 700, color: "#94a3b8", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                    <p style={{ fontSize: "10px", fontWeight: 700, color: "var(--muted-foreground)", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.06em" }}>
                       Domaine
                     </p>
                     <div style={{ display: "flex", gap: "6px", overflowX: "auto", scrollbarWidth: "none", paddingBottom: "2px" }}>
@@ -958,7 +958,7 @@ export function CahierRoulementScreen() {
 
                   {/* OS selector */}
                   <div>
-                    <p style={{ fontSize: "10px", fontWeight: 700, color: "#94a3b8", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                    <p style={{ fontSize: "10px", fontWeight: 700, color: "var(--muted-foreground)", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.06em" }}>
                       Objectif Spécifique
                     </p>
                     <div style={{ position: "relative" }}>
@@ -971,7 +971,7 @@ export function CahierRoulementScreen() {
                           padding: "0 36px 0 12px",
                           borderRadius: "12px",
                           border: `1.5px solid ${evalDomain.color}50`,
-                          backgroundColor: "#fff",
+                          backgroundColor: "var(--card)",
                           fontSize: "12px",
                           fontWeight: 600,
                           fontFamily: "'Plus Jakarta Sans', sans-serif",
@@ -1012,7 +1012,7 @@ export function CahierRoulementScreen() {
                 <p style={{ margin: 0, fontSize: "11px", fontWeight: 700, color: evalOS.color }}>
                   {evalOS.label}
                 </p>
-                <p style={{ margin: "2px 0 0", fontSize: "10px", color: "#64748b" }}>
+                <p style={{ margin: "2px 0 0", fontSize: "10px", color: "var(--muted-foreground)" }}>
                   {STUDENTS.length} élèves · NM = Non Maîtrisé · A = En Acquisition · M = Maîtrisé
                 </p>
               </div>
@@ -1031,7 +1031,7 @@ export function CahierRoulementScreen() {
                       key={student.id}
                       style={{
                         display: "flex", alignItems: "center",
-                        backgroundColor: "#fff",
+                        backgroundColor: "var(--card)",
                         borderRadius: "12px",
                         padding: isDesktop ? "10px 16px" : "8px 14px",
                         boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
@@ -1051,7 +1051,7 @@ export function CahierRoulementScreen() {
                       <span style={{
                         flex: 1, minWidth: 0,
                         fontSize: isDesktop ? "13.5px" : "13px",
-                        fontWeight: 600, color: "#1a365d",
+                        fontWeight: 600, color: "var(--primary)",
                         overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
                       }}>
                         {student.name}
