@@ -133,11 +133,12 @@ function ImageTile({ label, hint, currentUrl, onUpload, uploading }: {
 export function ProfilScreen() {
   const navigate  = useNavigate();
   const { user }  = useAuthContext();
-  const { profile, saving, uploading, updateProfile, uploadFile } = useProfile();
+  const { profile, saving, uploading, updateProfile, uploadFile, updateEmail } = useProfile();
 
   // Form state
   const [fullName,     setFullName]     = useState("");
   const [role,         setRole]         = useState<UserRole>("teacher");
+  const [email,        setEmail]        = useState("");
   const [telephone,    setTelephone]    = useState("");
   const [ecoleName,    setEcoleName]    = useState("");
   const [ief,          setIef]          = useState("");
@@ -145,10 +146,15 @@ export function ProfilScreen() {
   const [classeActive, setClasseActive] = useState("CE2");
 
   // Password change
+  const [currentPw, setCurrentPw] = useState("");
   const [newPw,     setNewPw]     = useState("");
   const [confirmPw, setConfirmPw] = useState("");
   const [showPw,    setShowPw]    = useState(false);
   const [pwLoading, setPwLoading] = useState(false);
+
+  // Email update
+  const [emailUpdating, setEmailUpdating] = useState(false);
+  const [emailChanged,  setEmailChanged]  = useState(false);
 
   useEffect(() => {
     if (!profile) return;
@@ -161,9 +167,13 @@ export function ProfilScreen() {
     setClasseActive(profile.classeActive ?? "CE2");
   }, [profile]);
 
+  useEffect(() => {
+    if (user?.email) setEmail(user.email);
+  }, [user]);
+
   const isComplete   = !!profile?.fullName?.trim() && !!profile?.ecoleName?.trim();
   const initials     = getInitials(fullName || "U");
-  const displayEmail = user?.email ?? "";
+  const displayEmail = user?.email ?? user?.phone ?? "";
 
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
@@ -178,18 +188,53 @@ export function ProfilScreen() {
     }
   }
 
+  async function handleUpdateEmail(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email || email === user?.email) {
+      toast.info("Entrez une nouvelle adresse email.");
+      return;
+    }
+    setEmailUpdating(true);
+    try {
+      await updateEmail(email);
+      setEmailChanged(true);
+      toast.success("Email mis à jour ! Vérification envoyée.");
+      setTimeout(() => setEmailChanged(false), 5000);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Erreur mise à jour email");
+    } finally {
+      setEmailUpdating(false);
+    }
+  }
+
   async function handlePasswordChange(e: React.FormEvent) {
     e.preventDefault();
     if (newPw !== confirmPw) { toast.error("Mots de passe différents."); return; }
     if (newPw.length < 6)    { toast.error("Minimum 6 caractères."); return; }
+
     setPwLoading(true);
-    const { error } = await supabase.auth.updateUser({ password: newPw });
-    setPwLoading(false);
-    if (error) {
-      toast.error("Erreur : " + error.message);
-    } else {
-      toast.success("Mot de passe mis à jour !");
-      setNewPw(""); setConfirmPw("");
+    try {
+      // If user has an email, verify current password first
+      if (currentPw && user?.email) {
+        const { error: signInErr } = await supabase.auth.signInWithPassword({
+          email: user.email,
+          password: currentPw,
+        });
+        if (signInErr) {
+          toast.error("Mot de passe actuel incorrect.");
+          setPwLoading(false);
+          return;
+        }
+      }
+      const { error } = await supabase.auth.updateUser({ password: newPw });
+      if (error) {
+        toast.error("Erreur : " + error.message);
+      } else {
+        toast.success("Mot de passe mis à jour !");
+        setCurrentPw(""); setNewPw(""); setConfirmPw("");
+      }
+    } finally {
+      setPwLoading(false);
     }
   }
 
@@ -285,9 +330,57 @@ export function ProfilScreen() {
             <Field label="Nom complet" required
                    value={fullName} onChange={setFullName}
                    placeholder="M. Abdou DIALLO" />
-            <Field label="Téléphone"
-                   value={telephone} onChange={setTelephone}
-                   placeholder="+221 77 000 00 00" type="tel" />
+
+            {/* Email — utilisé pour la connexion Email + mot de passe */}
+            <div style={{ marginBottom: "12px", paddingBottom: "12px", borderBottom: "1px solid #f1f5f9" }}>
+              <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
+                              color: "#475569", marginBottom: "5px", fontFamily: FF }}>
+                Adresse email (connexion email)
+              </label>
+              <div style={{ display: "flex", gap: "6px", alignItems: "flex-end" }}>
+                <div style={{ flex: 1 }}>
+                  <input
+                    type="email" value={email} onChange={e => setEmail(e.target.value)}
+                    placeholder="vous@exemple.com"
+                    style={{
+                      width: "100%", padding: "9px 12px", borderRadius: "8px",
+                      border: "1.5px solid #e2e8f0", fontSize: "13px", outline: "none",
+                      backgroundColor: "#f8fafc", boxSizing: "border-box", fontFamily: FF,
+                    }}
+                    onFocus={e => (e.target.style.borderColor = "#3182ce")}
+                    onBlur={e  => (e.target.style.borderColor = "#e2e8f0")}
+                  />
+                </div>
+                <button
+                  type="button" onClick={handleUpdateEmail} disabled={emailUpdating || email === user?.email}
+                  style={{
+                    padding: "9px 12px", borderRadius: "8px",
+                    backgroundColor: emailUpdating || email === user?.email ? "#e2e8f0" : "#3182ce",
+                    color: emailUpdating || email === user?.email ? "#94a3b8" : "#fff",
+                    fontSize: "11.5px", fontWeight: 700, border: "none",
+                    cursor: emailUpdating || email === user?.email ? "not-allowed" : "pointer",
+                    fontFamily: FF, whiteSpace: "nowrap",
+                  }}
+                >
+                  {emailUpdating ? "Mise à jour…" : emailChanged ? "✓ Mis à jour" : "Mettre à jour"}
+                </button>
+              </div>
+              <p style={{ fontSize: "11px", color: "#64748b", marginTop: "4px",
+                          fontFamily: FF }}>
+                Utilisé pour vous connecter via Email + mot de passe. Vérification par email sera envoyée.
+              </p>
+            </div>
+
+            {/* Téléphone WhatsApp — utilisé pour l'OTP WhatsApp */}
+            <Field
+              label="Numéro WhatsApp (connexion WhatsApp OTP)"
+              value={telephone} onChange={setTelephone}
+              placeholder="+221771234567" type="tel"
+            />
+            <p style={{ fontSize: "11px", color: "#64748b", marginTop: "-8px",
+                        marginBottom: "12px", fontFamily: FF }}>
+              Format international requis (+221…). Utilisé pour recevoir le code WhatsApp.
+            </p>
 
             <div style={{ marginBottom: "6px" }}>
               <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
@@ -407,11 +500,40 @@ export function ProfilScreen() {
         {/* ── Mot de passe ── */}
         <Card title="Sécurité"
               icon={<Lock style={{ width: 14, height: 14 }} />}>
+          <p style={{ fontSize: "12px", color: "#64748b", marginBottom: "14px", fontFamily: FF, lineHeight: 1.5 }}>
+            Gérez votre mot de passe pour sécuriser votre compte et vous connecter via Email + mot de passe.
+          </p>
           <form onSubmit={handlePasswordChange}>
-            <div style={{ position: "relative", marginBottom: "10px" }}>
+            {/* Mot de passe actuel */}
+            {user?.email && (
+              <div style={{ marginBottom: "12px" }}>
+                <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
+                                color: "#475569", marginBottom: "5px", fontFamily: FF }}>
+                  Mot de passe actuel <span style={{ color: "#ef4444" }}>*</span>
+                </label>
+                <input
+                  type="password"
+                  value={currentPw} onChange={e => setCurrentPw(e.target.value)}
+                  placeholder="Votre mot de passe actuel"
+                  style={{
+                    width: "100%", padding: "9px 12px", borderRadius: "8px",
+                    border: "1.5px solid #e2e8f0", fontSize: "13px", outline: "none",
+                    backgroundColor: "#f8fafc", fontFamily: FF, boxSizing: "border-box",
+                  }}
+                  onFocus={e => (e.target.style.borderColor = "#3182ce")}
+                  onBlur={e  => (e.target.style.borderColor = "#e2e8f0")}
+                />
+                <p style={{ fontSize: "10.5px", color: "#64748b", marginTop: "4px",
+                            fontFamily: FF }}>
+                  Requis pour vérifier votre identité avant de changer le mot de passe.
+                </p>
+              </div>
+            )}
+            
+            <div style={{ marginBottom: "12px" }}>
               <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
                               color: "#475569", marginBottom: "5px", fontFamily: FF }}>
-                Nouveau mot de passe
+                Nouveau mot de passe <span style={{ color: "#ef4444" }}>*</span>
               </label>
               <div style={{ position: "relative" }}>
                 <input
@@ -441,34 +563,41 @@ export function ProfilScreen() {
               </div>
             </div>
 
-            <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
-                            color: "#475569", marginBottom: "5px", fontFamily: FF }}>
-              Confirmer le mot de passe
-            </label>
-            <input
-              type={showPw ? "text" : "password"}
-              value={confirmPw} onChange={e => setConfirmPw(e.target.value)}
-              placeholder="Répétez le mot de passe"
-              style={{
-                width: "100%", padding: "9px 12px", borderRadius: "8px",
-                border: `1.5px solid ${confirmPw && confirmPw !== newPw ? "#fca5a5" : "#e2e8f0"}`,
-                fontSize: "13px", outline: "none", backgroundColor: "#f8fafc",
-                fontFamily: FF, boxSizing: "border-box", marginBottom: "14px",
-              }}
-              onFocus={e => (e.target.style.borderColor = "#3182ce")}
-              onBlur={e  => (e.target.style.borderColor =
-                confirmPw && confirmPw !== newPw ? "#fca5a5" : "#e2e8f0")}
-            />
+            <div style={{ marginBottom: "14px" }}>
+              <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
+                              color: "#475569", marginBottom: "5px", fontFamily: FF }}>
+                Confirmer le mot de passe <span style={{ color: "#ef4444" }}>*</span>
+              </label>
+              <input
+                type={showPw ? "text" : "password"}
+                value={confirmPw} onChange={e => setConfirmPw(e.target.value)}
+                placeholder="Répétez le mot de passe"
+                style={{
+                  width: "100%", padding: "9px 12px", borderRadius: "8px",
+                  border: `1.5px solid ${confirmPw && confirmPw !== newPw ? "#fca5a5" : "#e2e8f0"}`,
+                  fontSize: "13px", outline: "none", backgroundColor: "#f8fafc",
+                  fontFamily: FF, boxSizing: "border-box",
+                }}
+                onFocus={e => (e.target.style.borderColor = "#3182ce")}
+                onBlur={e  => (e.target.style.borderColor =
+                  confirmPw && confirmPw !== newPw ? "#fca5a5" : "#e2e8f0")}
+              />
+              {confirmPw && confirmPw !== newPw && (
+                <p style={{ fontSize: "10.5px", color: "#ef4444", marginTop: "4px", fontFamily: FF }}>
+                  ❌ Les mots de passe ne correspondent pas.
+                </p>
+              )}
+            </div>
 
-            <button type="submit" disabled={pwLoading || !newPw}
+            <button type="submit" disabled={pwLoading || !newPw || !currentPw}
               style={{
                 display: "flex", alignItems: "center", gap: "6px",
-                padding: "9px 18px", borderRadius: "8px",
-                backgroundColor: pwLoading || !newPw ? "#e2e8f0" : "#1a365d",
-                color: pwLoading || !newPw ? "#94a3b8" : "#fff",
+                padding: "10px 18px", borderRadius: "8px",
+                backgroundColor: pwLoading || !newPw || !currentPw ? "#e2e8f0" : "#1a365d",
+                color: pwLoading || !newPw || !currentPw ? "#94a3b8" : "#fff",
                 fontSize: "12.5px", fontWeight: 700, border: "none",
-                cursor: pwLoading || !newPw ? "not-allowed" : "pointer",
-                fontFamily: FF,
+                cursor: pwLoading || !newPw || !currentPw ? "not-allowed" : "pointer",
+                fontFamily: FF, width: "100%", justifyContent: "center",
               }}
             >
               <Lock style={{ width: 13, height: 13 }} />

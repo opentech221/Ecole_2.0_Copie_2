@@ -16,16 +16,18 @@ const FF = "'Plus Jakarta Sans', sans-serif";
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div style={{
-      backgroundColor: "#fff", borderRadius: "14px",
-      border: "1px solid #e2e8f0", overflow: "hidden",
+      backgroundColor: "var(--card)",
+      borderRadius: "14px",
+      border: "1px solid var(--border)",
+      overflow: "hidden",
       marginBottom: "16px",
     }}>
       <div style={{
         padding: "12px 18px",
-        borderBottom: "1px solid #f1f5f9",
-        backgroundColor: "#f8fafc",
+        borderBottom: "1px solid var(--border)",
+        backgroundColor: "var(--muted)",
       }}>
-        <p style={{ fontSize: "11px", fontWeight: 700, color: "#94a3b8",
+        <p style={{ fontSize: "11px", fontWeight: 700, color: "var(--muted-foreground)",
                     textTransform: "uppercase", letterSpacing: "0.08em",
                     margin: 0, fontFamily: FF }}>
           {title}
@@ -46,15 +48,15 @@ function ToggleRow({ label, hint, value, onChange }: {
     <div style={{
       display: "flex", alignItems: "center", justifyContent: "space-between",
       gap: "12px", paddingBottom: "12px", marginBottom: "12px",
-      borderBottom: "1px solid #f8fafc",
+      borderBottom: "1px solid var(--border)",
     }}>
       <div>
-        <p style={{ fontSize: "13px", fontWeight: 500, color: "#1e293b",
+        <p style={{ fontSize: "13px", fontWeight: 500, color: "var(--foreground)",
                     margin: 0, fontFamily: FF }}>
           {label}
         </p>
         {hint && (
-          <p style={{ fontSize: "11px", color: "#94a3b8", margin: "2px 0 0",
+          <p style={{ fontSize: "11px", color: "var(--muted-foreground)", margin: "2px 0 0",
                       fontFamily: FF }}>
             {hint}
           </p>
@@ -189,30 +191,31 @@ export function ParametresScreen() {
 
   const INPUT: React.CSSProperties = {
     width: "100%", padding: "9px 12px", borderRadius: "8px",
-    border: "1.5px solid #e2e8f0", fontSize: "13px",
-    outline: "none", backgroundColor: "#f8fafc",
+    border: "1.5px solid var(--border)", fontSize: "13px",
+    outline: "none", backgroundColor: "var(--muted)",
     fontFamily: FF, boxSizing: "border-box",
+    color: "var(--foreground)",
   };
 
   return (
-    <div style={{ backgroundColor: "#f8fafc", minHeight: "100vh", fontFamily: FF }}>
+    <div style={{ backgroundColor: "var(--background)", minHeight: "100vh", fontFamily: FF }}>
 
       {/* Page header */}
-      <div style={{ backgroundColor: "#fff", borderBottom: "1px solid #e2e8f0",
+      <div style={{ backgroundColor: "var(--card)", borderBottom: "1px solid var(--border)",
                     padding: "16px 20px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <div style={{
             width: 36, height: 36, borderRadius: "10px",
-            background: "linear-gradient(135deg, #1a365d 0%, #3182ce 100%)",
+            background: "linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)",
             display: "flex", alignItems: "center", justifyContent: "center",
           }}>
-            <Settings style={{ width: 18, height: 18, color: "#fff" }} />
+            <Settings style={{ width: 18, height: 18, color: "var(--primary-foreground)" }} />
           </div>
           <div>
-            <h1 style={{ fontSize: "16px", fontWeight: 800, color: "#0f172a", margin: 0 }}>
+            <h1 style={{ fontSize: "16px", fontWeight: 800, color: "var(--foreground)", margin: 0 }}>
               Paramètres
             </h1>
-            <p style={{ fontSize: "11px", color: "#64748b", margin: 0 }}>
+            <p style={{ fontSize: "11px", color: "var(--muted-foreground)", margin: 0 }}>
               Personnalisez votre expérience
             </p>
           </div>
@@ -223,7 +226,7 @@ export function ParametresScreen() {
 
         {/* ── Affichage / Thèmes ── */}
         <Section title="Affichage">
-          <p style={{ fontSize: "13px", color: "#475569", margin: "0 0 14px",
+          <p style={{ fontSize: "13px", color: "var(--muted-foreground)", margin: "0 0 14px",
                       lineHeight: 1.5 }}>
             Choisissez un thème de couleur. Votre préférence est sauvegardée sur tous vos appareils.
           </p>
@@ -271,7 +274,7 @@ export function ParametresScreen() {
 
         {/* ── Données de l'école ── */}
         <Section title="Données de l'école">
-          <p style={{ fontSize: "13px", color: "#475569", margin: "0 0 14px" }}>
+          <p style={{ fontSize: "13px", color: "var(--muted-foreground)", margin: "0 0 14px" }}>
             Gérez les informations de votre établissement utilisées dans vos documents officiels.
           </p>
           <button
@@ -283,29 +286,29 @@ export function ParametresScreen() {
               width:           "100%",
               padding:         "11px 14px",
               borderRadius:    "10px",
-              backgroundColor: "#f8fafc",
-              border:          "1.5px solid #e2e8f0",
+              backgroundColor: "var(--muted)",
+              border:          "1.5px solid var(--border)",
               cursor:          "pointer",
               fontFamily:      FF,
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <Building2 style={{ width: 16, height: 16, color: "#64748b" }} />
-              <span style={{ fontSize: "13px", fontWeight: 500, color: "#1e293b" }}>
+              <Building2 style={{ width: 16, height: 16, color: "var(--muted-foreground)" }} />
+              <span style={{ fontSize: "13px", fontWeight: 500, color: "var(--foreground)" }}>
                 Modifier les informations de l'école
               </span>
             </div>
-            <ChevronRight style={{ width: 15, height: 15, color: "#94a3b8" }} />
+            <ChevronRight style={{ width: 15, height: 15, color: "var(--muted-foreground)" }} />
           </button>
         </Section>
 
         {/* ── Sécurité ── */}
         <Section title="Sécurité du compte">
-          <p style={{ fontSize: "13px", color: "#475569", margin: "0 0 16px" }}>
-            Email : <strong>{user?.email ?? "—"}</strong>
+          <p style={{ fontSize: "13px", color: "var(--muted-foreground)", margin: "0 0 16px" }}>
+            Email : <strong style={{ color: "var(--foreground)" }}>{user?.email ?? "—"}</strong>
           </p>
           <form onSubmit={handlePasswordChange}>
-            <p style={{ fontSize: "12px", fontWeight: 700, color: "#374151",
+            <p style={{ fontSize: "12px", fontWeight: 700, color: "var(--foreground)",
                         margin: "0 0 6px" }}>
               Nouveau mot de passe
             </p>
@@ -318,7 +321,7 @@ export function ParametresScreen() {
               onFocus={e  => (e.target.style.borderColor = "#3182ce")}
               onBlur={e   => (e.target.style.borderColor = "#e2e8f0")}
             />
-            <p style={{ fontSize: "12px", fontWeight: 700, color: "#374151",
+            <p style={{ fontSize: "12px", fontWeight: 700, color: "var(--foreground)",
                         margin: "0 0 6px" }}>
               Confirmer le mot de passe
             </p>
@@ -344,8 +347,8 @@ export function ParametresScreen() {
                 gap:             "6px",
                 padding:         "9px 18px",
                 borderRadius:    "8px",
-                backgroundColor: pwLoading || !newPw ? "#e2e8f0" : "#1a365d",
-                color:           pwLoading || !newPw ? "#94a3b8" : "#fff",
+                backgroundColor: pwLoading || !newPw ? "var(--muted)" : "var(--primary)",
+                color:           pwLoading || !newPw ? "var(--muted-foreground)" : "var(--primary-foreground)",
                 fontSize:        "12.5px",
                 fontWeight:      700,
                 border:          "none",

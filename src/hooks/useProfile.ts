@@ -22,6 +22,7 @@ export interface ProfileFormData {
   // an authenticated client even if it were to slip through.
   signature_url?: string;
   logo_url?:      string;
+  role?:          string;
 }
 
 export function useProfile() {
@@ -79,5 +80,21 @@ export function useProfile() {
     }
   }
 
-  return { profile, saving, uploading, error, updateProfile, uploadFile };
+  async function updateEmail(newEmail: string): Promise<void> {
+    setSaving(true);
+    setError(null);
+    try {
+      const { error: err } = await supabase.auth.updateUser({ email: newEmail });
+      if (err) throw new Error(err.message);
+      await refreshProfile();
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : "Erreur lors de la mise à jour de l'email";
+      setError(msg);
+      throw e;
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return { profile, saving, uploading, error, updateProfile, uploadFile, updateEmail };
 }

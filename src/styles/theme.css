@@ -127,6 +127,32 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* ── Emerald theme ───────────────────────────────────────────────────────── */
+.theme-emerald {
+  --primary:              #059669;
+  --primary-foreground:   #ffffff;
+  --secondary:            #0d9488;
+  --secondary-foreground: #ffffff;
+  --ring:                 #059669;
+  --accent:               #d1fae5;
+  --accent-foreground:    #065f46;
+  --sidebar-primary:      #059669;
+  --sidebar-ring:         #059669;
+}
+
+/* ── Ocean theme ─────────────────────────────────────────────────────────── */
+.theme-ocean {
+  --primary:              #0284c7;
+  --primary-foreground:   #ffffff;
+  --secondary:            #0369a1;
+  --secondary-foreground: #ffffff;
+  --ring:                 #0284c7;
+  --accent:               #e0f2fe;
+  --accent-foreground:    #0c4a6e;
+  --sidebar-primary:      #0284c7;
+  --sidebar-ring:         #0284c7;
+}
+
 @keyframes accordion-down {
   from { height: 0 }
   to   { height: var(--radix-accordion-content-height) }
