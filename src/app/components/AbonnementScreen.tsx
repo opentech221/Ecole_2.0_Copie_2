@@ -95,7 +95,7 @@ function PlanCard({ plan, isCurrent }: { plan: typeof PLANS[0]; isCurrent: boole
     <div style={{
       borderRadius:    "16px",
       border:          `2px solid ${isCurrent ? plan.color : plan.border}`,
-      backgroundColor: isCurrent ? plan.bg : "#fff",
+      backgroundColor: plan.bg,
       padding:         "24px 20px",
       position:        "relative",
       boxShadow:       isCurrent
@@ -168,7 +168,7 @@ function PlanCard({ plan, isCurrent }: { plan: typeof PLANS[0]; isCurrent: boole
         cursor:          isCurrent ? "default" : "pointer",
         border:          "none",
         backgroundColor: isCurrent ? "var(--muted)" : plan.color,
-        color:           isCurrent ? "var(--muted-foreground)" : "#fff",
+        color:           isCurrent ? "var(--muted-foreground)" : "var(--primary-foreground)",
         fontFamily:      FF,
       }}>
         {isCurrent ? "Offre actuelle" : "Passer à ce niveau"}
@@ -203,7 +203,7 @@ function FaqItem({ q, a }: { q: string; a: string }) {
           fontFamily: FF,
         }}
       >
-        <span style={{ fontSize: "13px", fontWeight: 600, color: "#1e293b" }}>{q}</span>
+        <span style={{ fontSize: "13px", fontWeight: 600, color: "var(--foreground)" }}>{q}</span>
         {open
           ? <ChevronUp   style={{ width: 16, height: 16, color: "var(--muted-foreground)", flexShrink: 0 }}
                          aria-hidden="true" />
@@ -239,7 +239,7 @@ export function AbonnementScreen() {
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <div style={{
             width: 36, height: 36, borderRadius: "10px",
-            background: "linear-gradient(135deg, #1a365d 0%, #3182ce 100%)",
+            background: "linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)",
             display: "flex", alignItems: "center", justifyContent: "center",
           }}>
             <CreditCard style={{ width: 18, height: 18, color: "#fff" }} />
@@ -259,7 +259,7 @@ export function AbonnementScreen() {
 
         {/* Current plan banner */}
         <div style={{
-          backgroundColor: "#eff6ff", border: "1px solid #bfdbfe",
+          backgroundColor: "var(--accent)", border: "1px solid var(--border)",
           borderRadius: "14px", padding: "16px 20px", marginBottom: "24px",
           display: "flex", alignItems: "center", justifyContent: "space-between",
           gap: "12px", flexWrap: "wrap",
@@ -273,10 +273,10 @@ export function AbonnementScreen() {
               <Zap style={{ width: 18, height: 18, color: "#fff" }} />
             </div>
             <div>
-              <p style={{ fontSize: "11px", color: "#3b82f6", fontWeight: 600, margin: 0 }}>
+              <p style={{ fontSize: "11px", color: "var(--secondary)", fontWeight: 600, margin: 0 }}>
                 Offre actuelle
               </p>
-              <p style={{ fontSize: "15px", fontWeight: 800, color: "#1e293b", margin: 0 }}>
+              <p style={{ fontSize: "15px", fontWeight: 800, color: "var(--foreground)", margin: 0 }}>
                 Plan Découverte
               </p>
             </div>
@@ -285,7 +285,7 @@ export function AbonnementScreen() {
             <p style={{ fontSize: "11px", color: "var(--muted-foreground)", margin: "0 0 2px" }}>
               Renouvellement
             </p>
-            <p style={{ fontSize: "13px", fontWeight: 700, color: "#1e293b", margin: 0 }}>
+            <p style={{ fontSize: "13px", fontWeight: 700, color: "var(--foreground)", margin: 0 }}>
               Gratuit
             </p>
           </div>
@@ -314,7 +314,7 @@ export function AbonnementScreen() {
           border: "1px solid var(--border)", padding: "20px",
           marginBottom: "24px",
         }}>
-          <p style={{ fontSize: "13px", fontWeight: 700, color: "#1e293b",
+          <p style={{ fontSize: "13px", fontWeight: 700, color: "var(--foreground)",
                       margin: "0 0 16px" }}>
             Utilisation ce mois-ci
           </p>
@@ -327,7 +327,7 @@ export function AbonnementScreen() {
                 <div style={{ display: "flex", justifyContent: "space-between",
                               marginBottom: "5px" }}>
                   <span style={{ fontSize: "12px", color: "var(--muted-foreground)" }}>{label}</span>
-                  <span style={{ fontSize: "12px", fontWeight: 700, color: "#1e293b" }}>
+                  <span style={{ fontSize: "12px", fontWeight: 700, color: "var(--foreground)" }}>
                     {value} / {max}
                   </span>
                 </div>

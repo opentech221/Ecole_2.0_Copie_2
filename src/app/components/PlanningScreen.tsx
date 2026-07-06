@@ -1243,10 +1243,10 @@ export function PlanningScreen() {
                   display: "flex", flexDirection: "column",
                   alignItems: "center", justifyContent: "center",
                   padding: "12px 8px",
-                  borderRight: "1px solid #e5e7eb",
-                  backgroundColor: `${domain.color}07`,
+                  borderRight: "1px solid var(--border)",
+                  backgroundColor: "var(--card)",
                 }}>
-                  <span style={{ fontSize: "12px", fontWeight: 700, color: "var(--primary)" }}>
+                  <span style={{ fontSize: "12px", fontWeight: 700, color: "var(--foreground)" }}>
                     Semaine {w + 1}
                   </span>
                   <span style={{ fontSize: "9px", color: "var(--muted-foreground)", marginTop: "2px" }}>

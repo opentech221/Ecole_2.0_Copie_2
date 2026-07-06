@@ -199,8 +199,8 @@ function PreviewModal({
       style={{ backgroundColor: "var(--background)", fontFamily: "'Plus Jakarta Sans', sans-serif" }}
     >
       {/* Header bar */}
-      <div className="bg-white flex-shrink-0 flex items-center gap-3 px-4 py-3"
-           style={{ boxShadow: "0 1px 0 #e5e7eb, 0 2px 8px rgba(0,0,0,0.06)", zIndex: 10 }}>
+       <div className="bg-card flex-shrink-0 flex items-center gap-3 px-4 py-3"
+         style={{ boxShadow: "0 1px 0 var(--border), 0 2px 8px rgba(0,0,0,0.06)", zIndex: 10 }}>
         <button
           onClick={onClose}
           className="flex items-center justify-center rounded-xl transition-all active:scale-95"
@@ -228,7 +228,7 @@ function PreviewModal({
       {/* Scrollable content */}
       <div className="flex-1 overflow-auto p-4 lg:p-8">
         <div
-          className="bg-white mx-auto"
+          className="bg-card mx-auto"
           style={{
             maxWidth: "794px",
             padding: "28px 32px",
@@ -350,7 +350,7 @@ function DocCard({
 }) {
   const tone = DOC_TONES[doc.type];
   return (
-    <div className="bg-white rounded-2xl overflow-hidden transition-all hover:shadow-md"
+    <div className="bg-card rounded-2xl overflow-hidden transition-all hover:shadow-md"
          style={{ boxShadow: "0 1px 8px rgba(26,54,93,0.08)" }}>
       <div className="flex">
         {/* Accent bar */}
@@ -510,12 +510,12 @@ function AddDocumentModal({
   const cfg = DOC_TYPE_OPTIONS.find(o => o.key === type)!;
   const inp: React.CSSProperties = {
     width:"100%", padding:"9px 12px", borderRadius:"10px",
-    border:"1.5px solid #e2e8f0", fontSize:"13px",
+    border:"1.5px solid var(--border)", fontSize:"13px",
     fontFamily:"'Plus Jakarta Sans',sans-serif", outline:"none",
-    backgroundColor:"#fff", color:"#1a365d",
+    backgroundColor:"var(--card)", color:"var(--foreground)",
   };
   const lbl: React.CSSProperties = {
-    fontSize:"10px", fontWeight:700, color:"#64748b",
+    fontSize:"10px", fontWeight:700, color:"var(--muted-foreground)",
     textTransform:"uppercase", letterSpacing:"0.06em",
     display:"block", marginBottom:"4px",
   };
@@ -525,27 +525,27 @@ function AddDocumentModal({
       <div className="fixed inset-0 z-[450]"
            style={{ backgroundColor:"rgba(0,0,0,0.45)" }}
            onClick={onClose} />
-      <div className="fixed bottom-0 left-0 right-0 z-[460] bg-white"
+      <div className="fixed bottom-0 left-0 right-0 z-[460] bg-card"
            style={{ borderRadius:"20px 20px 0 0", maxHeight:"90vh",
                     display:"flex", flexDirection:"column",
                     boxShadow:"0 -8px 40px rgba(0,0,0,0.18)",
                     fontFamily:"'Plus Jakarta Sans',sans-serif" }}>
         <div style={{ display:"flex", justifyContent:"center", padding:"12px 0 4px" }}>
-          <div style={{ width:36, height:4, borderRadius:999, backgroundColor:"#e2e8f0" }} />
+          <div style={{ width:36, height:4, borderRadius:999, backgroundColor:"var(--border)" }} />
         </div>
         <div className="flex items-center justify-between px-5 pb-3"
-             style={{ borderBottom:"1px solid #f1f5f9" }}>
+             style={{ borderBottom:"1px solid var(--border)" }}>
           <div>
-            <p style={{ fontSize:"17px", fontWeight:800, color:"#1a365d", margin:0 }}>
+            <p style={{ fontSize:"17px", fontWeight:800, color:"var(--foreground)", margin:0 }}>
               Ajouter un document
             </p>
-            <p style={{ fontSize:"11px", color:"#94a3b8", margin:0 }}>Le titre est obligatoire.</p>
+            <p style={{ fontSize:"11px", color:"var(--muted-foreground)", margin:0 }}>Le titre est obligatoire.</p>
           </div>
           <button onClick={onClose}
-                  style={{ width:32, height:32, borderRadius:"50%", backgroundColor:"#f1f5f9",
+                  style={{ width:32, height:32, borderRadius:"50%", backgroundColor:"var(--muted)",
                            display:"flex", alignItems:"center", justifyContent:"center",
                            border:"none", cursor:"pointer" }}>
-            <X style={{ width:16, height:16, color:"#475569" }} />
+            <X style={{ width:16, height:16, color:"var(--muted-foreground)" }} />
           </button>
         </div>
 
@@ -561,9 +561,9 @@ function AddDocumentModal({
                         style={{
                           padding:"6px 14px", borderRadius:"999px", fontWeight:700,
                           fontSize:"11px", cursor:"pointer", border:"1.5px solid",
-                          backgroundColor: type===o.key ? o.color : "#f8fafc",
-                          color:           type===o.key ? "#fff"   : "#475569",
-                          borderColor:     type===o.key ? o.color  : "#e2e8f0",
+                          backgroundColor: type===o.key ? o.color : "var(--muted)",
+                          color:           type===o.key ? "#fff"   : "var(--muted-foreground)",
+                          borderColor:     type===o.key ? o.color  : "var(--border)",
                         }}>
                   {o.label}
                 </button>
@@ -600,8 +600,8 @@ function AddDocumentModal({
             <label style={lbl}>Fichier PDF (optionnel)</label>
             <div style={{
                    padding:"12px", borderRadius:"10px", cursor:"pointer",
-                   border:`1.5px dashed ${file ? cfg.color : "#e2e8f0"}`,
-                   backgroundColor: file ? cfg.bg : "#f8fafc",
+                   border:`1.5px dashed ${file ? cfg.color : "var(--border)"}`,
+                   backgroundColor: file ? cfg.bg : "var(--muted)",
                    display:"flex", alignItems:"center", gap:"10px",
                  }}
                  onClick={() => fileRef.current?.click()}>
@@ -782,8 +782,8 @@ export function DocumentsScreen() {
            style={{ height: "calc(100vh - 36px)", fontFamily: "'Plus Jakarta Sans',sans-serif" }}>
 
         {/* ── STICKY HEADER ─────────────────────────────────────────────────── */}
-        <div className="bg-white flex-shrink-0"
-             style={{ boxShadow: "0 1px 0 #e5e7eb, 0 2px 8px rgba(0,0,0,0.06)", zIndex: 50 }}>
+           <div className="bg-card flex-shrink-0"
+             style={{ boxShadow: "0 1px 0 var(--border), 0 2px 8px rgba(0,0,0,0.06)", zIndex: 50 }}>
           <div className="max-w-5xl mx-auto px-4 lg:px-6">
 
             {/* Nav row */}
@@ -795,7 +795,7 @@ export function DocumentsScreen() {
                 <span className="hidden sm:inline">Accueil</span>
               </button>
               <div className="flex-1 min-w-0">
-                <h1 className="font-bold text-[#1a365d] truncate" style={{ fontSize: "15px" }}>
+                <h1 className="font-bold truncate" style={{ fontSize: "15px", color: "var(--foreground)" }}>
                   Documents générés — Archive
                 </h1>
                 <p className="text-gray-400 mt-0.5 hidden sm:block" style={{ fontSize: "10px" }}>
@@ -861,7 +861,7 @@ export function DocumentsScreen() {
                 { label:"Bulletins de notes",  value: MOCK_BULLETINS.length, color:"#065f46", bg:"#d1fae5" },
                 { label:"Tableaux de planning",value: MOCK_PLANNING.length,  color:"#1a365d", bg:"#dbeafe" },
               ].map(s => (
-                <div key={s.label} className="bg-white rounded-xl p-3 text-center"
+                 <div key={s.label} className="bg-card rounded-xl p-3 text-center"
                      style={{ boxShadow: "0 1px 6px rgba(0,0,0,0.06)" }}>
                   <p className="font-black" style={{ fontSize: "22px", color: s.color }}>{s.value}</p>
                   <p className="font-semibold leading-tight"

@@ -168,7 +168,7 @@ function FicheTicket({ fiche }: { fiche: FicheCard }) {
   const nc = NIVEAU_COLOR[fiche.niveau]   ?? DEFAULT_NIVEAU;
 
   return (
-    <div className="bg-white rounded-2xl overflow-hidden"
+    <div className="bg-card rounded-2xl overflow-hidden"
          style={{ boxShadow:"0 2px 12px rgba(26,54,93,0.08), 0 1px 3px rgba(26,54,93,0.05)" }}>
       <div className="flex">
         <div className="w-[5px] shrink-0" style={{ backgroundColor:dc.bar }}/>
@@ -317,7 +317,7 @@ export function Dashboard() {
             <ModuleCard
               badge="Module 1"
               badgeIcon={<Calendar className="w-3.5 h-3.5 text-white/80"/>}
-              gradient="linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, color-mix(in srgb, var(--secondary) 80%, var(--primary)) 100%)"
+              gradient="linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)"
               shadowColor="color-mix(in srgb, var(--primary) 32%, transparent)"
               accent="var(--secondary)"
               title="Planification"
