@@ -4,12 +4,13 @@ import {
   LayoutDashboard, CalendarDays, BarChart3, BookOpenText,
   FileText, CreditCard, Settings, UserCircle,
   LogOut, GraduationCap, Menu, X, AlertTriangle, ChevronRight,
-  Check, Plus, ShieldCheck,
+  Check, Plus, ShieldCheck, Bell,
 } from "lucide-react";
 import { useAppContext, ALL_CLASSES, UserRole } from "../contexts/AppContext";
 import { useAuthContext }                        from "../contexts/AuthContext";
 import { signOut }                               from "../../hooks/useAuth";
 import type { UserProfile }                      from "../../hooks/useAuth";
+import { useNotificationsUnreadCount }           from "../../modules/notifications/hooks/useNotificationsUnreadCount";
 
 // ─── Utilities ────────────────────────────────────────────────────────────────
 
@@ -26,6 +27,7 @@ const MAIN_NAV = [
   { path: "/eleves",     Icon: BarChart3,       label: "Administration & Suivi" },
   { path: "/cahier",     Icon: BookOpenText,    label: "Journal & Registre"     },
   { path: "/documents",  Icon: FileText,        label: "Documents"              },
+  { path: "/notifications", Icon: Bell,         label: "Notifications"          },
   { path: "/admin",      Icon: ShieldCheck,     label: "Administration"         },
   { path: "/abonnement", Icon: CreditCard,      label: "Abonnement"             },
   { path: "/parametres", Icon: Settings,        label: "Paramètres"             },
@@ -183,8 +185,8 @@ function UserCard({ profile, onLogout }: { profile: UserProfile | null; onLogout
 
 // ─── Desktop Sidebar ──────────────────────────────────────────────────────────
 
-function DesktopSidebar({ profile, onLogout }: {
-  profile: UserProfile | null; onLogout: () => void;
+function DesktopSidebar({ profile, onLogout, unreadCount }: {
+  profile: UserProfile | null; onLogout: () => void; unreadCount: number;
 }) {
   const navigate     = useNavigate();
   const { pathname } = useLocation();
@@ -318,11 +320,30 @@ function DesktopSidebar({ profile, onLogout }: {
         {MAIN_NAV.map(({ path, Icon, label }) => {
           const active = path === "/" ? pathname === "/" : pathname.startsWith(path);
           const showDot = path === "/profil" && schoolMissing;
+          const showUnreadBadge = path === "/notifications" && unreadCount > 0;
           return (
             <button key={path} onClick={() => navigate(path)}
               style={{ ...navItemStyle(active), position: "relative", marginBottom: "1px" }}>
               <Icon style={{ width: 15, height: 15, flexShrink: 0, strokeWidth: 1.75 }} />
               {label}
+              {showUnreadBadge && (
+                <span style={{
+                  marginLeft: "auto",
+                  minWidth: 20,
+                  height: 20,
+                  borderRadius: 999,
+                  backgroundColor: "var(--primary)",
+                  color: "var(--primary-foreground)",
+                  fontSize: "11px",
+                  fontWeight: 700,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "0 6px",
+                }} aria-label={`${unreadCount} notifications non lues`}>
+                  {unreadCount > 99 ? "99+" : unreadCount}
+                </span>
+              )}
               {showDot && (
                 <span style={{
                   position: "absolute", right: "12px", top: "50%",
@@ -438,9 +459,9 @@ function MobileBottomNav() {
 
 // ─── Mobile Drawer ────────────────────────────────────────────────────────────
 
-function MobileDrawer({ open, onClose, profile, onLogout }: {
+function MobileDrawer({ open, onClose, profile, onLogout, unreadCount }: {
   open: boolean; onClose: () => void;
-  profile: UserProfile | null; onLogout: () => void;
+  profile: UserProfile | null; onLogout: () => void; unreadCount: number;
 }) {
   const navigate     = useNavigate();
   const { pathname } = useLocation();
@@ -585,11 +606,30 @@ function MobileDrawer({ open, onClose, profile, onLogout }: {
             {MAIN_NAV.map(({ path, Icon, label }) => {
               const active = path === "/" ? pathname === "/" : pathname.startsWith(path);
               const showDot = path === "/profil" && schoolMissing;
+              const showUnreadBadge = path === "/notifications" && unreadCount > 0;
               return (
                 <button key={path} onClick={() => goTo(path)}
                   style={{ ...navItemStyle(active), position: "relative" }}>
                   <Icon style={{ width: 15, height: 15, strokeWidth: 1.75, flexShrink: 0 }} />
                   {label}
+                  {showUnreadBadge && (
+                    <span style={{
+                      marginLeft: "auto",
+                      minWidth: 20,
+                      height: 20,
+                      borderRadius: 999,
+                      backgroundColor: "var(--primary)",
+                      color: "var(--primary-foreground)",
+                      fontSize: "11px",
+                      fontWeight: 700,
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      padding: "0 6px",
+                    }} aria-label={`${unreadCount} notifications non lues`}>
+                      {unreadCount > 99 ? "99+" : unreadCount}
+                    </span>
+                  )}
                   {showDot && (
                     <span style={{
                       position: "absolute", right: "12px", top: "50%",
@@ -667,6 +707,7 @@ function MobileDrawer({ open, onClose, profile, onLogout }: {
 export function AppLayout() {
   const { user, profile, loading: authLoading } = useAuthContext();
   const { activeClass }                         = useAppContext();
+  const { unreadCount }                         = useNotificationsUnreadCount(Boolean(user));
   const navigate                                = useNavigate();
   const { pathname }                            = useLocation();
   const [drawerOpen, setDrawerOpen]             = useState(false);
@@ -719,7 +760,7 @@ export function AppLayout() {
       <div className="md:flex" style={{ minHeight: "100vh" }}>
         {/* Desktop sidebar */}
         <div className="hidden md:block">
-          <DesktopSidebar profile={profile} onLogout={handleLogout} />
+          <DesktopSidebar profile={profile} onLogout={handleLogout} unreadCount={unreadCount} />
         </div>
 
         {/* Main content */}
@@ -745,6 +786,7 @@ export function AppLayout() {
         onClose={() => setDrawerOpen(false)}
         profile={profile}
         onLogout={handleLogout}
+        unreadCount={unreadCount}
       />
     </>
   );

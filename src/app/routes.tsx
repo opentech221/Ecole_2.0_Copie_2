@@ -18,6 +18,7 @@ import { AbonnementScreen }       from "./components/AbonnementScreen";
 import { ParametresScreen }       from "./components/ParametresScreen";
 import { AdminScreen }            from "./components/AdminScreen";
 import { AdminConsolePage }       from "../modules/admin/pages/AdminConsolePage";
+import { NotificationsPage }      from "../modules/notifications/pages/NotificationsPage";
 import ErrorBoundary              from "./components/ErrorBoundary";
 
 export const router = createBrowserRouter([
@@ -45,6 +46,7 @@ export const router = createBrowserRouter([
       { path:    "profil",        element: <ProfilScreen />,          errorElement: <ErrorBoundary /> },
       { path:    "abonnement",    element: <AbonnementScreen />,      errorElement: <ErrorBoundary /> },
       { path:    "parametres",    element: <ParametresScreen />,      errorElement: <ErrorBoundary /> },
+      { path:    "notifications", element: <NotificationsPage />,      errorElement: <ErrorBoundary /> },
       { path:    "admin",         element: <AdminConsolePage />,      errorElement: <ErrorBoundary /> },
       { path:    "admin/legacy",  element: <AdminScreen />,           errorElement: <ErrorBoundary /> },
     ],
