@@ -661,38 +661,46 @@ export function ContextSelector() {
       <div className="max-w-md lg:max-w-4xl mx-auto bg-card min-h-screen shadow-2xl lg:shadow-none flex flex-col relative">
 
         {/* ── Sticky header ─────────────────────────────────── */}
-        <div className="sticky top-0 z-20 bg-primary shadow-md overflow-hidden">
+        <div
+          className="sticky top-0 z-20 overflow-hidden"
+          style={{
+            backgroundColor: "color-mix(in srgb, var(--card) 94%, var(--background) 6%)",
+            borderBottom: "1px solid var(--border)",
+            boxShadow: "0 8px 24px color-mix(in srgb, var(--foreground) 10%, transparent)",
+          }}
+        >
           <div className="flex items-center gap-1 px-3 py-4 lg:px-6">
             <button
               onClick={() => navigate("/")}
-              className="p-2 rounded-xl hover:bg-white/10 transition-colors active:scale-95 shrink-0"
+              className="p-2 rounded-xl transition-colors active:scale-95 shrink-0"
+              style={{ backgroundColor: "var(--muted)" }}
               aria-label="Retour"
             >
-              <ChevronLeft className="w-5 h-5 text-white" />
+              <ChevronLeft className="w-5 h-5" style={{ color: "var(--foreground)" }} />
             </button>
             <div className="flex-1 min-w-0">
-              <p className="text-[10px] font-bold uppercase tracking-widest leading-none mb-0.5" style={{ color: "var(--accent-foreground)" }}>
+              <p className="text-[10px] font-bold uppercase tracking-widest leading-none mb-0.5" style={{ color: "var(--muted-foreground)" }}>
                 Nouvelle Fiche · Étape 1 sur 2
               </p>
-              <h1 className="text-white text-[16px] font-bold leading-tight truncate">
+              <h1 className="text-[16px] font-bold leading-tight truncate" style={{ color: "var(--foreground)" }}>
                 Configuration APC
               </h1>
             </div>
             {/* Step badge */}
             <div className="shrink-0 flex flex-col items-center">
-              <span className="text-white/50 text-[10px] font-semibold">Cadrage</span>
+              <span className="text-[10px] font-semibold" style={{ color: "var(--muted-foreground)" }}>Cadrage</span>
               <div className="flex gap-1 mt-1">
-                <span className="w-6 h-1.5 rounded-full bg-white" />
-                <span className="w-6 h-1.5 rounded-full bg-white/25" />
+                <span className="w-6 h-1.5 rounded-full" style={{ backgroundColor: "var(--primary)" }} />
+                <span className="w-6 h-1.5 rounded-full" style={{ backgroundColor: "var(--muted)" }} />
               </div>
             </div>
           </div>
 
           {/* Progress bar */}
-          <div className="h-1 bg-white/10">
+          <div className="h-1" style={{ backgroundColor: "var(--muted)" }}>
             <div
-              className="h-full bg-secondary transition-all duration-500 ease-out"
-              style={{ width: `${progressPct}%` }}
+              className="h-full transition-all duration-500 ease-out"
+              style={{ width: `${progressPct}%`, backgroundColor: "var(--primary)" }}
             />
           </div>
         </div>
@@ -1067,8 +1075,10 @@ export function ContextSelector() {
 
         {/* ── Fixed bottom CTA ──────────────────────────────── */}
         <div
-          className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md px-4 pb-6 pt-8 pointer-events-none"
-          style={{ background: "linear-gradient(to top, #f8f9fc 55%, rgba(248,249,252,0) 100%)" }}
+          className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md lg:max-w-4xl px-4 lg:px-6 pb-4 lg:pb-6 pt-8 pointer-events-none"
+          style={{
+            background: "linear-gradient(to top, color-mix(in srgb, var(--background) 96%, transparent) 62%, transparent 100%)",
+          }}
         >
           {/* ── Merge toggle + tooltip — only when ≥ 2 contenus selected ── */}
           {checked.size > 1 && (
@@ -1094,7 +1104,7 @@ export function ContextSelector() {
                       width: 0, height: 0,
                       borderLeft: "7px solid transparent",
                       borderRight: "7px solid transparent",
-                      borderTop: "7px solid #e2e8f0",
+                      borderTop: "7px solid color-mix(in srgb, var(--border) 92%, transparent)",
                     }}
                   />
                   <div
@@ -1104,7 +1114,7 @@ export function ContextSelector() {
                       width: 0, height: 0,
                       borderLeft: "6px solid transparent",
                       borderRight: "6px solid transparent",
-                      borderTop: "6px solid #fff",
+                      borderTop: "6px solid var(--card)",
                     }}
                   />
 
@@ -1124,7 +1134,7 @@ export function ContextSelector() {
                     </div>
                     <div>
                       <p className="text-[12px] font-bold leading-none mb-1" style={{ color: "var(--foreground)" }}>COCHÉ</p>
-                      <p className="text-[11px] text-gray-500 leading-relaxed">
+                      <p className="text-[11px] leading-relaxed" style={{ color: "var(--muted-foreground)" }}>
                         Regroupe toutes vos séquences sélectionnées dans un seul grand déroulé continu
                         <span className="font-semibold" style={{ color: "var(--foreground)" }}> (recommandé pour les séances consolidées)</span>.
                       </p>
@@ -1141,7 +1151,7 @@ export function ContextSelector() {
                     </div>
                     <div>
                       <p className="text-[12px] font-bold leading-none mb-1" style={{ color: "var(--foreground)" }}>DÉCOCHÉ</p>
-                      <p className="text-[11px] text-gray-500 leading-relaxed">
+                      <p className="text-[11px] leading-relaxed" style={{ color: "var(--muted-foreground)" }}>
                         Crée des onglets distincts <span className="font-semibold" style={{ color: "var(--foreground)" }}>(Multi-Tabs)</span> sur
                         l'écran d'édition, vous permettant de préparer une fiche indépendante pour chaque contenu.
                       </p>
@@ -1189,12 +1199,12 @@ export function ContextSelector() {
                     >
                       <HelpCircle
                         className="w-4 h-4"
-                        style={{ color: tooltipOpen ? "var(--primary)" : "#94a3b8" }}
+                        style={{ color: tooltipOpen ? "var(--primary)" : "var(--muted-foreground)" }}
                       />
                     </button>
                   </div>
                   <p className="text-[11px] mt-0.5 leading-tight"
-                    style={{ color: merged ? "var(--primary)" : "#94a3b8" }}>
+                    style={{ color: merged ? "var(--primary)" : "var(--muted-foreground)" }}>
                     {merged
                       ? "Un seul tableau continu · toutes les séquences à la suite"
                       : "Par défaut : fiches indépendantes, un onglet par contenu"}
@@ -1215,26 +1225,49 @@ export function ContextSelector() {
             </div>
           )}
 
-          <button
-            onClick={handleNext}
-            disabled={!canProceed}
-            className="w-full flex items-center justify-center gap-2.5 py-[15px] rounded-2xl font-semibold text-[15px] transition-all pointer-events-auto"
-            style={
-              canProceed
-                ? {
-                    backgroundColor: "var(--primary)",
-                    color: "var(--primary-foreground)",
-                    boxShadow: "0 6px 24px color-mix(in srgb, var(--primary) 35%, transparent), 0 2px 6px color-mix(in srgb, var(--primary) 20%, transparent)",
-                    opacity: 1,
-                  }
-                : { backgroundColor: "#e5e7eb", color: "#9ca3af", opacity: 0.5, cursor: "not-allowed" }
-            }
+          <div
+            className="pointer-events-auto rounded-2xl p-3 lg:p-4"
+            style={{
+              backgroundColor: "color-mix(in srgb, var(--card) 92%, transparent)",
+              border: "1px solid var(--border)",
+              boxShadow: "0 10px 28px color-mix(in srgb, var(--foreground) 10%, transparent)",
+            }}
           >
-            <span>Suivant : Choisir le Canevas de la Fiche</span>
-            <ChevronRight className="w-4 h-4 shrink-0" />
-          </button>
+            <div className="mb-2 px-1">
+              <p className="text-[11px] font-semibold uppercase tracking-wide" style={{ color: "var(--muted-foreground)" }}>
+                Suivant
+              </p>
+              <p className="text-[12px] lg:text-[13px] font-semibold" style={{ color: "var(--foreground)" }}>
+                Choisir le canevas de la fiche
+              </p>
+            </div>
+
+            <button
+              onClick={handleNext}
+              disabled={!canProceed}
+              className="w-full flex items-center justify-center gap-2.5 py-[14px] rounded-xl font-semibold text-[14px] lg:text-[15px] transition-all"
+              style={
+                canProceed
+                  ? {
+                      backgroundColor: "var(--primary)",
+                      color: "var(--primary-foreground)",
+                      boxShadow: "0 6px 24px color-mix(in srgb, var(--primary) 35%, transparent), 0 2px 6px color-mix(in srgb, var(--primary) 20%, transparent)",
+                      opacity: 1,
+                    }
+                  : {
+                      backgroundColor: "var(--muted)",
+                      color: "var(--muted-foreground)",
+                      opacity: 0.72,
+                      cursor: "not-allowed",
+                    }
+              }
+            >
+              <span>Continuer vers le canevas</span>
+              <ChevronRight className="w-4 h-4 shrink-0" />
+            </button>
+          </div>
           {!canProceed && discipline && contenus.length > 0 && (
-            <p className="text-center text-[11px] text-gray-400 mt-2 pointer-events-none">
+            <p className="text-center text-[11px] mt-2 pointer-events-none" style={{ color: "var(--muted-foreground)" }}>
               Sélectionnez au moins un contenu dans la section C
             </p>
           )}
