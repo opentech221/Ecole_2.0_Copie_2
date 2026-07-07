@@ -204,8 +204,8 @@ begin
     raise exception 'invalid_role';
   end if;
 
-  v_code := encode(gen_random_bytes(24), 'hex');
-  v_hash := encode(digest(v_code, 'sha256'), 'hex');
+  v_code := encode(extensions.gen_random_bytes(24), 'hex');
+  v_hash := encode(extensions.digest(v_code, 'sha256'), 'hex');
 
   insert into public.admin_invitations (
     email,
