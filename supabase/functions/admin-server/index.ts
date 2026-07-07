@@ -67,6 +67,16 @@ function getClients(authHeader: string | undefined) {
   return { caller, service };
 }
 
+function registerGet(path: string, handler: Parameters<typeof app.get>[1]) {
+  app.get(path, handler);
+  app.get(`/admin-server${path}`, handler);
+}
+
+function registerPost(path: string, handler: Parameters<typeof app.post>[1]) {
+  app.post(path, handler);
+  app.post(`/admin-server${path}`, handler);
+}
+
 async function requireDirector(authHeader: string | undefined) {
   const { caller, service } = getClients(authHeader);
   const { data: userData, error: authError } = await caller.auth.getUser();
@@ -93,9 +103,9 @@ async function requireDirector(authHeader: string | undefined) {
   };
 }
 
-app.get("/admin-server/health", (c) => c.json({ status: "ok" }));
+registerGet("/health", (c) => c.json({ status: "ok" }));
 
-app.get("/admin-server/audit", async (c) => {
+registerGet("/audit", async (c) => {
   const guard = await requireDirector(c.req.header("Authorization"));
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
 
@@ -111,7 +121,7 @@ app.get("/admin-server/audit", async (c) => {
   return c.json({ data });
 });
 
-app.get("/admin-server/invitations", async (c) => {
+registerGet("/invitations", async (c) => {
   const guard = await requireDirector(c.req.header("Authorization"));
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
 
@@ -125,7 +135,7 @@ app.get("/admin-server/invitations", async (c) => {
   return c.json({ data });
 });
 
-app.post("/admin-server/invitations", async (c) => {
+registerPost("/invitations", async (c) => {
   const guard = await requireDirector(c.req.header("Authorization"));
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
 
@@ -160,7 +170,7 @@ app.post("/admin-server/invitations", async (c) => {
   return c.json({ data }, 201);
 });
 
-app.post("/admin-server/invitations/revoke", async (c) => {
+registerPost("/invitations/revoke", async (c) => {
   const guard = await requireDirector(c.req.header("Authorization"));
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
 
@@ -177,7 +187,7 @@ app.post("/admin-server/invitations/revoke", async (c) => {
   return c.json({ ok: true });
 });
 
-app.post("/admin-server/roles/assign", async (c) => {
+registerPost("/roles/assign", async (c) => {
   const guard = await requireDirector(c.req.header("Authorization"));
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
 
