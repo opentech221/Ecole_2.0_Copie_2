@@ -1111,7 +1111,7 @@ export function ContextSelector() {
 
         {/* ── Fixed bottom CTA ──────────────────────────────── */}
         <div
-          className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md lg:max-w-4xl px-4 lg:px-6 pb-4 lg:pb-6 pt-8 pointer-events-none"
+          className="fixed bottom-[72px] lg:bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md lg:max-w-4xl px-4 lg:px-6 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] lg:pb-6 pt-8 pointer-events-none"
           style={{ background: "transparent" }}
         >
           {/* ── Merge toggle + tooltip — only when ≥ 2 contenus selected ── */}
@@ -1259,10 +1259,10 @@ export function ContextSelector() {
             </div>
           )}
 
-          <div ref={missingHintsRef} className="relative pointer-events-auto flex justify-end">
+          <div ref={missingHintsRef} className="relative pointer-events-auto flex justify-center lg:justify-end">
             {showMissingHints && !canProceed && (
               <div
-                className="absolute bottom-14 right-0 w-[min(320px,calc(100vw-2rem))] rounded-2xl p-3"
+                className="absolute bottom-16 lg:bottom-14 left-1/2 -translate-x-1/2 lg:left-auto lg:translate-x-0 lg:right-0 w-[min(340px,calc(100vw-2rem))] rounded-2xl p-3"
                 style={{
                   backgroundColor: "var(--card)",
                   border: "1px solid var(--border)",
@@ -1293,7 +1293,7 @@ export function ContextSelector() {
 
             <button
               onClick={handleNext}
-              className="h-12 w-auto min-w-[160px] px-4 rounded-full flex items-center justify-center gap-2 transition-all active:scale-95"
+              className="h-12 sm:h-[50px] w-full max-w-[320px] lg:w-auto lg:max-w-none min-w-[160px] px-4 rounded-full flex items-center justify-center gap-2 transition-all active:scale-95"
               aria-label={canProceed ? "Continuer vers le canevas" : "Afficher les champs manquants"}
               title={canProceed ? "Continuer vers le canevas" : "Voir les champs manquants"}
               style={

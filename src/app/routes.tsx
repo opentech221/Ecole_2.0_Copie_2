@@ -16,6 +16,7 @@ import { DataDeletionPage }       from "./components/DataDeletionPage";
 import { ProfilScreen }           from "./components/ProfilScreen";
 import { AbonnementScreen }       from "./components/AbonnementScreen";
 import { ParametresScreen }       from "./components/ParametresScreen";
+import { AdminScreen }            from "./components/AdminScreen";
 import ErrorBoundary              from "./components/ErrorBoundary";
 
 export const router = createBrowserRouter([
@@ -43,6 +44,7 @@ export const router = createBrowserRouter([
       { path:    "profil",        element: <ProfilScreen />,          errorElement: <ErrorBoundary /> },
       { path:    "abonnement",    element: <AbonnementScreen />,      errorElement: <ErrorBoundary /> },
       { path:    "parametres",    element: <ParametresScreen />,      errorElement: <ErrorBoundary /> },
+      { path:    "admin",         element: <AdminScreen />,           errorElement: <ErrorBoundary /> },
     ],
   },
 ]);

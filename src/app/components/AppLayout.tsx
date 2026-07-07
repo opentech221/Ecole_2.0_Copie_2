@@ -4,7 +4,7 @@ import {
   LayoutDashboard, CalendarDays, BarChart3, BookOpenText,
   FileText, CreditCard, Settings, UserCircle,
   LogOut, GraduationCap, Menu, X, AlertTriangle, ChevronRight,
-  Check, Plus,
+  Check, Plus, ShieldCheck,
 } from "lucide-react";
 import { useAppContext, ALL_CLASSES, UserRole } from "../contexts/AppContext";
 import { useAuthContext }                        from "../contexts/AuthContext";
@@ -26,6 +26,7 @@ const MAIN_NAV = [
   { path: "/eleves",     Icon: BarChart3,       label: "Administration & Suivi" },
   { path: "/cahier",     Icon: BookOpenText,    label: "Journal & Registre"     },
   { path: "/documents",  Icon: FileText,        label: "Documents"              },
+  { path: "/admin",      Icon: ShieldCheck,     label: "Administration"         },
   { path: "/abonnement", Icon: CreditCard,      label: "Abonnement"             },
   { path: "/parametres", Icon: Settings,        label: "Paramètres"             },
   { path: "/profil",     Icon: UserCircle,      label: "Profil"                 },
