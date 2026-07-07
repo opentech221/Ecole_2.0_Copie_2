@@ -1596,9 +1596,9 @@ export function LessonEditor() {
                 className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl text-[13px] font-semibold transition-all active:scale-95"
                 style={{
                   minHeight:"44px",
-                  color: saved ? "#059669" : "#1a365d",
-                  backgroundColor: saved ? "#f0fdf4" : "#f1f5f9",
-                  border: `1.5px solid ${saved ? "#86efac" : "#e2e8f0"}`,
+                  color: saved ? "#059669" : "var(--foreground)",
+                  backgroundColor: saved ? "#f0fdf4" : "var(--muted)",
+                  border: `1.5px solid ${saved ? "#86efac" : "var(--border)"}`,
                 }}
               >
                 {saved ? <Check className="w-4 h-4 shrink-0"/> : <Save className="w-4 h-4 shrink-0"/>}
@@ -1628,7 +1628,7 @@ export function LessonEditor() {
               style={{
                 minHeight:"48px",
                 backgroundColor: "var(--primary)",
-                boxShadow: "0 4px 16px rgba(26,54,93,0.30)",
+                boxShadow: "0 4px 16px color-mix(in srgb, var(--primary) 30%, transparent)",
               }}
             >
               <FileDown className="w-4 h-4 shrink-0"/>
@@ -1647,9 +1647,9 @@ export function LessonEditor() {
                 className="inline-flex items-center gap-2 rounded-xl px-4 text-[13px] font-semibold transition-all active:scale-95"
                 style={{
                   minHeight:"44px",
-                  color: saved ? "#059669" : "#1a365d",
-                  backgroundColor: saved ? "#f0fdf4" : "#f8fafc",
-                  border: `1.5px solid ${saved ? "#86efac" : "#e2e8f0"}`,
+                  color: saved ? "#059669" : "var(--foreground)",
+                  backgroundColor: saved ? "#f0fdf4" : "var(--muted)",
+                  border: `1.5px solid ${saved ? "#86efac" : "var(--border)"}`,
                 }}
               >
                 {saved ? <Check className="w-4 h-4 shrink-0"/> : <Save className="w-4 h-4 shrink-0"/>}
@@ -1669,16 +1669,8 @@ export function LessonEditor() {
                   backgroundColor: "var(--muted)",
                   border: "1.5px solid var(--border)",
                 }}
-                onMouseEnter={e=>{
-                  (e.currentTarget as HTMLElement).style.backgroundColor="#eef4ff";
-                  (e.currentTarget as HTMLElement).style.borderColor="#bfdbfe";
-                }}
-                onMouseLeave={e=>{
-                  (e.currentTarget as HTMLElement).style.backgroundColor="#f8fafc";
-                  (e.currentTarget as HTMLElement).style.borderColor="#e2e8f0";
-                }}
               >
-                <Eye className="w-4 h-4 shrink-0" style={{ color:"#3182ce" }}/>
+                <Eye className="w-4 h-4 shrink-0" style={{ color:"var(--secondary)" }}/>
                 Prévisualiser la fiche
               </button>
 

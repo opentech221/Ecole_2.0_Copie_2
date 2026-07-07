@@ -99,8 +99,10 @@ function ThemeCard({ id, label, palette, active, onSelect }: {
   id: Theme; label: string; palette: string[]; active: boolean;
   onSelect: () => void;
 }) {
-  const fixedPreviewText = id === "dark" ? "#e5e7eb" : "#1f2937";
-  const fixedPreviewBg = id === "dark" ? "#111827" : "#f8fafc";
+  const fixedPreviewText = id === "dark" ? "#e5e7eb" : id === "light" ? "#1f2937" : "#334155";
+  const fixedPreviewBg = id === "dark" ? "#111827" : id === "light" ? "#f8fafc" : "#eef2f7";
+  const fixedBorder = id === "dark" ? "#374151" : id === "light" ? "#d1d5db" : "#cbd5e1";
+  const previewCaption = id === "dark" ? "Aperçu sombre" : id === "light" ? "Aperçu clair" : "Aperçu";
   return (
     <button
       onClick={onSelect}
@@ -135,13 +137,16 @@ function ThemeCard({ id, label, palette, active, onSelect }: {
         color: fixedPreviewText,
         display: "flex", flexDirection: "column", alignItems: "center", gap: "3px",
         backgroundColor: fixedPreviewBg,
-        border: `1px solid ${id === "dark" ? "#374151" : "#d1d5db"}`,
+        border: `1px solid ${fixedBorder}`,
         borderRadius: "8px",
         padding: "4px 8px",
       }}>
         {THEME_ICONS[id]}
         <span style={{ fontSize: "11px", fontWeight: active ? 700 : 500 }}>
           {label}
+        </span>
+        <span style={{ fontSize: "9px", fontWeight: 600, opacity: 0.8 }}>
+          {previewCaption}
         </span>
       </div>
 

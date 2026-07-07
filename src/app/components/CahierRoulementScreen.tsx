@@ -682,6 +682,7 @@ export function CahierRoulementScreen() {
           <div style={{
             display: "flex",
             backgroundColor: "var(--muted)",
+            border: "1px solid var(--border)",
             borderRadius: "999px",
             padding: "3px",
             position: "relative",
@@ -708,7 +709,8 @@ export function CahierRoulementScreen() {
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
                 borderRadius: "999px", border: "none",
                 color: view === "cahier" ? "var(--primary-foreground)" : "var(--muted-foreground)",
-                background: "transparent", cursor: "pointer",
+                backgroundColor: view === "cahier" ? "transparent" : "var(--card)",
+                cursor: "pointer",
                 display: "flex", alignItems: "center", justifyContent: "center", gap: "6px",
               }}
             >
@@ -725,7 +727,8 @@ export function CahierRoulementScreen() {
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
                 borderRadius: "999px", border: "none",
                 color: view === "evaluations" ? "var(--primary-foreground)" : "var(--muted-foreground)",
-                background: "transparent", cursor: "pointer",
+                backgroundColor: view === "evaluations" ? "transparent" : "var(--card)",
+                cursor: "pointer",
                 display: "flex", alignItems: "center", justifyContent: "center", gap: "6px",
               }}
             >

@@ -92,6 +92,7 @@ const FAQ = [
 function PlanCard({ plan, isCurrent }: { plan: typeof PLANS[0]; isCurrent: boolean }) {
   const FF = "'Plus Jakarta Sans', sans-serif";
   const HeaderIcon = plan.id === "premium" ? Shield : plan.id === "pro" ? Star : Zap;
+  const paidPlan = plan.id === "pro" || plan.id === "premium";
   return (
     <div style={{
       borderRadius:    "16px",
@@ -130,13 +131,22 @@ function PlanCard({ plan, isCurrent }: { plan: typeof PLANS[0]; isCurrent: boole
         </div>
       )}
 
-      <div style={{ display: "flex", alignItems: "center", gap: "6px", margin: "0 0 4px" }}>
+      <div style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "6px",
+        margin: "0 0 8px",
+        padding: paidPlan ? "6px 8px" : "0",
+        borderRadius: paidPlan ? "10px" : "0",
+        backgroundColor: paidPlan ? "color-mix(in srgb, var(--card) 82%, var(--muted) 18%)" : "transparent",
+        border: paidPlan ? `1px solid color-mix(in srgb, ${plan.color} 35%, var(--border))` : "none",
+      }}>
         <div style={{
           width: 18,
           height: 18,
           borderRadius: "6px",
-          backgroundColor: "var(--muted)",
-          border: "1px solid var(--border)",
+          backgroundColor: paidPlan ? "color-mix(in srgb, var(--card) 65%, var(--muted) 35%)" : "var(--muted)",
+          border: paidPlan ? `1px solid color-mix(in srgb, ${plan.color} 50%, var(--border))` : "1px solid var(--border)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
