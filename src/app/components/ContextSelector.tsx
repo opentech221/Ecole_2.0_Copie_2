@@ -714,7 +714,7 @@ export function ContextSelector() {
 
           {/* ══ SECTION A ═════════════════════════════════════ */}
           <div
-            className="bg-white rounded-2xl p-5 mb-4 lg:mb-0"
+            className="bg-card rounded-2xl p-5 mb-4 lg:mb-0"
             style={{ boxShadow: "0 2px 12px rgba(26,54,93,0.07), 0 1px 3px rgba(26,54,93,0.05)" }}
           >
             <SectionLabel step="A" label="Cadrage Institutionnel" />
@@ -786,7 +786,7 @@ export function ContextSelector() {
 
           {/* ══ SECTION B ═════════════════════════════════════ */}
           <div
-            className={`bg-white rounded-2xl p-5 transition-all duration-300 mb-4 lg:mb-0 ${discipline ? "opacity-100" : "opacity-40 pointer-events-none"}`}
+            className={`bg-card rounded-2xl p-5 transition-all duration-300 mb-4 lg:mb-0 ${discipline ? "opacity-100" : "opacity-40 pointer-events-none"}`}
             style={{ boxShadow: "0 2px 12px rgba(26,54,93,0.07), 0 1px 3px rgba(26,54,93,0.05)" }}
           >
             <SectionLabel step="B" label="Alignement APC" />
@@ -850,7 +850,7 @@ export function ContextSelector() {
                         ? "bg-gray-50 border-gray-200 text-gray-400 cursor-not-allowed"
                         : oaIdx !== ""
                           ? "bg-accent border-primary text-foreground"
-                          : "bg-white border-gray-200 text-gray-400 hover:border-gray-300 focus:border-primary cursor-pointer"
+                          : "bg-card border-gray-200 text-gray-400 hover:border-gray-300 focus:border-primary cursor-pointer"
                       }`}
                     style={oaIdx !== "" ? { boxShadow: "0 0 0 3px color-mix(in srgb, var(--primary) 10%, transparent)" } : {}}
                   >
@@ -892,7 +892,7 @@ export function ContextSelector() {
                         ? "bg-gray-50 border-gray-200 text-gray-400 cursor-not-allowed"
                         : selectedOS
                           ? "bg-accent border-primary text-foreground"
-                          : "bg-white border-gray-200 text-gray-400 hover:border-gray-300 focus:border-primary cursor-pointer"
+                          : "bg-card border-gray-200 text-gray-400 hover:border-gray-300 focus:border-primary cursor-pointer"
                       }`}
                     style={selectedOS ? { boxShadow: "0 0 0 3px color-mix(in srgb, var(--primary) 10%, transparent)" } : {}}
                   >
@@ -924,7 +924,7 @@ export function ContextSelector() {
           {/* ══ SECTION C — full width below A+B grid ═════════ */}
           {/* Gate: requires selectedOS — not just discipline — to enforce strict cascade */}
           <div
-            className={`bg-white rounded-2xl p-5 transition-all duration-300 ${selectedOS || loadingStep === "contenus" ? "opacity-100" : "opacity-40 pointer-events-none"}`}
+            className={`bg-card rounded-2xl p-5 transition-all duration-300 ${selectedOS || loadingStep === "contenus" ? "opacity-100" : "opacity-40 pointer-events-none"}`}
             style={{ boxShadow: "0 2px 12px rgba(26,54,93,0.07), 0 1px 3px rgba(26,54,93,0.05)" }}
           >
             <SectionLabel step="C" label="Le Panier de Contenus" />

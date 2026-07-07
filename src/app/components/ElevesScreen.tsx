@@ -1832,8 +1832,8 @@ export function ElevesScreen() {
                 className="inline-flex items-center gap-1.5 shrink-0 font-semibold transition-all"
                 style={{
                   minHeight:"40px", padding:"0 14px", fontSize:"12px",
-                  borderBottom: `2px solid ${view===tab.key ? "#1a365d" : "transparent"}`,
-                  color: view===tab.key ? "#1a365d" : "#64748b",
+                  borderBottom: `2px solid ${view===tab.key ? "var(--primary)" : "transparent"}`,
+                  color: view===tab.key ? "var(--foreground)" : "var(--muted-foreground)",
                   backgroundColor:"transparent",
                 }}>
                 {tab.icon}
@@ -1921,9 +1921,9 @@ export function ElevesScreen() {
                         ].map(({ h, w }) => (
                           <th key={h} style={{
                             width: w, padding:"10px 8px", textAlign:"left",
-                            fontSize:"10px", fontWeight:800, color:"#64748b",
+                            fontSize:"10px", fontWeight:800, color:"var(--muted-foreground)",
                             textTransform:"uppercase", letterSpacing:"0.06em",
-                            borderBottom:"1px solid #e5e7eb",
+                            borderBottom:"1px solid var(--border)",
                             whiteSpace:"nowrap",
                           }}>{h}</th>
                         ))}
@@ -1945,7 +1945,7 @@ export function ElevesScreen() {
                           onMouseEnter={e=>{ if (!isEditing) (e.currentTarget as HTMLElement).style.backgroundColor="var(--muted)"; }}
                           onMouseLeave={e=>{ if (!isEditing) (e.currentTarget as HTMLElement).style.backgroundColor=selectedId===s.id?"var(--accent)":i%2===0?"var(--card)":"var(--muted)"; }}>
                           <td style={{ padding:"10px 8px", fontSize:"11px", color:"#94a3b8", fontWeight:600 }}>{i+1}</td>
-                          <td style={{ padding:"10px 8px", fontSize:"11px", color:"#475569", fontWeight:700, fontFamily:"monospace", whiteSpace:"nowrap" }}>{s.matricule}</td>
+                          <td style={{ padding:"10px 8px", fontSize:"11px", color:"var(--muted-foreground)", fontWeight:700, fontFamily:"monospace", whiteSpace:"nowrap" }}>{s.matricule}</td>
                           {/* ── Name cell — switches to input when editing ── */}
                           <td style={{ padding:"6px 8px" }}>
                             {isEditing ? (
@@ -1962,7 +1962,7 @@ export function ElevesScreen() {
                                   }}
                                   style={{
                                     padding:"4px 8px", borderRadius:"8px", fontSize:"12px",
-                                    fontWeight:700, color:"#1e293b", border:"1.5px solid #3182ce",
+                                    fontWeight:700, color:"var(--foreground)", border:"1.5px solid var(--secondary)",
                                     outline:"none", width:"140px",
                                     fontFamily:"'Plus Jakarta Sans',sans-serif",
                                   }}
@@ -1982,7 +1982,7 @@ export function ElevesScreen() {
                                      style={{ fontSize:"10px", backgroundColor:s.genre==="F"?"#be185d":"#2563eb" }}>
                                   {s.prenom[0]}{s.nom[0]}
                                 </div>
-                                <p style={{ fontSize:"12px", fontWeight:700, color:"#1e293b", whiteSpace:"nowrap" }}>{s.nom} {s.prenom}</p>
+                                <p style={{ fontSize:"12px", fontWeight:700, color:"var(--foreground)", whiteSpace:"nowrap" }}>{s.nom} {s.prenom}</p>
                               </div>
                             )}
                           </td>
@@ -1993,11 +1993,11 @@ export function ElevesScreen() {
                               color:s.genre==="F"?"#be185d":"#1d4ed8",
                             }}>{s.genre}</span>
                           </td>
-                          <td style={{ padding:"10px 8px", fontSize:"11px", color:"#475569", whiteSpace:"nowrap" }}>
+                          <td style={{ padding:"10px 8px", fontSize:"11px", color:"var(--muted-foreground)", whiteSpace:"nowrap" }}>
                             {s.dateNaissance} · <span style={{ color:"#94a3b8" }}>{s.lieuNaissance}</span>
                           </td>
-                          <td style={{ padding:"10px 8px", fontSize:"11px", color:"#475569", whiteSpace:"nowrap" }}>{s.tuteurNom}</td>
-                          <td style={{ padding:"10px 8px", fontSize:"11px", color:"#475569", fontFamily:"monospace", whiteSpace:"nowrap" }}>{s.tuteurPhone}</td>
+                          <td style={{ padding:"10px 8px", fontSize:"11px", color:"var(--muted-foreground)", whiteSpace:"nowrap" }}>{s.tuteurNom}</td>
+                          <td style={{ padding:"10px 8px", fontSize:"11px", color:"var(--muted-foreground)", fontFamily:"monospace", whiteSpace:"nowrap" }}>{s.tuteurPhone}</td>
                           <td style={{ padding:"6px 8px" }}>
                             <div className="flex items-center gap-1.5">
                               {/* Bulletin button */}
@@ -2060,7 +2060,7 @@ export function ElevesScreen() {
             <div>
               {/* Header: title + month picker + legend */}
               <div className="flex flex-wrap items-center gap-3 mb-3">
-                <p className="font-bold text-[#1a365d] shrink-0" style={{ fontSize:"13px" }}>
+                <p className="font-bold shrink-0" style={{ fontSize:"13px", color: "var(--foreground)" }}>
                   Registre de présences — {trimestre === 1 ? "1er" : trimestre === 2 ? "2ème" : "3ème"} Trimestre
                 </p>
                 {/* Month selector */}
@@ -2070,9 +2070,9 @@ export function ElevesScreen() {
                       style={{
                         minHeight:"30px", padding:"0 10px", borderRadius:"8px",
                         fontSize:"11px", fontWeight:700, border:"1.5px solid",
-                        borderColor: selectedMonth===idx ? "#1a365d" : "#e2e8f0",
-                        backgroundColor: selectedMonth===idx ? "#1a365d" : "#fff",
-                        color: selectedMonth===idx ? "#fff" : "#64748b",
+                        borderColor: selectedMonth===idx ? "var(--primary)" : "var(--border)",
+                        backgroundColor: selectedMonth===idx ? "var(--primary)" : "var(--card)",
+                        color: selectedMonth===idx ? "var(--primary-foreground)" : "var(--muted-foreground)",
                         cursor:"pointer",
                       }}>
                       {m.short}
@@ -2090,7 +2090,7 @@ export function ElevesScreen() {
                                    border:`1.5px solid ${s.color}` }}>
                       {s.label}
                     </span>
-                    <span style={{ fontSize:"10px", color:"#64748b" }}>{s.title}</span>
+                    <span style={{ fontSize:"10px", color:"var(--muted-foreground)" }}>{s.title}</span>
                   </div>
                 ))}
                 <span style={{ fontSize:"10px", color:"#94a3b8", marginLeft:"auto" }}>
@@ -2141,7 +2141,7 @@ export function ElevesScreen() {
                       return (
                         <tr key={s.id} style={{ backgroundColor:rowBg }}>
                           <td style={{
-                            padding:"6px 8px", fontSize:"10.5px", fontWeight:700, color:"#1e293b",
+                            padding:"6px 8px", fontSize:"10.5px", fontWeight:700, color:"var(--foreground)",
                             position:"sticky", left:0, backgroundColor:rowBg,
                             borderBottom:"1.5px solid #cbd5e1",
                             borderRight:"2px solid #cbd5e1", zIndex:5,

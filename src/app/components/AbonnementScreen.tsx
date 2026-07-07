@@ -91,6 +91,7 @@ const FAQ = [
 
 function PlanCard({ plan, isCurrent }: { plan: typeof PLANS[0]; isCurrent: boolean }) {
   const FF = "'Plus Jakarta Sans', sans-serif";
+  const HeaderIcon = plan.id === "premium" ? Shield : plan.id === "pro" ? Star : Zap;
   return (
     <div style={{
       borderRadius:    "16px",
@@ -129,10 +130,24 @@ function PlanCard({ plan, isCurrent }: { plan: typeof PLANS[0]; isCurrent: boole
         </div>
       )}
 
-      <p style={{ fontSize: "13px", fontWeight: 700, color: plan.color,
-                  margin: "0 0 4px", fontFamily: FF }}>
-        {plan.name}
-      </p>
+      <div style={{ display: "flex", alignItems: "center", gap: "6px", margin: "0 0 4px" }}>
+        <div style={{
+          width: 18,
+          height: 18,
+          borderRadius: "6px",
+          backgroundColor: "var(--muted)",
+          border: "1px solid var(--border)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexShrink: 0,
+        }}>
+          <HeaderIcon style={{ width: 11, height: 11, color: plan.color }} />
+        </div>
+        <p style={{ fontSize: "13px", fontWeight: 700, color: "var(--foreground)", margin: 0, fontFamily: FF }}>
+          {plan.name}
+        </p>
+      </div>
       <div style={{ display: "flex", alignItems: "baseline", gap: "4px", marginBottom: "16px" }}>
         <span style={{ fontSize: "28px", fontWeight: 900, color: "var(--foreground)", fontFamily: FF }}>
           {plan.price}
@@ -239,10 +254,11 @@ export function AbonnementScreen() {
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <div style={{
             width: 36, height: 36, borderRadius: "10px",
-            background: "linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)",
+            background: "var(--muted)",
+            border: "1px solid var(--border)",
             display: "flex", alignItems: "center", justifyContent: "center",
           }}>
-            <CreditCard style={{ width: 18, height: 18, color: "#fff" }} />
+            <CreditCard style={{ width: 18, height: 18, color: "var(--primary)" }} />
           </div>
           <div>
             <h1 style={{ fontSize: "16px", fontWeight: 800, color: "var(--foreground)", margin: 0 }}>
@@ -267,10 +283,10 @@ export function AbonnementScreen() {
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
             <div style={{
               width: 40, height: 40, borderRadius: "10px",
-              backgroundColor: "var(--primary)",
+              backgroundColor: "var(--secondary)",
               display: "flex", alignItems: "center", justifyContent: "center",
             }}>
-              <Zap style={{ width: 18, height: 18, color: "#fff" }} />
+              <Zap style={{ width: 18, height: 18, color: "var(--primary-foreground)" }} />
             </div>
             <div>
               <p style={{ fontSize: "11px", color: "var(--secondary)", fontWeight: 600, margin: 0 }}>

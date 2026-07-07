@@ -99,6 +99,8 @@ function ThemeCard({ id, label, palette, active, onSelect }: {
   id: Theme; label: string; palette: string[]; active: boolean;
   onSelect: () => void;
 }) {
+  const fixedPreviewText = id === "dark" ? "#e5e7eb" : "#1f2937";
+  const fixedPreviewBg = id === "dark" ? "#111827" : "#f8fafc";
   return (
     <button
       onClick={onSelect}
@@ -130,8 +132,12 @@ function ThemeCard({ id, label, palette, active, onSelect }: {
 
       {/* Icon + label */}
       <div style={{
-        color: active ? "var(--foreground)" : "var(--muted-foreground)",
+        color: fixedPreviewText,
         display: "flex", flexDirection: "column", alignItems: "center", gap: "3px",
+        backgroundColor: fixedPreviewBg,
+        border: `1px solid ${id === "dark" ? "#374151" : "#d1d5db"}`,
+        borderRadius: "8px",
+        padding: "4px 8px",
       }}>
         {THEME_ICONS[id]}
         <span style={{ fontSize: "11px", fontWeight: active ? 700 : 500 }}>

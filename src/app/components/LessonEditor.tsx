@@ -10,8 +10,6 @@ import {
   Layers, RotateCcw, Eye, AlertCircle,
 } from "lucide-react";
 
-// ─── Brand ───────────────────────────────────────────────────────────────────
-
 const LILIA = {
   primary: "#6d28d9", mid: "#7c3aed",
   light: "#f5f3ff", border: "#ddd6fe", glow: "rgba(109,40,217,0.17)",
@@ -1016,8 +1014,8 @@ export function LessonEditor() {
       )}
 
       {/* ══ STICKY HEADER ════════════════════════════════════════════════════ */}
-      <div className="sticky top-0 z-30 bg-white"
-           style={{ boxShadow:"0 1px 0 #e5e7eb, 0 2px 10px rgba(0,0,0,0.04)" }}>
+       <div className="sticky top-0 z-30 bg-card"
+         style={{ boxShadow:"0 1px 0 var(--border), 0 2px 10px rgba(0,0,0,0.04)" }}>
 
         {/* Nav */}
         <div className="max-w-7xl mx-auto px-4 md:px-6 pt-3 pb-2 flex items-center gap-3">
@@ -1059,8 +1057,8 @@ export function LessonEditor() {
         <div className="max-w-7xl mx-auto px-4 md:px-6 pb-2">
           <button onClick={()=>setHeaderOpen(o=>!o)}
                   className="w-full flex items-center justify-between gap-3 rounded-xl px-3.5 py-2 transition-all"
-                  style={{ backgroundColor:headerOpen?"#eef4ff":"#f8fafc",
-                           border:`1.5px solid ${headerOpen?"#bfdbfe":"#e2e8f0"}` }}>
+                  style={{ backgroundColor:headerOpen?"var(--accent)":"var(--muted)",
+                           border:`1.5px solid ${headerOpen?"var(--secondary)":"var(--border)"}` }}>
             <div className="flex items-center gap-2 min-w-0">
               <Check className="w-3.5 h-3.5 shrink-0" style={{ color:"#3182ce" }}/>
                 <span className="text-[12px] font-semibold text-primary truncate">Contenus sélectionnés</span>
@@ -1145,7 +1143,7 @@ export function LessonEditor() {
           </div>
         )}
 
-        <div className="h-0.5 bg-gradient-to-r from-[#1a365d] via-[#3182ce] to-transparent"/>
+        <div className="h-0.5" style={{ background: "linear-gradient(to right, var(--primary), var(--secondary), transparent)" }}/>
       </div>
 
       {/* ══ BODY ════════════════════════════════════════════════════════════ */}
@@ -1423,15 +1421,15 @@ export function LessonEditor() {
         </button>
 
         {/* ── MOBILE COLUMN TABS ───────────────────────────────────────────── */}
-        <div className="md:hidden sticky z-20 bg-white rounded-xl overflow-hidden flex"
+        <div className="md:hidden sticky z-20 bg-card rounded-xl overflow-hidden flex"
              style={{ top:"0", boxShadow:"0 2px 8px rgba(26,54,93,0.08)" }}>
           {TAB_LABELS.map((label,i)=>(
             <button key={label} onClick={()=>setActiveColTab(i as ColTab)}
               className="flex-1 flex flex-col items-center justify-center py-3 transition-all"
               style={{ minHeight:"48px",
-                       color:activeColTab===i?"#1a365d":"#94a3b8",
-                       borderBottom:`3px solid ${activeColTab===i?"#1a365d":"transparent"}`,
-                       backgroundColor:activeColTab===i?"#f0f4ff":"white" }}>
+                       color:activeColTab===i?"var(--foreground)":"var(--muted-foreground)",
+                       borderBottom:`3px solid ${activeColTab===i?"var(--primary)":"transparent"}`,
+                       backgroundColor:activeColTab===i?"var(--accent)":"var(--card)" }}>
               <span className="text-[11px] font-bold leading-tight px-1">
                 {label.split(" ").slice(0,2).join(" ")}
               </span>
@@ -1479,7 +1477,7 @@ export function LessonEditor() {
                     <span className="text-white font-bold text-[13px] truncate">{contenu}</span>
                   </div>
 
-                  <div className="bg-white divide-y divide-gray-100">
+                  <div className="bg-card divide-y divide-gray-100">
                     {PHASES.map((phase,pi)=>{
                       const rowBg=pi%2===0?"#fff":"#fdfdfe";
                       const lblBg=pi%2===0?"#fafbfc":"#f7f8fa";
@@ -1583,8 +1581,8 @@ export function LessonEditor() {
         Mobile  : two rows — [Sauvegarder | Prévisualiser] then [Générer PDF]
         Desktop : one row  — [Sauvegarder  Prévisualiser] ··· [Générer PDF]
       */}
-      <div className="fixed bottom-0 left-0 right-0 z-30 bg-white"
-           style={{ boxShadow:"0 -1px 0 #e2e8f0, 0 -4px 20px rgba(0,0,0,0.07)" }}>
+       <div className="fixed bottom-0 left-0 right-0 z-30 bg-card"
+         style={{ boxShadow:"0 -1px 0 var(--border), 0 -4px 20px rgba(0,0,0,0.07)" }}>
         <div className="max-w-7xl mx-auto px-4 md:px-6">
 
           {/* ── MOBILE: two-row stacked layout ── */}

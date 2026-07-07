@@ -174,6 +174,11 @@ export function ProfilScreen() {
   const isComplete   = !!profile?.fullName?.trim() && !!profile?.ecoleName?.trim();
   const initials     = getInitials(fullName || "U");
   const displayEmail = user?.email ?? user?.phone ?? "";
+  const hasEmailPassword = !!user?.identities?.some((i) => i.provider === "email");
+  const profilePhotoUrl = profile?.logoUrl
+    ?? (user?.user_metadata?.avatar_url as string | undefined)
+    ?? (user?.user_metadata?.picture as string | undefined)
+    ?? "";
 
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
@@ -214,8 +219,13 @@ export function ProfilScreen() {
 
     setPwLoading(true);
     try {
-      // If user has an email, verify current password first
-      if (currentPw && user?.email) {
+      // Require current password only for accounts that already use email/password auth.
+      if (hasEmailPassword && user?.email) {
+        if (!currentPw) {
+          toast.error("Le mot de passe actuel est requis pour ce compte.");
+          setPwLoading(false);
+          return;
+        }
         const { error: signInErr } = await supabase.auth.signInWithPassword({
           email: user.email,
           password: currentPw,
@@ -261,8 +271,8 @@ export function ProfilScreen() {
             boxShadow: "0 6px 24px rgba(0,0,0,0.30)",
             position: "relative",
           }}>
-            {profile?.logoUrl
-              ? <img src={profile.logoUrl} alt="" style={{
+            {profilePhotoUrl
+              ? <img src={profilePhotoUrl} alt="" style={{
                   width: "100%", height: "100%", borderRadius: "50%",
                   objectFit: "cover",
                 }} />
@@ -467,7 +477,7 @@ export function ProfilScreen() {
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
               <ImageTile
                 label="Logo de l'école" hint="JPG, PNG — max 2 Mo"
-                currentUrl={profile?.logoUrl} uploading={uploading}
+                currentUrl={profilePhotoUrl || profile?.logoUrl} uploading={uploading}
                 onUpload={f => uploadFile(f, "logo")}
               />
               <ImageTile
@@ -483,11 +493,11 @@ export function ProfilScreen() {
             type="submit" disabled={saving || uploading}
             style={{
               width: "100%", padding: "13px", borderRadius: "12px",
-              backgroundColor: saving ? "#94a3b8" : "#1a365d",
+              backgroundColor: saving ? "var(--muted)" : "var(--primary)",
               color: "var(--primary-foreground)", fontWeight: 800, fontSize: "14px",
               border: "none", cursor: saving ? "not-allowed" : "pointer",
               display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
-              boxShadow: "0 4px 16px rgba(26,54,93,0.25)",
+              boxShadow: "0 4px 16px color-mix(in srgb, var(--primary) 28%, transparent)",
               fontFamily: FF, marginBottom: "16px",
             }}
           >
@@ -505,7 +515,7 @@ export function ProfilScreen() {
           </p>
           <form onSubmit={handlePasswordChange}>
             {/* Mot de passe actuel */}
-            {user?.email && (
+            {hasEmailPassword && user?.email && (
               <div style={{ marginBottom: "12px" }}>
                 <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
                                 color: "var(--foreground)", marginBottom: "5px", fontFamily: FF }}>
@@ -593,10 +603,10 @@ export function ProfilScreen() {
               style={{
                 display: "flex", alignItems: "center", gap: "6px",
                 padding: "10px 18px", borderRadius: "8px",
-                backgroundColor: pwLoading || !newPw || !currentPw ? "#e2e8f0" : "#1a365d",
-                color: pwLoading || !newPw || !currentPw ? "#94a3b8" : "#fff",
+                backgroundColor: pwLoading || !newPw || (hasEmailPassword && !currentPw) ? "var(--muted)" : "var(--primary)",
+                color: pwLoading || !newPw || (hasEmailPassword && !currentPw) ? "var(--muted-foreground)" : "var(--primary-foreground)",
                 fontSize: "12.5px", fontWeight: 700, border: "none",
-                cursor: pwLoading || !newPw || !currentPw ? "not-allowed" : "pointer",
+                cursor: pwLoading || !newPw || (hasEmailPassword && !currentPw) ? "not-allowed" : "pointer",
                 fontFamily: FF, width: "100%", justifyContent: "center",
               }}
             >

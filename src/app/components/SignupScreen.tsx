@@ -371,9 +371,9 @@ export function SignupScreen() {
         <div style={{ textAlign: "center", marginBottom: "28px" }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: "10px",
                         marginBottom: "10px", padding: "10px 20px", borderRadius: "14px",
-                        backgroundColor: "#f0f7ff", border: "1px solid #bfdbfe" }}>
+                        backgroundColor: "var(--muted)", border: "1px solid var(--border)" }}>
             <GraduationCap style={{ width: 24, height: 24, color: "var(--secondary)" }} />
-            <span style={{ fontSize: "18px", fontWeight: 900, color: "var(--primary)",
+            <span style={{ fontSize: "18px", fontWeight: 900, color: "var(--foreground)",
                            letterSpacing: "0.1em", textTransform: "uppercase" }}>
               École 2.0
             </span>
@@ -612,18 +612,21 @@ export function SignupScreen() {
           </button>
         </div>
 
-        <div style={{ marginTop: "18px", display: "flex", gap: "8px", flexWrap: "wrap" }}>
+        <div style={{ marginTop: "14px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6px" }}>
           <Link
             to="/privacy-policy"
             style={{
-              padding: "8px 10px",
+              padding: "6px 8px",
               borderRadius: "8px",
-              border: "1px solid #bfdbfe",
-              backgroundColor: "#eff6ff",
-              color: "#1d4ed8",
+              border: "1px solid var(--border)",
+              backgroundColor: "var(--muted)",
+              color: "var(--secondary)",
               textDecoration: "none",
-              fontSize: "12px",
+              fontSize: "10.5px",
               fontWeight: 700,
+              lineHeight: 1.1,
+              textAlign: "center",
+              whiteSpace: "nowrap",
             }}
           >
             Politique de confidentialite
@@ -631,14 +634,17 @@ export function SignupScreen() {
           <Link
             to="/data-deletion"
             style={{
-              padding: "8px 10px",
+              padding: "6px 8px",
               borderRadius: "8px",
-              border: "1px solid #86efac",
-              backgroundColor: "#f0fdf4",
-              color: "#166534",
+              border: "1px solid var(--border)",
+              backgroundColor: "var(--muted)",
+              color: "var(--foreground)",
               textDecoration: "none",
-              fontSize: "12px",
+              fontSize: "10.5px",
               fontWeight: 700,
+              lineHeight: 1.1,
+              textAlign: "center",
+              whiteSpace: "nowrap",
             }}
           >
             Suppression des donnees

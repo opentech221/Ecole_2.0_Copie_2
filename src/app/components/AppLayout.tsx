@@ -100,13 +100,14 @@ function SchoolAlertCard({ onGo }: { onGo: () => void }) {
 // ─── User card (bottom of sidebar) ───────────────────────────────────────────
 
 function UserCard({ profile, onLogout }: { profile: UserProfile | null; onLogout: () => void }) {
+  const { role, setRole } = useAppContext();
   const [hover, setHover] = useState(false);
   const displayName = profile?.fullName || "Enseignant";
-  const displayRole = profile?.role === "director" ? "Directeur" : "Enseignant";
+  const displayRole = role === "director" ? "Directeur" : "Enseignant";
   const initials    = getInitials(displayName);
 
   return (
-    <div style={{ borderTop: "1px solid #f1f5f9", padding: "10px 12px" }}>
+    <div style={{ borderTop: "1px solid var(--border)", padding: "10px 12px" }}>
       <div style={{ display: "flex", alignItems: "center", gap: "9px",
                     padding: "6px 8px", marginBottom: "6px" }}>
         <div style={{
@@ -116,10 +117,12 @@ function UserCard({ profile, onLogout }: { profile: UserProfile | null; onLogout
           fontSize: "11px", fontWeight: 700, color: "#fff",
           fontFamily: "'Plus Jakarta Sans', sans-serif",
         }}>
-          {initials}
+          {profile?.logoUrl
+            ? <img src={profile.logoUrl} alt="Profil" style={{ width: "100%", height: "100%", borderRadius: "50%", objectFit: "cover" }} />
+            : initials}
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
-          <p style={{ fontSize: "12px", fontWeight: 600, color: "#1e293b",
+          <p style={{ fontSize: "12px", fontWeight: 600, color: "var(--foreground)",
                       margin: 0, overflow: "hidden", textOverflow: "ellipsis",
                       whiteSpace: "nowrap", fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             {displayName}
@@ -131,6 +134,30 @@ function UserCard({ profile, onLogout }: { profile: UserProfile | null; onLogout
         </div>
       </div>
 
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6px", marginBottom: "8px" }}>
+        {(["teacher", "director"] as UserRole[]).map((r) => {
+          const active = role === r;
+          return (
+            <button
+              key={r}
+              onClick={() => void setRole(r)}
+              style={{
+                padding: "6px 8px",
+                borderRadius: "8px",
+                border: `1px solid ${active ? "var(--primary)" : "var(--border)"}`,
+                backgroundColor: active ? "var(--primary)" : "var(--muted)",
+                color: active ? "var(--primary-foreground)" : "var(--muted-foreground)",
+                fontSize: "11px",
+                fontWeight: 700,
+                cursor: "pointer",
+              }}
+            >
+              {r === "teacher" ? "Enseignant" : "Directeur"}
+            </button>
+          );
+        })}
+      </div>
+
       <button
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
@@ -139,9 +166,9 @@ function UserCard({ profile, onLogout }: { profile: UserProfile | null; onLogout
           display: "flex", alignItems: "center", justifyContent: "center", gap: "6px",
           width: "100%", padding: "7px 12px", borderRadius: "8px",
           fontSize: "12px", fontWeight: 500,
-          color:           hover ? "#ef4444" : "var(--muted-foreground)",
+          color:           hover ? "var(--destructive)" : "var(--muted-foreground)",
           backgroundColor: hover ? "#fff1f2" : "transparent",
-          border:          `1px solid ${hover ? "#fecaca" : "var(--border)"}`,
+          border:          `1px solid ${hover ? "var(--destructive)" : "var(--border)"}`,
           cursor: "pointer", transition: "all 160ms ease",
           fontFamily: "'Plus Jakarta Sans', sans-serif",
         }}
@@ -183,7 +210,7 @@ function DesktopSidebar({ profile, onLogout }: {
     }}>
       {/* Header */}
       <div style={{
-        padding: "18px 16px 14px", borderBottom: "1px solid #f1f5f9",
+        padding: "18px 16px 14px", borderBottom: "1px solid var(--border)",
         display: "flex", alignItems: "center", gap: "10px",
       }}>
         <div style={{
@@ -467,7 +494,7 @@ function MobileDrawer({ open, onClose, profile, onLogout }: {
         {/* Header */}
         <div style={{ display: "flex", alignItems: "center",
                       justifyContent: "space-between",
-                      padding: "4px 20px 12px", borderBottom: "1px solid #f1f5f9" }}>
+                      padding: "4px 20px 12px", borderBottom: "1px solid var(--border)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <div style={{
               width: 36, height: 36, borderRadius: "50%", flexShrink: 0,
@@ -475,7 +502,9 @@ function MobileDrawer({ open, onClose, profile, onLogout }: {
               display: "flex", alignItems: "center", justifyContent: "center",
               fontSize: "13px", fontWeight: 700, color: "#fff",
             }}>
-              {initials}
+              {profile?.logoUrl
+                ? <img src={profile.logoUrl} alt="Profil" style={{ width: "100%", height: "100%", borderRadius: "50%", objectFit: "cover" }} />
+                : initials}
             </div>
             <div>
               <p style={{ fontSize: "13px", fontWeight: 600, color: "var(--foreground)", margin: 0 }}>
@@ -573,20 +602,37 @@ function MobileDrawer({ open, onClose, profile, onLogout }: {
             })}
           </div>
 
-          {/* Role badge — read-only, sourced from backend profile (P1.3) */}
+          {/* Role switch */}
           <div style={{
-            display: "flex", alignItems: "center", gap: "8px",
             marginBottom: "16px", padding: "8px 12px", borderRadius: "9px",
             backgroundColor: "var(--muted)", border: "1px solid var(--border)",
           }}>
-            <span style={{ fontSize: "11px", color: "var(--muted-foreground)",
-                           fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              Rôle :
-            </span>
-            <span style={{ fontSize: "12.5px", fontWeight: 700, color: "#1e293b",
-                           fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              {role === "director" ? "Directeur" : "Enseignant"}
-            </span>
+            <p style={{ margin: "0 0 6px", fontSize: "11px", color: "var(--muted-foreground)", fontWeight: 700 }}>
+              Rôle
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6px" }}>
+              {(["teacher", "director"] as UserRole[]).map((r) => {
+                const active = role === r;
+                return (
+                  <button
+                    key={r}
+                    onClick={() => void setRole(r)}
+                    style={{
+                      padding: "7px 8px",
+                      borderRadius: "8px",
+                      border: `1px solid ${active ? "var(--primary)" : "var(--border)"}`,
+                      backgroundColor: active ? "var(--primary)" : "var(--card)",
+                      color: active ? "var(--primary-foreground)" : "var(--foreground)",
+                      fontSize: "11px",
+                      fontWeight: 700,
+                      cursor: "pointer",
+                    }}
+                  >
+                    {r === "teacher" ? "Enseignant" : "Directeur"}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {/* Logout */}
@@ -598,9 +644,9 @@ function MobileDrawer({ open, onClose, profile, onLogout }: {
               display: "flex", alignItems: "center", justifyContent: "center", gap: "6px",
               width: "100%", padding: "10px", borderRadius: "10px",
               fontSize: "13px", fontWeight: 500,
-              color:           logHover ? "#ef4444" : "#94a3b8",
+              color:           logHover ? "var(--destructive)" : "var(--muted-foreground)",
               backgroundColor: logHover ? "#fff1f2" : "transparent",
-              border:          `1px solid ${logHover ? "#fecaca" : "#f1f5f9"}`,
+              border:          `1px solid ${logHover ? "var(--destructive)" : "var(--border)"}`,
               cursor: "pointer", transition: "all 160ms ease",
               fontFamily: "'Plus Jakarta Sans', sans-serif",
               marginBottom: "8px",

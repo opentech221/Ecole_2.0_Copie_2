@@ -4,6 +4,7 @@ import {
   Calendar, BookMarked, ChevronRight, Users,
 } from "lucide-react";
 import { useAppContext } from "../contexts/AppContext";
+import { useAuthContext } from "../contexts/AuthContext";
 
 // ─── WhatsApp icon ────────────────────────────────────────────────────────────
 
@@ -241,6 +242,7 @@ function FicheTicket({ fiche }: { fiche: FicheCard }) {
 export function Dashboard() {
   const navigate   = useNavigate();
   const { activeClass, role, userName, schoolName } = useAppContext();
+  const { profile } = useAuthContext();
 
   return (
     <div className="min-h-screen bg-background lg:bg-background" style={{ fontFamily:"'Plus Jakarta Sans',sans-serif" }}>
@@ -248,19 +250,21 @@ export function Dashboard() {
       <div className="max-w-md lg:max-w-none mx-auto bg-card min-h-screen shadow-2xl lg:shadow-none flex flex-col relative">
 
         {/* ── Header ──────────────────────────────────────────────── */}
-        <div className="bg-[var(--primary)] px-4 lg:px-8 pt-5 pb-3">
+        <div className="px-4 lg:px-8 pt-5 pb-3" style={{ backgroundColor: "var(--card)", borderBottom: "1px solid var(--border)" }}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-[var(--secondary)] flex items-center justify-center text-white font-extrabold text-[10px] shrink-0">
-                {userName.replace(/\./g,"").split(" ").map((w:string)=>w[0]).join("").slice(0,2).toUpperCase()}
+              <div className="w-8 h-8 rounded-full bg-[var(--secondary)] flex items-center justify-center text-white font-extrabold text-[10px] shrink-0 overflow-hidden">
+                {profile?.logoUrl
+                  ? <img src={profile.logoUrl} alt="Profil" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  : userName.replace(/\./g,"").split(" ").map((w:string)=>w[0]).join("").slice(0,2).toUpperCase()}
               </div>
               <div>
-                <p className="text-white/70 text-[9px] font-semibold uppercase tracking-widest leading-none">
+                <p className="text-[9px] font-semibold uppercase tracking-widest leading-none" style={{ color: "var(--muted-foreground)" }}>
                   {role === "director" ? "Direction — Vue Globale" : "Bonjour"}
                 </p>
-                <h1 className="text-white text-[13px] font-bold leading-tight">
+                <h1 className="text-[13px] font-bold leading-tight" style={{ color: "var(--foreground)" }}>
                   {userName}{" "}
-                  <span className="text-white/40 font-normal">
+                  <span className="font-normal" style={{ color: "var(--muted-foreground)" }}>
                     · {activeClass} · {schoolName.split(" ").slice(-2).join(" ")}
                   </span>
                 </h1>
@@ -268,13 +272,13 @@ export function Dashboard() {
             </div>
             <div className="flex items-center gap-1.5">
               <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full"
-                     style={{ backgroundColor:"color-mix(in srgb, var(--secondary) 18%, transparent)" }}>
+                     style={{ backgroundColor:"var(--muted)", border: "1px solid var(--border)" }}>
                   <span className="w-1.5 h-1.5 rounded-full bg-[var(--secondary)] animate-pulse shrink-0"/>
-                  <span className="text-[9px] font-semibold text-white">Hors ligne</span>
+                  <span className="text-[9px] font-semibold" style={{ color: "var(--foreground)" }}>Hors ligne</span>
               </div>
-              <button className="relative p-1.5 rounded-lg bg-white/10 active:scale-95"
+              <button className="relative p-1.5 rounded-lg active:scale-95" style={{ backgroundColor: "var(--muted)" }}
                       aria-label="Notifications">
-                <Bell className="w-4 h-4 text-white"/>
+                <Bell className="w-4 h-4" style={{ color: "var(--muted-foreground)" }}/>
                   <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-[var(--secondary)] rounded-full"/>
               </button>
             </div>
@@ -282,7 +286,7 @@ export function Dashboard() {
         </div>
 
         {/* Wave */}
-          <div className="h-3 bg-[var(--primary)]">
+          <div className="h-3" style={{ backgroundColor: "var(--card)" }}>
             <div className="h-full bg-card rounded-t-[14px]"/>
         </div>
 

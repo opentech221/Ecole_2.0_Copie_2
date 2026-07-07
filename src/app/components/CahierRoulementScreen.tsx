@@ -707,7 +707,7 @@ export function CahierRoulementScreen() {
                 minHeight: "40px", fontSize: "12px", fontWeight: 700,
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
                 borderRadius: "999px", border: "none",
-                color: view === "cahier" ? "#fff" : "#64748b",
+                color: view === "cahier" ? "var(--primary-foreground)" : "var(--muted-foreground)",
                 background: "transparent", cursor: "pointer",
                 display: "flex", alignItems: "center", justifyContent: "center", gap: "6px",
               }}
@@ -724,7 +724,7 @@ export function CahierRoulementScreen() {
                 minHeight: "40px", fontSize: "12px", fontWeight: 700,
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
                 borderRadius: "999px", border: "none",
-                color: view === "evaluations" ? "#fff" : "#64748b",
+                color: view === "evaluations" ? "var(--primary-foreground)" : "var(--muted-foreground)",
                 background: "transparent", cursor: "pointer",
                 display: "flex", alignItems: "center", justifyContent: "center", gap: "6px",
               }}
