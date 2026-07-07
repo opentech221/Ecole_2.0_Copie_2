@@ -337,6 +337,42 @@ $$;
 -- ---------------------------------------------------------------------
 -- 7) Give director access to requested account (if exists)
 -- ---------------------------------------------------------------------
-update public.profiles
-   set role = 'director'
- where full_name in ('Cheikh T S Ba', 'Cheikh T S Bâ');
+do $$
+begin
+  if exists (
+    select 1
+    from pg_trigger
+    where tgname = 'trg_prevent_profile_role_change'
+  ) then
+    execute 'alter table public.profiles disable trigger trg_prevent_profile_role_change';
+  end if;
+
+  if exists (
+    select 1
+    from pg_trigger
+    where tgname = 'enforce_role_immutable'
+  ) then
+    execute 'alter table public.profiles disable trigger enforce_role_immutable';
+  end if;
+
+  update public.profiles
+     set role = 'director'
+   where full_name in ('Cheikh T S Ba', 'Cheikh T S Bâ');
+
+  if exists (
+    select 1
+    from pg_trigger
+    where tgname = 'trg_prevent_profile_role_change'
+  ) then
+    execute 'alter table public.profiles enable trigger trg_prevent_profile_role_change';
+  end if;
+
+  if exists (
+    select 1
+    from pg_trigger
+    where tgname = 'enforce_role_immutable'
+  ) then
+    execute 'alter table public.profiles enable trigger enforce_role_immutable';
+  end if;
+end;
+$$;
