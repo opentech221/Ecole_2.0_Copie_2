@@ -189,12 +189,12 @@ function ReadField({ label, value, icon }: { label:string; value:string; icon?:R
   return (
     <div className="flex flex-col gap-1">
       <div className="flex items-center gap-1">
-        {icon && <span className="text-gray-400 shrink-0 text-[13px]">{icon}</span>}
-        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{label}</span>
+        {icon && <span className="shrink-0 text-[13px]" style={{ color:"var(--muted-foreground)" }}>{icon}</span>}
+        <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color:"var(--muted-foreground)" }}>{label}</span>
       </div>
-      <div className="text-[13px] font-semibold text-[#1a365d] px-3 py-2.5 rounded-xl flex items-center"
-           style={{ backgroundColor:"#f1f5f9", border:"1.5px solid #e2e8f0", minHeight:"44px" }}>
-        {value || <span className="text-gray-300 italic text-[12px] font-normal">—</span>}
+      <div className="text-[13px] font-semibold px-3 py-2.5 rounded-xl flex items-center"
+           style={{ backgroundColor:"var(--muted)", border:"1.5px solid var(--border)", color:"var(--foreground)", minHeight:"44px" }}>
+        {value || <span className="italic text-[12px] font-normal" style={{ color:"var(--muted-foreground)", opacity:0.7 }}>—</span>}
       </div>
     </div>
   );
@@ -204,13 +204,13 @@ function AutoField({ label, value, icon }: { label:string; value:string; icon?:R
   return (
     <div className="flex flex-col gap-1">
       <div className="flex items-center gap-1">
-        {icon && <span className="text-gray-400 shrink-0 text-[13px]">{icon}</span>}
-        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{label}</span>
+        {icon && <span className="shrink-0 text-[13px]" style={{ color:"var(--muted-foreground)" }}>{icon}</span>}
+        <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color:"var(--muted-foreground)" }}>{label}</span>
         <span className="ml-auto text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full"
-              style={{ backgroundColor:"#e0f2fe", color:"#0369a1" }}>Auto</span>
+              style={{ backgroundColor:"color-mix(in srgb, var(--primary) 16%, var(--card))", color:"var(--primary)" }}>Auto</span>
       </div>
-      <div className="text-[13px] font-semibold text-[#1a365d] px-3 py-2.5 rounded-xl flex items-center"
-           style={{ backgroundColor:"#f0f9ff", border:"1.5px solid #bae6fd", minHeight:"44px" }}>
+      <div className="text-[13px] font-semibold px-3 py-2.5 rounded-xl flex items-center"
+           style={{ backgroundColor:"color-mix(in srgb, var(--primary) 8%, var(--card))", border:"1.5px solid color-mix(in srgb, var(--primary) 30%, var(--border))", color:"var(--foreground)", minHeight:"44px" }}>
         {value}
       </div>
     </div>
@@ -225,8 +225,8 @@ function EditField({ label, value, onChange, type="text", placeholder="", icon }
   return (
     <div className="flex flex-col gap-1">
       <div className="flex items-center gap-1">
-        {icon && <span className="text-gray-400 shrink-0 text-[13px]">{icon}</span>}
-        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{label}</span>
+        {icon && <span className="shrink-0 text-[13px]" style={{ color:"var(--muted-foreground)" }}>{icon}</span>}
+        <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color:"var(--muted-foreground)" }}>{label}</span>
       </div>
          <input type={type} value={value} onChange={e=>onChange(e.target.value)}
         placeholder={placeholder}
@@ -274,11 +274,11 @@ function OOCallout({ value, onChange, onGenerate, generating, genCount }: {
 
   return (
     <div className="rounded-2xl overflow-hidden transition-all duration-150"
-         style={{ border:`2px solid ${focused?"#16a34a":"#86efac"}`,
-                  boxShadow:focused?"0 0 0 3px rgba(22,163,74,0.12)":"0 2px 8px rgba(22,163,74,0.08)" }}>
+         style={{ border:`2px solid ${focused?"var(--primary)":"color-mix(in srgb, var(--primary) 40%, var(--border))"}`,
+                  boxShadow:focused?"0 0 0 3px color-mix(in srgb, var(--primary) 16%, transparent)":"0 2px 10px color-mix(in srgb, var(--foreground) 8%, transparent)" }}>
 
       {/* ── Green header strip + mini Lilia sparkle button ── */}
-      <div className="flex items-center gap-2.5 px-4 py-2.5" style={{ backgroundColor:"#16a34a" }}>
+      <div className="flex items-center gap-2.5 px-4 py-2.5" style={{ background:"linear-gradient(120deg, color-mix(in srgb, var(--primary) 86%, #14532d) 0%, color-mix(in srgb, var(--secondary) 72%, var(--primary)) 100%)" }}>
         <div className="w-6 h-6 rounded-lg bg-white/20 flex items-center justify-center shrink-0">
           <GraduationCap className="w-3.5 h-3.5 text-white"/>
         </div>
@@ -316,7 +316,7 @@ function OOCallout({ value, onChange, onGenerate, generating, genCount }: {
       </div>
 
       {/* ── Body — textarea always present, hint shown when empty ── */}
-      <div className="relative" style={{ backgroundColor:"#f0fdf4" }}>
+      <div className="relative" style={{ backgroundColor:"color-mix(in srgb, var(--card) 84%, var(--accent) 16%)" }}>
         {/* Version badge when re-generating */}
         {genCount > 0 && hasValue && (
           <div className="absolute top-2 right-3 flex items-center gap-1"
@@ -343,7 +343,7 @@ function OOCallout({ value, onChange, onGenerate, generating, genCount }: {
           style={{
             fontFamily:"'Plus Jakarta Sans',sans-serif",
             minHeight:"80px",
-            color: generating ? "#86efac" : "#14532d",
+            color: generating ? "var(--muted-foreground)" : "var(--foreground)",
             paddingBottom: hasValue ? "8px" : "12px",
             paddingRight: genCount > 0 && hasValue ? "48px" : "16px", // room for version badge
           }}
@@ -429,8 +429,8 @@ function ChipSelect({ label, icon, options, selected, onAdd, onRemove, chipBg }:
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center gap-1.5">
-        <span className="text-gray-400 shrink-0">{icon}</span>
-        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{label}</span>
+        <span className="shrink-0" style={{ color:"var(--muted-foreground)" }}>{icon}</span>
+        <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color:"var(--muted-foreground)" }}>{label}</span>
       </div>
 
       {/* Selected chips */}
@@ -457,15 +457,15 @@ function ChipSelect({ label, icon, options, selected, onAdd, onRemove, chipBg }:
         onClick={()=> open ? closeMenu() : openMenu()}
         disabled={avail.length===0}
         className="w-full flex items-center justify-between gap-2 px-4 py-3 rounded-xl text-[13px] font-semibold transition-all"
-        style={{ minHeight:"44px", backgroundColor:open?"#f0f4ff":"#fff",
-                 border:`1.5px solid ${open?"#3182ce":"#e2e8f0"}`,
-                 color:avail.length===0?"#9ca3af":"#2d3748" }}
+        style={{ minHeight:"44px", backgroundColor:open?"color-mix(in srgb, var(--primary) 10%, var(--card))":"var(--card)",
+                 border:`1.5px solid ${open?"color-mix(in srgb, var(--primary) 65%, var(--border))":"var(--border)"}`,
+                 color:avail.length===0?"var(--muted-foreground)":"var(--foreground)" }}
       >
         <div className="flex items-center gap-2">
-          <Plus className="w-3.5 h-3.5" style={{ color:"#3182ce" }}/>
+          <Plus className="w-3.5 h-3.5" style={{ color:"var(--primary)" }}/>
           <span>{avail.length===0?"Tous les éléments ajoutés":"Ajouter un élément…"}</span>
         </div>
-        <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-150 ${open?"rotate-180":""}`}/>
+        <ChevronDown className={`w-4 h-4 transition-transform duration-150 ${open?"rotate-180":""}`} style={{ color:"var(--muted-foreground)" }}/>
       </button>
 
       {/* ── Floating portal overlay — escapes all parent overflow clipping ── */}
@@ -491,10 +491,12 @@ function ChipSelect({ label, icon, options, selected, onAdd, onRemove, chipBg }:
             <button
               key={opt}
               onClick={()=>{ onAdd(opt); closeMenu(); }}
-              className="w-full text-left px-4 py-3 text-[13px] font-medium text-[#2d3748] hover:bg-[#f0f4ff] transition-colors flex items-center gap-2.5"
-              style={{ borderBottom:i<avail.length-1?"1px solid #f1f5f9":"none", minHeight:"44px" }}
+              className="w-full text-left px-4 py-3 text-[13px] font-medium transition-colors flex items-center gap-2.5"
+              style={{ color:"var(--foreground)", backgroundColor:"transparent", borderBottom:i<avail.length-1?"1px solid var(--border)":"none", minHeight:"44px" }}
+              onMouseEnter={e=>{(e.currentTarget as HTMLElement).style.backgroundColor="color-mix(in srgb, var(--primary) 8%, var(--card))";}}
+              onMouseLeave={e=>{(e.currentTarget as HTMLElement).style.backgroundColor="transparent";}}
             >
-              <span className="w-4 h-4 rounded-md border-2 border-gray-200 shrink-0 flex items-center justify-center">
+              <span className="w-4 h-4 rounded-md border-2 shrink-0 flex items-center justify-center" style={{ borderColor:"var(--border)" }}>
                 {/* Empty checkbox visual */}
               </span>
               {opt}
@@ -516,8 +518,8 @@ function AiCell({ value, placeholder, onChange, generating, onGenerate }: {
   return (
     <div className="relative group">
       <textarea value={value} onChange={e=>onChange(e.target.value)} placeholder={placeholder} rows={3}
-        className="w-full resize-none outline-none text-[13px] leading-relaxed text-[#2d3748] placeholder-gray-300 bg-transparent pr-8"
-        style={{ minHeight:"72px", fontFamily:"'Plus Jakarta Sans',sans-serif" }}/>
+        className="w-full resize-none outline-none text-[13px] leading-relaxed bg-transparent pr-8"
+        style={{ color:"var(--foreground)", minHeight:"72px", fontFamily:"'Plus Jakarta Sans',sans-serif" }}/>
       <button onClick={onGenerate} disabled={generating} title="Générer avec Lilia"
         className="absolute bottom-2 right-1 w-7 h-7 rounded-lg flex items-center justify-center transition-all opacity-20 group-hover:opacity-100 active:scale-90"
         style={{ color:LILIA.primary }}
@@ -538,11 +540,13 @@ function SectionCard({ icon, title, subtitle, open, onToggle, children, error, e
 }) {
   return (
     <div
-      className="bg-white rounded-2xl overflow-hidden transition-all duration-200"
+      className="rounded-2xl overflow-hidden transition-all duration-200"
       style={{
+        backgroundColor:"var(--card)",
+        border:`1px solid ${error ? "#fca5a5" : "var(--border)"}`,
         boxShadow: error
           ? "0 0 0 2px #fca5a5, 0 2px 12px rgba(220,38,38,0.10)"
-          : "0 2px 12px rgba(26,54,93,0.07), 0 1px 3px rgba(26,54,93,0.04)",
+          : "0 4px 14px color-mix(in srgb, var(--foreground) 7%, transparent)",
       }}
     >
       <button onClick={onToggle}
@@ -559,13 +563,13 @@ function SectionCard({ icon, title, subtitle, open, onToggle, children, error, e
             </p>
             {error && errorMsg
               ? <p className="text-[10px] font-semibold text-red-500 mt-0.5">{errorMsg}</p>
-              : subtitle && <p className="text-[10px] text-gray-400 mt-0.5">{subtitle}</p>}
+              : subtitle && <p className="text-[10px] mt-0.5" style={{ color:"var(--muted-foreground)" }}>{subtitle}</p>}
           </div>
         </div>
-        {open?<ChevronUp className="w-4 h-4 text-gray-400 shrink-0"/>
-             :<ChevronDown className="w-4 h-4 text-gray-400 shrink-0"/>}
+        {open?<ChevronUp className="w-4 h-4 shrink-0" style={{ color:"var(--muted-foreground)" }}/>
+             :<ChevronDown className="w-4 h-4 shrink-0" style={{ color:"var(--muted-foreground)" }}/>} 
       </button>
-      {open&&<div className="px-5 pb-5 border-t border-gray-100">{children}</div>}
+      {open&&<div className="px-5 pb-5 border-t" style={{ borderColor:"var(--border)" }}>{children}</div>}
     </div>
   );
 }
@@ -984,8 +988,9 @@ export function LessonEditor() {
           style={{ animation:"slideDown 250ms ease" }}
         >
           <style>{`@keyframes slideDown{from{opacity:0;transform:translate(-50%,-12px)}to{opacity:1;transform:translate(-50%,0)}}`}</style>
-          <div className="bg-white rounded-2xl overflow-hidden"
-               style={{ boxShadow:"0 8px 32px rgba(220,38,38,0.18), 0 2px 8px rgba(0,0,0,0.08)",
+          <div className="rounded-2xl overflow-hidden"
+               style={{ backgroundColor:"var(--card)",
+                        boxShadow:"0 8px 32px rgba(220,38,38,0.18), 0 2px 8px rgba(0,0,0,0.08)",
                         border:"1.5px solid #fca5a5" }}>
             {/* Red accent bar */}
             <div className="h-1 bg-gradient-to-r from-red-400 to-red-500"/>
@@ -1004,8 +1009,11 @@ export function LessonEditor() {
                   ))}
                 </ul>
               </div>
-              <button onClick={()=>setToast(null)}
-                      className="shrink-0 p-1 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors">
+                    <button onClick={()=>setToast(null)}
+                      className="shrink-0 p-1 rounded-lg transition-colors"
+                      style={{ color:"var(--muted-foreground)", backgroundColor:"transparent" }}
+                      onMouseEnter={e=>{(e.currentTarget as HTMLElement).style.backgroundColor="var(--muted)";}}
+                      onMouseLeave={e=>{(e.currentTarget as HTMLElement).style.backgroundColor="transparent";}}>
                 <X className="w-4 h-4"/>
               </button>
             </div>
@@ -1032,11 +1040,11 @@ export function LessonEditor() {
             </h1>
           </div>
           <div className="shrink-0 flex items-center gap-1.5">
-            <div className="w-14 md:w-24 h-1.5 rounded-full bg-gray-100 overflow-hidden">
+            <div className="w-14 md:w-24 h-1.5 rounded-full overflow-hidden" style={{ backgroundColor:"var(--muted)" }}>
               <div className="h-full rounded-full transition-all duration-500"
                    style={{ width:`${pct}%`, backgroundColor:pct===100?"#059669":tabChip.on }}/>
             </div>
-            <span className="text-[10px] text-gray-400 font-bold hidden md:block">{pct}%</span>
+            <span className="text-[10px] font-bold hidden md:block" style={{ color:"var(--muted-foreground)" }}>{pct}%</span>
           </div>
         </div>
 
@@ -1044,9 +1052,9 @@ export function LessonEditor() {
         {stateRestored && (
           <div className="max-w-7xl mx-auto px-4 md:px-6 pb-2">
             <div className="flex items-center gap-2 px-3 py-2 rounded-xl"
-                 style={{ backgroundColor:"#f0fdf4", border:"1px solid #bbf7d0" }}>
+                 style={{ backgroundColor:"color-mix(in srgb, #16a34a 10%, var(--card))", border:"1px solid color-mix(in srgb, #16a34a 35%, var(--border))" }}>
               <RotateCcw className="w-3.5 h-3.5 shrink-0" style={{ color:"#16a34a" }}/>
-              <span className="text-[11px] font-semibold" style={{ color:"#15803d" }}>
+              <span className="text-[11px] font-semibold" style={{ color:"var(--foreground)" }}>
                 Données de travail restaurées automatiquement — votre progression est préservée.
               </span>
             </div>
@@ -1060,13 +1068,13 @@ export function LessonEditor() {
                   style={{ backgroundColor:headerOpen?"var(--accent)":"var(--muted)",
                            border:`1.5px solid ${headerOpen?"var(--secondary)":"var(--border)"}` }}>
             <div className="flex items-center gap-2 min-w-0">
-              <Check className="w-3.5 h-3.5 shrink-0" style={{ color:"#3182ce" }}/>
+              <Check className="w-3.5 h-3.5 shrink-0" style={{ color:"var(--primary)" }}/>
                 <span className="text-[12px] font-semibold text-primary truncate">Contenus sélectionnés</span>
               <span className="inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold text-white shrink-0"
-                    style={{ backgroundColor:"#3182ce" }}>{contenus.length}</span>
+                    style={{ backgroundColor:"var(--primary)" }}>{contenus.length}</span>
             </div>
-            {headerOpen?<ChevronUp className="w-4 h-4 text-gray-400 shrink-0"/>
-                       :<ChevronDown className="w-4 h-4 text-gray-400 shrink-0"/>}
+            {headerOpen?<ChevronUp className="w-4 h-4 shrink-0" style={{ color:"var(--muted-foreground)" }}/>
+                       :<ChevronDown className="w-4 h-4 shrink-0" style={{ color:"var(--muted-foreground)" }}/>}
           </button>
           {headerOpen&&(
             <div className="flex flex-wrap gap-1.5 mt-2 px-0.5">
@@ -1077,7 +1085,7 @@ export function LessonEditor() {
 
         {/* ── Multi-fiche tab bar — tab mode only ── */}
         {!merged && contenus.length>1&&(
-          <div className="max-w-7xl mx-auto border-t border-gray-100">
+          <div className="max-w-7xl mx-auto border-t" style={{ borderColor:"var(--border)" }}>
             <div className="flex overflow-x-auto px-4 md:px-6"
                  style={{ scrollbarWidth:"none" }}>
               {contenus.map((contenu,i)=>{
@@ -1093,24 +1101,24 @@ export function LessonEditor() {
                              backgroundColor:isActive?c.bg:"transparent", minHeight:"56px" }}>
                     <div className="flex items-center gap-1.5 w-full">
                       <span className="text-[10px] font-bold uppercase tracking-widest"
-                            style={{ color:isActive?c.on:"#94a3b8" }}>
+                            style={{ color:isActive?c.on:"var(--muted-foreground)" }}>
                         Fiche {i+1}
                       </span>
                       {cmp>0&&(
                         <span className="ml-auto text-[9px] font-bold px-1.5 py-0.5 rounded-full shrink-0"
-                              style={{ backgroundColor:isActive?c.on:"#e2e8f0",
-                                       color:isActive?"#fff":"#64748b" }}>
+                              style={{ backgroundColor:isActive?c.on:"var(--muted)",
+                                       color:isActive?"#fff":"var(--muted-foreground)" }}>
                           {cmp}%
                         </span>
                       )}
                     </div>
                     <div className="flex items-center gap-1 mt-0.5 w-full min-w-0">
                       <span style={{ opacity:0.55, fontWeight:700, fontSize:"10px",
-                                     color:isActive?c.on:"#94a3b8", flexShrink:0 }}>
+                                     color:isActive?c.on:"var(--muted-foreground)", flexShrink:0 }}>
                         {pad(i)}.
                       </span>
                       <span className="text-[11px] font-semibold truncate"
-                            style={{ color:isActive?c.on:"#64748b" }}>
+                            style={{ color:isActive?c.on:"var(--foreground)" }}>
                         {contenu}
                       </span>
                     </div>
@@ -1123,7 +1131,7 @@ export function LessonEditor() {
 
         {/* ── Merged mode banner ── */}
         {merged && contenus.length>1 && (
-          <div className="max-w-7xl mx-auto border-t border-gray-100">
+          <div className="max-w-7xl mx-auto border-t" style={{ borderColor:"var(--border)" }}>
             <div className="px-4 md:px-6 py-2.5 flex items-center gap-2">
               <div className="flex gap-1 flex-wrap">
                 {contenus.map((c,i)=>(
@@ -1179,7 +1187,7 @@ export function LessonEditor() {
           </div>
 
           {/* Pedagogical hierarchy */}
-          <div className="mt-4 border-t border-gray-100 pt-4 space-y-3">
+          <div className="mt-4 border-t pt-4 space-y-3" style={{ borderColor:"var(--border)" }}>
             <ReadField label="Domaine" value={domaine}/>
             <ReadField label="Sous-domaine · Discipline"
                        value={[sousDomaine,discipline].filter(Boolean).join(" · ")}/>
@@ -1194,7 +1202,7 @@ export function LessonEditor() {
                 {/* Lock badge — only shown when triangulated from planning */}
                 {isTriangulated && (
                   <span className="ml-auto text-[8px] font-bold px-1.5 py-0.5 rounded-full shrink-0"
-                        style={{ backgroundColor:"#dbeafe", color:"#1e40af" }}>
+                        style={{ backgroundColor:"color-mix(in srgb, var(--primary) 15%, var(--card))", color:"var(--primary)" }}>
                     🔒 Auto
                   </span>
                 )}
@@ -1202,9 +1210,9 @@ export function LessonEditor() {
               {isTriangulated ? (
                 /* Locked read-only display — triangulated from curriculum */
                 <div className="rounded-xl px-3 py-2.5"
-                     style={{ backgroundColor:"#f1f5f9",
-                              border:"1.5px solid #cbd5e1",
-                              color:"#475569", fontSize:"12px",
+                     style={{ backgroundColor:"var(--muted)",
+                              border:"1.5px solid var(--border)",
+                              color:"var(--foreground)", fontSize:"12px",
                               fontWeight:500, lineHeight:1.55,
                               userSelect:"none", cursor:"not-allowed" }}>
                   {competence}
@@ -1216,9 +1224,9 @@ export function LessonEditor() {
                   rows={2}
                   className="rounded-xl resize-none outline-none font-medium text-[12px] leading-relaxed"
                   style={{ padding:"10px 12px", minHeight:"44px",
-                           backgroundColor: competence?"#eff6ff":"#fff",
-                           border:`1.5px solid ${competence?"#bfdbfe":"#e2e8f0"}`,
-                           color: competence?"#1e3a8a":"#6b7280",
+                           backgroundColor: competence?"color-mix(in srgb, var(--primary) 10%, var(--card))":"var(--card)",
+                           border:`1.5px solid ${competence?"color-mix(in srgb, var(--primary) 45%, var(--border))":"var(--border)"}`,
+                           color: competence?"var(--foreground)":"var(--muted-foreground)",
                            fontFamily:"'Plus Jakarta Sans',sans-serif",
                            transition:"border-color 150ms" }}/>
               )}
@@ -1232,7 +1240,7 @@ export function LessonEditor() {
                 </span>
                 {isTriangulated && (
                   <span className="ml-auto text-[8px] font-bold px-1.5 py-0.5 rounded-full shrink-0"
-                        style={{ backgroundColor:"#dbeafe", color:"#1e40af" }}>
+                        style={{ backgroundColor:"color-mix(in srgb, var(--primary) 15%, var(--card))", color:"var(--primary)" }}>
                     🔒 Auto
                   </span>
                 )}
@@ -1240,9 +1248,9 @@ export function LessonEditor() {
               {isTriangulated ? (
                 /* Locked read-only pill */
                 <div className="rounded-xl px-3 flex items-center"
-                     style={{ minHeight:"44px", backgroundColor:"#f1f5f9",
-                              border:"1.5px solid #cbd5e1",
-                              color:"#475569", fontSize:"13px",
+                     style={{ minHeight:"44px", backgroundColor:"var(--muted)",
+                              border:"1.5px solid var(--border)",
+                              color:"var(--foreground)", fontSize:"13px",
                               fontWeight:600, cursor:"not-allowed",
                               userSelect:"none" }}>
                   {palier}
@@ -1253,15 +1261,16 @@ export function LessonEditor() {
                     className="w-full appearance-none rounded-xl outline-none font-semibold"
                     style={{ minHeight:"44px", padding:"0 36px 0 12px", fontSize:"13px",
                              fontFamily:"'Plus Jakarta Sans',sans-serif",
-                             backgroundColor: palier?"#f8fafc":"#fff",
-                             border:"1.5px solid #e2e8f0",
-                             color:"#1a365d", cursor:"pointer" }}>
+                             backgroundColor: palier?"var(--muted)":"var(--card)",
+                             border:"1.5px solid var(--border)",
+                             color:"var(--foreground)", cursor:"pointer" }}>
                     <option value="">Sélectionner le Palier…</option>
                     {["Palier 1","Palier 2","Palier 3"].map(p=>(
                       <option key={p} value={p}>{p}</option>
                     ))}
                   </select>
-                  <svg className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none w-4 h-4 text-gray-400"
+                     <svg className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none w-4 h-4"
+                       style={{ color:"var(--muted-foreground)" }}
                        viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
                   </svg>
@@ -1283,9 +1292,9 @@ export function LessonEditor() {
                 rows={2}
                 className="rounded-xl resize-none outline-none font-medium text-[12px] leading-relaxed"
                 style={{ padding:"10px 12px", minHeight:"44px",
-                         backgroundColor: oa?"#f8fafc":"#fff",
-                         border:`1.5px solid ${oa?"#e2e8f0":"#e2e8f0"}`,
-                         color:"#1a365d",
+                         backgroundColor: oa?"var(--muted)":"var(--card)",
+                         border:"1.5px solid var(--border)",
+                         color:"var(--foreground)",
                          fontFamily:"'Plus Jakarta Sans',sans-serif",
                          transition:"border-color 150ms" }}/>
             </div>
@@ -1305,9 +1314,9 @@ export function LessonEditor() {
                 rows={2}
                 className="rounded-xl resize-none outline-none font-medium text-[12px] leading-relaxed"
                 style={{ padding:"10px 12px", minHeight:"44px",
-                         backgroundColor: os?"#fffbeb":"#fff",
-                         border:`1.5px solid ${os?"#fde68a":"#e2e8f0"}`,
-                         color: os?"#78350f":"#6b7280",
+                         backgroundColor: os?"color-mix(in srgb, #f59e0b 10%, var(--card))":"var(--card)",
+                         border:`1.5px solid ${os?"color-mix(in srgb, #f59e0b 44%, var(--border))":"var(--border)"}`,
+                         color: os?"var(--foreground)":"var(--muted-foreground)",
                          fontFamily:"'Plus Jakarta Sans',sans-serif",
                          transition:"border-color 150ms" }}/>
             </div>
@@ -1319,7 +1328,7 @@ export function LessonEditor() {
               </span>
               {merged ? (
                 <div className="flex flex-wrap gap-1.5 p-3 rounded-xl"
-                     style={{ backgroundColor:"#f8fafc", border:"1.5px solid #e2e8f0" }}>
+                     style={{ backgroundColor:"var(--muted)", border:"1.5px solid var(--border)" }}>
                   {contenus.map((c,i)=>{
                     const col=CHIP_COLORS[i%CHIP_COLORS.length];
                     return (
@@ -1334,7 +1343,7 @@ export function LessonEditor() {
                 </div>
               ) : (
                 <div className="flex items-center gap-2 p-3 rounded-xl"
-                     style={{ backgroundColor:tabChip.bg, border:`1.5px solid ${tabChip.on}30` }}>
+                     style={{ backgroundColor:`color-mix(in srgb, ${tabChip.on} 12%, var(--card))`, border:`1.5px solid color-mix(in srgb, ${tabChip.on} 40%, var(--border))` }}>
                   <span style={{ opacity:0.55, fontWeight:700, fontSize:"12px", color:tabChip.on }}>{pad(activeFiche)}.</span>
                   <span className="text-[13px] font-semibold" style={{ color:tabChip.on }}>
                     {contenus[activeFiche]}
@@ -1421,8 +1430,8 @@ export function LessonEditor() {
         </button>
 
         {/* ── MOBILE COLUMN TABS ───────────────────────────────────────────── */}
-        <div className="md:hidden sticky z-20 bg-card rounded-xl overflow-hidden flex"
-             style={{ top:"0", boxShadow:"0 2px 8px rgba(26,54,93,0.08)" }}>
+           <div className="md:hidden sticky z-20 bg-card rounded-xl overflow-hidden flex"
+             style={{ top:"0", boxShadow:"0 3px 12px color-mix(in srgb, var(--foreground) 10%, transparent)", border:"1px solid var(--border)" }}>
           {TAB_LABELS.map((label,i)=>(
             <button key={label} onClick={()=>setActiveColTab(i as ColTab)}
               className="flex-1 flex flex-col items-center justify-center py-3 transition-all"
@@ -1433,7 +1442,7 @@ export function LessonEditor() {
               <span className="text-[11px] font-bold leading-tight px-1">
                 {label.split(" ").slice(0,2).join(" ")}
               </span>
-              {activeColTab===i&&<span className="w-1 h-1 rounded-full mt-0.5" style={{ backgroundColor:"#3182ce" }}/>}
+              {activeColTab===i&&<span className="w-1 h-1 rounded-full mt-0.5" style={{ backgroundColor:"var(--primary)" }}/>}
             </button>
           ))}
         </div>
@@ -1443,8 +1452,8 @@ export function LessonEditor() {
              style={{ top:"0", gridTemplateColumns:"200px 1fr 1fr" }}>
           {TAB_LABELS.map((col,i)=>(
             <div key={col} className="px-5 py-3 text-[11px] font-bold uppercase tracking-widest text-white"
-                 style={{ backgroundColor:i===0?"#1a365d":i===1?"#1e4976":"#234f7e",
-                          borderRight:i<2?"1px solid rgba(255,255,255,0.12)":"none" }}>
+                 style={{ backgroundColor:i===0?"color-mix(in srgb, var(--primary) 88%, #0f172a)":i===1?"color-mix(in srgb, var(--primary) 74%, var(--secondary))":"color-mix(in srgb, var(--secondary) 80%, #0f172a)",
+                          borderRight:i<2?"1px solid rgba(255,255,255,0.16)":"none" }}>
               {col}
             </div>
           ))}
@@ -1466,7 +1475,7 @@ export function LessonEditor() {
               {seqsToRender.map(({ contenu, ci, chip })=>(
                 <div key={`seq-${ci}`}
                      className="rounded-xl md:rounded-none overflow-hidden"
-                     style={{ boxShadow:"0 2px 12px rgba(26,54,93,0.08), 0 1px 3px rgba(26,54,93,0.05)" }}>
+                   style={{ boxShadow:"0 3px 14px color-mix(in srgb, var(--foreground) 9%, transparent)", border:"1px solid var(--border)" }}>
                   {/* Sequence header */}
                   <div className="flex items-center gap-3 px-4 md:px-5 py-3"
                        style={{ backgroundColor:chip.on }}>
@@ -1477,21 +1486,22 @@ export function LessonEditor() {
                     <span className="text-white font-bold text-[13px] truncate">{contenu}</span>
                   </div>
 
-                  <div className="bg-card divide-y divide-gray-100">
+                  <div className="bg-card divide-y" style={{ borderColor:"var(--border)" }}>
                     {PHASES.map((phase,pi)=>{
-                      const rowBg=pi%2===0?"#fff":"#fdfdfe";
-                      const lblBg=pi%2===0?"#fafbfc":"#f7f8fa";
+                      const rowBg=pi%2===0?"var(--card)":"color-mix(in srgb, var(--card) 86%, var(--muted) 14%)";
+                      const lblBg=pi%2===0?"color-mix(in srgb, var(--card) 82%, var(--muted) 18%)":"color-mix(in srgb, var(--card) 74%, var(--muted) 26%)";
                       const isEval=phase===EVAL_PHASE;
                       return (
                         <div key={`ph-${pi}`}>
                           {/* Desktop 3-col grid */}
                           <div className="hidden md:grid" style={{ gridTemplateColumns:"200px 1fr 1fr" }}>
-                            <div className="px-4 py-3.5 border-r border-gray-100 flex flex-col gap-1.5"
-                                 style={{ backgroundColor:lblBg }}>
+                             <div className="px-4 py-3.5 border-r flex flex-col gap-1.5"
+                               style={{ borderColor:"var(--border)", backgroundColor:lblBg }}
+                             >
                               <div className="flex items-start gap-2">
                                 <div className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0"
                                      style={{ backgroundColor:isEval?"#16a34a":chip.on, opacity:0.7 }}/>
-                                <span className="text-[12px] font-semibold text-[#2d3748] leading-snug">{phase}</span>
+                                <span className="text-[12px] font-semibold leading-snug" style={{ color:"var(--foreground)" }}>{phase}</span>
                               </div>
                               {isEval&&activeOO&&(
                                 <div className="flex items-center gap-1 ml-3.5">
@@ -1501,23 +1511,22 @@ export function LessonEditor() {
                                 </div>
                               )}
                             </div>
-                            <div className="px-4 py-3 border-r border-gray-100"
-                                 style={{ backgroundColor:isEval?"#f0fdf4":rowBg }}>
+                            <div className="px-4 py-3 border-r" style={{ borderColor:"var(--border)", backgroundColor:isEval?"color-mix(in srgb, #16a34a 10%, var(--card))":rowBg }}>
                               {renderAiCell(ci,pi,"m",phase)}
                             </div>
-                            <div className="px-4 py-3" style={{ backgroundColor:isEval?"#f0fdf4":rowBg }}>
+                            <div className="px-4 py-3" style={{ backgroundColor:isEval?"color-mix(in srgb, #16a34a 10%, var(--card))":rowBg }}>
                               {renderAiCell(ci,pi,"e",phase)}
                             </div>
                           </div>
 
                           {/* Mobile single-column tabs */}
-                          <div className="md:hidden" style={{ backgroundColor:isEval?"#f0fdf4":rowBg }}>
+                          <div className="md:hidden" style={{ backgroundColor:isEval?"color-mix(in srgb, #16a34a 10%, var(--card))":rowBg }}>
                             {activeColTab===0&&(
                               <div className="px-4 py-3.5 flex flex-col gap-1.5" style={{ backgroundColor:lblBg }}>
                                 <div className="flex items-start gap-2.5">
                                   <div className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0"
                                        style={{ backgroundColor:isEval?"#16a34a":chip.on, opacity:0.7 }}/>
-                                  <span className="text-[13px] font-semibold text-[#2d3748] leading-snug">{phase}</span>
+                                  <span className="text-[13px] font-semibold leading-snug" style={{ color:"var(--foreground)" }}>{phase}</span>
                                 </div>
                                 {isEval&&activeOO&&(
                                   <div className="flex items-center gap-1 ml-4">
@@ -1531,7 +1540,7 @@ export function LessonEditor() {
                             {activeColTab===1&&(
                               <div className="px-4 py-3">
                                 <div className="flex items-center gap-1.5 mb-1.5">
-                                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{phase}</span>
+                                  <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color:"var(--muted-foreground)" }}>{phase}</span>
                                   {isEval&&activeOO&&(
                                     <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full"
                                           style={{ backgroundColor:"#dcfce7", color:"#16a34a" }}>OO</span>
@@ -1543,7 +1552,7 @@ export function LessonEditor() {
                             {activeColTab===2&&(
                               <div className="px-4 py-3">
                                 <div className="flex items-center gap-1.5 mb-1.5">
-                                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{phase}</span>
+                                  <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color:"var(--muted-foreground)" }}>{phase}</span>
                                   {isEval&&activeOO&&(
                                     <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full"
                                           style={{ backgroundColor:"#dcfce7", color:"#16a34a" }}>OO</span>
@@ -1565,7 +1574,7 @@ export function LessonEditor() {
 
         <div className="flex items-center justify-center gap-1.5 pt-2">
           <Sparkles className="w-3 h-3" style={{ color:LILIA.primary, opacity:0.4 }}/>
-          <span className="text-[10px] text-gray-400">Suggestions générées par IA · Vérifiez avant de générer.</span>
+          <span className="text-[10px]" style={{ color:"var(--muted-foreground)" }}>Suggestions générées par IA · Vérifiez avant de générer.</span>
           {invalidSections.has("workspace") && (
             <p className="text-[11px] font-semibold text-red-500 text-center mt-1">
               <AlertCircle className="inline w-3 h-3 mr-1"/>
@@ -1657,7 +1666,7 @@ export function LessonEditor() {
               </button>
 
               {/* Separator */}
-              <div className="w-px h-5 bg-gray-200"/>
+              <div className="w-px h-5" style={{ backgroundColor:"var(--border)" }}/>
 
               {/* Preview */}
               <button
@@ -1677,16 +1686,16 @@ export function LessonEditor() {
               {/* Fiche pills — tab mode only, desktop */}
               {!merged && contenus.length>1&&(
                 <div className="flex items-center gap-1.5 ml-1">
-                  <div className="w-px h-5 bg-gray-200"/>
+                  <div className="w-px h-5" style={{ backgroundColor:"var(--border)" }}/>
                   {fiches.map((f,i)=>{
                     const cmp=ficheCompletion(f);
                     const c=CHIP_COLORS[i%CHIP_COLORS.length];
                     return (
                       <button key={i} onClick={()=>setActiveFiche(i)}
                         className="text-[10px] font-bold px-2 py-1 rounded-full transition-all"
-                        style={{ backgroundColor:activeFiche===i?c.on:cmp>0?c.bg:"#f1f5f9",
-                                 color:activeFiche===i?"#fff":cmp>0?c.on:"#94a3b8",
-                                 border:`1px solid ${activeFiche===i?c.on:cmp>0?c.on+"40":"#e2e8f0"}` }}>
+                        style={{ backgroundColor:activeFiche===i?c.on:cmp>0?c.bg:"var(--muted)",
+                                 color:activeFiche===i?"#fff":cmp>0?c.on:"var(--muted-foreground)",
+                                 border:`1px solid ${activeFiche===i?c.on:cmp>0?c.on+"40":"var(--border)"}` }}>
                         F{i+1}{cmp>0?` · ${cmp}%`:""}
                       </button>
                     );
@@ -1695,10 +1704,10 @@ export function LessonEditor() {
               )}
               {merged && (
                 <div className="flex items-center gap-1.5 ml-1">
-                  <div className="w-px h-5 bg-gray-200"/>
+                  <div className="w-px h-5" style={{ backgroundColor:"var(--border)" }}/>
                   <span className="flex items-center gap-1.5 text-[11px] font-semibold"
-                        style={{ color:"#3182ce" }}>
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#3182ce]"/>
+                        style={{ color:"var(--primary)" }}>
+                    <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor:"var(--primary)" }}/>
                     Fiche unifiée · {contenus.length} séquences
                   </span>
                 </div>
@@ -1707,7 +1716,7 @@ export function LessonEditor() {
 
             {/* Right — primary CTA */}
             <div className="flex items-center gap-3">
-              <span className="text-[11px] text-gray-400">
+              <span className="text-[11px]" style={{ color:"var(--muted-foreground)" }}>
                 {filledCells===0
                   ? "Renseignez au moins une cellule."
                   : `${filledCells} / ${totalCells} cellules`}
@@ -1718,7 +1727,7 @@ export function LessonEditor() {
                 style={{
                   minHeight:"44px",
                   backgroundColor: "var(--primary)",
-                  boxShadow: "0 4px 16px rgba(26,54,93,0.30)",
+                  boxShadow: "0 4px 16px color-mix(in srgb, var(--primary) 30%, transparent)",
                 }}
               >
                 <FileDown className="w-4 h-4 shrink-0"/>

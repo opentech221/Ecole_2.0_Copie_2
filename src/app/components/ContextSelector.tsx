@@ -571,6 +571,7 @@ export function ContextSelector() {
     "sousDomaine"|"discipline"|"palier"|"oa"|"os"|"contenus"|null
   >(null);
   const loadTimerRef = useRef<ReturnType<typeof setTimeout>|null>(null);
+  const missingHintsRef = useRef<HTMLDivElement | null>(null);
 
   const [merged,      setMerged]      = useState(false);
   const [tooltipOpen, setTooltipOpen] = useState(false);
@@ -652,6 +653,20 @@ export function ContextSelector() {
     if (canProceed && showMissingHints) setShowMissingHints(false);
   }, [canProceed, showMissingHints]);
 
+  useEffect(() => {
+    if (!showMissingHints) return;
+
+    function handleOutsideClick(event: MouseEvent) {
+      const target = event.target as Node;
+      if (missingHintsRef.current && !missingHintsRef.current.contains(target)) {
+        setShowMissingHints(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, [showMissingHints]);
+
   function toggleCheck(c: string) {
     setChecked((prev) => {
       const n = new Set(prev);
@@ -662,9 +677,10 @@ export function ContextSelector() {
 
   function handleNext() {
     if (!canProceed) {
-      setShowMissingHints(true);
+      setShowMissingHints((prev) => !prev);
       return;
     }
+    setShowMissingHints(false);
     navigate("/select-lesson", {
       state: { niveau, domaine, sousDomaine, discipline, palier,
                oa: oaEntry?.oa ?? "", os: selectedOS,
@@ -1243,7 +1259,7 @@ export function ContextSelector() {
             </div>
           )}
 
-          <div className="relative pointer-events-auto flex justify-end">
+          <div ref={missingHintsRef} className="relative pointer-events-auto flex justify-end">
             {showMissingHints && !canProceed && (
               <div
                 className="absolute bottom-14 right-0 w-[min(320px,calc(100vw-2rem))] rounded-2xl p-3"
