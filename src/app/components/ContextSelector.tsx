@@ -1096,9 +1096,7 @@ export function ContextSelector() {
         {/* ── Fixed bottom CTA ──────────────────────────────── */}
         <div
           className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md lg:max-w-4xl px-4 lg:px-6 pb-4 lg:pb-6 pt-8 pointer-events-none"
-          style={{
-            background: "linear-gradient(to top, color-mix(in srgb, var(--background) 96%, transparent) 62%, transparent 100%)",
-          }}
+          style={{ background: "transparent" }}
         >
           {/* ── Merge toggle + tooltip — only when ≥ 2 contenus selected ── */}
           {checked.size > 1 && (
@@ -1279,7 +1277,7 @@ export function ContextSelector() {
 
             <button
               onClick={handleNext}
-              className="h-12 w-12 lg:h-11 lg:w-auto lg:px-4 rounded-full lg:rounded-2xl flex items-center justify-center gap-2 transition-all active:scale-95"
+              className="h-12 w-auto min-w-[160px] px-4 rounded-full flex items-center justify-center gap-2 transition-all active:scale-95"
               aria-label={canProceed ? "Continuer vers le canevas" : "Afficher les champs manquants"}
               title={canProceed ? "Continuer vers le canevas" : "Voir les champs manquants"}
               style={
@@ -1303,10 +1301,10 @@ export function ContextSelector() {
               ) : (
                 <AlertCircle className="w-4 h-4 shrink-0" style={{ color: "#f59e0b" }} />
               )}
-              <span className="hidden lg:inline text-[13px] font-semibold">
-                {canProceed ? "Canevas" : `${missingFields.length} restant(s)`}
+              <span className="text-[13px] font-semibold whitespace-nowrap">
+                {canProceed ? "Passer au canevas" : `Passer au canevas • ${missingFields.length}`}
               </span>
-              <ChevronRight className="hidden lg:inline w-4 h-4 shrink-0" />
+              <ChevronRight className="w-4 h-4 shrink-0" />
             </button>
           </div>
         </div>
