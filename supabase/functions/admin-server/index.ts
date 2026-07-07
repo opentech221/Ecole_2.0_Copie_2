@@ -151,10 +151,10 @@ registerPost("/invitations", async (c) => {
     p_note: body.note ?? null,
   };
 
-  const { data, error } = await guard.service.rpc("admin_create_invitation", payload);
+  const { data, error } = await guard.caller.rpc("admin_create_invitation", payload);
   if (error) return c.json({ error: error.message }, 400);
 
-  await guard.service.rpc("admin_log_action", {
+  await guard.caller.rpc("admin_log_action", {
     p_action: "admin.edge.invitation.created",
     p_target_user_id: null,
     p_target_type: "invitation",
@@ -177,7 +177,7 @@ registerPost("/invitations/revoke", async (c) => {
   const body = await c.req.json().catch(() => ({}));
   if (!body.invitationId) return c.json({ error: "invitationId is required" }, 400);
 
-  const { error } = await guard.service.rpc("admin_revoke_invitation", {
+  const { error } = await guard.caller.rpc("admin_revoke_invitation", {
     p_invitation_id: body.invitationId,
     p_reason: body.reason ?? null,
   });
@@ -196,7 +196,7 @@ registerPost("/roles/assign", async (c) => {
     return c.json({ error: "userId and role are required" }, 400);
   }
 
-  const { error } = await guard.service.rpc("admin_assign_user_role", {
+  const { error } = await guard.caller.rpc("admin_assign_user_role", {
     p_user_id: body.userId,
     p_new_role: body.role,
     p_reason: body.reason ?? null,
@@ -204,7 +204,7 @@ registerPost("/roles/assign", async (c) => {
 
   if (error) return c.json({ error: error.message }, 400);
 
-  await guard.service.rpc("admin_log_action", {
+  await guard.caller.rpc("admin_log_action", {
     p_action: "admin.edge.role.assigned",
     p_target_user_id: body.userId,
     p_target_type: "user",
