@@ -18,6 +18,7 @@ import {
   MailPlus,
   Ban,
   UserCog,
+  AlertTriangle,
 } from "lucide-react";
 import { supabase } from "../../lib/supabase";
 import { useAuthContext } from "../contexts/AuthContext";
@@ -65,6 +66,10 @@ interface Kpi {
   tone: "neutral" | "good" | "warn";
   Icon: ComponentType<{ className?: string; style?: CSSProperties }>;
 }
+
+type CriticalAction =
+  | { type: "promote-director"; userId: string; role: RowRole }
+  | { type: "revoke-invitation"; invitationId: string };
 
 const TABS: Array<{ id: AdminTab; label: string; Icon: Kpi["Icon"] }> = [
   { id: "overview", label: "Vue globale", Icon: Activity },
@@ -125,6 +130,11 @@ export function AdminScreen() {
   const [auditActionFilter, setAuditActionFilter] = useState("all");
   const [auditActorFilter, setAuditActorFilter] = useState("all");
   const [auditPeriodFilter, setAuditPeriodFilter] = useState<"all" | "24h" | "7d" | "30d">("30d");
+
+  const [criticalAction, setCriticalAction] = useState<CriticalAction | null>(null);
+  const [criticalActionLabel, setCriticalActionLabel] = useState("");
+  const [criticalActionConfirmation, setCriticalActionConfirmation] = useState("");
+  const [criticalActionBusy, setCriticalActionBusy] = useState(false);
 
   async function safeCount(table: string): Promise<number | null> {
     const { count, error } = await supabase
@@ -321,10 +331,14 @@ export function AdminScreen() {
   async function handleRevokeInvitation(invitationId: string, invitationEmail: string) {
     if (!isDirector) return;
 
-    const confirmed = window.confirm(
-      `Confirmer la revocation de l'invitation pour ${invitationEmail} ?\n\nCette action est immediate et sera journalisee.`
-    );
-    if (!confirmed) return;
+    setCriticalAction({ type: "revoke-invitation", invitationId });
+    setCriticalActionLabel(`Revocation de l'invitation pour ${invitationEmail}`);
+    setCriticalActionConfirmation("");
+    return;
+  }
+
+  async function revokeInvitation(invitationId: string) {
+    if (!isDirector) return;
 
     try {
       await edgeRequest<{ ok: boolean }>("/invitations/revoke", {
@@ -342,11 +356,17 @@ export function AdminScreen() {
     if (!isDirector) return;
 
     if (role === "director" && currentRole !== "director") {
-      const confirmed = window.confirm(
-        "Confirmer la promotion en directeur ?\n\nCet utilisateur obtiendra des droits administratifs complets et l'action sera auditee."
-      );
-      if (!confirmed) return;
+      setCriticalAction({ type: "promote-director", userId, role });
+      setCriticalActionLabel("Promotion en directeur avec acces administratif complet");
+      setCriticalActionConfirmation("");
+      return;
     }
+
+    await assignRole(userId, role);
+  }
+
+  async function assignRole(userId: string, role: RowRole) {
+    if (!isDirector) return;
 
     try {
       await edgeRequest<{ ok: boolean }>("/roles/assign", {
@@ -358,6 +378,39 @@ export function AdminScreen() {
     } catch (e) {
       setNotice(e instanceof Error ? e.message : "Erreur attribution role");
     }
+  }
+
+  async function confirmCriticalAction() {
+    if (!criticalAction || criticalActionBusy) return;
+    if (criticalActionConfirmation.trim().toUpperCase() !== "CONFIRMER") {
+      setNotice("Tapez CONFIRMER pour valider cette action sensible.");
+      return;
+    }
+
+    setCriticalActionBusy(true);
+    setNotice(null);
+
+    try {
+      if (criticalAction.type === "revoke-invitation") {
+        await revokeInvitation(criticalAction.invitationId);
+      }
+
+      if (criticalAction.type === "promote-director") {
+        await assignRole(criticalAction.userId, criticalAction.role);
+      }
+    } finally {
+      setCriticalActionBusy(false);
+      setCriticalAction(null);
+      setCriticalActionLabel("");
+      setCriticalActionConfirmation("");
+    }
+  }
+
+  function cancelCriticalAction() {
+    if (criticalActionBusy) return;
+    setCriticalAction(null);
+    setCriticalActionLabel("");
+    setCriticalActionConfirmation("");
   }
 
   async function handleAssignClass(userId: string) {
@@ -735,6 +788,64 @@ export function AdminScreen() {
           </section>
         )}
       </div>
+
+      {criticalAction && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center px-4"
+          style={{ backgroundColor: "color-mix(in srgb, black 45%, transparent)" }}
+        >
+          <div
+            className="w-full max-w-lg rounded-2xl p-5"
+            style={{ backgroundColor: "var(--card)", border: "1px solid var(--border)", boxShadow: "0 20px 60px color-mix(in srgb, var(--foreground) 20%, transparent)" }}
+          >
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full" style={{ backgroundColor: "color-mix(in srgb, #f59e0b 16%, var(--card))", color: "#b45309" }}>
+              <AlertTriangle className="w-4 h-4" />
+              <span style={{ fontSize: "12px", fontWeight: 800 }}>Confirmation obligatoire</span>
+            </div>
+
+            <h3 className="mt-3" style={{ fontSize: "18px", fontWeight: 900, color: "var(--foreground)" }}>
+              Action administrative sensible
+            </h3>
+
+            <p className="mt-2" style={{ color: "var(--muted-foreground)", fontSize: "13px", lineHeight: 1.5 }}>
+              {criticalActionLabel}. Cette operation est irreversible a court terme et sera auditee cote serveur.
+            </p>
+
+            <label className="mt-4 block">
+              <span style={{ fontSize: "11px", fontWeight: 800, color: "var(--muted-foreground)", textTransform: "uppercase" }}>
+                Tapez CONFIRMER pour continuer
+              </span>
+              <input
+                value={criticalActionConfirmation}
+                onChange={(e) => setCriticalActionConfirmation(e.target.value)}
+                className="mt-1 w-full rounded-xl px-3 py-2 outline-none"
+                style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", color: "var(--foreground)", fontSize: "13px" }}
+                placeholder="CONFIRMER"
+                autoFocus
+              />
+            </label>
+
+            <div className="mt-4 flex items-center justify-end gap-2">
+              <button
+                onClick={cancelCriticalAction}
+                disabled={criticalActionBusy}
+                className="rounded-xl px-4 py-2"
+                style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", color: "var(--foreground)", fontWeight: 700, opacity: criticalActionBusy ? 0.7 : 1 }}
+              >
+                Annuler
+              </button>
+              <button
+                onClick={() => void confirmCriticalAction()}
+                disabled={criticalActionBusy}
+                className="rounded-xl px-4 py-2"
+                style={{ backgroundColor: "#b91c1c", color: "#fff", fontWeight: 800, opacity: criticalActionBusy ? 0.7 : 1 }}
+              >
+                {criticalActionBusy ? "Validation..." : "Confirmer l'action"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
