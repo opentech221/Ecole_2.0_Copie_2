@@ -79,7 +79,7 @@ const TABS: Array<{ id: AdminTab; label: string; Icon: Kpi["Icon"] }> = [
   { id: "settings", label: "Parametres SaaS", Icon: SlidersHorizontal },
 ];
 
-const EDGE_BASE = `https://${projectId}.supabase.co/functions/v1/admin-server/admin-server`;
+const EDGE_BASE = `https://${projectId}.supabase.co/functions/v1/admin-server`;
 
 export function AdminScreen() {
   const { profile, loading } = useAuthContext();
