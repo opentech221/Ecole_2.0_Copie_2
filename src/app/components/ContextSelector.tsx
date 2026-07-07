@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate }                 from "react-router";
 import { useProfileGuard }             from "../../hooks/useProfileGuard";
 import { ProfileGuardLoader }          from "./ProfileGuardLoader";
-import { ChevronLeft, ChevronDown, ChevronRight, Info, HelpCircle, Loader2 } from "lucide-react";
+import { ChevronLeft, ChevronDown, ChevronRight, Info, HelpCircle, Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
 
 // ─── APC Data ─────────────────────────────────────────────────────────────────
 
@@ -574,6 +574,7 @@ export function ContextSelector() {
 
   const [merged,      setMerged]      = useState(false);
   const [tooltipOpen, setTooltipOpen] = useState(false);
+  const [showMissingHints, setShowMissingHints] = useState(false);
 
   // ── Derived values ────────────────────────────────────────────────────────
   const competence = COMPETENCES[discipline] ?? "";
@@ -585,7 +586,19 @@ export function ContextSelector() {
   // If no OS is selected, the panier is empty — no orphan chips appear.
   const contenus = selectedOS ? (CONTENUS_BY_OS[selectedOS] ?? []) : [];
 
-  const canProceed = checked.size > 0;
+  const requiresSousDomaine = Boolean(domaine) && !isMaths && sousOpts.length > 0;
+  const missingFields: string[] = [];
+
+  if (!niveau) missingFields.push("Niveau");
+  if (!domaine) missingFields.push("Domaine");
+  if (requiresSousDomaine && !sousDomaine) missingFields.push("Sous-domaine");
+  if (!discipline) missingFields.push("Discipline / Activité");
+  if (!palier) missingFields.push("Palier");
+  if (oaIdx === "") missingFields.push("Objectif d'apprentissage");
+  if (!selectedOS) missingFields.push("Objectif spécifique");
+  if (checked.size === 0) missingFields.push("Au moins un contenu");
+
+  const canProceed = missingFields.length === 0;
 
   // progress
   const stepsA = [niveau, domaine, discipline].filter(Boolean).length;
@@ -635,6 +648,10 @@ export function ContextSelector() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedOS]);
 
+  useEffect(() => {
+    if (canProceed && showMissingHints) setShowMissingHints(false);
+  }, [canProceed, showMissingHints]);
+
   function toggleCheck(c: string) {
     setChecked((prev) => {
       const n = new Set(prev);
@@ -644,7 +661,10 @@ export function ContextSelector() {
   }
 
   function handleNext() {
-    if (!canProceed) return;
+    if (!canProceed) {
+      setShowMissingHints(true);
+      return;
+    }
     navigate("/select-lesson", {
       state: { niveau, domaine, sousDomaine, discipline, palier,
                oa: oaEntry?.oa ?? "", os: selectedOS,
@@ -1225,52 +1245,70 @@ export function ContextSelector() {
             </div>
           )}
 
-          <div
-            className="pointer-events-auto rounded-2xl p-3 lg:p-4"
-            style={{
-              backgroundColor: "color-mix(in srgb, var(--card) 92%, transparent)",
-              border: "1px solid var(--border)",
-              boxShadow: "0 10px 28px color-mix(in srgb, var(--foreground) 10%, transparent)",
-            }}
-          >
-            <div className="mb-2 px-1">
-              <p className="text-[11px] font-semibold uppercase tracking-wide" style={{ color: "var(--muted-foreground)" }}>
-                Suivant
-              </p>
-              <p className="text-[12px] lg:text-[13px] font-semibold" style={{ color: "var(--foreground)" }}>
-                Choisir le canevas de la fiche
-              </p>
-            </div>
+          <div className="relative pointer-events-auto flex justify-end">
+            {showMissingHints && !canProceed && (
+              <div
+                className="absolute bottom-14 right-0 w-[min(320px,calc(100vw-2rem))] rounded-2xl p-3"
+                style={{
+                  backgroundColor: "var(--card)",
+                  border: "1px solid var(--border)",
+                  boxShadow: "0 12px 28px color-mix(in srgb, var(--foreground) 12%, transparent)",
+                }}
+              >
+                <p className="text-[11px] font-bold uppercase tracking-wide mb-1.5" style={{ color: "var(--foreground)" }}>
+                  Champs à renseigner
+                </p>
+                <p className="text-[11px] mb-2" style={{ color: "var(--muted-foreground)" }}>
+                  Complétez ces éléments pour activer le bouton.
+                </p>
+                <ul className="space-y-1.5">
+                  {missingFields.slice(0, 6).map((field) => (
+                    <li key={field} className="flex items-center gap-1.5 text-[12px]" style={{ color: "var(--foreground)" }}>
+                      <AlertCircle className="w-3.5 h-3.5 shrink-0" style={{ color: "#f59e0b" }} />
+                      <span>{field}</span>
+                    </li>
+                  ))}
+                  {missingFields.length > 6 && (
+                    <li className="text-[11px]" style={{ color: "var(--muted-foreground)" }}>
+                      +{missingFields.length - 6} autre(s) champ(s)
+                    </li>
+                  )}
+                </ul>
+              </div>
+            )}
 
             <button
               onClick={handleNext}
-              disabled={!canProceed}
-              className="w-full flex items-center justify-center gap-2.5 py-[14px] rounded-xl font-semibold text-[14px] lg:text-[15px] transition-all"
+              className="h-12 w-12 lg:h-11 lg:w-auto lg:px-4 rounded-full lg:rounded-2xl flex items-center justify-center gap-2 transition-all active:scale-95"
+              aria-label={canProceed ? "Continuer vers le canevas" : "Afficher les champs manquants"}
+              title={canProceed ? "Continuer vers le canevas" : "Voir les champs manquants"}
               style={
                 canProceed
                   ? {
                       backgroundColor: "var(--primary)",
                       color: "var(--primary-foreground)",
-                      boxShadow: "0 6px 24px color-mix(in srgb, var(--primary) 35%, transparent), 0 2px 6px color-mix(in srgb, var(--primary) 20%, transparent)",
-                      opacity: 1,
+                      border: "1px solid color-mix(in srgb, var(--primary) 70%, var(--border))",
+                      boxShadow: "0 8px 24px color-mix(in srgb, var(--primary) 38%, transparent)",
                     }
                   : {
-                      backgroundColor: "var(--muted)",
+                      backgroundColor: "color-mix(in srgb, var(--card) 78%, var(--muted) 22%)",
                       color: "var(--muted-foreground)",
-                      opacity: 0.72,
-                      cursor: "not-allowed",
+                      border: "1px solid var(--border)",
+                      boxShadow: "0 8px 22px color-mix(in srgb, var(--foreground) 10%, transparent)",
                     }
               }
             >
-              <span>Continuer vers le canevas</span>
-              <ChevronRight className="w-4 h-4 shrink-0" />
+              {canProceed ? (
+                <CheckCircle2 className="w-4 h-4 shrink-0" />
+              ) : (
+                <AlertCircle className="w-4 h-4 shrink-0" style={{ color: "#f59e0b" }} />
+              )}
+              <span className="hidden lg:inline text-[13px] font-semibold">
+                {canProceed ? "Canevas" : `${missingFields.length} restant(s)`}
+              </span>
+              <ChevronRight className="hidden lg:inline w-4 h-4 shrink-0" />
             </button>
           </div>
-          {!canProceed && discipline && contenus.length > 0 && (
-            <p className="text-center text-[11px] mt-2 pointer-events-none" style={{ color: "var(--muted-foreground)" }}>
-              Sélectionnez au moins un contenu dans la section C
-            </p>
-          )}
         </div>
 
       </div>
