@@ -160,6 +160,10 @@ Ce preflight exécute:
 3. verification des versions appliquees
 4. build frontend
 
+## Documentation Interne
+
+- Guide exploitation admin: [guidelines/admin-exploitation-runbook.md](guidelines/admin-exploitation-runbook.md)
+
 ---
 
 ## 🤝 Contribuer
