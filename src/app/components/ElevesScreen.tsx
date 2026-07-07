@@ -229,6 +229,7 @@ interface BulletinBodyProps {
   student:        Student;
   grades:         Record<string, GradeSet>;
   trimestre:      1|2|3;
+  activeClass:    string;
   moyT3:          number;
   absNJ:          number;
   decision:       { label: string; color: string; bg: string };
@@ -241,7 +242,7 @@ interface BulletinBodyProps {
 }
 
 function BulletinBody({
-  student, grades, trimestre, moyT3, absNJ, decision,
+  student, grades, trimestre, activeClass, moyT3, absNJ, decision,
   onGradeChange, gradeSchema, rank: rankProp,
   disciplineConfig, onToggle,
 }: BulletinBodyProps) {
@@ -694,6 +695,7 @@ function buildOneBulletinHtml(
   student:     Student,
   grades:      Record<string, GradeSet>,
   trimestre:   1|2|3,
+  classLabel:  string,
   schema:      Record<string, number>,
   rank:        number,
   absNJ:       number,
@@ -748,7 +750,7 @@ function buildOneBulletinHtml(
   const idRows = [
     ["Élève",           `${student.nom} ${student.prenom}`],
     ["Matricule",       student.matricule],
-    ["Classe",          activeClass],
+    ["Classe",          classLabel],
     ["Trimestre",       `${trimLabel} Trimestre`],
     ["IEF",             "Inspection de Kolda"],
     ["École",           "Ilyaou Mamadou SEYDI"],
@@ -796,6 +798,7 @@ function buildOneBulletinHtml(
 function buildBatchPrintHtml(
   students:      Student[],
   trimestre:     1|2|3,
+  classLabel:    string,
   gradesMap:     Record<string, Record<string, GradeSet>>,
   gradeSchema:   Record<string, number>,
   computedRanks: Record<string, number>,
@@ -804,7 +807,7 @@ function buildBatchPrintHtml(
   const pages = students.map(s => {
     const g    = gradesMap[s.id] ?? getStudentGrades(s.id);
     const nj3  = totalAbsencesNJ(getAttendance(s.id, 20));
-    return buildOneBulletinHtml(s, g, trimestre, gradeSchema, computedRanks[s.id] ?? 0, nj3);
+    return buildOneBulletinHtml(s, g, trimestre, classLabel, gradeSchema, computedRanks[s.id] ?? 0, nj3);
   });
   return [
     "<!DOCTYPE html><html lang='fr'>",
@@ -835,6 +838,7 @@ function BatchPreviewModal({
   open, trimestre, onClose, sortKey, onSortChange, students,
   gradesMap, gradeSchema, computedRanks,
 }: BatchPreviewModalProps) {
+  const { activeClass } = useAppContext();
   const [isPrinting, setIsPrinting] = useState(false);
 
   // ── PRINT PORTAL ──────────────────────────────────────────────────────────
@@ -879,7 +883,7 @@ function BatchPreviewModal({
 
     // ── 2. Générer le document HTML complet (pure string, zero DOM React) ───
     const html = buildBatchPrintHtml(
-      validStudents, trimestre, gradesMap, gradeSchema, computedRanks
+      validStudents, trimestre, activeClass, gradesMap, gradeSchema, computedRanks
     );
 
     // ── 3. Créer le Blob et ouvrir dans un nouvel onglet ────────────────────
@@ -1077,6 +1081,7 @@ function BatchPreviewModal({
                 fontFamily:      "Arial, Helvetica, sans-serif",
               }}>
                 <BulletinBody student={s} grades={g} trimestre={trimestre}
+                              activeClass={activeClass}
                               moyT3={m3} absNJ={nj3} decision={dec}
                               gradeSchema={gradeSchema} rank={computedRanks[s.id]} />
               </div>
@@ -2395,6 +2400,7 @@ export function ElevesScreen() {
                        border:"1px solid var(--border)" }}>
                 <BulletinBody
                   student={student} grades={grades} trimestre={trimestre}
+                  activeClass={activeClass}
                   moyT3={moyT3} absNJ={absNJ} decision={decision}
                   onGradeChange={(disc, t, v) => handleGradeChange(student.id, disc, t, v)}
                   gradeSchema={gradeSchema}
@@ -2428,6 +2434,7 @@ export function ElevesScreen() {
                     return (
                       <div key={s.id} className="bulletin-print-item">
                         <BulletinBody student={s} grades={g} trimestre={trimestre}
+                                      activeClass={activeClass}
                                       moyT3={m3} absNJ={nj3} decision={dec} />
                       </div>
                     );
@@ -2436,6 +2443,7 @@ export function ElevesScreen() {
                   /* Single student */
                   <div className="bulletin-print-item">
                     <BulletinBody student={student} grades={grades} trimestre={trimestre}
+                                  activeClass={activeClass}
                                   moyT3={moyT3} absNJ={absNJ} decision={decision} />
                   </div>
                 )}

@@ -7,16 +7,42 @@ const app = new Hono();
 
 app.use("*", logger(console.log));
 
-const rawOrigins = Deno.env.get("ALLOWED_ORIGINS") ?? "http://localhost:5173";
-const ALLOWED_ORIGINS = rawOrigins
+const defaultOrigins = [
+  "http://localhost:5173",
+  "https://ecole-2-0-copie-2-opentechsn.vercel.app",
+];
+
+const rawOrigins = Deno.env.get("ALLOWED_ORIGINS") ?? defaultOrigins.join(",");
+const ALLOWED_ORIGIN_PATTERNS = rawOrigins
   .split(",")
   .map((o) => o.trim())
   .filter(Boolean);
 
+function isOriginAllowed(origin: string): boolean {
+  if (!origin) return true;
+
+  return ALLOWED_ORIGIN_PATTERNS.some((pattern) => {
+    if (pattern === "*") return true;
+    if (pattern === origin) return true;
+
+    if (pattern.startsWith("*.")) {
+      try {
+        const hostname = new URL(origin).hostname;
+        const suffix = pattern.slice(2);
+        return hostname === suffix || hostname.endsWith(`.${suffix}`);
+      } catch {
+        return false;
+      }
+    }
+
+    return false;
+  });
+}
+
 app.use(
   "/*",
   cors({
-    origin: (origin) => (ALLOWED_ORIGINS.includes(origin) ? origin : false),
+    origin: (origin) => (isOriginAllowed(origin) ? origin : false),
     allowHeaders: ["Content-Type", "Authorization"],
     allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     exposeHeaders: ["Content-Length"],
