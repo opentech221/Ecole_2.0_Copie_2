@@ -1,6 +1,7 @@
 import { Hono } from "npm:hono";
 import { cors } from "npm:hono/cors";
 import { logger } from "npm:hono/logger";
+import webpush from "npm:web-push@3.6.7";
 import { z } from "npm:zod";
 import { createClient } from "jsr:@supabase/supabase-js@2.49.8";
 
@@ -46,6 +47,15 @@ app.use(
 const supabaseUrl = Deno.env.get("SUPABASE_URL") ?? "";
 const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY") ?? "";
 const supabaseServiceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
+const vapidPublicKey = Deno.env.get("VAPID_PUBLIC_KEY") ?? Deno.env.get("VITE_VAPID_PUBLIC_KEY") ?? "";
+const vapidPrivateKey = Deno.env.get("VAPID_PRIVATE_KEY") ?? "";
+const vapidSubject = Deno.env.get("VAPID_SUBJECT") ?? "mailto:admin@ecole20.app";
+
+const pushConfigured = Boolean(vapidPublicKey && vapidPrivateKey && vapidSubject);
+
+if (pushConfigured) {
+  webpush.setVapidDetails(vapidSubject, vapidPublicKey, vapidPrivateKey);
+}
 
 function getClients(authHeader: string | undefined) {
   const caller = createClient(supabaseUrl, supabaseAnonKey, {
@@ -95,6 +105,20 @@ const createNotificationSchema = z.object({
   data: z.record(z.unknown()).default({}),
 });
 
+const pushSubscriptionSchema = z.object({
+  endpoint: z.string().trim().url(),
+  expirationTime: z.number().nullable().optional(),
+  keys: z.object({
+    p256dh: z.string().trim().min(1),
+    auth: z.string().trim().min(1),
+  }),
+  deviceLabel: z.string().trim().max(120).nullable().optional(),
+});
+
+const unsubscribePushSchema = z.object({
+  endpoint: z.string().trim().url(),
+});
+
 function chooseRole(roles: string[], profileRole: string | null | undefined): AccessRole | null {
   const priority: AccessRole[] = ["owner", "super_admin", "admin_finance", "support", "director"];
   for (const role of priority) {
@@ -106,6 +130,17 @@ function chooseRole(roles: string[], profileRole: string | null | undefined): Ac
 
 function canWrite(role: AccessRole) {
   return role !== "support";
+}
+
+function resolveTenantRole(guard: Extract<AccessGuard, { ok: true }>, tenantId: string, needsWrite = false) {
+  const role = guard.roleByTenant[tenantId];
+  if (!tenantId || !role) {
+    return { ok: false as const, status: 403, message: "Accès tenant refusé" };
+  }
+  if (needsWrite && !canWrite(role)) {
+    return { ok: false as const, status: 403, message: "Droits insuffisants" };
+  }
+  return { ok: true as const, role };
 }
 
 function registerGet(path: string, handler: Parameters<typeof app.get>[1]) {
@@ -200,6 +235,120 @@ async function dispatchNotification(
   return data as string;
 }
 
+async function getPushStatusPayload(service: ReturnType<typeof createClient>, tenantId: string, userId: string) {
+  const [{ data: subscription }, { data: preference }] = await Promise.all([
+    service
+      .from("notification_push_subscriptions")
+      .select("id")
+      .eq("tenant_id", tenantId)
+      .eq("user_id", userId)
+      .eq("enabled", true)
+      .limit(1)
+      .maybeSingle(),
+    service
+      .from("notification_preferences")
+      .select("push_enabled")
+      .eq("tenant_id", tenantId)
+      .eq("user_id", userId)
+      .maybeSingle(),
+  ]);
+
+  return {
+    pushConfigured,
+    vapidPublicKey: pushConfigured ? vapidPublicKey : null,
+    subscriptionEnabled: Boolean(preference?.push_enabled && subscription),
+    hasSubscription: Boolean(subscription),
+    syncSupported: true,
+  };
+}
+
+async function sendPushToUserSubscriptions(
+  service: ReturnType<typeof createClient>,
+  payload: {
+    tenantId: string;
+    userId: string;
+    notificationId: string;
+    title: string;
+    message: string;
+    actionUrl: string | null;
+    priority: string;
+    type: string;
+  },
+) {
+  if (!pushConfigured) return;
+
+  const [{ data: preference }, { data: subscriptions }] = await Promise.all([
+    service
+      .from("notification_preferences")
+      .select("push_enabled")
+      .eq("tenant_id", payload.tenantId)
+      .eq("user_id", payload.userId)
+      .maybeSingle(),
+    service
+      .from("notification_push_subscriptions")
+      .select("id, endpoint, p256dh, auth, content_encoding")
+      .eq("tenant_id", payload.tenantId)
+      .eq("user_id", payload.userId)
+      .eq("enabled", true),
+  ]);
+
+  if (!preference?.push_enabled || !subscriptions?.length) return;
+
+  await Promise.all(subscriptions.map(async (subscription) => {
+    try {
+      await webpush.sendNotification(
+        {
+          endpoint: subscription.endpoint,
+          expirationTime: null,
+          keys: {
+            p256dh: subscription.p256dh,
+            auth: subscription.auth,
+          },
+        },
+        JSON.stringify({
+          title: payload.title,
+          body: payload.message,
+          tag: payload.notificationId,
+          data: {
+            notificationId: payload.notificationId,
+            tenantId: payload.tenantId,
+            type: payload.type,
+            actionUrl: payload.actionUrl ?? "/notifications",
+          },
+          icon: "/icons/icon-192.png",
+          badge: "/icons/icon-192.png",
+          requireInteraction: payload.priority === "critique",
+        }),
+      );
+
+      await service.from("notification_delivery_logs").insert({
+        notification_id: payload.notificationId,
+        tenant_id: payload.tenantId,
+        channel: "in_app",
+        status: "sent",
+        provider: "webpush",
+        provider_message_id: subscription.id,
+        sent_at: new Date().toISOString(),
+      });
+    } catch (error) {
+      const statusCode = typeof error === "object" && error && "statusCode" in error ? Number((error as { statusCode?: number }).statusCode) : null;
+      if (statusCode === 404 || statusCode === 410) {
+        await service.from("notification_push_subscriptions").update({ enabled: false }).eq("id", subscription.id);
+      }
+
+      await service.from("notification_delivery_logs").insert({
+        notification_id: payload.notificationId,
+        tenant_id: payload.tenantId,
+        channel: "in_app",
+        status: "failed",
+        provider: "webpush",
+        provider_message_id: subscription.id,
+        error_message: error instanceof Error ? error.message : "push_failed",
+      });
+    }
+  }));
+}
+
 registerGet("/api/tenants", async (c) => {
   const guard = await getAccessGuard(c);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
@@ -214,13 +363,24 @@ registerGet("/api/tenants", async (c) => {
   return c.json({ data: data ?? [] });
 });
 
+registerGet("/api/push/status", async (c) => {
+  const guard = await getAccessGuard(c);
+  if (!guard.ok) return c.json({ error: guard.message }, guard.status);
+
+  const tenantId = c.req.query("tenantId") ?? "";
+  const tenantAccess = resolveTenantRole(guard, tenantId, false);
+  if (!tenantAccess.ok) return c.json({ error: tenantAccess.message }, tenantAccess.status);
+
+  return c.json(await getPushStatusPayload(guard.service, tenantId, guard.userId));
+});
+
 registerGet("/api/notifications", async (c) => {
   const guard = await getAccessGuard(c);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
 
   const tenantId = c.req.query("tenantId") ?? "";
-  const role = guard.roleByTenant[tenantId];
-  if (!tenantId || !role) return c.json({ error: "Accès tenant refusé" }, 403);
+  const tenantAccess = resolveTenantRole(guard, tenantId, false);
+  if (!tenantAccess.ok) return c.json({ error: tenantAccess.message }, tenantAccess.status);
 
   const parsed = listFiltersSchema.safeParse({
     page: c.req.query("page"),
@@ -289,7 +449,8 @@ registerPatch("/api/notifications/:id/read", async (c) => {
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
 
   const tenantId = c.req.query("tenantId") ?? "";
-  if (!guard.roleByTenant[tenantId]) return c.json({ error: "Accès tenant refusé" }, 403);
+  const tenantAccess = resolveTenantRole(guard, tenantId, false);
+  if (!tenantAccess.ok) return c.json({ error: tenantAccess.message }, tenantAccess.status);
 
   const notificationId = c.req.param("id");
 
@@ -310,7 +471,8 @@ registerPatch("/api/notifications/read-all", async (c) => {
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
 
   const tenantId = c.req.query("tenantId") ?? "";
-  if (!guard.roleByTenant[tenantId]) return c.json({ error: "Accès tenant refusé" }, 403);
+  const tenantAccess = resolveTenantRole(guard, tenantId, false);
+  if (!tenantAccess.ok) return c.json({ error: tenantAccess.message }, tenantAccess.status);
 
   const { data, error } = await guard.service
     .from("notifications")
@@ -330,7 +492,8 @@ registerPatch("/api/notifications/:id/archive", async (c) => {
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
 
   const tenantId = c.req.query("tenantId") ?? "";
-  if (!guard.roleByTenant[tenantId]) return c.json({ error: "Accès tenant refusé" }, 403);
+  const tenantAccess = resolveTenantRole(guard, tenantId, false);
+  if (!tenantAccess.ok) return c.json({ error: tenantAccess.message }, tenantAccess.status);
 
   const notificationId = c.req.param("id");
 
@@ -355,10 +518,8 @@ registerPost("/api/notifications", async (c) => {
   if (!parsed.success) return c.json({ error: "Payload notification invalide" }, 400);
 
   const payload = parsed.data;
-  const role = guard.roleByTenant[payload.tenantId];
-  if (!role || !canWrite(role)) {
-    return c.json({ error: "Droits insuffisants pour créer une notification" }, 403);
-  }
+  const tenantAccess = resolveTenantRole(guard, payload.tenantId, true);
+  if (!tenantAccess.ok) return c.json({ error: "Droits insuffisants pour créer une notification" }, tenantAccess.status);
 
   try {
     const id = await dispatchNotification(guard.service, {
@@ -374,11 +535,112 @@ registerPost("/api/notifications", async (c) => {
       createdBy: guard.userId,
     });
 
+    await sendPushToUserSubscriptions(guard.service, {
+      tenantId: payload.tenantId,
+      userId: payload.userId,
+      notificationId: id,
+      title: payload.title,
+      message: payload.message,
+      actionUrl: payload.actionUrl ?? null,
+      priority: payload.priority,
+      type: payload.type,
+    });
+
     return c.json({ ok: true, id }, 201);
   } catch (error) {
     const message = error instanceof Error ? error.message : "Erreur création notification";
     return c.json({ error: message }, 400);
   }
+});
+
+registerPost("/api/push/subscribe", async (c) => {
+  const guard = await getAccessGuard(c);
+  if (!guard.ok) return c.json({ error: guard.message }, guard.status);
+
+  const tenantId = c.req.query("tenantId") ?? "";
+  const tenantAccess = resolveTenantRole(guard, tenantId, false);
+  if (!tenantAccess.ok) return c.json({ error: tenantAccess.message }, tenantAccess.status);
+
+  const body = await c.req.json().catch(() => ({}));
+  const parsed = pushSubscriptionSchema.safeParse(body);
+  if (!parsed.success) return c.json({ error: "Abonnement push invalide" }, 400);
+
+  const payload = parsed.data;
+  const { error } = await guard.service.from("notification_push_subscriptions").upsert({
+    tenant_id: tenantId,
+    user_id: guard.userId,
+    endpoint: payload.endpoint,
+    p256dh: payload.keys.p256dh,
+    auth: payload.keys.auth,
+    content_encoding: payload.expirationTime ? String(payload.expirationTime) : null,
+    user_agent: c.req.header("user-agent") ?? null,
+    device_label: payload.deviceLabel ?? null,
+    enabled: true,
+    last_seen_at: new Date().toISOString(),
+  }, { onConflict: "endpoint" });
+
+  if (error) return c.json({ error: error.message }, 400);
+
+  await guard.service.from("notification_preferences").upsert({
+    tenant_id: tenantId,
+    user_id: guard.userId,
+    push_enabled: true,
+  }, { onConflict: "tenant_id,user_id" });
+
+  return c.json({ ok: true });
+});
+
+registerPost("/api/push/unsubscribe", async (c) => {
+  const guard = await getAccessGuard(c);
+  if (!guard.ok) return c.json({ error: guard.message }, guard.status);
+
+  const tenantId = c.req.query("tenantId") ?? "";
+  const tenantAccess = resolveTenantRole(guard, tenantId, false);
+  if (!tenantAccess.ok) return c.json({ error: tenantAccess.message }, tenantAccess.status);
+
+  const body = await c.req.json().catch(() => ({}));
+  const parsed = unsubscribePushSchema.safeParse(body);
+  if (!parsed.success) return c.json({ error: "Endpoint push invalide" }, 400);
+
+  const { error } = await guard.service
+    .from("notification_push_subscriptions")
+    .update({ enabled: false, last_seen_at: new Date().toISOString() })
+    .eq("tenant_id", tenantId)
+    .eq("user_id", guard.userId)
+    .eq("endpoint", parsed.data.endpoint);
+
+  if (error) return c.json({ error: error.message }, 400);
+
+  await guard.service.from("notification_preferences").upsert({
+    tenant_id: tenantId,
+    user_id: guard.userId,
+    push_enabled: false,
+  }, { onConflict: "tenant_id,user_id" });
+
+  return c.json({ ok: true });
+});
+
+registerPost("/api/push/test", async (c) => {
+  const guard = await getAccessGuard(c);
+  if (!guard.ok) return c.json({ error: guard.message }, guard.status);
+
+  const tenantId = c.req.query("tenantId") ?? "";
+  const tenantAccess = resolveTenantRole(guard, tenantId, false);
+  if (!tenantAccess.ok) return c.json({ error: tenantAccess.message }, tenantAccess.status);
+
+  const notificationId = crypto.randomUUID();
+  await sendPushToUserSubscriptions(guard.service, {
+    tenantId,
+    userId: guard.userId,
+    notificationId,
+    title: "Test push Ecole 2.0",
+    message: "Votre appareil reçoit correctement les notifications push.",
+    actionUrl: "/notifications",
+    priority: "normale",
+    type: "systeme",
+  });
+
+  return c.json({ ok: true });
 });
 
 Deno.serve(app.fetch);

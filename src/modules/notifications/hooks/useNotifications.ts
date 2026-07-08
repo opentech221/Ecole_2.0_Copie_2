@@ -52,8 +52,8 @@ export function useNotifications() {
 
   const markReadMutation = useMutation({
     mutationFn: (notificationId: string) => notificationsClient.markAsRead(resolvedTenantId, notificationId),
-    onSuccess: () => {
-      toast.success("Notification marquée comme lue.");
+    onSuccess: (result) => {
+      toast.success(result.queued ? "Action enregistrée hors ligne, synchronisation en attente." : "Notification marquée comme lue.");
       void refresh();
     },
     onError: (error) => {
@@ -63,8 +63,8 @@ export function useNotifications() {
 
   const markAllMutation = useMutation({
     mutationFn: () => notificationsClient.markAllAsRead(resolvedTenantId),
-    onSuccess: () => {
-      toast.success("Toutes les notifications sont marquées comme lues.");
+    onSuccess: (result) => {
+      toast.success(result.queued ? "Actions enregistrées hors ligne, synchronisation en attente." : "Toutes les notifications sont marquées comme lues.");
       void refresh();
     },
     onError: (error) => {
@@ -74,8 +74,8 @@ export function useNotifications() {
 
   const archiveMutation = useMutation({
     mutationFn: (notificationId: string) => notificationsClient.archive(resolvedTenantId, notificationId),
-    onSuccess: () => {
-      toast.success("Notification archivée.");
+    onSuccess: (result) => {
+      toast.success(result.queued ? "Archivage mis en file hors ligne." : "Notification archivée.");
       void refresh();
     },
     onError: (error) => {

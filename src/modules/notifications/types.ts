@@ -75,3 +75,20 @@ export interface NotificationCreateInput {
   actionUrl?: string | null;
   data?: Record<string, unknown>;
 }
+
+export interface PushSubscriptionPayload {
+  endpoint: string;
+  expirationTime?: number | null;
+  keys: {
+    p256dh: string;
+    auth: string;
+  };
+}
+
+export interface PushStatusResult {
+  pushConfigured: boolean;
+  vapidPublicKey: string | null;
+  subscriptionEnabled: boolean;
+  hasSubscription: boolean;
+  syncSupported: boolean;
+}

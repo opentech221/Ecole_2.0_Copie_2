@@ -1,7 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import { projectId } from "../../../../utils/supabase/info";
-import { createNotificationSchema, notificationListFilterSchema } from "../schemas";
-import type { NotificationCreateInput, NotificationListResult, NotificationTenant, NotificationUnreadCountResult } from "../types";
+import { createNotificationSchema, notificationListFilterSchema, pushSubscriptionSchema, unsubscribePushSchema } from "../schemas";
+import type { NotificationCreateInput, NotificationListResult, NotificationTenant, NotificationUnreadCountResult, PushStatusResult } from "../types";
 
 const EDGE_BASE = `https://${projectId}.supabase.co/functions/v1/notifications-server`;
 
@@ -60,17 +60,17 @@ export const notificationsClient = {
 
   async markAsRead(tenantId: string, notificationId: string) {
     const url = withTenant(`/api/notifications/${notificationId}/read`, tenantId);
-    return edgeRequest<{ ok: true }>(url, { method: "PATCH" });
+    return edgeRequest<{ ok: true; queued?: boolean; offline?: boolean }>(url, { method: "PATCH" });
   },
 
   async markAllAsRead(tenantId: string) {
     const url = withTenant("/api/notifications/read-all", tenantId);
-    return edgeRequest<{ ok: true; updated: number }>(url, { method: "PATCH" });
+    return edgeRequest<{ ok: true; updated?: number; queued?: boolean; offline?: boolean }>(url, { method: "PATCH" });
   },
 
   async archive(tenantId: string, notificationId: string) {
     const url = withTenant(`/api/notifications/${notificationId}/archive`, tenantId);
-    return edgeRequest<{ ok: true }>(url, { method: "PATCH" });
+    return edgeRequest<{ ok: true; queued?: boolean; offline?: boolean }>(url, { method: "PATCH" });
   },
 
   async create(input: NotificationCreateInput) {
@@ -80,5 +80,33 @@ export const notificationsClient = {
       method: "POST",
       body: JSON.stringify(payload),
     });
+  },
+
+  async getPushStatus(tenantId: string) {
+    const url = withTenant("/api/push/status", tenantId);
+    return edgeRequest<PushStatusResult>(url);
+  },
+
+  async subscribePush(tenantId: string, subscription: unknown) {
+    const payload = pushSubscriptionSchema.parse(subscription);
+    const url = withTenant("/api/push/subscribe", tenantId);
+    return edgeRequest<{ ok: true }>(url, {
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
+  },
+
+  async unsubscribePush(tenantId: string, payload: { endpoint: string }) {
+    const body = unsubscribePushSchema.parse(payload);
+    const url = withTenant("/api/push/unsubscribe", tenantId);
+    return edgeRequest<{ ok: true }>(url, {
+      method: "POST",
+      body: JSON.stringify(body),
+    });
+  },
+
+  async sendTestPush(tenantId: string) {
+    const url = withTenant("/api/push/test", tenantId);
+    return edgeRequest<{ ok: true }>(url, { method: "POST" });
   },
 };

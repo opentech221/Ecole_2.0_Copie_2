@@ -47,4 +47,25 @@ describe("notificationsClient", () => {
     expect(result.ok).toBe(true);
     expect(String(fetchMock.mock.calls[0]?.[0])).toContain("read-all");
   });
+
+  it("récupère le statut push", async () => {
+    const fetchMock = vi.mocked(fetch);
+    fetchMock.mockResolvedValue(
+      new Response(JSON.stringify({
+        pushConfigured: true,
+        vapidPublicKey: "public-key",
+        subscriptionEnabled: true,
+        hasSubscription: true,
+        syncSupported: true,
+      }), {
+        headers: { "content-type": "application/json" },
+      }),
+    );
+
+    const { notificationsClient } = await import("@/modules/notifications/api/notificationsClient");
+    const result = await notificationsClient.getPushStatus("11111111-1111-4111-8111-111111111111");
+
+    expect(result.pushConfigured).toBe(true);
+    expect(String(fetchMock.mock.calls[0]?.[0])).toContain("/api/push/status");
+  });
 });

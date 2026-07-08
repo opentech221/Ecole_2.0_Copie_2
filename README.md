@@ -171,6 +171,8 @@ L'application est configurée en Progressive Web App avec:
 - service worker: `public/sw.js`
 - fallback offline: `public/offline.html`
 - icones: `public/icons/*`
+- push web: abonnement navigateur + réception via service worker
+- background sync: synchronisation différée des actions notifications hors ligne
 
 ### Lancer en local
 
@@ -191,6 +193,15 @@ npx vite preview
 ```bash
 npm run build
 ```
+
+### Variables d'environnement PWA avancée
+
+- `VITE_VAPID_PUBLIC_KEY`: clé publique VAPID exposée au frontend pour l'abonnement push
+- `VAPID_PUBLIC_KEY`: clé publique lue côté fonction Edge
+- `VAPID_PRIVATE_KEY`: clé privée VAPID pour signer les push
+- `VAPID_SUBJECT`: contact VAPID, ex. `mailto:admin@ecole20.app`
+
+Sans ces variables, la PWA reste installable/offline, mais le push web reste désactivé.
 
 ### Tester l'installation mobile
 
@@ -223,6 +234,8 @@ Vercel/Supabase couvrent ce prerequis par defaut.
 4. Vider cache/service worker puis recharger hard (`Ctrl+Shift+R`).
 5. Tester offline avec DevTools Network `Offline` et navigation vers une route SPA.
 6. Verifier qu'aucune requete API sensible authentifiee n'est servie stale sans reseau.
+7. Verifier `PushManager` et les permissions navigateur avant de tester les notifications push.
+8. Sur Vercel, verifier que l'URL finale publique n'est pas protegee par SSO si vous voulez tester l'installabilite sur mobile externe.
 
 
 ---

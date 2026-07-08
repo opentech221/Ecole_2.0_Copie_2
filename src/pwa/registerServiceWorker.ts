@@ -8,4 +8,9 @@ export function registerServiceWorker() {
         console.warn("Échec enregistrement service worker", error);
       });
   });
+
+  window.addEventListener("online", async () => {
+    const registration = await navigator.serviceWorker.ready.catch(() => null);
+    registration?.active?.postMessage({ type: "REPLAY_NOTIFICATION_QUEUE" });
+  });
 }

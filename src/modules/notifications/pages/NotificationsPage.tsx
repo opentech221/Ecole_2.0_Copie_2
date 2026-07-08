@@ -5,6 +5,8 @@ import { useNotifications } from "../hooks/useNotifications";
 import { NotificationItem } from "../components/NotificationItem";
 import { NotificationsFilters } from "../components/NotificationsFilters";
 import { NotificationsSkeleton } from "../components/NotificationsSkeleton";
+import { PushNotificationsCard } from "../components/PushNotificationsCard";
+import { usePushNotifications } from "../hooks/usePushNotifications";
 
 export function NotificationsPage() {
   const {
@@ -21,6 +23,7 @@ export function NotificationsPage() {
     refresh,
     isBusy,
   } = useNotifications();
+  const push = usePushNotifications(tenantId);
 
   const notifications = listQuery.data?.rows ?? [];
 
@@ -36,6 +39,17 @@ export function NotificationsPage() {
           unreadCount={unreadCount}
           onMarkAllRead={() => markAllMutation.mutate()}
           busy={isBusy}
+        />
+
+        <PushNotificationsCard
+          status={push.status}
+          loading={push.statusQuery.isLoading}
+          enabling={push.subscribeMutation.isPending}
+          disabling={push.unsubscribeMutation.isPending}
+          testing={push.testPushMutation.isPending}
+          onEnable={() => push.subscribeMutation.mutate()}
+          onDisable={() => push.unsubscribeMutation.mutate()}
+          onTest={() => push.testPushMutation.mutate()}
         />
 
         {listQuery.isLoading ? (

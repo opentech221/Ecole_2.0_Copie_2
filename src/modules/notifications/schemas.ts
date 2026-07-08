@@ -23,5 +23,20 @@ export const notificationUpdateStatusSchema = z.object({
   status: z.enum(notificationStatuses),
 });
 
+export const pushSubscriptionSchema = z.object({
+  endpoint: z.string().trim().url(),
+  expirationTime: z.number().nullable().optional(),
+  keys: z.object({
+    p256dh: z.string().trim().min(1),
+    auth: z.string().trim().min(1),
+  }),
+  deviceLabel: z.string().trim().max(120).nullable().optional(),
+});
+
+export const unsubscribePushSchema = z.object({
+  endpoint: z.string().trim().url(),
+});
+
 export type NotificationListFilterInput = z.input<typeof notificationListFilterSchema>;
 export type CreateNotificationInput = z.infer<typeof createNotificationSchema>;
+export type PushSubscriptionInput = z.infer<typeof pushSubscriptionSchema>;
