@@ -6,6 +6,7 @@ import { ThemeProvider, useTheme }       from "./contexts/ThemeContext";
 import { AuthProvider }        from "./contexts/AuthContext";
 import { AppProvider }         from "./contexts/AppContext";
 import { queryClient }         from "../lib/queryClient";
+import { PwaInstallPrompt }    from "./components/PwaInstallPrompt";
 
 function AppShell() {
   const { theme } = useTheme();
@@ -13,6 +14,7 @@ function AppShell() {
   return (
     <>
       <RouterProvider router={router} />
+      <PwaInstallPrompt />
       <Toaster
         position="bottom-center"
         richColors

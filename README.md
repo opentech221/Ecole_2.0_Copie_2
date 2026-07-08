@@ -164,6 +164,67 @@ Ce preflight exécute:
 
 - Guide exploitation admin: [guidelines/admin-exploitation-runbook.md](guidelines/admin-exploitation-runbook.md)
 
+## PWA (Installable Android/iOS)
+
+L'application est configurée en Progressive Web App avec:
+- manifest: `public/manifest.webmanifest`
+- service worker: `public/sw.js`
+- fallback offline: `public/offline.html`
+- icones: `public/icons/*`
+
+### Lancer en local
+
+```bash
+npm install
+npm run dev
+```
+
+Pour tester le service worker localement, préférer un build preview:
+
+```bash
+npm run build
+npx vite preview
+```
+
+### Build production
+
+```bash
+npm run build
+```
+
+### Tester l'installation mobile
+
+Android (Chrome):
+1. Ouvrir l'app en HTTPS.
+2. Attendre le bouton `Installer l'app`.
+3. Installer puis relancer depuis l'ecran d'accueil.
+
+iOS (Safari):
+1. Ouvrir l'app en HTTPS.
+2. Partager.
+3. Choisir `Sur l'ecran d'accueil`.
+
+### HTTPS requis
+
+Le mode installable PWA et le service worker exigent HTTPS en production.
+Vercel/Supabase couvrent ce prerequis par defaut.
+
+### Limites iOS
+
+- Pas d'evenement `beforeinstallprompt` standard.
+- Le prompt d'installation est remplace par une indication utilisateur.
+- Fonctionnalites avancees (push/background sync) plus limitees que sur Android.
+
+### Checklist debug PWA
+
+1. Verifier `Application > Manifest` dans DevTools.
+2. Verifier `Application > Service Workers` (scope `/`, statut actif).
+3. Confirmer que `sw.js` et `manifest.webmanifest` renvoient HTTP 200.
+4. Vider cache/service worker puis recharger hard (`Ctrl+Shift+R`).
+5. Tester offline avec DevTools Network `Offline` et navigation vers une route SPA.
+6. Verifier qu'aucune requete API sensible authentifiee n'est servie stale sans reseau.
+
+
 ---
 
 ## 🤝 Contribuer
