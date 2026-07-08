@@ -10,6 +10,10 @@ app.use("*", logger(console.log));
 
 const defaultOrigins = [
   "http://localhost:5173",
+  "http://localhost:4173",
+  "http://localhost:3000",
+  "*.github.dev",
+  "*.vercel.app",
   "https://ecole-2-0-copie-2-opentechsn.vercel.app",
 ];
 
@@ -19,17 +23,30 @@ const allowedOriginPatterns = rawOrigins.split(",").map((o) => o.trim()).filter(
 function isOriginAllowed(origin: string): boolean {
   if (!origin) return true;
 
+  let parsedOrigin: URL;
+  try {
+    parsedOrigin = new URL(origin);
+  } catch {
+    return false;
+  }
+
   return allowedOriginPatterns.some((pattern) => {
     if (pattern === "*" || pattern === origin) return true;
-    if (!pattern.startsWith("*.")) return false;
+    const trimmed = pattern.trim();
 
-    try {
-      const hostname = new URL(origin).hostname;
-      const suffix = pattern.slice(2);
-      return hostname === suffix || hostname.endsWith(`.${suffix}`);
-    } catch {
-      return false;
+    const schemeWildcardMatch = trimmed.match(/^(https?):\/\/\*\.(.+)$/i);
+    if (schemeWildcardMatch) {
+      const scheme = `${schemeWildcardMatch[1].toLowerCase()}:`;
+      const suffix = schemeWildcardMatch[2].toLowerCase();
+      const hostname = parsedOrigin.hostname.toLowerCase();
+      return parsedOrigin.protocol === scheme && (hostname === suffix || hostname.endsWith(`.${suffix}`));
     }
+
+    if (!trimmed.startsWith("*.")) return false;
+
+    const hostname = parsedOrigin.hostname.toLowerCase();
+    const suffix = trimmed.slice(2).toLowerCase();
+    return hostname === suffix || hostname.endsWith(`.${suffix}`);
   });
 }
 

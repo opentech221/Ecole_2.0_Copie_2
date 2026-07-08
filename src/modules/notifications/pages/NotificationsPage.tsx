@@ -44,6 +44,11 @@ export function NotificationsPage() {
         <PushNotificationsCard
           status={push.status}
           loading={push.statusQuery.isLoading}
+          statusError={push.statusQuery.isError
+            ? (push.statusQuery.error instanceof Error
+              ? push.statusQuery.error.message
+              : "Impossible de contacter le service notifications")
+            : null}
           enabling={push.subscribeMutation.isPending}
           disabling={push.unsubscribeMutation.isPending}
           testing={push.testPushMutation.isPending}

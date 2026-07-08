@@ -6,6 +6,7 @@ import type { PushStatusResult } from "../types";
 interface PushNotificationsCardProps {
   status: PushStatusResult;
   loading: boolean;
+  statusError?: string | null;
   enabling: boolean;
   disabling: boolean;
   testing: boolean;
@@ -17,6 +18,7 @@ interface PushNotificationsCardProps {
 export function PushNotificationsCard({
   status,
   loading,
+  statusError,
   enabling,
   disabling,
   testing,
@@ -58,7 +60,14 @@ export function PushNotificationsCard({
           </div>
         </div>
 
-        {!status.pushConfigured && !loading && (
+        {statusError && !loading && (
+          <div className="rounded-xl border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive">
+            Statut push indisponible: {statusError}. Vérifiez la configuration CORS (ALLOWED_ORIGINS)
+            et l'authentification utilisateur.
+          </div>
+        )}
+
+        {!status.pushConfigured && !loading && !statusError && (
           <div className="rounded-xl border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-900/50 dark:bg-amber-950/40 dark:text-amber-100">
             Clés VAPID absentes côté serveur. Renseignez VITE_VAPID_PUBLIC_KEY, VAPID_PUBLIC_KEY,
             VAPID_PRIVATE_KEY et VAPID_SUBJECT pour activer les push réels.
