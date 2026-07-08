@@ -108,6 +108,21 @@ function canWrite(role: AccessRole) {
   return role !== "support";
 }
 
+function registerGet(path: string, handler: Parameters<typeof app.get>[1]) {
+  app.get(path, handler);
+  app.get(`/notifications-server${path}`, handler);
+}
+
+function registerPatch(path: string, handler: Parameters<typeof app.patch>[1]) {
+  app.patch(path, handler);
+  app.patch(`/notifications-server${path}`, handler);
+}
+
+function registerPost(path: string, handler: Parameters<typeof app.post>[1]) {
+  app.post(path, handler);
+  app.post(`/notifications-server${path}`, handler);
+}
+
 async function getAccessGuard(c: Parameters<typeof app.get>[1] extends (ctx: infer T) => unknown ? T : never): Promise<AccessGuard> {
   const authHeader = c.req.header("Authorization");
   const { caller, service } = getClients(authHeader);
@@ -185,7 +200,7 @@ async function dispatchNotification(
   return data as string;
 }
 
-app.get("/api/tenants", async (c) => {
+registerGet("/api/tenants", async (c) => {
   const guard = await getAccessGuard(c);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
 
@@ -199,7 +214,7 @@ app.get("/api/tenants", async (c) => {
   return c.json({ data: data ?? [] });
 });
 
-app.get("/api/notifications", async (c) => {
+registerGet("/api/notifications", async (c) => {
   const guard = await getAccessGuard(c);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
 
@@ -242,7 +257,7 @@ app.get("/api/notifications", async (c) => {
   });
 });
 
-app.get("/api/notifications/unread-count", async (c) => {
+registerGet("/api/notifications/unread-count", async (c) => {
   const guard = await getAccessGuard(c);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
 
@@ -269,7 +284,7 @@ app.get("/api/notifications/unread-count", async (c) => {
   return c.json({ unreadCount: count ?? 0 });
 });
 
-app.patch("/api/notifications/:id/read", async (c) => {
+registerPatch("/api/notifications/:id/read", async (c) => {
   const guard = await getAccessGuard(c);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
 
@@ -290,7 +305,7 @@ app.patch("/api/notifications/:id/read", async (c) => {
   return c.json({ ok: true });
 });
 
-app.patch("/api/notifications/read-all", async (c) => {
+registerPatch("/api/notifications/read-all", async (c) => {
   const guard = await getAccessGuard(c);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
 
@@ -310,7 +325,7 @@ app.patch("/api/notifications/read-all", async (c) => {
   return c.json({ ok: true, updated: data?.length ?? 0 });
 });
 
-app.patch("/api/notifications/:id/archive", async (c) => {
+registerPatch("/api/notifications/:id/archive", async (c) => {
   const guard = await getAccessGuard(c);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
 
@@ -331,7 +346,7 @@ app.patch("/api/notifications/:id/archive", async (c) => {
   return c.json({ ok: true });
 });
 
-app.post("/api/notifications", async (c) => {
+registerPost("/api/notifications", async (c) => {
   const guard = await getAccessGuard(c);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
 
