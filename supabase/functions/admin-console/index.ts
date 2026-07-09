@@ -59,6 +59,16 @@ function getClients(authHeader: string | undefined) {
   return { caller, service };
 }
 
+function registerGet(path: string, handler: Parameters<typeof app.get>[1]) {
+  app.get(path, handler);
+  app.get(`/admin-console${path}`, handler);
+}
+
+function registerPost(path: string, handler: Parameters<typeof app.post>[1]) {
+  app.post(path, handler);
+  app.post(`/admin-console${path}`, handler);
+}
+
 type ConsoleRole = "super_admin" | "admin_finance" | "support" | "owner" | "director";
 
 type GuardResult =
@@ -716,21 +726,21 @@ async function getSummaryPayload(guard: Extract<GuardResult, { ok: true }>, para
   };
 }
 
-app.get("/health", (c) => c.json({ status: "ok" }));
+registerGet("/health", (c) => c.json({ status: "ok" }));
 
-app.get("/tenants", async (c) => {
+registerGet("/tenants", async (c) => {
   const data = await listAccessibleTenants(c.req.header("Authorization"));
   return c.json({ data });
 });
 
-app.get("/summary", async (c) => {
+registerGet("/summary", async (c) => {
   const guard = await requireConsoleAccess(c.req.raw);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
   const payload = await getSummaryPayload(guard, new URL(c.req.url).searchParams);
   return c.json(payload);
 });
 
-app.get("/payments", async (c) => {
+registerGet("/payments", async (c) => {
   const guard = await requireConsoleAccess(c.req.raw);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
 
@@ -801,7 +811,7 @@ app.get("/payments", async (c) => {
   });
 });
 
-app.get("/payments/export", async (c) => {
+registerGet("/payments/export", async (c) => {
   const guard = await requireConsoleAccess(c.req.raw);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
   const filters = paymentFiltersSchema.parse(Object.fromEntries(new URL(c.req.url).searchParams.entries()));
@@ -847,7 +857,7 @@ app.get("/payments/export", async (c) => {
   });
 });
 
-app.get("/payments/:paymentId", async (c) => {
+registerGet("/payments/:paymentId", async (c) => {
   const guard = await requireConsoleAccess(c.req.raw);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
   const paymentId = c.req.param("paymentId");
@@ -907,7 +917,7 @@ app.get("/payments/:paymentId", async (c) => {
   });
 });
 
-app.post("/payments/:paymentId/refund", async (c) => {
+registerPost("/payments/:paymentId/refund", async (c) => {
   const guard = await requireConsoleAccess(c.req.raw);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
   if (!["owner", "super_admin", "admin_finance", "director"].includes(guard.role)) {
@@ -951,7 +961,7 @@ app.post("/payments/:paymentId/refund", async (c) => {
   return c.json({ ok: true });
 });
 
-app.post("/payments/:paymentId/remind", async (c) => {
+registerPost("/payments/:paymentId/remind", async (c) => {
   const guard = await requireConsoleAccess(c.req.raw);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
   const paymentId = c.req.param("paymentId");
@@ -972,7 +982,7 @@ app.post("/payments/:paymentId/remind", async (c) => {
   return c.json({ ok: true });
 });
 
-app.post("/payments/:paymentId/mark-offline", async (c) => {
+registerPost("/payments/:paymentId/mark-offline", async (c) => {
   const guard = await requireConsoleAccess(c.req.raw);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
   if (!["owner", "super_admin", "admin_finance", "director"].includes(guard.role)) {
@@ -1011,7 +1021,7 @@ app.post("/payments/:paymentId/mark-offline", async (c) => {
   return c.json({ ok: true });
 });
 
-app.post("/payments/:paymentId/cancel", async (c) => {
+registerPost("/payments/:paymentId/cancel", async (c) => {
   const guard = await requireConsoleAccess(c.req.raw);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
   if (!["owner", "super_admin", "admin_finance", "director"].includes(guard.role)) {
@@ -1043,7 +1053,7 @@ app.post("/payments/:paymentId/cancel", async (c) => {
   return c.json({ ok: true });
 });
 
-app.post("/payments/:paymentId/note", async (c) => {
+registerPost("/payments/:paymentId/note", async (c) => {
   const guard = await requireConsoleAccess(c.req.raw);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
   const paymentId = c.req.param("paymentId");
@@ -1062,7 +1072,7 @@ app.post("/payments/:paymentId/note", async (c) => {
   return c.json({ ok: true });
 });
 
-app.get("/billing", async (c) => {
+registerGet("/billing", async (c) => {
   const guard = await requireConsoleAccess(c.req.raw);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
 
@@ -1120,7 +1130,7 @@ app.get("/billing", async (c) => {
   });
 });
 
-app.post("/plans", async (c) => {
+registerPost("/plans", async (c) => {
   const guard = await requireConsoleAccess(c.req.raw);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
   if (!["owner", "super_admin", "admin_finance", "director"].includes(guard.role)) {
@@ -1163,7 +1173,7 @@ app.post("/plans", async (c) => {
   return c.json({ ok: true });
 });
 
-app.get("/audit", async (c) => {
+registerGet("/audit", async (c) => {
   const guard = await requireConsoleAccess(c.req.raw);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
 
@@ -1188,7 +1198,7 @@ app.get("/audit", async (c) => {
   });
 });
 
-app.get("/users", async (c) => {
+registerGet("/users", async (c) => {
   const guard = await requireConsoleAccess(c.req.raw);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
 
@@ -1271,7 +1281,7 @@ app.get("/users", async (c) => {
   });
 });
 
-app.get("/users/export", async (c) => {
+registerGet("/users/export", async (c) => {
   const guard = await requireConsoleAccess(c.req.raw);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
 
@@ -1321,7 +1331,7 @@ app.get("/users/export", async (c) => {
   });
 });
 
-app.get("/users/:userId", async (c) => {
+registerGet("/users/:userId", async (c) => {
   const guard = await requireConsoleAccess(c.req.raw);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
 
@@ -1375,7 +1385,7 @@ app.get("/users/:userId", async (c) => {
   });
 });
 
-app.post("/users", async (c) => {
+registerPost("/users", async (c) => {
   const guard = await requireConsoleAccess(c.req.raw);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
   if (!canManageUsers(guard.role)) return c.json({ error: "Action non autorisée" }, 403);
@@ -1490,7 +1500,7 @@ app.patch("/users/:userId", async (c) => {
   return c.json({ ok: true });
 });
 
-app.post("/users/:userId/suspend", async (c) => {
+registerPost("/users/:userId/suspend", async (c) => {
   const guard = await requireConsoleAccess(c.req.raw);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
   if (!canManageUsers(guard.role)) return c.json({ error: "Action non autorisée" }, 403);
@@ -1518,7 +1528,7 @@ app.post("/users/:userId/suspend", async (c) => {
   return c.json({ ok: true });
 });
 
-app.post("/users/:userId/reactivate", async (c) => {
+registerPost("/users/:userId/reactivate", async (c) => {
   const guard = await requireConsoleAccess(c.req.raw);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
   if (!canManageUsers(guard.role)) return c.json({ error: "Action non autorisée" }, 403);
@@ -1545,7 +1555,7 @@ app.post("/users/:userId/reactivate", async (c) => {
   return c.json({ ok: true });
 });
 
-app.post("/users/:userId/reset-password", async (c) => {
+registerPost("/users/:userId/reset-password", async (c) => {
   const guard = await requireConsoleAccess(c.req.raw);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
   if (!canManageUsers(guard.role)) return c.json({ error: "Action non autorisée" }, 403);
@@ -1610,7 +1620,7 @@ app.delete("/users/:userId", async (c) => {
   return c.json({ ok: true });
 });
 
-app.post("/users/import", async (c) => {
+registerPost("/users/import", async (c) => {
   const guard = await requireConsoleAccess(c.req.raw);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
   if (!canManageUsers(guard.role)) return c.json({ error: "Action non autorisée" }, 403);
