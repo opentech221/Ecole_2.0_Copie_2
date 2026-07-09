@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/app/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/components/ui/select";
 import { Skeleton } from "@/app/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/ui/tabs";
+import { Input } from "@/app/components/ui/input";
 import { useAuthContext } from "@/app/contexts/AuthContext";
 import { adminConsoleClient } from "../api/adminConsoleClient";
 import { AuditWorkspace } from "../components/AuditWorkspace";
@@ -15,6 +16,7 @@ import { ExecutiveOverview } from "../components/ExecutiveOverview";
 import { PaymentDetailDialog } from "../components/PaymentDetailDialog";
 import { PaymentsWorkspace } from "../components/PaymentsWorkspace";
 import { PlanEditorDialog } from "../components/PlanEditorDialog";
+import { UsersWorkspace } from "../components/UsersWorkspace";
 import { useAdminConsole } from "../hooks/useAdminConsole";
 
 const FILTER_STORAGE_KEY = "ecole2.admin-console.filters";
@@ -26,11 +28,19 @@ export function AdminConsolePage() {
     setTenantId,
     filters,
     setFilters,
+    summaryFilters,
+    setSummaryFilters,
+    userFilters,
+    setUserFilters,
     tenantsQuery,
     summaryQuery,
     paymentsQuery,
     billingQuery,
     auditQuery,
+    usersQuery,
+    selectedUserId,
+    setSelectedUserId,
+    userDetailQuery,
     selectedPaymentId,
     setSelectedPaymentId,
     paymentDetailQuery,
@@ -41,6 +51,13 @@ export function AdminConsolePage() {
     cancelMutation,
     noteMutation,
     planMutation,
+    createUserMutation,
+    updateUserMutation,
+    suspendUserMutation,
+    reactivateUserMutation,
+    resetPasswordMutation,
+    deleteUserMutation,
+    importUsersMutation,
     refreshAll,
   } = useAdminConsole();
   const [tab, setTab] = useState("overview");
@@ -65,7 +82,18 @@ export function AdminConsolePage() {
   const editingPlan = useMemo(() => billingQuery.data?.plans.find((plan) => plan.id === editingPlanId) ?? null, [billingQuery.data?.plans, editingPlanId]);
 
   const isAllowed = profile?.role === "director";
-  const busyAction = refundMutation.isPending || reminderMutation.isPending || markOfflineMutation.isPending || cancelMutation.isPending || noteMutation.isPending;
+  const busyAction = refundMutation.isPending
+    || reminderMutation.isPending
+    || markOfflineMutation.isPending
+    || cancelMutation.isPending
+    || noteMutation.isPending
+    || createUserMutation.isPending
+    || updateUserMutation.isPending
+    || suspendUserMutation.isPending
+    || reactivateUserMutation.isPending
+    || resetPasswordMutation.isPending
+    || deleteUserMutation.isPending
+    || importUsersMutation.isPending;
 
   async function handleExport() {
     const csv = await adminConsoleClient.exportPaymentsCsv(tenantId, filters);
@@ -74,6 +102,17 @@ export function AdminConsolePage() {
     const link = document.createElement("a");
     link.href = url;
     link.download = `payments-${tenantId}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+
+  async function handleExportUsers() {
+    const csv = await adminConsoleClient.exportUsersCsv(tenantId);
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `users-${tenantId}.csv`;
     link.click();
     URL.revokeObjectURL(url);
   }
@@ -132,11 +171,40 @@ export function AdminConsolePage() {
               </div>
             </div>
           </div>
+          <div className="mt-4 grid gap-3 md:grid-cols-3 xl:grid-cols-4">
+            <Select value={summaryFilters.period} onValueChange={(value) => setSummaryFilters((prev) => ({ ...prev, period: value as "7d" | "30d" | "90d" | "12m" }))}>
+              <SelectTrigger>
+                <SelectValue placeholder="Période" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="7d">7 jours</SelectItem>
+                <SelectItem value="30d">30 jours</SelectItem>
+                <SelectItem value="90d">90 jours</SelectItem>
+                <SelectItem value="12m">12 mois</SelectItem>
+              </SelectContent>
+            </Select>
+            <Input
+              placeholder="Pays (ex: SN)"
+              value={summaryFilters.country ?? ""}
+              onChange={(event) => setSummaryFilters((prev) => ({ ...prev, country: event.target.value || undefined }))}
+            />
+            <Input
+              placeholder="Canal acquisition"
+              value={summaryFilters.channel ?? ""}
+              onChange={(event) => setSummaryFilters((prev) => ({ ...prev, channel: event.target.value || undefined }))}
+            />
+            <Input
+              placeholder="Plan UUID (optionnel)"
+              value={summaryFilters.planId ?? ""}
+              onChange={(event) => setSummaryFilters((prev) => ({ ...prev, planId: event.target.value || undefined }))}
+            />
+          </div>
         </div>
 
         <Tabs value={tab} onValueChange={setTab} className="space-y-4">
           <TabsList className="w-full justify-start overflow-auto rounded-2xl border border-slate-200/70 bg-white/90 p-1 dark:border-slate-800 dark:bg-slate-950/80">
             <TabsTrigger value="overview"><BarChart3 className="h-4 w-4" /> Vue exécutive</TabsTrigger>
+            <TabsTrigger value="users">Utilisateurs</TabsTrigger>
             <TabsTrigger value="payments">Paiements</TabsTrigger>
             <TabsTrigger value="billing">Facturation & abonnements</TabsTrigger>
             <TabsTrigger value="audit">Audit & conformité</TabsTrigger>
@@ -145,6 +213,28 @@ export function AdminConsolePage() {
 
           <TabsContent value="overview">
             {summaryQuery.isLoading || !summaryQuery.data ? <Skeleton className="h-[620px] w-full" /> : <ExecutiveOverview summary={summaryQuery.data} />}
+          </TabsContent>
+
+          <TabsContent value="users">
+            <UsersWorkspace
+              filters={userFilters}
+              setFilters={setUserFilters}
+              data={usersQuery.data}
+              loading={usersQuery.isLoading}
+              selectedUserId={selectedUserId}
+              onSelectUser={setSelectedUserId}
+              selectedUser={userDetailQuery.data}
+              detailLoading={userDetailQuery.isLoading}
+              busy={busyAction}
+              onCreateUser={(payload) => createUserMutation.mutate(payload)}
+              onUpdateUser={(payload) => updateUserMutation.mutate(payload)}
+              onSuspendUser={(payload) => suspendUserMutation.mutate(payload)}
+              onReactivateUser={(payload) => reactivateUserMutation.mutate(payload)}
+              onResetPassword={(payload) => resetPasswordMutation.mutate(payload)}
+              onDeleteUser={(payload) => deleteUserMutation.mutate(payload)}
+              onImportCsv={(payload) => importUsersMutation.mutate(payload)}
+              onExportCsv={() => void handleExportUsers()}
+            />
           </TabsContent>
 
           <TabsContent value="payments">

@@ -2,14 +2,17 @@ import { useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { adminConsoleClient } from "../api/adminConsoleClient";
-import type { PaymentFilters } from "../types";
+import type { AdminUserFilters, PaymentFilters, SummaryFilters } from "../types";
 
 const adminKeys = {
   tenants: ["admin-console", "tenants"] as const,
   summary: (tenantId: string) => ["admin-console", tenantId, "summary"] as const,
+  summaryScoped: (tenantId: string, filters: SummaryFilters) => ["admin-console", tenantId, "summary", filters] as const,
   payments: (tenantId: string, filters: PaymentFilters) => ["admin-console", tenantId, "payments", filters] as const,
   billing: (tenantId: string) => ["admin-console", tenantId, "billing"] as const,
   audit: (tenantId: string) => ["admin-console", tenantId, "audit"] as const,
+  users: (tenantId: string, filters: AdminUserFilters) => ["admin-console", tenantId, "users", filters] as const,
+  userDetail: (tenantId: string, userId: string | null) => ["admin-console", tenantId, "user-detail", userId] as const,
   paymentDetail: (tenantId: string, paymentId: string | null) => ["admin-console", tenantId, "payment", paymentId] as const,
 };
 
@@ -36,13 +39,24 @@ export function useAdminConsole() {
     reconciliationStatus: "all",
   });
   const [selectedPaymentId, setSelectedPaymentId] = useState<string | null>(null);
+  const [summaryFilters, setSummaryFilters] = useState<SummaryFilters>({ period: "30d" });
+  const [userFilters, setUserFilters] = useState<AdminUserFilters>({
+    page: 1,
+    pageSize: 20,
+    search: "",
+    status: "all",
+    role: "all",
+    sortBy: "created_at",
+    sortOrder: "desc",
+  });
+  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
 
   const resolvedTenantId = tenantId || tenantsQuery.data?.[0]?.id || "";
 
   const summaryQuery = useQuery({
-    queryKey: adminKeys.summary(resolvedTenantId),
+    queryKey: adminKeys.summaryScoped(resolvedTenantId, summaryFilters),
     enabled: Boolean(resolvedTenantId),
-    queryFn: () => adminConsoleClient.getSummary(resolvedTenantId),
+    queryFn: () => adminConsoleClient.getSummary(resolvedTenantId, summaryFilters),
   });
 
   const paymentsQuery = useQuery({
@@ -63,6 +77,18 @@ export function useAdminConsole() {
     queryFn: () => adminConsoleClient.getAudit(resolvedTenantId),
   });
 
+  const usersQuery = useQuery({
+    queryKey: adminKeys.users(resolvedTenantId, userFilters),
+    enabled: Boolean(resolvedTenantId),
+    queryFn: () => adminConsoleClient.getUsers(resolvedTenantId, userFilters),
+  });
+
+  const userDetailQuery = useQuery({
+    queryKey: adminKeys.userDetail(resolvedTenantId, selectedUserId),
+    enabled: Boolean(resolvedTenantId && selectedUserId),
+    queryFn: () => adminConsoleClient.getUserDetail(resolvedTenantId, selectedUserId as string),
+  });
+
   const paymentDetailQuery = useQuery({
     queryKey: adminKeys.paymentDetail(resolvedTenantId, selectedPaymentId),
     enabled: Boolean(resolvedTenantId && selectedPaymentId),
@@ -72,9 +98,12 @@ export function useAdminConsole() {
   const refreshAll = async () => {
     await Promise.all([
       queryClient.invalidateQueries({ queryKey: adminKeys.summary(resolvedTenantId) }),
+      queryClient.invalidateQueries({ queryKey: adminKeys.summaryScoped(resolvedTenantId, summaryFilters) }),
       queryClient.invalidateQueries({ queryKey: adminKeys.payments(resolvedTenantId, filters) }),
       queryClient.invalidateQueries({ queryKey: adminKeys.billing(resolvedTenantId) }),
       queryClient.invalidateQueries({ queryKey: adminKeys.audit(resolvedTenantId) }),
+      queryClient.invalidateQueries({ queryKey: adminKeys.users(resolvedTenantId, userFilters) }),
+      queryClient.invalidateQueries({ queryKey: adminKeys.userDetail(resolvedTenantId, selectedUserId) }),
     ]);
   };
 
@@ -130,6 +159,53 @@ export function useAdminConsole() {
     onError: (error) => failure(error, "Erreur sauvegarde plan"),
   });
 
+  const createUserMutation = useMutation({
+    mutationFn: adminConsoleClient.createUser.bind(null, resolvedTenantId),
+    onSuccess: () => success("Utilisateur créé."),
+    onError: (error) => failure(error, "Erreur création utilisateur"),
+  });
+
+  const updateUserMutation = useMutation({
+    mutationFn: (input: { userId: string; payload: Parameters<typeof adminConsoleClient.updateUser>[2] }) =>
+      adminConsoleClient.updateUser(resolvedTenantId, input.userId, input.payload),
+    onSuccess: () => success("Utilisateur mis à jour."),
+    onError: (error) => failure(error, "Erreur mise à jour utilisateur"),
+  });
+
+  const suspendUserMutation = useMutation({
+    mutationFn: (input: { userId: string; reason: string }) =>
+      adminConsoleClient.suspendUser(resolvedTenantId, input.userId, { reason: input.reason }),
+    onSuccess: () => success("Utilisateur suspendu."),
+    onError: (error) => failure(error, "Erreur suspension utilisateur"),
+  });
+
+  const reactivateUserMutation = useMutation({
+    mutationFn: (input: { userId: string; reason?: string }) =>
+      adminConsoleClient.reactivateUser(resolvedTenantId, input.userId, { reason: input.reason }),
+    onSuccess: () => success("Utilisateur réactivé."),
+    onError: (error) => failure(error, "Erreur réactivation utilisateur"),
+  });
+
+  const resetPasswordMutation = useMutation({
+    mutationFn: (input: { userId: string; redirectTo?: string }) =>
+      adminConsoleClient.resetPassword(resolvedTenantId, input.userId, { redirectTo: input.redirectTo }),
+    onSuccess: () => success("Réinitialisation mot de passe envoyée."),
+    onError: (error) => failure(error, "Erreur réinitialisation mot de passe"),
+  });
+
+  const deleteUserMutation = useMutation({
+    mutationFn: (input: { userId: string; hardDelete?: boolean; reason?: string }) =>
+      adminConsoleClient.deleteUser(resolvedTenantId, input.userId, { hardDelete: Boolean(input.hardDelete), reason: input.reason }),
+    onSuccess: () => success("Utilisateur supprimé."),
+    onError: (error) => failure(error, "Erreur suppression utilisateur"),
+  });
+
+  const importUsersMutation = useMutation({
+    mutationFn: (input: { csv: string }) => adminConsoleClient.importUsersCsv(resolvedTenantId, { csv: input.csv }),
+    onSuccess: (result) => success(`Import terminé: ${result.imported} succès, ${result.failed} échec(s).`),
+    onError: (error) => failure(error, "Erreur import CSV"),
+  });
+
   const statusCounts = useMemo(() => {
     const rows = paymentsQuery.data?.rows ?? [];
     return rows.reduce<Record<string, number>>((acc, row) => {
@@ -143,11 +219,19 @@ export function useAdminConsole() {
     setTenantId,
     filters,
     setFilters,
+    summaryFilters,
+    setSummaryFilters,
+    userFilters,
+    setUserFilters,
     tenantsQuery,
     summaryQuery,
     paymentsQuery,
     billingQuery,
     auditQuery,
+    usersQuery,
+    selectedUserId,
+    setSelectedUserId,
+    userDetailQuery,
     selectedPaymentId,
     setSelectedPaymentId,
     paymentDetailQuery,
@@ -158,6 +242,13 @@ export function useAdminConsole() {
     cancelMutation,
     noteMutation,
     planMutation,
+    createUserMutation,
+    updateUserMutation,
+    suspendUserMutation,
+    reactivateUserMutation,
+    resetPasswordMutation,
+    deleteUserMutation,
+    importUsersMutation,
     refreshAll,
   };
 }

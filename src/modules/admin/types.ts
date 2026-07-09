@@ -40,6 +40,12 @@ export interface AdminAlert {
 export interface AdminDashboardSummary {
   tenant: AdminTenantSummary;
   userRole: AdminConsoleRole | "director";
+  filtersApplied?: {
+    period: "7d" | "30d" | "90d" | "12m";
+    planId: string | null;
+    country: string | null;
+    channel: string | null;
+  };
   kpis: {
     mrr: ExecutiveKpi;
     arr: ExecutiveKpi;
@@ -59,7 +65,30 @@ export interface AdminDashboardSummary {
     byLevel: DistributionPoint[];
     byPaymentMethod: DistributionPoint[];
   };
+  business?: {
+    kpis: {
+      activeUsers: number;
+      newSignups: number;
+      grossRevenue: number;
+      netRevenue: number;
+      conversionRate: number;
+      momGrowth: number;
+      arpu: number;
+      aov: number;
+    };
+    funnel: Array<{ stage: string; value: number }>;
+    cohorts: Array<{ cohortMonth: string; activityMonth: string; activeUsers: number; retentionPct: number }>;
+    forecast: Array<{ horizonMonths: number; projectedRevenueCents: number }>;
+    acquisition: Array<{ channel: string; users: number }>;
+  };
   alerts: AdminAlert[];
+}
+
+export interface SummaryFilters {
+  period: "7d" | "30d" | "90d" | "12m";
+  planId?: string;
+  country?: string;
+  channel?: string;
 }
 
 export type PaymentStatus = "pending" | "paid" | "failed" | "refunded" | "partially_refunded" | "disputed";
@@ -186,6 +215,54 @@ export interface AuditEntry {
 
 export interface AuditResult {
   rows: AuditEntry[];
+}
+
+export type AdminUserStatus = "active" | "suspended" | "pending_invite" | "deleted";
+
+export type AdminUserRole = "owner" | "super_admin" | "admin_finance" | "support" | "director";
+
+export interface AdminUserListItem {
+  userId: string;
+  fullName: string;
+  email: string;
+  phone: string | null;
+  roleCode: AdminUserRole;
+  status: AdminUserStatus;
+  countryCode: string;
+  acquisitionChannel: string;
+  lastSeenAt: string | null;
+  suspendedReason: string | null;
+  suspendedAt: string | null;
+  reactivatedAt: string | null;
+  createdAt: string;
+}
+
+export interface AdminUsersPageResult {
+  rows: AdminUserListItem[];
+  page: number;
+  pageSize: number;
+  total: number;
+}
+
+export interface AdminUserDetail extends AdminUserListItem {
+  metadata: Record<string, unknown>;
+  auditTrail: Array<{
+    id: string;
+    action: string;
+    severity: "info" | "warn" | "critical";
+    metadata: Record<string, unknown>;
+    createdAt: string;
+  }>;
+}
+
+export interface AdminUserFilters {
+  page: number;
+  pageSize: number;
+  search: string;
+  status: "all" | AdminUserStatus;
+  role: "all" | AdminUserRole;
+  sortBy: "created_at" | "last_seen_at" | "full_name" | "email" | "status";
+  sortOrder: "asc" | "desc";
 }
 
 export interface AdminConsoleContext {

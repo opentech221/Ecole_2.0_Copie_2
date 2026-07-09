@@ -10,6 +10,10 @@ app.use("*", logger(console.log));
 
 const defaultOrigins = [
   "http://localhost:5173",
+  "http://localhost:4173",
+  "http://localhost:3000",
+  "*.github.dev",
+  "*.vercel.app",
   "https://ecole-2-0-copie-2-opentechsn.vercel.app",
 ];
 
@@ -37,7 +41,7 @@ app.use(
   cors({
     origin: (origin) => (isOriginAllowed(origin) ? origin : false),
     allowHeaders: ["Content-Type", "Authorization"],
-    allowMethods: ["GET", "POST", "OPTIONS"],
+    allowMethods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
     exposeHeaders: ["Content-Length", "Content-Disposition"],
     maxAge: 600,
   }),
@@ -80,6 +84,60 @@ const paymentFiltersSchema = z.object({
   status: z.enum(["all", "pending", "paid", "failed", "refunded", "partially_refunded", "disputed"]).default("all"),
   paymentMethod: z.string().trim().default("all"),
   reconciliationStatus: z.enum(["all", "matched", "unmatched", "manual_review"]).default("all"),
+});
+
+const summaryFiltersSchema = z.object({
+  period: z.enum(["7d", "30d", "90d", "12m"]).default("30d"),
+  planId: z.string().uuid().optional(),
+  country: z.string().trim().min(2).max(3).optional(),
+  channel: z.string().trim().min(2).max(80).optional(),
+});
+
+const userListFiltersSchema = z.object({
+  page: z.coerce.number().int().min(1).default(1),
+  pageSize: z.coerce.number().int().min(1).max(100).default(20),
+  search: z.string().trim().default(""),
+  status: z.enum(["all", "active", "suspended", "pending_invite", "deleted"]).default("all"),
+  role: z.enum(["all", "owner", "super_admin", "admin_finance", "support", "director"]).default("all"),
+  sortBy: z.enum(["created_at", "last_seen_at", "full_name", "email", "status"]).default("created_at"),
+  sortOrder: z.enum(["asc", "desc"]).default("desc"),
+});
+
+const userCreateSchema = z.object({
+  email: z.string().trim().email(),
+  fullName: z.string().trim().min(2).max(160),
+  roleCode: z.enum(["owner", "super_admin", "admin_finance", "support", "director"]).default("support"),
+  status: z.enum(["active", "suspended", "pending_invite"]).default("active"),
+  countryCode: z.string().trim().min(2).max(3).default("SN"),
+  acquisitionChannel: z.string().trim().min(2).max(80).default("direct"),
+  password: z.string().min(8).optional(),
+  sendInvite: z.boolean().default(true),
+});
+
+const userUpdateSchema = z.object({
+  fullName: z.string().trim().min(2).max(160).optional(),
+  roleCode: z.enum(["owner", "super_admin", "admin_finance", "support", "director"]).optional(),
+  status: z.enum(["active", "suspended", "pending_invite", "deleted"]).optional(),
+  countryCode: z.string().trim().min(2).max(3).optional(),
+  acquisitionChannel: z.string().trim().min(2).max(80).optional(),
+  suspendedReason: z.string().trim().min(3).max(240).optional(),
+});
+
+const suspendUserSchema = z.object({
+  reason: z.string().trim().min(3).max(240),
+});
+
+const reactivateUserSchema = z.object({
+  reason: z.string().trim().min(3).max(240).optional(),
+});
+
+const resetPasswordSchema = z.object({
+  redirectTo: z.string().trim().url().optional(),
+});
+
+const deleteUserSchema = z.object({
+  hardDelete: z.boolean().default(false),
+  reason: z.string().trim().min(3).max(240).optional(),
 });
 
 const refundSchema = z.object({
@@ -127,6 +185,48 @@ function chooseRole(roles: string[], profileRole: string | null | undefined): Co
   }
   if (profileRole === "director") return "director";
   return null;
+}
+
+function canManageUsers(role: ConsoleRole) {
+  return ["owner", "super_admin", "director"].includes(role);
+}
+
+function canSeeRawPii(role: ConsoleRole) {
+  return role !== "support";
+}
+
+function maskEmail(value: string | null | undefined) {
+  if (!value) return null;
+  const [local, domain] = value.split("@");
+  if (!local || !domain) return "***";
+  if (local.length <= 2) return `**@${domain}`;
+  return `${local[0]}***${local[local.length - 1]}@${domain}`;
+}
+
+function daysFromPeriod(period: "7d" | "30d" | "90d" | "12m") {
+  switch (period) {
+    case "7d":
+      return 7;
+    case "90d":
+      return 90;
+    case "12m":
+      return 365;
+    default:
+      return 30;
+  }
+}
+
+function parseCsv(text: string) {
+  const lines = text.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+  if (lines.length === 0) return [] as Array<Record<string, string>>;
+  const headers = lines[0].split(",").map((item) => item.trim());
+  return lines.slice(1).map((line) => {
+    const values = line.split(",").map((item) => item.trim());
+    return headers.reduce<Record<string, string>>((acc, header, index) => {
+      acc[header] = values[index] ?? "";
+      return acc;
+    }, {});
+  });
 }
 
 async function requireConsoleAccess(request: Request): Promise<GuardResult> {
@@ -325,9 +425,17 @@ async function getMonthlySeries(service: ReturnType<typeof createClient>, tenant
   return Array.from(buckets.entries()).map(([label, values]) => ({ label, ...values }));
 }
 
-async function getSummaryPayload(guard: Extract<GuardResult, { ok: true }>) {
+async function getSummaryPayload(guard: Extract<GuardResult, { ok: true }>, params: URLSearchParams) {
   const { service, tenantId, accessibleTenantIds, role } = guard;
   const tenantScope = accessibleTenantIds.length > 0 ? accessibleTenantIds : [tenantId];
+  const filters = summaryFiltersSchema.parse({
+    period: params.get("period") ?? undefined,
+    planId: params.get("planId") ?? undefined,
+    country: params.get("country") ?? undefined,
+    channel: params.get("channel") ?? undefined,
+  });
+  const periodDays = daysFromPeriod(filters.period);
+  const periodThreshold = new Date(Date.now() - periodDays * 24 * 60 * 60 * 1000);
 
   const [
     { data: tenant },
@@ -336,16 +444,19 @@ async function getSummaryPayload(guard: Extract<GuardResult, { ok: true }>) {
     { data: invoices },
     { data: classes },
     { data: webhooks },
+    { data: refunds },
+    { data: tenantUsers },
+    { data: kpiEvents },
   ] = await Promise.all([
     service.from("tenants").select("id, name, slug, status, currency").eq("id", tenantId).single(),
     service
       .from("payments")
-      .select("id, tenant_id, amount_cents, status, payment_method, class_id, created_at")
+      .select("id, tenant_id, plan_id, amount_cents, status, payment_method, class_id, created_at")
       .in("tenant_id", tenantScope)
       .is("deleted_at", null),
     service
       .from("subscriptions")
-      .select("id, tenant_id, amount_cents, billing_cycle, status, current_period_end")
+      .select("id, tenant_id, plan_id, amount_cents, billing_cycle, status, current_period_end, created_at")
       .in("tenant_id", tenantScope)
       .is("deleted_at", null),
     service
@@ -364,24 +475,67 @@ async function getSummaryPayload(guard: Extract<GuardResult, { ok: true }>) {
       .eq("tenant_id", tenantId)
       .order("created_at", { ascending: false })
       .limit(4),
+    service
+      .from("refunds")
+      .select("tenant_id, amount_cents, status, created_at")
+      .in("tenant_id", tenantScope),
+    service
+      .from("tenant_user_accounts")
+      .select("tenant_id, user_id, status, country_code, acquisition_channel, created_at, last_seen_at, deleted_at")
+      .in("tenant_id", tenantScope),
+    service
+      .from("kpi_events")
+      .select("tenant_id, user_id, event_name, amount_cents, occurred_at")
+      .in("tenant_id", tenantScope)
+      .gte("occurred_at", new Date(Date.now() - 400 * 24 * 60 * 60 * 1000).toISOString()),
   ]);
 
   const now = new Date();
   const currentMonth = now.getMonth();
   const currentYear = now.getFullYear();
+  const previousMonthDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
 
-  const currentMonthPayments = (payments ?? []).filter((payment) => {
+  const scopedUsers = (tenantUsers ?? []).filter((row) => {
+    if (filters.country && row.country_code?.toUpperCase() !== filters.country.toUpperCase()) return false;
+    if (filters.channel && row.acquisition_channel?.toLowerCase() !== filters.channel.toLowerCase()) return false;
+    return true;
+  });
+  const scopedUserIds = new Set(scopedUsers.map((row) => row.user_id));
+
+  const paymentRows = (payments ?? []).filter((row) => {
+    if (filters.planId && row.plan_id !== filters.planId) return false;
+    return true;
+  });
+  const subscriptionRows = (subscriptions ?? []).filter((row) => {
+    if (filters.planId && row.plan_id !== filters.planId) return false;
+    return true;
+  });
+
+  const currentMonthPayments = paymentRows.filter((payment) => {
     const createdAt = new Date(payment.created_at);
     return createdAt.getMonth() === currentMonth && createdAt.getFullYear() === currentYear;
   });
+  const previousMonthPayments = paymentRows.filter((payment) => {
+    const createdAt = new Date(payment.created_at);
+    return createdAt.getMonth() === previousMonthDate.getMonth() && createdAt.getFullYear() === previousMonthDate.getFullYear();
+  });
 
   const paidAmountMonth = currentMonthPayments.reduce((sum, payment) => sum + (payment.status === "paid" ? cents(payment.amount_cents) : 0), 0);
+  const paidAmountPreviousMonth = previousMonthPayments.reduce((sum, payment) => sum + (payment.status === "paid" ? cents(payment.amount_cents) : 0), 0);
   const failedAmountMonth = currentMonthPayments.reduce((sum, payment) => sum + (payment.status === "failed" ? cents(payment.amount_cents) : 0), 0);
   const unpaidAmount = (invoices ?? []).reduce((sum, invoice) => sum + cents(invoice.balance_cents), 0);
   const totalInvoiced = (invoices ?? []).reduce((sum, invoice) => sum + cents(invoice.total_cents), 0);
   const totalCollected = (invoices ?? []).reduce((sum, invoice) => sum + cents(invoice.paid_cents), 0);
-  const activeSubs = (subscriptions ?? []).filter((sub) => ["trialing", "active", "past_due"].includes(sub.status));
-  const churnedSubs = (subscriptions ?? []).filter((sub) => ["canceled", "expired"].includes(sub.status));
+  const refundedAmountMonth = (refunds ?? []).reduce((sum, refund) => {
+    if (refund.status !== "succeeded") return sum;
+    const createdAt = new Date(refund.created_at);
+    if (createdAt.getMonth() !== currentMonth || createdAt.getFullYear() !== currentYear) return sum;
+    return sum + cents(refund.amount_cents);
+  }, 0);
+  const netRevenueMonth = Math.max(0, paidAmountMonth - refundedAmountMonth);
+
+  const activeSubs = subscriptionRows.filter((sub) => ["trialing", "active", "past_due"].includes(sub.status));
+  const churnedSubs = subscriptionRows.filter((sub) => ["canceled", "expired"].includes(sub.status));
   const mrr = activeSubs.reduce((sum, sub) => sum + (sub.billing_cycle === "monthly" ? cents(sub.amount_cents) : Math.round(cents(sub.amount_cents) / 12)), 0);
   const arr = mrr * 12;
   const churnRate = activeSubs.length + churnedSubs.length === 0 ? 0 : (churnedSubs.length / (activeSubs.length + churnedSubs.length)) * 100;
@@ -389,12 +543,41 @@ async function getSummaryPayload(guard: Extract<GuardResult, { ok: true }>) {
   const recoveryRate = totalInvoiced === 0 ? 0 : (totalCollected / totalInvoiced) * 100;
   const successPaymentsCount = currentMonthPayments.filter((payment) => payment.status === "paid").length;
   const failedPaymentsCount = currentMonthPayments.filter((payment) => payment.status === "failed").length;
+  const momGrowth = paidAmountPreviousMonth === 0 ? 0 : ((paidAmountMonth - paidAmountPreviousMonth) / paidAmountPreviousMonth) * 100;
+
+  const activeUsers = scopedUsers.filter((row) => row.status === "active" && !row.deleted_at).length;
+  const newSignups = scopedUsers.filter((row) => new Date(row.created_at) >= periodThreshold).length;
+
+  const filteredEvents = (kpiEvents ?? []).filter((event) => {
+    if (new Date(event.occurred_at) < periodThreshold) return false;
+    if (event.user_id && scopedUserIds.size > 0 && !scopedUserIds.has(event.user_id)) return false;
+    return true;
+  });
+  const signupStarted = filteredEvents.filter((event) => event.event_name === "signup_started").length;
+  const signupCompleted = filteredEvents.filter((event) => event.event_name === "signup_completed").length;
+  const trialStarted = filteredEvents.filter((event) => event.event_name === "trial_started").length;
+  const subscriptionsActivated = filteredEvents.filter((event) => event.event_name === "subscription_activated").length;
+  const paymentsSuccess = filteredEvents.filter((event) => event.event_name === "payment_success").length;
+  const churnEvents = filteredEvents.filter((event) => ["subscription_canceled", "churned"].includes(event.event_name)).length;
+  const conversionRate = signupStarted === 0 ? 0 : (signupCompleted / signupStarted) * 100;
+  const arpu = activeUsers === 0 ? 0 : Math.round(netRevenueMonth / activeUsers);
+  const aov = successPaymentsCount === 0 ? 0 : Math.round(paidAmountMonth / successPaymentsCount);
+
   const revenue7d = await getRevenueSeries(service, tenantScope, tenantId, 7);
   const revenue30d = await getRevenueSeries(service, tenantScope, tenantId, 30);
   const revenue12m = await getMonthlySeries(service, tenantScope, tenantId);
 
+  const monthlyPaidValues = revenue12m.map((item) => item.paidAmountCents).filter((value) => value > 0);
+  const recentAverage = monthlyPaidValues.length === 0
+    ? 0
+    : Math.round(monthlyPaidValues.slice(-3).reduce((sum, value) => sum + value, 0) / Math.min(3, monthlyPaidValues.length));
+  const forecast = [3, 6, 12].map((horizon) => ({
+    horizonMonths: horizon,
+    projectedRevenueCents: recentAverage * horizon,
+  }));
+
   const byTenantMap = new Map<string, number>();
-  for (const payment of payments ?? []) {
+  for (const payment of paymentRows) {
     byTenantMap.set(payment.tenant_id, (byTenantMap.get(payment.tenant_id) ?? 0) + cents(payment.amount_cents));
   }
   const { data: tenantNames } = await service.from("tenants").select("id, name").in("id", tenantScope);
@@ -407,11 +590,50 @@ async function getSummaryPayload(guard: Extract<GuardResult, { ok: true }>) {
   }
 
   const byMethodMap = new Map<string, number>();
-  for (const payment of payments ?? []) {
+  for (const payment of paymentRows) {
     byMethodMap.set(payment.payment_method, (byMethodMap.get(payment.payment_method) ?? 0) + cents(payment.amount_cents));
   }
 
-  const expiringSubscriptions = (subscriptions ?? []).filter((sub) => {
+  const acquisitionMap = new Map<string, number>();
+  for (const user of scopedUsers) {
+    const channel = user.acquisition_channel || "direct";
+    acquisitionMap.set(channel, (acquisitionMap.get(channel) ?? 0) + 1);
+  }
+
+  const cohortByUser = new Map<string, { cohortMonth: string; activity: Set<string> }>();
+  for (const event of kpiEvents ?? []) {
+    if (!event.user_id) continue;
+    if (scopedUserIds.size > 0 && !scopedUserIds.has(event.user_id)) continue;
+    const activityMonth = new Date(event.occurred_at).toISOString().slice(0, 7);
+    const current = cohortByUser.get(event.user_id) ?? { cohortMonth: "", activity: new Set<string>() };
+    if ((event.event_name === "signup_completed" || event.event_name === "subscription_activated") && (!current.cohortMonth || activityMonth < current.cohortMonth)) {
+      current.cohortMonth = activityMonth;
+    }
+    current.activity.add(activityMonth);
+    cohortByUser.set(event.user_id, current);
+  }
+
+  const cohortsMap = new Map<string, Map<string, number>>();
+  cohortByUser.forEach(({ cohortMonth, activity }) => {
+    if (!cohortMonth) return;
+    const bucket = cohortsMap.get(cohortMonth) ?? new Map<string, number>();
+    activity.forEach((month) => {
+      bucket.set(month, (bucket.get(month) ?? 0) + 1);
+    });
+    cohortsMap.set(cohortMonth, bucket);
+  });
+
+  const cohorts = Array.from(cohortsMap.entries()).flatMap(([cohortMonth, activityMap]) => {
+    const base = activityMap.get(cohortMonth) ?? 1;
+    return Array.from(activityMap.entries()).map(([activityMonth, users]) => ({
+      cohortMonth,
+      activityMonth,
+      activeUsers: users,
+      retentionPct: Math.round((users / base) * 100),
+    }));
+  });
+
+  const expiringSubscriptions = subscriptionRows.filter((sub) => {
     if (!sub.current_period_end) return false;
     const end = new Date(sub.current_period_end).getTime();
     return end > Date.now() && end <= Date.now() + 1000 * 60 * 60 * 24 * 30;
@@ -420,6 +642,12 @@ async function getSummaryPayload(guard: Extract<GuardResult, { ok: true }>) {
   const alerts = [
     ...(failedPaymentsCount >= 3
       ? [{ id: crypto.randomUUID(), title: "Pic d’échecs paiements", description: `${failedPaymentsCount} échecs ce mois-ci sur le tenant sélectionné.`, severity: "critical" as const, category: "payments" as const, createdAt: now.toISOString() }]
+      : []),
+    ...(momGrowth < -15
+      ? [{ id: crypto.randomUUID(), title: "Décroissance mensuelle", description: `La croissance MoM est en baisse (${momGrowth.toFixed(1)}%).`, severity: "warn" as const, category: "payments" as const, createdAt: now.toISOString() }]
+      : []),
+    ...(churnEvents > 0
+      ? [{ id: crypto.randomUUID(), title: "Hausse churn détectée", description: `${churnEvents} événement(s) de churn sur la période ${filters.period}.`, severity: "warn" as const, category: "subscriptions" as const, createdAt: now.toISOString() }]
       : []),
     ...(expiringSubscriptions.length > 0
       ? [{ id: crypto.randomUUID(), title: "Abonnements expirants", description: `${expiringSubscriptions.length} abonnement(s) arrivent à échéance sous 30 jours.`, severity: "warn" as const, category: "subscriptions" as const, createdAt: now.toISOString() }]
@@ -437,6 +665,12 @@ async function getSummaryPayload(guard: Extract<GuardResult, { ok: true }>) {
   return {
     tenant,
     userRole: role,
+    filtersApplied: {
+      period: filters.period,
+      planId: filters.planId ?? null,
+      country: filters.country ?? null,
+      channel: filters.channel ?? null,
+    },
     kpis: {
       mrr: { label: "MRR", value: mrr, currency: tenant.currency, tone: "good" as const },
       arr: { label: "ARR", value: arr, currency: tenant.currency, tone: "neutral" as const },
@@ -456,6 +690,28 @@ async function getSummaryPayload(guard: Extract<GuardResult, { ok: true }>) {
       byLevel: Array.from(byLevelMap.entries()).map(([key, value]) => ({ key, label: key, value })),
       byPaymentMethod: Array.from(byMethodMap.entries()).map(([key, value]) => ({ key, label: key, value })),
     },
+    business: {
+      kpis: {
+        activeUsers,
+        newSignups,
+        grossRevenue: paidAmountMonth,
+        netRevenue: netRevenueMonth,
+        conversionRate,
+        momGrowth,
+        arpu,
+        aov,
+      },
+      funnel: [
+        { stage: "signup_started", value: signupStarted },
+        { stage: "signup_completed", value: signupCompleted },
+        { stage: "trial_started", value: trialStarted },
+        { stage: "subscription_activated", value: subscriptionsActivated },
+        { stage: "payment_success", value: paymentsSuccess },
+      ],
+      cohorts,
+      forecast,
+      acquisition: Array.from(acquisitionMap.entries()).map(([channel, users]) => ({ channel, users })),
+    },
     alerts,
   };
 }
@@ -470,7 +726,7 @@ app.get("/tenants", async (c) => {
 app.get("/summary", async (c) => {
   const guard = await requireConsoleAccess(c.req.raw);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
-  const payload = await getSummaryPayload(guard);
+  const payload = await getSummaryPayload(guard, new URL(c.req.url).searchParams);
   return c.json(payload);
 });
 
@@ -930,6 +1186,490 @@ app.get("/audit", async (c) => {
       createdAt: row.created_at,
     })),
   });
+});
+
+app.get("/users", async (c) => {
+  const guard = await requireConsoleAccess(c.req.raw);
+  if (!guard.ok) return c.json({ error: guard.message }, guard.status);
+
+  const filters = userListFiltersSchema.parse(Object.fromEntries(new URL(c.req.url).searchParams.entries()));
+
+  const { data: baseUsers, error } = await guard.service
+    .from("tenant_user_accounts")
+    .select("user_id, status, country_code, acquisition_channel, suspended_reason, suspended_at, reactivated_at, last_seen_at, created_at")
+    .eq("tenant_id", guard.tenantId)
+    .is("deleted_at", null);
+
+  if (error) return c.json({ error: error.message }, 400);
+  const userIds = (baseUsers ?? []).map((row) => row.user_id);
+
+  const [{ data: profiles }, { data: roles }, authUsersRes] = await Promise.all([
+    userIds.length
+      ? guard.service.from("profiles").select("id, full_name, telephone").in("id", userIds)
+      : Promise.resolve({ data: [] as Array<{ id: string; full_name: string | null; telephone: string | null }> }),
+    userIds.length
+      ? guard.service.from("user_roles").select("user_id, role_code").eq("tenant_id", guard.tenantId).in("user_id", userIds)
+      : Promise.resolve({ data: [] as Array<{ user_id: string; role_code: string }> }),
+    guard.service.auth.admin.listUsers({ page: 1, perPage: 1000 }),
+  ]);
+
+  const emailMap = new Map<string, string>();
+  for (const user of authUsersRes.data?.users ?? []) {
+    emailMap.set(user.id, user.email ?? "");
+  }
+
+  const profileMap = new Map((profiles ?? []).map((profile) => [profile.id, profile]));
+  const roleMap = new Map<string, string>();
+  for (const row of roles ?? []) {
+    if (!roleMap.has(row.user_id)) roleMap.set(row.user_id, row.role_code);
+  }
+
+  const allowRawPii = canSeeRawPii(guard.role);
+  const normalized = (baseUsers ?? []).map((row) => {
+    const profile = profileMap.get(row.user_id);
+    const email = emailMap.get(row.user_id) ?? "";
+    return {
+      userId: row.user_id,
+      fullName: profile?.full_name ?? "Utilisateur",
+      email: allowRawPii ? email : (maskEmail(email) ?? ""),
+      phone: allowRawPii ? profile?.telephone ?? null : null,
+      roleCode: roleMap.get(row.user_id) ?? "support",
+      status: row.status,
+      countryCode: row.country_code,
+      acquisitionChannel: row.acquisition_channel,
+      lastSeenAt: row.last_seen_at,
+      suspendedReason: row.suspended_reason,
+      suspendedAt: row.suspended_at,
+      reactivatedAt: row.reactivated_at,
+      createdAt: row.created_at,
+    };
+  });
+
+  const searched = normalized.filter((row) => {
+    if (filters.status !== "all" && row.status !== filters.status) return false;
+    if (filters.role !== "all" && row.roleCode !== filters.role) return false;
+    if (!filters.search) return true;
+    const haystack = `${row.fullName} ${row.email}`.toLowerCase();
+    return haystack.includes(filters.search.toLowerCase());
+  });
+
+  const factor = filters.sortOrder === "asc" ? 1 : -1;
+  searched.sort((a, b) => {
+    const left = String((a as Record<string, unknown>)[filters.sortBy] ?? "").toLowerCase();
+    const right = String((b as Record<string, unknown>)[filters.sortBy] ?? "").toLowerCase();
+    return left.localeCompare(right) * factor;
+  });
+
+  const from = (filters.page - 1) * filters.pageSize;
+  const paged = searched.slice(from, from + filters.pageSize);
+
+  return c.json({
+    rows: paged,
+    page: filters.page,
+    pageSize: filters.pageSize,
+    total: searched.length,
+  });
+});
+
+app.get("/users/export", async (c) => {
+  const guard = await requireConsoleAccess(c.req.raw);
+  if (!guard.ok) return c.json({ error: guard.message }, guard.status);
+
+  const { data: baseUsers, error } = await guard.service
+    .from("tenant_user_accounts")
+    .select("user_id, status, country_code, acquisition_channel, created_at")
+    .eq("tenant_id", guard.tenantId)
+    .is("deleted_at", null);
+  if (error) return c.json({ error: error.message }, 400);
+
+  const userIds = (baseUsers ?? []).map((row) => row.user_id);
+  const [{ data: profiles }, { data: roles }, authUsersRes] = await Promise.all([
+    userIds.length
+      ? guard.service.from("profiles").select("id, full_name").in("id", userIds)
+      : Promise.resolve({ data: [] as Array<{ id: string; full_name: string | null }> }),
+    userIds.length
+      ? guard.service.from("user_roles").select("user_id, role_code").eq("tenant_id", guard.tenantId).in("user_id", userIds)
+      : Promise.resolve({ data: [] as Array<{ user_id: string; role_code: string }> }),
+    guard.service.auth.admin.listUsers({ page: 1, perPage: 1000 }),
+  ]);
+
+  const profileMap = new Map((profiles ?? []).map((profile) => [profile.id, profile.full_name ?? ""]));
+  const roleMap = new Map((roles ?? []).map((row) => [row.user_id, row.role_code]));
+  const emailMap = new Map<string, string>();
+  for (const user of authUsersRes.data?.users ?? []) emailMap.set(user.id, user.email ?? "");
+
+  const rows = [
+    ["userId", "fullName", "email", "roleCode", "status", "countryCode", "acquisitionChannel", "createdAt"],
+    ...(baseUsers ?? []).map((row) => [
+      row.user_id,
+      profileMap.get(row.user_id) ?? "",
+      emailMap.get(row.user_id) ?? "",
+      roleMap.get(row.user_id) ?? "support",
+      row.status,
+      row.country_code,
+      row.acquisition_channel,
+      row.created_at,
+    ]),
+  ];
+
+  const csv = rows.map((row) => row.map((item) => `"${String(item).replaceAll('"', '""')}"`).join(",")).join("\n");
+  return new Response(csv, {
+    headers: {
+      "Content-Type": "text/csv; charset=utf-8",
+      "Content-Disposition": "attachment; filename=admin-users.csv",
+    },
+  });
+});
+
+app.get("/users/:userId", async (c) => {
+  const guard = await requireConsoleAccess(c.req.raw);
+  if (!guard.ok) return c.json({ error: guard.message }, guard.status);
+
+  const userId = c.req.param("userId");
+  const [{ data: account }, { data: profile }, { data: roles }, authUsersRes, { data: audits }] = await Promise.all([
+    guard.service
+      .from("tenant_user_accounts")
+      .select("user_id, status, country_code, acquisition_channel, suspended_reason, suspended_at, reactivated_at, last_seen_at, created_at, metadata")
+      .eq("tenant_id", guard.tenantId)
+      .eq("user_id", userId)
+      .is("deleted_at", null)
+      .maybeSingle(),
+    guard.service.from("profiles").select("id, full_name, telephone, role").eq("id", userId).maybeSingle(),
+    guard.service.from("user_roles").select("role_code").eq("tenant_id", guard.tenantId).eq("user_id", userId),
+    guard.service.auth.admin.getUserById(userId),
+    guard.service
+      .from("audit_logs")
+      .select("id, action, severity, metadata, created_at")
+      .eq("tenant_id", guard.tenantId)
+      .eq("entity_id", userId)
+      .order("created_at", { ascending: false })
+      .limit(25),
+  ]);
+
+  if (!account) return c.json({ error: "Utilisateur introuvable" }, 404);
+
+  const userEmail = authUsersRes.data.user?.email ?? "";
+  const primaryRole = roles?.[0]?.role_code ?? "support";
+  return c.json({
+    userId,
+    fullName: profile?.full_name ?? "Utilisateur",
+    email: canSeeRawPii(guard.role) ? userEmail : maskEmail(userEmail),
+    phone: canSeeRawPii(guard.role) ? profile?.telephone ?? null : null,
+    roleCode: primaryRole,
+    status: account.status,
+    countryCode: account.country_code,
+    acquisitionChannel: account.acquisition_channel,
+    suspendedReason: account.suspended_reason,
+    suspendedAt: account.suspended_at,
+    reactivatedAt: account.reactivated_at,
+    lastSeenAt: account.last_seen_at,
+    createdAt: account.created_at,
+    metadata: account.metadata ?? {},
+    auditTrail: (audits ?? []).map((row) => ({
+      id: row.id,
+      action: row.action,
+      severity: row.severity,
+      metadata: row.metadata ?? {},
+      createdAt: row.created_at,
+    })),
+  });
+});
+
+app.post("/users", async (c) => {
+  const guard = await requireConsoleAccess(c.req.raw);
+  if (!guard.ok) return c.json({ error: guard.message }, guard.status);
+  if (!canManageUsers(guard.role)) return c.json({ error: "Action non autorisée" }, 403);
+
+  const body = userCreateSchema.parse(await c.req.json().catch(() => ({})));
+  const tempPassword = body.password ?? `${crypto.randomUUID()}Aa1!`;
+  const created = await guard.service.auth.admin.createUser({
+    email: body.email,
+    password: tempPassword,
+    email_confirm: true,
+    user_metadata: { full_name: body.fullName },
+  });
+  if (created.error || !created.data.user) return c.json({ error: created.error?.message ?? "Création utilisateur impossible" }, 400);
+
+  const userId = created.data.user.id;
+  await Promise.all([
+    guard.service.from("profiles").upsert({
+      id: userId,
+      role: "teacher",
+      full_name: body.fullName,
+    }),
+    guard.service.from("user_roles").upsert({
+      tenant_id: guard.tenantId,
+      user_id: userId,
+      role_code: body.roleCode,
+      is_primary: true,
+    }, { onConflict: "tenant_id,user_id,role_code" }),
+    guard.service.from("tenant_user_accounts").upsert({
+      tenant_id: guard.tenantId,
+      user_id: userId,
+      status: body.status,
+      country_code: body.countryCode.toUpperCase(),
+      acquisition_channel: body.acquisitionChannel,
+      metadata: { invited_by: guard.userId },
+    }, { onConflict: "tenant_id,user_id" }),
+    guard.service.from("kpi_events").insert({
+      tenant_id: guard.tenantId,
+      user_id: userId,
+      event_name: "signup_completed",
+      properties: { source: "admin_console" },
+    }),
+  ]);
+
+  if (body.sendInvite) {
+    await guard.service.auth.admin.generateLink({
+      email: body.email,
+      type: "invite",
+    });
+  }
+
+  await appendAuditLog(guard.service, {
+    tenantId: guard.tenantId,
+    actorUserId: guard.userId,
+    actorRole: guard.role,
+    action: "user.created",
+    entityType: "user",
+    entityId: userId,
+    metadata: { roleCode: body.roleCode, status: body.status },
+    ipAddress: c.req.header("x-forwarded-for") ?? null,
+    userAgent: c.req.header("user-agent") ?? null,
+  });
+
+  return c.json({ ok: true, userId }, 201);
+});
+
+app.patch("/users/:userId", async (c) => {
+  const guard = await requireConsoleAccess(c.req.raw);
+  if (!guard.ok) return c.json({ error: guard.message }, guard.status);
+  if (!canManageUsers(guard.role)) return c.json({ error: "Action non autorisée" }, 403);
+
+  const userId = c.req.param("userId");
+  const body = userUpdateSchema.parse(await c.req.json().catch(() => ({})));
+
+  if (body.fullName) {
+    const { error } = await guard.service.from("profiles").update({ full_name: body.fullName }).eq("id", userId);
+    if (error) return c.json({ error: error.message }, 400);
+  }
+
+  if (body.roleCode) {
+    await guard.service.from("user_roles").delete().eq("tenant_id", guard.tenantId).eq("user_id", userId);
+    await guard.service.from("user_roles").insert({
+      tenant_id: guard.tenantId,
+      user_id: userId,
+      role_code: body.roleCode,
+      is_primary: true,
+    });
+  }
+
+  const patch: Record<string, unknown> = {};
+  if (body.status) patch.status = body.status;
+  if (body.countryCode) patch.country_code = body.countryCode.toUpperCase();
+  if (body.acquisitionChannel) patch.acquisition_channel = body.acquisitionChannel;
+  if (body.suspendedReason) patch.suspended_reason = body.suspendedReason;
+  if (body.status === "suspended") patch.suspended_at = new Date().toISOString();
+  if (body.status === "active") patch.reactivated_at = new Date().toISOString();
+
+  if (Object.keys(patch).length > 0) {
+    const { error } = await guard.service.from("tenant_user_accounts").update(patch).eq("tenant_id", guard.tenantId).eq("user_id", userId);
+    if (error) return c.json({ error: error.message }, 400);
+  }
+
+  await appendAuditLog(guard.service, {
+    tenantId: guard.tenantId,
+    actorUserId: guard.userId,
+    actorRole: guard.role,
+    action: "user.updated",
+    entityType: "user",
+    entityId: userId,
+    metadata: body,
+  });
+
+  return c.json({ ok: true });
+});
+
+app.post("/users/:userId/suspend", async (c) => {
+  const guard = await requireConsoleAccess(c.req.raw);
+  if (!guard.ok) return c.json({ error: guard.message }, guard.status);
+  if (!canManageUsers(guard.role)) return c.json({ error: "Action non autorisée" }, 403);
+
+  const userId = c.req.param("userId");
+  const body = suspendUserSchema.parse(await c.req.json().catch(() => ({})));
+
+  await guard.service.from("tenant_user_accounts").update({
+    status: "suspended",
+    suspended_reason: body.reason,
+    suspended_at: new Date().toISOString(),
+  }).eq("tenant_id", guard.tenantId).eq("user_id", userId);
+
+  await appendAuditLog(guard.service, {
+    tenantId: guard.tenantId,
+    actorUserId: guard.userId,
+    actorRole: guard.role,
+    action: "user.suspended",
+    entityType: "user",
+    entityId: userId,
+    severity: "warn",
+    metadata: body,
+  });
+
+  return c.json({ ok: true });
+});
+
+app.post("/users/:userId/reactivate", async (c) => {
+  const guard = await requireConsoleAccess(c.req.raw);
+  if (!guard.ok) return c.json({ error: guard.message }, guard.status);
+  if (!canManageUsers(guard.role)) return c.json({ error: "Action non autorisée" }, 403);
+
+  const userId = c.req.param("userId");
+  const body = reactivateUserSchema.parse(await c.req.json().catch(() => ({})));
+
+  await guard.service.from("tenant_user_accounts").update({
+    status: "active",
+    reactivated_at: new Date().toISOString(),
+    suspended_reason: body.reason ?? null,
+  }).eq("tenant_id", guard.tenantId).eq("user_id", userId);
+
+  await appendAuditLog(guard.service, {
+    tenantId: guard.tenantId,
+    actorUserId: guard.userId,
+    actorRole: guard.role,
+    action: "user.reactivated",
+    entityType: "user",
+    entityId: userId,
+    metadata: body,
+  });
+
+  return c.json({ ok: true });
+});
+
+app.post("/users/:userId/reset-password", async (c) => {
+  const guard = await requireConsoleAccess(c.req.raw);
+  if (!guard.ok) return c.json({ error: guard.message }, guard.status);
+  if (!canManageUsers(guard.role)) return c.json({ error: "Action non autorisée" }, 403);
+
+  const userId = c.req.param("userId");
+  const body = resetPasswordSchema.parse(await c.req.json().catch(() => ({})));
+  const userResult = await guard.service.auth.admin.getUserById(userId);
+  if (userResult.error || !userResult.data.user?.email) {
+    return c.json({ error: "Utilisateur introuvable" }, 404);
+  }
+
+  const reset = await guard.service.auth.admin.generateLink({
+    type: "recovery",
+    email: userResult.data.user.email,
+    options: body.redirectTo ? { redirectTo: body.redirectTo } : undefined,
+  });
+  if (reset.error) return c.json({ error: reset.error.message }, 400);
+
+  await appendAuditLog(guard.service, {
+    tenantId: guard.tenantId,
+    actorUserId: guard.userId,
+    actorRole: guard.role,
+    action: "user.password_reset_requested",
+    entityType: "user",
+    entityId: userId,
+    severity: "warn",
+  });
+
+  return c.json({ ok: true });
+});
+
+app.delete("/users/:userId", async (c) => {
+  const guard = await requireConsoleAccess(c.req.raw);
+  if (!guard.ok) return c.json({ error: guard.message }, guard.status);
+  if (!canManageUsers(guard.role)) return c.json({ error: "Action non autorisée" }, 403);
+
+  const userId = c.req.param("userId");
+  const body = deleteUserSchema.parse(await c.req.json().catch(() => ({})));
+
+  await guard.service.from("tenant_user_accounts").update({
+    status: "deleted",
+    deleted_at: new Date().toISOString(),
+  }).eq("tenant_id", guard.tenantId).eq("user_id", userId);
+
+  await guard.service.from("user_roles").delete().eq("tenant_id", guard.tenantId).eq("user_id", userId);
+
+  if (body.hardDelete) {
+    await guard.service.auth.admin.deleteUser(userId, true);
+  }
+
+  await appendAuditLog(guard.service, {
+    tenantId: guard.tenantId,
+    actorUserId: guard.userId,
+    actorRole: guard.role,
+    action: body.hardDelete ? "user.hard_deleted" : "user.soft_deleted",
+    entityType: "user",
+    entityId: userId,
+    severity: "critical",
+    metadata: { reason: body.reason ?? null },
+  });
+
+  return c.json({ ok: true });
+});
+
+app.post("/users/import", async (c) => {
+  const guard = await requireConsoleAccess(c.req.raw);
+  if (!guard.ok) return c.json({ error: guard.message }, guard.status);
+  if (!canManageUsers(guard.role)) return c.json({ error: "Action non autorisée" }, 403);
+
+  const body = await c.req.json().catch(() => ({}));
+  const csvText = typeof body.csv === "string" ? body.csv : "";
+  const rows = parseCsv(csvText);
+  let imported = 0;
+  const errors: string[] = [];
+
+  for (const row of rows) {
+    try {
+      const payload = userCreateSchema.parse({
+        email: row.email,
+        fullName: row.fullName,
+        roleCode: row.roleCode || "support",
+        status: row.status || "active",
+        countryCode: row.countryCode || "SN",
+        acquisitionChannel: row.acquisitionChannel || "import_csv",
+        sendInvite: false,
+      });
+
+      const created = await guard.service.auth.admin.createUser({
+        email: payload.email,
+        password: `${crypto.randomUUID()}Aa1!`,
+        email_confirm: true,
+        user_metadata: { full_name: payload.fullName },
+      });
+      if (created.error || !created.data.user) throw new Error(created.error?.message ?? "create_user_failed");
+
+      await Promise.all([
+        guard.service.from("profiles").upsert({ id: created.data.user.id, role: "teacher", full_name: payload.fullName }),
+        guard.service.from("user_roles").insert({ tenant_id: guard.tenantId, user_id: created.data.user.id, role_code: payload.roleCode, is_primary: true }),
+        guard.service.from("tenant_user_accounts").upsert({
+          tenant_id: guard.tenantId,
+          user_id: created.data.user.id,
+          status: payload.status,
+          country_code: payload.countryCode,
+          acquisition_channel: payload.acquisitionChannel,
+          metadata: { source: "csv_import" },
+        }, { onConflict: "tenant_id,user_id" }),
+      ]);
+
+      imported += 1;
+    } catch (error) {
+      errors.push(error instanceof Error ? error.message : "import_row_failed");
+    }
+  }
+
+  await appendAuditLog(guard.service, {
+    tenantId: guard.tenantId,
+    actorUserId: guard.userId,
+    actorRole: guard.role,
+    action: "users.imported_csv",
+    entityType: "user",
+    metadata: { imported, failed: errors.length },
+  });
+
+  return c.json({ ok: true, imported, failed: errors.length, errors: errors.slice(0, 15) });
 });
 
 app.onError((error, c) => {

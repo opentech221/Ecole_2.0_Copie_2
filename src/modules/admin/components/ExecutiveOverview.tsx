@@ -19,6 +19,14 @@ export function ExecutiveOverview({ summary }: ExecutiveOverviewProps) {
     { title: "Impayés", icon: ShieldAlert, value: formatMoney(summary.kpis.unpaid.value, summary.kpis.unpaid.currency), tone: summary.kpis.unpaid.tone, detail: `${summary.kpis.failedPayments.value} paiements en échec` },
     { title: "Recouvrement", icon: CreditCard, value: formatPercent(summary.kpis.recoveryRate.value), tone: summary.kpis.recoveryRate.tone, detail: `Churn ${formatPercent(summary.kpis.churnRate.value)}` },
     { title: "LTV estimée", icon: ArrowUpRight, value: formatMoney(summary.kpis.estimatedLtv.value, summary.kpis.estimatedLtv.currency), tone: summary.kpis.estimatedLtv.tone, detail: "Valeur vie client estimée" },
+    ...(summary.business
+      ? [
+          { title: "Utilisateurs actifs", icon: ShieldAlert, value: String(summary.business.kpis.activeUsers), tone: "neutral" as const, detail: `${summary.business.kpis.newSignups} nouveaux inscrits` },
+          { title: "Revenu net", icon: Wallet, value: formatMoney(summary.business.kpis.netRevenue, summary.kpis.monthRevenue.currency), tone: "good" as const, detail: `Brut ${formatMoney(summary.business.kpis.grossRevenue, summary.kpis.monthRevenue.currency)}` },
+          { title: "Conversion", icon: CreditCard, value: formatPercent(summary.business.kpis.conversionRate), tone: summary.business.kpis.conversionRate < 20 ? "warn" as const : "good" as const, detail: `MoM ${summary.business.kpis.momGrowth.toFixed(1)}%` },
+          { title: "ARPU / AOV", icon: CircleDollarSign, value: `${formatMoney(summary.business.kpis.arpu, summary.kpis.monthRevenue.currency)} / ${formatMoney(summary.business.kpis.aov, summary.kpis.monthRevenue.currency)}`, tone: "neutral" as const, detail: "ARPU mensuel et panier moyen" },
+        ]
+      : []),
   ];
 
   return (
@@ -148,6 +156,96 @@ export function ExecutiveOverview({ summary }: ExecutiveOverviewProps) {
           </CardContent>
         </Card>
       </div>
+
+      {summary.business && (
+        <div className="grid gap-4 xl:grid-cols-[1.35fr_1fr_1fr]">
+          <Card className="border-slate-200/70 bg-white/90 shadow-sm dark:border-slate-800 dark:bg-slate-950/80">
+            <CardHeader>
+              <CardTitle>Funnel d’acquisition</CardTitle>
+              <CardDescription>Du signup au paiement réussi</CardDescription>
+            </CardHeader>
+            <CardContent className="h-[240px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={summary.business.funnel}>
+                  <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
+                  <XAxis dataKey="stage" tick={{ fontSize: 11 }} />
+                  <YAxis tick={{ fontSize: 12 }} />
+                  <Tooltip />
+                  <Bar dataKey="value" fill="#0f766e" radius={[6, 6, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+
+          <Card className="border-slate-200/70 bg-white/90 shadow-sm dark:border-slate-800 dark:bg-slate-950/80">
+            <CardHeader>
+              <CardTitle>Prévisions baseline</CardTitle>
+              <CardDescription>Projection revenus 3/6/12 mois</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {summary.business.forecast.map((item) => (
+                <div key={item.horizonMonths} className="rounded-xl border p-3">
+                  <p className="text-xs uppercase text-muted-foreground">Horizon {item.horizonMonths} mois</p>
+                  <p className="text-lg font-semibold">{formatMoney(item.projectedRevenueCents, summary.kpis.monthRevenue.currency)}</p>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+
+          <Card className="border-slate-200/70 bg-white/90 shadow-sm dark:border-slate-800 dark:bg-slate-950/80">
+            <CardHeader>
+              <CardTitle>Canaux d’acquisition</CardTitle>
+              <CardDescription>Segmentation clients</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {summary.business.acquisition.map((item, index) => (
+                <div key={item.channel} className="space-y-1">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="font-medium">{item.channel}</span>
+                    <span className="text-muted-foreground">{item.users}</span>
+                  </div>
+                  <div className="h-2 rounded-full bg-slate-100 dark:bg-slate-900">
+                    <div className="h-2 rounded-full" style={{ width: `${Math.max(10, (item.users / Math.max(1, summary.business.kpis.activeUsers)) * 100)}%`, backgroundColor: palette[index % palette.length] }} />
+                  </div>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {summary.business && summary.business.cohorts.length > 0 && (
+        <Card className="border-slate-200/70 bg-white/90 shadow-sm dark:border-slate-800 dark:bg-slate-950/80">
+          <CardHeader>
+            <CardTitle>Cohortes d’abonnement</CardTitle>
+            <CardDescription>Rétention mensuelle par cohorte</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="rounded-2xl border">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b text-left">
+                    <th className="px-3 py-2">Cohorte</th>
+                    <th className="px-3 py-2">Mois activité</th>
+                    <th className="px-3 py-2">Actifs</th>
+                    <th className="px-3 py-2">Rétention</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {summary.business.cohorts.slice(0, 18).map((row) => (
+                    <tr key={`${row.cohortMonth}-${row.activityMonth}`} className="border-b last:border-b-0">
+                      <td className="px-3 py-2">{row.cohortMonth}</td>
+                      <td className="px-3 py-2">{row.activityMonth}</td>
+                      <td className="px-3 py-2">{row.activeUsers}</td>
+                      <td className="px-3 py-2">{row.retentionPct}%</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }

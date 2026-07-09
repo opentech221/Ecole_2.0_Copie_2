@@ -5,18 +5,38 @@ import {
   noteSchema,
   paymentFiltersSchema,
   planUpsertSchema,
+  summaryFiltersSchema,
   refundSchema,
   reminderSchema,
+  adminUserFiltersSchema,
+  adminUserCreateSchema,
+  adminUserUpdateSchema,
+  suspendUserSchema,
+  reactivateUserSchema,
+  resetPasswordSchema,
+  deleteUserSchema,
+  importUsersCsvSchema,
   type MarkOfflineInput,
   type NoteInput,
   type PaymentFiltersInput,
   type PlanUpsertInput,
+  type SummaryFiltersInput,
+  type AdminUserFiltersInput,
+  type AdminUserCreateInput,
+  type AdminUserUpdateInput,
+  type SuspendUserInput,
+  type ReactivateUserInput,
+  type ResetPasswordInput,
+  type DeleteUserInput,
+  type ImportUsersCsvInput,
   type RefundInput,
   type ReminderInput,
 } from "../schemas";
 import type {
   AdminDashboardSummary,
   AdminTenantSummary,
+  AdminUserDetail,
+  AdminUsersPageResult,
   AuditResult,
   BillingSnapshot,
   PaymentDetail,
@@ -66,8 +86,15 @@ export const adminConsoleClient = {
     return edgeRequest<{ data: AdminTenantSummary[] }>(url);
   },
 
-  async getSummary(tenantId: string) {
-    return edgeRequest<AdminDashboardSummary>(withTenant("/summary", tenantId));
+  async getSummary(tenantId: string, filters?: Partial<SummaryFiltersInput>) {
+    const parsed = summaryFiltersSchema.partial().parse(filters ?? {});
+    const url = withTenant("/summary", tenantId);
+    Object.entries(parsed).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== "") {
+        url.searchParams.set(key, String(value));
+      }
+    });
+    return edgeRequest<AdminDashboardSummary>(url);
   },
 
   async getPayments(tenantId: string, filters: Partial<PaymentFiltersInput>) {
@@ -152,5 +179,80 @@ export const adminConsoleClient = {
       method: "POST",
       body: JSON.stringify(body),
     });
+  },
+
+  async getUsers(tenantId: string, filters: Partial<AdminUserFiltersInput>) {
+    const parsed = adminUserFiltersSchema.partial().parse(filters);
+    const url = withTenant("/users", tenantId);
+    Object.entries(parsed).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== "") {
+        url.searchParams.set(key, String(value));
+      }
+    });
+    return edgeRequest<AdminUsersPageResult>(url);
+  },
+
+  async getUserDetail(tenantId: string, userId: string) {
+    return edgeRequest<AdminUserDetail>(withTenant(`/users/${userId}`, tenantId));
+  },
+
+  async createUser(tenantId: string, payload: AdminUserCreateInput) {
+    const body = adminUserCreateSchema.parse(payload);
+    return edgeRequest<{ ok: true; userId: string }>(withTenant("/users", tenantId), {
+      method: "POST",
+      body: JSON.stringify(body),
+    });
+  },
+
+  async updateUser(tenantId: string, userId: string, payload: AdminUserUpdateInput) {
+    const body = adminUserUpdateSchema.parse(payload);
+    return edgeRequest<{ ok: true }>(withTenant(`/users/${userId}`, tenantId), {
+      method: "PATCH",
+      body: JSON.stringify(body),
+    });
+  },
+
+  async suspendUser(tenantId: string, userId: string, payload: SuspendUserInput) {
+    const body = suspendUserSchema.parse(payload);
+    return edgeRequest<{ ok: true }>(withTenant(`/users/${userId}/suspend`, tenantId), {
+      method: "POST",
+      body: JSON.stringify(body),
+    });
+  },
+
+  async reactivateUser(tenantId: string, userId: string, payload: ReactivateUserInput = {}) {
+    const body = reactivateUserSchema.parse(payload);
+    return edgeRequest<{ ok: true }>(withTenant(`/users/${userId}/reactivate`, tenantId), {
+      method: "POST",
+      body: JSON.stringify(body),
+    });
+  },
+
+  async resetPassword(tenantId: string, userId: string, payload: ResetPasswordInput = {}) {
+    const body = resetPasswordSchema.parse(payload);
+    return edgeRequest<{ ok: true }>(withTenant(`/users/${userId}/reset-password`, tenantId), {
+      method: "POST",
+      body: JSON.stringify(body),
+    });
+  },
+
+  async deleteUser(tenantId: string, userId: string, payload: DeleteUserInput = { hardDelete: false }) {
+    const body = deleteUserSchema.parse(payload);
+    return edgeRequest<{ ok: true }>(withTenant(`/users/${userId}`, tenantId), {
+      method: "DELETE",
+      body: JSON.stringify(body),
+    });
+  },
+
+  async importUsersCsv(tenantId: string, payload: ImportUsersCsvInput) {
+    const body = importUsersCsvSchema.parse(payload);
+    return edgeRequest<{ ok: true; imported: number; failed: number; errors: string[] }>(withTenant("/users/import", tenantId), {
+      method: "POST",
+      body: JSON.stringify(body),
+    });
+  },
+
+  async exportUsersCsv(tenantId: string) {
+    return edgeRequest<string>(withTenant("/users/export", tenantId));
   },
 };
