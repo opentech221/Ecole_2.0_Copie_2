@@ -49,6 +49,8 @@ export function NotificationsPage() {
               ? push.statusQuery.error.message
               : "Impossible de contacter le service notifications")
             : null}
+          hasTenant={Boolean(tenantId)}
+          supportsPushApi={push.supportsPushApi}
           enabling={push.subscribeMutation.isPending}
           disabling={push.unsubscribeMutation.isPending}
           testing={push.testPushMutation.isPending}

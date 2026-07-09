@@ -48,6 +48,10 @@ function toPayload(subscription: PushSubscription): PushSubscriptionPayload {
 
 export function usePushNotifications(tenantId: string) {
   const queryClient = useQueryClient();
+  const supportsPushApi = typeof window !== "undefined"
+    && "serviceWorker" in navigator
+    && "PushManager" in window
+    && "Notification" in window;
 
   const statusQuery = useQuery({
     queryKey: ["notifications", tenantId, "push-status"],
@@ -131,6 +135,7 @@ export function usePushNotifications(tenantId: string) {
   return {
     status,
     statusQuery,
+    supportsPushApi,
     subscribeMutation,
     unsubscribeMutation,
     testPushMutation,
