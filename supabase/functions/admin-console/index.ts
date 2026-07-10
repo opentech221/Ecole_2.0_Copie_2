@@ -9,9 +9,6 @@ const app = new Hono();
 app.use("*", logger(console.log));
 
 const defaultOrigins = [
-  "http://localhost:5173",
-  "http://localhost:4173",
-  "http://localhost:3000",
   "*.github.dev",
   "*.vercel.app",
   "https://ecole-2-0-copie-2-opentechsn.vercel.app",
@@ -67,6 +64,16 @@ function registerGet(path: string, handler: Parameters<typeof app.get>[1]) {
 function registerPost(path: string, handler: Parameters<typeof app.post>[1]) {
   app.post(path, handler);
   app.post(`/admin-console${path}`, handler);
+}
+
+function registerPatch(path: string, handler: Parameters<typeof app.patch>[1]) {
+  app.patch(path, handler);
+  app.patch(`/admin-console${path}`, handler);
+}
+
+function registerDelete(path: string, handler: Parameters<typeof app.delete>[1]) {
+  app.delete(path, handler);
+  app.delete(`/admin-console${path}`, handler);
 }
 
 type ConsoleRole = "super_admin" | "admin_finance" | "support" | "owner" | "director";
@@ -1451,7 +1458,7 @@ registerPost("/users", async (c) => {
   return c.json({ ok: true, userId }, 201);
 });
 
-app.patch("/users/:userId", async (c) => {
+registerPatch("/users/:userId", async (c) => {
   const guard = await requireConsoleAccess(c.req.raw);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
   if (!canManageUsers(guard.role)) return c.json({ error: "Action non autorisée" }, 403);
@@ -1587,7 +1594,7 @@ registerPost("/users/:userId/reset-password", async (c) => {
   return c.json({ ok: true });
 });
 
-app.delete("/users/:userId", async (c) => {
+registerDelete("/users/:userId", async (c) => {
   const guard = await requireConsoleAccess(c.req.raw);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
   if (!canManageUsers(guard.role)) return c.json({ error: "Action non autorisée" }, 403);

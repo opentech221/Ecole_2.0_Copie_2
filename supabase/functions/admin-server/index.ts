@@ -8,7 +8,8 @@ const app = new Hono();
 app.use("*", logger(console.log));
 
 const defaultOrigins = [
-  "http://localhost:5173",
+  "*.github.dev",
+  "*.vercel.app",
   "https://ecole-2-0-copie-2-opentechsn.vercel.app",
 ];
 
