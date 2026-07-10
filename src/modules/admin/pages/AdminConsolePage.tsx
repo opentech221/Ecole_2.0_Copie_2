@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { startTransition, useEffect, useMemo, useState } from "react";
 import { BarChart3, PanelLeft, RefreshCw, ShieldCheck } from "lucide-react";
 import { Link } from "react-router";
 import { Badge } from "@/app/components/ui/badge";
@@ -23,6 +23,7 @@ const FILTER_STORAGE_KEY = "ecole2.admin-console.filters";
 
 export function AdminConsolePage() {
   const { profile, loading } = useAuthContext();
+  const [tab, setTab] = useState("overview");
   const {
     tenantId,
     setTenantId,
@@ -59,8 +60,7 @@ export function AdminConsolePage() {
     deleteUserMutation,
     importUsersMutation,
     refreshAll,
-  } = useAdminConsole();
-  const [tab, setTab] = useState("overview");
+  } = useAdminConsole(tab);
   const [planDialogOpen, setPlanDialogOpen] = useState(false);
   const [editingPlanId, setEditingPlanId] = useState<string | null>(null);
 
@@ -201,7 +201,7 @@ export function AdminConsolePage() {
           </div>
         </div>
 
-        <Tabs value={tab} onValueChange={setTab} className="space-y-4">
+        <Tabs value={tab} onValueChange={(value) => startTransition(() => setTab(value))} className="space-y-4">
           <TabsList className="w-full justify-start overflow-auto rounded-2xl border border-slate-200/70 bg-white/90 p-1 dark:border-slate-800 dark:bg-slate-950/80">
             <TabsTrigger value="overview"><BarChart3 className="h-4 w-4" /> Vue exécutive</TabsTrigger>
             <TabsTrigger value="users">Utilisateurs</TabsTrigger>
@@ -253,12 +253,16 @@ export function AdminConsolePage() {
             <BillingWorkspace
               data={billingQuery.data}
               onCreatePlan={() => {
-                setEditingPlanId(null);
-                setPlanDialogOpen(true);
+                startTransition(() => {
+                  setEditingPlanId(null);
+                  setPlanDialogOpen(true);
+                });
               }}
               onEditPlan={(plan) => {
-                setEditingPlanId(plan.id);
-                setPlanDialogOpen(true);
+                startTransition(() => {
+                  setEditingPlanId(plan.id);
+                  setPlanDialogOpen(true);
+                });
               }}
             />
           </TabsContent>

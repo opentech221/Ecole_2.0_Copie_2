@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { startTransition, useMemo, useState } from "react";
 import { Download, KeyRound, PauseCircle, Plus, Search, Trash2, Upload, UserCheck } from "lucide-react";
 import { Badge } from "@/app/components/ui/badge";
 import { Button } from "@/app/components/ui/button";
@@ -104,10 +104,10 @@ export function UsersWorkspace({
             <Button variant="outline" onClick={onExportCsv}>
               <Download className="h-4 w-4" /> Export CSV
             </Button>
-            <Button variant="outline" onClick={() => setImportOpen(true)}>
+            <Button variant="outline" onClick={() => startTransition(() => setImportOpen(true))}>
               <Upload className="h-4 w-4" /> Import CSV
             </Button>
-            <Button onClick={() => setCreateOpen(true)}>
+            <Button onClick={() => startTransition(() => setCreateOpen(true))}>
               <Plus className="h-4 w-4" /> Nouvel utilisateur
             </Button>
           </div>
@@ -355,19 +355,21 @@ export function UsersWorkspace({
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setCreateOpen(false)}>Annuler</Button>
+            <Button variant="outline" onClick={() => startTransition(() => setCreateOpen(false))}>Annuler</Button>
             <Button
               onClick={() => {
                 onCreateUser(createForm);
-                setCreateOpen(false);
-                setCreateForm({
-                  email: "",
-                  fullName: "",
-                  roleCode: "support",
-                  status: "active",
-                  countryCode: "SN",
-                  acquisitionChannel: "direct",
-                  sendInvite: true,
+                startTransition(() => {
+                  setCreateOpen(false);
+                  setCreateForm({
+                    email: "",
+                    fullName: "",
+                    roleCode: "support",
+                    status: "active",
+                    countryCode: "SN",
+                    acquisitionChannel: "direct",
+                    sendInvite: true,
+                  });
                 });
               }}
               disabled={busy || !createForm.email || !createForm.fullName}
@@ -386,11 +388,11 @@ export function UsersWorkspace({
           </DialogHeader>
           <Textarea rows={10} value={csvPayload} onChange={(event) => setCsvPayload(event.target.value)} />
           <DialogFooter>
-            <Button variant="outline" onClick={() => setImportOpen(false)}>Annuler</Button>
+            <Button variant="outline" onClick={() => startTransition(() => setImportOpen(false))}>Annuler</Button>
             <Button
               onClick={() => {
                 onImportCsv({ csv: csvPayload });
-                setImportOpen(false);
+                startTransition(() => setImportOpen(false));
               }}
               disabled={busy || !csvPayload.trim()}
             >

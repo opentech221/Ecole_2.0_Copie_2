@@ -26,7 +26,7 @@ export function useAdminTenants() {
   });
 }
 
-export function useAdminConsole() {
+export function useAdminConsole(activeTab: string) {
   const queryClient = useQueryClient();
   const tenantsQuery = useAdminTenants();
   const [tenantId, setTenantId] = useState<string>("");
@@ -52,46 +52,51 @@ export function useAdminConsole() {
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
 
   const resolvedTenantId = tenantId || tenantsQuery.data?.[0]?.id || "";
+  const isOverviewTab = activeTab === "overview";
+  const isUsersTab = activeTab === "users";
+  const isPaymentsTab = activeTab === "payments";
+  const isBillingTab = activeTab === "billing";
+  const isAuditTab = activeTab === "audit";
 
   const summaryQuery = useQuery({
     queryKey: adminKeys.summaryScoped(resolvedTenantId, summaryFilters),
-    enabled: Boolean(resolvedTenantId),
+    enabled: Boolean(resolvedTenantId && isOverviewTab),
     queryFn: () => adminConsoleClient.getSummary(resolvedTenantId, summaryFilters),
   });
 
   const paymentsQuery = useQuery({
     queryKey: adminKeys.payments(resolvedTenantId, filters),
-    enabled: Boolean(resolvedTenantId),
+    enabled: Boolean(resolvedTenantId && isPaymentsTab),
     queryFn: () => adminConsoleClient.getPayments(resolvedTenantId, filters),
   });
 
   const billingQuery = useQuery({
     queryKey: adminKeys.billing(resolvedTenantId),
-    enabled: Boolean(resolvedTenantId),
+    enabled: Boolean(resolvedTenantId && isBillingTab),
     queryFn: () => adminConsoleClient.getBilling(resolvedTenantId),
   });
 
   const auditQuery = useQuery({
     queryKey: adminKeys.audit(resolvedTenantId),
-    enabled: Boolean(resolvedTenantId),
+    enabled: Boolean(resolvedTenantId && isAuditTab),
     queryFn: () => adminConsoleClient.getAudit(resolvedTenantId),
   });
 
   const usersQuery = useQuery({
     queryKey: adminKeys.users(resolvedTenantId, userFilters),
-    enabled: Boolean(resolvedTenantId),
+    enabled: Boolean(resolvedTenantId && isUsersTab),
     queryFn: () => adminConsoleClient.getUsers(resolvedTenantId, userFilters),
   });
 
   const userDetailQuery = useQuery({
     queryKey: adminKeys.userDetail(resolvedTenantId, selectedUserId),
-    enabled: Boolean(resolvedTenantId && selectedUserId),
+    enabled: Boolean(resolvedTenantId && isUsersTab && selectedUserId),
     queryFn: () => adminConsoleClient.getUserDetail(resolvedTenantId, selectedUserId as string),
   });
 
   const paymentDetailQuery = useQuery({
     queryKey: adminKeys.paymentDetail(resolvedTenantId, selectedPaymentId),
-    enabled: Boolean(resolvedTenantId && selectedPaymentId),
+    enabled: Boolean(resolvedTenantId && isPaymentsTab && selectedPaymentId),
     queryFn: () => adminConsoleClient.getPaymentDetail(resolvedTenantId, selectedPaymentId as string),
   });
 
