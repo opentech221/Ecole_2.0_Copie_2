@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
 import {
   Plus, Eye, Bell, WifiOff, Download,
-  Calendar, BookMarked, ChevronRight, Users,
+  Calendar, BookMarked, ChevronRight, Users, ShieldCheck,
 } from "lucide-react";
 import { useAppContext } from "../contexts/AppContext";
 import { useAuthContext } from "../contexts/AuthContext";
@@ -143,6 +143,7 @@ function ModuleCard({ badge, badgeIcon, gradient, shadowColor, accent, title, de
         <div className="flex items-center gap-2 relative">
           <button
             onClick={onClick}
+            aria-label={title}
             className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl font-bold transition-all active:scale-[0.97]"
             style={{ minHeight:"44px", fontSize:"13px", backgroundColor:accent, color:"#fff", boxShadow:`0 2px 10px ${accent}60` }}
           >
@@ -367,6 +368,19 @@ export function Dashboard() {
               description="Consultez, imprimez et partagez vos fiches de préparation, bulletins et rapports trimestriels générés."
               ctaLabel="Consulter mes archives"
               onClick={() => navigate("/documents")}
+            />
+
+            {/* Module 5: Admin SaaS */}
+            <ModuleCard
+              badge="Module 5"
+              badgeIcon={<ShieldCheck className="w-3.5 h-3.5 text-white/80"/>}
+              gradient="linear-gradient(135deg, #111827 0%, #1f2937 50%, #374151 100%)"
+              shadowColor="rgba(17,24,39,0.32)"
+              accent="#0f766e"
+              title="Admin SaaS"
+              description="Centre d'administration pour le pilotage global : utilisateurs actifs, population pédagogique, sécurité et gouvernance de la plateforme."
+              ctaLabel="Ouvrir le centre"
+              onClick={() => navigate("/admin/saas")}
             />
 
           </div>
