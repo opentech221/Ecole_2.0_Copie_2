@@ -1,0 +1,447 @@
+[
+  {
+    "niveau": "CE1",
+    "document_ref": "guide_etape_2",
+    "domaines": [
+      {
+        "nom": "Mathématiques",
+        "sous_domaines": [
+          {
+            "nom": null,
+            "activites": [
+              {
+                "nom": "Activités Numériques",
+                "page_source": 177,
+                "competences_base": [
+                  {
+                    "description": "Intégrer les nombres entiers naturels de 0 à 100 000, les nombres décimaux et fractionnaires simples ainsi que les opérations arithmétiques (sens et techniques) dans des situations de résolution de problèmes de calculs numériques.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "Intégrer des opérations arithmétiques portant sur les nombres entiers naturels de 0 à 5 000 dans des situations de résolution de problèmes de calculs numériques.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Maîtriser les outils de numération et de calcul (0 à 1000)",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Former un nombre de 3 chiffres",
+                                "contenus": [
+                                  "100, l’unité, la dizaine, la centaine, tableau de numération"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir les nombres de 100 à 500",
+                                "contenus": [
+                                  "Les nombres de 100 à 500, notion d’ordre, écritures additives"
+                                ]
+                              },
+                              {
+                                "titre": "Caractériser un nombre entier",
+                                "contenus": [
+                                  "Nombres pairs, nombres impairs, la moitié, le double d’un nombre"
+                                ]
+                              },
+                              {
+                                "titre": "Effectuer des opérations sur les nombres de 100 à 500",
+                                "contenus": [
+                                  "Addition : sens et technique (addition avec et sans retenue)"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir les nombres de 500 à 999",
+                                "contenus": [
+                                  "Les nombres de 500 à 999 : notion d’ordre, écritures additives, multiplicatives, mixtes"
+                                ]
+                              },
+                              {
+                                "titre": "Effectuer des opérations sur les nombres de 500 à 999",
+                                "contenus": [
+                                  "Soustraction : sens et technique (soustraction avec et sans emprunt)"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir le nombre 1000.",
+                                "contenus": [
+                                  "1000, tableau de numération : unité, dizaine, centaine, unité de mille"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Maîtriser les outils de numération et de calcul (1000 à 5000)",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir les nombres de 1000 à 5000",
+                                "contenus": [
+                                  "les nombres de 1000 à 5000 : formation, écritures additives, multiplicatives, partage"
+                                ]
+                              },
+                              {
+                                "titre": "Effectuer des opérations sur les nombres de 0 à 5000",
+                                "contenus": [
+                                  "Multiplication, division : sens et technique"
+                                ]
+                              },
+                              {
+                                "titre": "Utiliser les caractères de divisibilité",
+                                "contenus": [
+                                  "Divisibilité par 2, par 5"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Développer des automatismes de calcul",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Effectuer un calcul mental",
+                                "contenus": [
+                                  "Addition de deux nombres d’un chiffre chacun",
+                                  "Soustraction de deux nombres d’un chiffre",
+                                  "Comptage et décomptage de 2 en 2 ; 3 en 3 ; 5 en 5 ; 10 en 10",
+                                  "Multiplication par 10, 100 ou 1000",
+                                  "Tables de multiplication par 2, 3, 4 et 5"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "Intégrer les opérations sur les nombres entiers naturels de 0 à 10 000 dans des situations de résolution de problèmes de calculs numériques.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Utiliser les outils de numération et de calcul (jusqu'à 10 000)",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir les nombres de 5000 à 9999",
+                                "contenus": [
+                                  "Les nombres de 5000 à 9999, notion d’ordre, écritures additives"
+                                ]
+                              },
+                              {
+                                "titre": "Effectuer des opérations sur les nombres de 5000 à 9999",
+                                "contenus": [
+                                  "Addition (avec ou sans retenue) et soustraction : ( avec et sans emprunt)",
+                                  "La multiplication (sans retenue et avec retenue), avec au plus deux chiffres au multiplicateur",
+                                  "La division (avec un chiffre au diviseur): sens et technique"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir le nombre 10000",
+                                "contenus": [
+                                  "tableau de numération : unité, dizaine, centaine, unité de mille, dizaine de mille"
+                                ]
+                              },
+                              {
+                                "titre": "Caractériser un nombre entier",
+                                "contenus": [
+                                  "Le triple d’un nombre, les caractères de divisibilité par 2, 5 et 10"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Développer des automatismes de calcul",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Effectuer un calcul mental",
+                                "contenus": [
+                                  "Multiplication par 10, 100 ou 1000",
+                                  "Tables de multiplication par 5 et 6",
+                                  "Addition d’un nombre de deux chiffres et d’un nombre d’un chiffre",
+                                  "Soustraction d’un nombre de deux chiffres et d’un nombre d’un chiffre",
+                                  "Compter et décompter de 2 en 2 ; 3 en 3 ; 5 en 5 ; 10 en10"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Activités Géométriques",
+                "page_source": 191,
+                "competences_base": [
+                  {
+                    "description": "Intégrer les notions liées aux formes des lignes et aux positions particulières et relatives des droites, les propriétés de figures planes et de solides ainsi que des techniques d’utilisation d’instruments dans des situations de résolution de problèmes de constructions géométriques.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "Intégrer les notions liées aux formes de lignes, aux positions particulières et relatives des droites ainsi que des techniques d’utilisation d’instruments dans des situations familières de résolution de problèmes de repérage et de traçage.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Identifier et tracer des lignes et des droites",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier et représenter les formes de lignes à l’aide d’instruments (Règle, double décimètre)",
+                                "contenus": [
+                                  "Lignes droites ; lignes brisées",
+                                  "Lignes courbes"
+                                ]
+                              },
+                              {
+                                "titre": "Identifier et représenter les positions particulières des droites à l’aide d’instruments (Règle, double décimètre)",
+                                "contenus": [
+                                  "Droite horizontale ; droite verticale ; droite oblique"
+                                ]
+                              },
+                              {
+                                "titre": "Identifier et représenter les positions relatives des droites à l’aide d’instruments (Règle, double décimètre, équerre, compas, rapporteur)",
+                                "contenus": [
+                                  "Droites sécantes",
+                                  "Angle droit ; droites perpendiculaires",
+                                  "droites parallèles"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "Intégrer les notions liées aux formes de lignes, aux positions particulières et relatives des droites, des propriétés de figures planes (carré et rectangle) ainsi que des techniques d’utilisation d’instruments dans des situations de résolution de problèmes de constructions géométriques.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Réaliser des constructions géométriques planes",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Construire le carré",
+                                "contenus": [
+                                  "Le carré : découverte et propriétés",
+                                  "Le carré : les diagonales",
+                                  "Le carré : les médianes"
+                                ]
+                              },
+                              {
+                                "titre": "Construire le rectangle",
+                                "contenus": [
+                                  "Le rectangle : découverte et propriétés",
+                                  "Le rectangle : les diagonales",
+                                  "Le rectangle: les médianes"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Activités de Mesure",
+                "page_source": 200,
+                "competences_base": [
+                  {
+                    "description": "Intégrer les notions de longueur, de capacité, de masse, de durée, d’aire et de monnaie ainsi que des techniques d’utilisation d’instruments conventionnels et les opérations arithmétiques dans des situations de résolution de problèmes de mesure et de calcul.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "Intégrer les notions de longueur et de capacité, ainsi que des techniques d’utilisation d’instruments conventionnels dans des situations de résolution de problèmes de mesure.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Mesurer des longueurs et des capacités",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Effectuer des mesures de longueur et des conversions pratiques d’unités.",
+                                "contenus": [
+                                  "Le mètre",
+                                  "Le mètre, le décimètre",
+                                  "Le mètre, le décimètre le centimètre, millimètre"
+                                ]
+                              },
+                              {
+                                "titre": "Effectuer des mesures de capacité et des conversions pratiques d’unités.",
+                                "contenus": [
+                                  "Litre.",
+                                  "Litre, décilitre, centilitre.",
+                                  "Litre, décilitre, centilitre, millilitre."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "Intégrer les notions de longueur, de capacité, de masse et de durée, ainsi que des techniques d’utilisation d’instruments conventionnels dans des situations de résolution de problèmes de mesure.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Mesurer des masses et le temps",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Estimer des masses et effectuer des mesures de masse à l’aide de la balance et des conversions pratiques d’unités.",
+                                "contenus": [
+                                  "Le kilogramme",
+                                  "Le kilogramme, le gramme",
+                                  "Kilogramme, 500g, 250g"
+                                ]
+                              },
+                              {
+                                "titre": "Estimer une durée et utiliser un calendrier",
+                                "contenus": [
+                                  "Jour, semaine, mois, année"
+                                ]
+                              },
+                              {
+                                "titre": "Lire l’heure",
+                                "contenus": [
+                                  "Heure, minute"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 3",
+                        "description": "Intégrer les notions de longueur et de monnaie ainsi que des techniques d’utilisation d’instruments conventionnels dans des situations de résolution de problèmes de calcul de périmètre et de prix.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Effectuer des calculs de périmètres et de prix",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Calculer des périmètres",
+                                "contenus": [
+                                  "Le périmètre du carré",
+                                  "Le périmètre du rectangle"
+                                ]
+                              },
+                              {
+                                "titre": "Effectuer des échanges",
+                                "contenus": [
+                                  "Pièces de monnaie",
+                                  "Pièces de monnaie, billets de banque"
+                                ]
+                              },
+                              {
+                                "titre": "Calculer des prix",
+                                "contenus": [
+                                  "Prix d’achat, prix de revient, frais",
+                                  "Prix d’achat, prix de revient, frais, prix de vente"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Résolution de problèmes",
+                "page_source": 213,
+                "competences_base": [
+                  {
+                    "description": "Intégrer des données, des consignes et des questions d’un énoncé mathématique ainsi que les démarches de raisonnement dans des situations de recherche de solutions appropriées.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "Intégrer les différentes catégories de données dans des situations de résolution de problèmes d’analyse d’énoncés mathématiques.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Analyser les données d'un énoncé",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Organiser les informations contenues dans un énoncé",
+                                "contenus": [
+                                  "Informations (numériques ou non numériques)"
+                                ]
+                              },
+                              {
+                                "titre": "Organiser les données d’un énoncé",
+                                "contenus": [
+                                  "données numériques"
+                                ]
+                              },
+                              {
+                                "titre": "Sélectionner les données utiles d’un énoncé",
+                                "contenus": [
+                                  "données utiles, données inutiles"
+                                ]
+                              },
+                              {
+                                "titre": "Trouver les données manquantes d’un énoncé",
+                                "contenus": [
+                                  "données manquantes"
+                                ]
+                              },
+                              {
+                                "titre": "Exploiter les données contenues dans un tableau",
+                                "contenus": [
+                                  "tableau de données"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "Intégrer des données, des consignes et des questions finales dans des situations de résolution de problèmes d’analyse d’énoncés mathématiques.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Identifier les consignes et les questions",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Organiser des données et des questions",
+                                "contenus": [
+                                  "données numériques, questions"
+                                ]
+                              },
+                              {
+                                "titre": "Formuler la question d’un énoncé.",
+                                "contenus": [
+                                  "Questions finales"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 3",
+                        "description": "Intégrer des données, des consignes et des questions ainsi que la démarche progressive de raisonnement dans des situations problèmes de recherche de solutions appropriées.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Maîtriser la démarche de résolution",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Trouver la question finale et les questions intermédiaires d’un énoncé",
+                                "contenus": [
+                                  "Question intermédiaire, question finale"
+                                ]
+                              },
+                              {
+                                "titre": "Formuler la question finale, la question intermédiaire d’un énoncé.",
+                                "contenus": [
+                                  "Question intermédiaire, question finale"
+                                ]
+                              },
+                              {
+                                "titre": "Raisonner avec ou sans données numériques",
+                                "contenus": [
+                                  "Démarche progressive"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

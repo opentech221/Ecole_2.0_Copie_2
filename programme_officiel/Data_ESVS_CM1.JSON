@@ -1,0 +1,351 @@
+[
+  {
+    "niveau": "CM1",
+    "document_ref": "guide_etape_3",
+    "domaines": [
+      {
+        "nom": "Éducation à la Science et à la Vie Sociale",
+        "sous_domaines": [
+          {
+            "nom": "Découverte du monde",
+            "activites": [
+              {
+                "nom": "Histoire",
+                "page_source": 251,
+                "competences_base": [
+                  {
+                    "description": "intégrer des démarches et techniques de recherche dans des situations de découverte des faits saillants de l’histoire du Sénégal, de l’Afrique de l’ouest et du reste du monde.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "intégrer des démarches et techniques de recherche dans des situations de découverte de la préhistoire",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Découvrir l’âge de la pierre polie",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir les outils et les armes de la préhistoire",
+                                "contenus": [
+                                  "polissage de la pierre"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir le mode de vie des hommes préhistoriques",
+                                "contenus": [
+                                  "chasse",
+                                  "pêche",
+                                  "cueillette",
+                                  "agriculture",
+                                  "élevage"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir l'habitat préhistorique",
+                                "contenus": [
+                                  "création des premiers villages"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir l’organisation sociale de la préhistoire",
+                                "contenus": [
+                                  "division du travail",
+                                  "hiérarchisation sociale et apparition des castes",
+                                  "enterrement des morts",
+                                  "peinture rupestre"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "intégrer des démarches et techniques de recherche dans des situations de découverte de l’histoire des royaumes du Sénégal avant l’arrivée des Blancs",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Découvrir les faits saillants de l’histoire des royaumes du Sénégal avant l’arrivée des Blancs",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Analyser l'organisation des royaumes",
+                                "contenus": [
+                                  "organisation sociale",
+                                  "organisation politique",
+                                  "organisation culturelle",
+                                  "organisation économique",
+                                  "organisation militaire"
+                                ]
+                              },
+                              {
+                                "titre": "Identifier les éléments marquants de la période",
+                                "contenus": [
+                                  "principaux événements et personnages marquants",
+                                  "commerce",
+                                  "religion",
+                                  "santé et hygiène",
+                                  "mission civilisatrice",
+                                  "exploration",
+                                  "éducation",
+                                  "esclavage"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Géographie",
+                "page_source": 265,
+                "competences_base": [
+                  {
+                    "description": "intégrer des démarches et des techniques d’investigation dans des situations d’explication des interrelations entre l’homme et le milieu.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "intégrer des démarches et des techniques d’investigation dans des situations de découverte de la géographie de son milieu.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Découvrir les caractéristiques humaines de son milieu",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Étudier la population du milieu",
+                                "contenus": [
+                                  "taille de la population",
+                                  "composition (ethnique, par sexe, tranches d’âge, par croyance)",
+                                  "répartition géographique",
+                                  "mouvement de la population (exode, migration)"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "intégrer des démarches et des techniques d’investigation dans des situations d’explication des interrelations entre les activités économiques et les ressources du milieu.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Découvrir les caractéristiques économiques de son milieu",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir les activités économiques du milieu",
+                                "contenus": [
+                                  "agriculture",
+                                  "élevage",
+                                  "pêche",
+                                  "industrie",
+                                  "artisanat",
+                                  "commerce",
+                                  "tourisme",
+                                  "etc."
+                                ]
+                              },
+                              {
+                                "titre": "Etablir les liens entre les activités économiques, les ressources et les potentialités du milieu.",
+                                "contenus": [
+                                  "répartition des types d’activités"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Initiation scientifique et technologique",
+                "page_source": 277,
+                "competences_base": [
+                  {
+                    "description": "intégrer des principes, démarches et techniques dans des situations de réalisation d’objets courants et d’explication scientifique et technologique d’éléments et de phénomènes du milieu.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "intégrer des principes, démarches et techniques dans des situations de réalisation d’objets courants",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Démonter un objet technique",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Démonter un objet technique simple",
+                                "contenus": [
+                                  "jouet",
+                                  "lampe de poche",
+                                  "ciseaux",
+                                  "etc."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "intégrer des principes, démarches et techniques dans des situations d’explication scientifique et technologique d’éléments et de phénomènes du milieu.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Assembler un objet technique",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Réaliser le montage d'un objet technique",
+                                "contenus": [
+                                  "jouet",
+                                  "lampe de poche",
+                                  "ciseaux",
+                                  "etc."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Découvrir des phénomènes et des propriétés de quelques substances",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir des phénomènes de la vie courante",
+                                "contenus": [
+                                  "le temps qu’il fait : le vent, la pluie, température",
+                                  "les combustions : combustion vive, combustion lente",
+                                  "les changements d’états : fusion, évaporation, condensation",
+                                  "dilatation des corps (eau, air, métaux)"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nom": "Éducation au développement durable",
+            "sous_domaines": [
+              {
+                "nom": null,
+                "activites": [
+                  {
+                    "nom": "Vivre dans son milieu",
+                    "page_source": 298,
+                    "competences_base": [
+                      {
+                        "description": "intégrer des notions de base, des démarches et des techniques simples dans des situations d’explication et de proposition de solutions pertinentes à des problèmes d’environnement, de nutrition, de population et de santé du milieu.",
+                        "paliers": [
+                          {
+                            "nom": "Palier 2",
+                            "description": "intégrer des notions de base, des démarches et des techniques simples dans des situations de proposition de solutions à des problèmes de santé favorisés par le manque d'hygiène",
+                            "objectifs_apprentissage": [
+                              {
+                                "titre": "Proposer des mesures préventives contre les maladies endémiques et épidémiques",
+                                "objectifs_specifiques": [
+                                  {
+                                    "titre": "Lutter contre les maladies favorisées par le manque d’hygiène",
+                                    "contenus": [
+                                      "évacuation des eaux usées et des déchets solides",
+                                      "élimination des gites larvaires",
+                                      "lavage des mains aux moments critiques",
+                                      "désinfection des fruits et des légumes",
+                                      "déparasitage",
+                                      "aération des pièces"
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "nom": "Vivre ensemble",
+                    "page_source": 312,
+                    "competences_base": [
+                      {
+                        "description": "intégrer des connaissances, des aptitudes et des attitudes dans des situations d’explication et de proposition de solutions à des problèmes de relations humaines au sein du milieu",
+                        "paliers": [
+                          {
+                            "nom": "Palier 1",
+                            "description": "intégrer des règles de base du savoir vivre, le respect des différences et des choix personnels dans des situations d’explication et de proposition de solutions à des problèmes liés à la vie en société",
+                            "objectifs_apprentissage": [
+                              {
+                                "titre": "Proposer des solutions à des problèmes nés de la divergence d’opinions",
+                                "objectifs_specifiques": [
+                                  {
+                                    "titre": "Identifier des problèmes nés de la divergence d’opinions",
+                                    "contenus": [
+                                      "oppositions radicales",
+                                      "propos vifs",
+                                      "querelles",
+                                      "intransigeance",
+                                      "railleries, ironie",
+                                      "agressions verbales",
+                                      "injures",
+                                      "bouderie",
+                                      "bagarres",
+                                      "etc."
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Proposer des modes de gestion des problèmes nés de la divergence d’opinions",
+                                    "contenus": [
+                                      "prévention des problèmes : sens de l’écoute, ouverture d’esprit, respect de l’opinion d’autrui, respect de l’autre, humilité, sens de la mesure et de la modération, bonne foi, empathie, tolérance, etc.",
+                                      "règlement des conflits : dialogue constructif, sens de l’écoute, ouverture d’esprit, respect de l’opinion d’autrui, respect de l’autre, retenue, sens du dépassement, humilité, bonne foi, etc."
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "nom": "Palier 2",
+                            "description": "intégrer des notions de base, des règles de fonctionnement des organisations, une culture démocratique, des actes de solidarité dans des situations d’explication et de proposition de solutions pertinentes à des problèmes liés à la gestion des institutions locales",
+                            "objectifs_apprentissage": [
+                              {
+                                "titre": "Gérer les problèmes nés de la différence d'appartenance",
+                                "objectifs_specifiques": [
+                                  {
+                                    "titre": "Identifier des problèmes nés de la différence d’appartenance",
+                                    "contenus": [
+                                      "rivalité",
+                                      "intolérance",
+                                      "ironie",
+                                      "moquerie",
+                                      "complexe de supériorité",
+                                      "fierté déplacée",
+                                      "repli identitaire",
+                                      "mépris",
+                                      "communautarisme",
+                                      "racisme",
+                                      "etc."
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Proposer des modes de gestion des problèmes nés de la différence d’appartenance",
+                                    "contenus": [
+                                      "prévention et règlement : par le dialogue constructif, l’ouverture d’esprit, le respect de l’autre, le sens de l’égalité et de l’équité, l’humilité, etc."
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,709 @@
+[
+  {
+    "niveau": "CI",
+    "document_ref": "guide_etape_1",
+    "domaines": [
+      {
+        "nom": "Mathématiques",
+        "sous_domaines": [
+          {
+            "nom": null,
+            "activites": [
+              {
+                "nom": "Activités numériques",
+                "page_source": 196,
+                "competences_base": [
+                  {
+                    "description": "Intégrer des notions ensemblistes élémentaires et des opérations portant sur les nombres entiers de 0 à 100 dans des situations de résolution de problèmes de calculs numériques",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "Intégrer les notions ensemblistes élémentaires dans des situations de résolution de problèmes concrets de classification et de sériation.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Former et représenter graphiquement un ensemble",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Former et représenter graphiquement un ensemble",
+                                "contenus": [
+                                  "Notion de sous-ensemble",
+                                  "réunion",
+                                  "Diagramme de Venn"
+                                ]
+                              },
+                              {
+                                "titre": "Former et représenter graphiquement des sous-ensembles",
+                                "contenus": [
+                                  "Peu",
+                                  "beaucoup",
+                                  "rien"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Classifier des ensembles suivant des critères de quantité.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Classifier des ensembles suivant des critères de quantité.",
+                                "contenus": [
+                                  "Peu",
+                                  "beaucoup",
+                                  "rien"
+                                ]
+                              },
+                              {
+                                "titre": "Classifier des ensembles suivant des critères de qualité",
+                                "contenus": [
+                                  "Ensemble",
+                                  "sous ensemble",
+                                  "caractéristiques des éléments : forme, couleur etc."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Comparer des ensembles",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Comparer des ensembles",
+                                "contenus": [
+                                  "sous-ensemble",
+                                  "inclusion",
+                                  "partition",
+                                  "plus que/autant que/moins que"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "Intégrer des opérations arithmétiques portant sur les nombres entiers de 0 à 10 dans des situations de résolution de problèmes concrets de construction et de calculs numériques.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Maitriser les nombres de 0 à 6",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir les nombres 1 2 et 3",
+                                "contenus": [
+                                  "les nombres 1, 2 et 3"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir les nombres 4 et 5",
+                                "contenus": [
+                                  "Les nombres 4 et 5",
+                                  "la notion d’ordre (<, >)"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir le nombre 0",
+                                "contenus": [
+                                  "Le nombre 0 (à partir de l’ensemble vide.)"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Découvrir le nombre 10",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir le nombre 10",
+                                "contenus": [
+                                  "Le nombre 10 (présentation)"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Composer et décomposer le nombre 10",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Composer et décomposer le nombre 10",
+                                "contenus": [
+                                  "Ecritures additives"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Découvrir la dizaine",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir la dizaine",
+                                "contenus": [
+                                  "Unité/dizaine",
+                                  "groupement et échange"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Ajouter 2 à un nombre",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Ajouter 2 à un nombre",
+                                "contenus": [
+                                  "Les nombres de 0 à 8"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Trouver le double ou la moitié d’un nombre",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Trouver le double ou la moitié d’un nombre",
+                                "contenus": [
+                                  "Les nombres de 0 à 10"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 3",
+                        "description": "Intégrer des opérations arithmétiques portant sur les nombres entiers de 0 à 20 dans des situations de résolution de problèmes concrets de construction et de calculs numériques.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Maitriser les nombres de 11 à 20/ utiliser l’addition et la soustraction",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir le nombre 11",
+                                "contenus": [
+                                  "les nombres de 0 à 11",
+                                  "la notion d’ordre (<, >)"
+                                ]
+                              },
+                              {
+                                "titre": "Composer et décomposer le nombre 11",
+                                "contenus": [
+                                  "Ecritures additives du nombre 11"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir le nombre 12",
+                                "contenus": [
+                                  "Les nombres de 0 à 12",
+                                  "la notion d’ordre (<, >)"
+                                ]
+                              },
+                              {
+                                "titre": "Composer et décomposer le nombre 12",
+                                "contenus": [
+                                  "Ecritures additives du nombre 12"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir le nombre 13",
+                                "contenus": [
+                                  "Les nombres de 0 à 13",
+                                  "la notion d’ordre (<, >)"
+                                ]
+                              },
+                              {
+                                "titre": "Composer et décomposer le nombre 13",
+                                "contenus": [
+                                  "Ecritures additives du nombre 13"
+                                ]
+                              },
+                              {
+                                "titre": "Effectuer des opérations portant sur les nombres de 0 à 13",
+                                "contenus": [
+                                  "Addition et soustraction sur les nombres de 0 à 13"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir le nombre 14",
+                                "contenus": [
+                                  "Les nombres de 0 à 14",
+                                  "la notion d’ordre (<, >)"
+                                ]
+                              },
+                              {
+                                "titre": "Composer et décomposer le nombre 14",
+                                "contenus": [
+                                  "Ecritures additives du nombre 14"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir le nombre 15",
+                                "contenus": [
+                                  "Les nombres de 0 à 15",
+                                  "la notion d’ordre (<, >)"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Activités géométriques",
+                "page_source": 236,
+                "competences_base": [
+                  {
+                    "description": "Intégrer des notions de structuration de l’espace, les formes de figures planes et de solides familiers ainsi que les techniques d’utilisation d’instruments de traçage dans des situations de résolution de problèmes de reproduction d’objets géométriques.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "Intégrer des notions de structuration de l’espace dans des situations de résolution de problèmes concrets de repérage de positions.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "utiliser les notions indiquées en se référant aux parties de son corps",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "utiliser les notions indiquées en se référant aux parties de son corps",
+                                "contenus": [
+                                  "droite/gauche",
+                                  "devant/derrière"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Se situer dans un espace réel ou représenté en utilisant les notions indiquées",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Se situer dans un espace réel ou représenté en utilisant les notions indiquées",
+                                "contenus": [
+                                  "droite/gauche",
+                                  "devant/derrière",
+                                  "près de/loin de",
+                                  "sur/sous",
+                                  "en haut/ en bas",
+                                  "avant/au même niveau/après"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Situer des objets dans un espace réel ou représenté",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Situer des objets dans un espace réel ou représenté",
+                                "contenus": [
+                                  "droite/gauche",
+                                  "près de/loin de",
+                                  "sur/sous",
+                                  "en haut/ en bas",
+                                  "avant/au même niveau/après",
+                                  "devant/derrière"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "Intégrer les formes de solides familiers et de figures planes dans des situations de résolution de problèmes concrets de classification, de reconnaissance, de reproduction et de dessin d’objets géométriques",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Classifier des solides familiers",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Classifier des solides familiers",
+                                "contenus": [
+                                  "Cylindre",
+                                  "parallélépipède rectangle (pavé droit)",
+                                  "cube"
+                                ]
+                              },
+                              {
+                                "titre": "Dessiner des solides familiers",
+                                "contenus": [
+                                  "Cylindre",
+                                  "parallélépipède rectangle (pavé droit)",
+                                  "cube"
+                                ]
+                              },
+                              {
+                                "titre": "Décrire des solides (description sommaire)",
+                                "contenus": [
+                                  "Cylindre",
+                                  "parallélépipède rectangle (pavé droit)",
+                                  "cube"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Classifier des figures planes (selon la forme)",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Classifier des figures planes (selon la forme)",
+                                "contenus": [
+                                  "carré",
+                                  "rectangle",
+                                  "triangle",
+                                  "rond"
+                                ]
+                              },
+                              {
+                                "titre": "Dessiner des figures planes",
+                                "contenus": [
+                                  "carré",
+                                  "rectangle",
+                                  "triangle",
+                                  "rond"
+                                ]
+                              },
+                              {
+                                "titre": "Décrire des figures planes simples (description sommaire)",
+                                "contenus": [
+                                  "carré",
+                                  "rectangle",
+                                  "triangle",
+                                  "rond"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Décomposer et recomposer un solide familier",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Décomposer et recomposer un solide familier",
+                                "contenus": [
+                                  "Cylindre",
+                                  "parallélépipède rectangle (pavé droit)",
+                                  "cube"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 3",
+                        "description": "Intégrer des formes de lignes et des notions de structuration de l’espace dans des situations de résolution de problèmes de représentation graphique d’itinéraires.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Tracer des lignes ouvertes et des lignes fermées.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Tracer des lignes ouvertes et des lignes fermées.",
+                                "contenus": [
+                                  "Lignes ouvertes",
+                                  "lignes fermées",
+                                  "Rythmes graphiques"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Utiliser en situation le vocabulaire adéquat.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Utiliser en situation le vocabulaire adéquat.",
+                                "contenus": [
+                                  "Intérieur/Extérieur/Frontière",
+                                  "Quadrillage/Case/Nœud",
+                                  "Point de départ /Point d’arrivée/Parcours"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Représenter graphiquement des itinéraires.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Représenter graphiquement des itinéraires.",
+                                "contenus": [
+                                  "Notion d’itinéraire",
+                                  "point de départ",
+                                  "point d’arrivée",
+                                  "parcours"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Activités de mesure",
+                "page_source": 262,
+                "competences_base": [
+                  {
+                    "description": "Intégrer les notions de longueurs, de capacités, de masses, de durées et de monnaie ainsi que les techniques d’utilisation des instruments non conventionnels, conventionnels et usuels dans des situations de résolution de problèmes concrets de mesure",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "Intégrer les notions de longueurs et de capacités ainsi que la notion d’instruments non conventionnels dans des situations de résolution de problèmes concrets de mesurage.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Estimer des longueurs",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Estimer des longueurs",
+                                "contenus": [
+                                  "court/long",
+                                  "grand/petit"
+                                ]
+                              },
+                              {
+                                "titre": "Comparer des longueurs",
+                                "contenus": [
+                                  "Plus long /plus court"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Estimer des distances",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Estimer des distances",
+                                "contenus": [
+                                  "Près de / Loin de"
+                                ]
+                              },
+                              {
+                                "titre": "Comparer des distances",
+                                "contenus": [
+                                  "Plus près de /Plus loin de"
+                                ]
+                              },
+                              {
+                                "titre": "Estimer des capacités",
+                                "contenus": [
+                                  "beaucoup/peu"
+                                ]
+                              },
+                              {
+                                "titre": "Comparer des capacités",
+                                "contenus": [
+                                  "Plus de…que de",
+                                  "Moins de…que de",
+                                  "Autant de…que de"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "Intégrer les notions de longueurs, de capacités et de masses ainsi que la notion d’instruments non conventionnels dans des situations de résolution de problèmes concrets de mesurage",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Estimer des masses",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Estimer des masses",
+                                "contenus": [
+                                  "lourd/ léger"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 3",
+                        "description": "Intégrer les notions de longueurs, de capacités, de masses, de durées ainsi que la notion d’instruments non conventionnels dans des situations de résolution de problèmes concrets de mesurage.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Estimer une durée",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Estimer une durée",
+                                "contenus": [
+                                  "Long / court",
+                                  "lent / rapide"
+                                ]
+                              },
+                              {
+                                "titre": "Comparer des durées",
+                                "contenus": [
+                                  "Plus…( long/court/rapide) que",
+                                  "Moins ( long/ court/rapide ) que",
+                                  "Aussi (long/court/rapide) que"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Activités de résolution de problèmes",
+                "page_source": 284,
+                "competences_base": [
+                  {
+                    "description": "Intégrer des données et des consignes/questions d’un énoncé mathématique ainsi que les démarches de raisonnement dans des situations de recherche de solutions appropriées",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "Intégrer les techniques d’observation et de recherche d’indices dans la résolution de situations problèmes de mise en relation et d’application de règles logiques",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Rechercher des informations sur une image",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Chercher des indices",
+                                "contenus": [
+                                  "Informations utiles",
+                                  "informations inutiles",
+                                  "informations manquantes"
+                                ]
+                              },
+                              {
+                                "titre": "Identifier l’intrus sur une image",
+                                "contenus": [
+                                  "Informations utiles",
+                                  "informations inutiles"
+                                ]
+                              },
+                              {
+                                "titre": "Retrouver ce qui manque sur une image",
+                                "contenus": [
+                                  "Informations utiles",
+                                  "informations inutiles",
+                                  "informations manquantes"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Traiter les informations sur une image",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Remettre de l’ordre dans une série d’images",
+                                "contenus": [
+                                  "Règles logiques"
+                                ]
+                              },
+                              {
+                                "titre": "Lier un indice à une image",
+                                "contenus": [
+                                  "Règles logiques"
+                                ]
+                              },
+                              {
+                                "titre": "Reproduire un modèle",
+                                "contenus": [
+                                  "Règles logiques",
+                                  "Informations utiles",
+                                  "informations inutiles"
+                                ]
+                              },
+                              {
+                                "titre": "Reconnaître et appliquer un algorithme",
+                                "contenus": [
+                                  "Rythme",
+                                  "Algorithme répétitif",
+                                  "algorithme récursif"
+                                ]
+                              },
+                              {
+                                "titre": "Construire et utiliser un tableau",
+                                "contenus": [
+                                  "Tableau à double entrée"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "Intégrer les notions de donnée et de question dans des situations de résolution de problèmes concrets d’analyse d’énoncés mathématiques.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Identifier un problème mathématique parmi plusieurs situations comprenant des énoncés oraux mathématiques et non mathématiques",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier un problème mathématique parmi plusieurs situations comprenant des énoncés oraux mathématiques et non mathématiques",
+                                "contenus": [
+                                  "Le problème mathématique"
+                                ]
+                              },
+                              {
+                                "titre": "Dramatiser un problème mathématique",
+                                "contenus": [
+                                  "Le problème mathématique"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Identifier les données d’un énoncé mathématique",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier les données d’un énoncé mathématique",
+                                "contenus": [
+                                  "Les données d’un problème",
+                                  "Les informations non numériques"
+                                ]
+                              },
+                              {
+                                "titre": "Identifier les questions/consignes d’un énoncé",
+                                "contenus": [
+                                  "Les questions / consignes d’un énoncé"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 3",
+                        "description": "Intégrer les données et les consignes/questions dans des situations de résolution de problèmes concrets d’analyse d’énoncés mathématiques.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Identifier les données utiles ou inutiles d’un énoncé mathématique",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier les données utiles ou inutiles d’un énoncé mathématique",
+                                "contenus": [
+                                  "données utiles",
+                                  "données inutiles"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Identifier la question finale d’un énoncé mathématique",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier la question finale d’un énoncé mathématique",
+                                "contenus": [
+                                  "question finale"
+                                ]
+                              },
+                              {
+                                "titre": "Identifier les questions intermédiaires d’un énoncé mathématique",
+                                "contenus": [
+                                  "questions intermédiaires"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

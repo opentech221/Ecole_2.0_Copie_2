@@ -16,10 +16,10 @@ const TERM_COVERAGE = [28, 55, 82];
 
 // ─── Cascade data: OA → OS → Contenu ─────────────────────────────────────────
 
-interface OsItem { os: string; contenus: string[] }
-interface OaItem { oa: string; osItems: OsItem[] }
+export interface OsItem { os: string; contenus: string[] }
+export interface OaItem { oa: string; osItems: OsItem[] }
 
-const OA_CATALOG: Record<string, OaItem[]> = {
+export const OA_CATALOG: Record<string, OaItem[]> = {
   "Activités Numériques": [
     { oa: "OA1 · Reconnaître et lire les nombres jusqu'à 1 000",
       osItems: [
@@ -178,15 +178,15 @@ const OA_CATALOG: Record<string, OaItem[]> = {
 
 // days = unique session days after deduplication (2 slots on same day = 1 session).
 // deferredDays = days that had 2 slots → the 2nd slot is a deferred evaluation block.
-interface Activity  { name: string; days: string[]; deferredDays?: string[] }
-interface SousGroup { sous: string | null; activities: Activity[] }
-interface Domain    {
+export interface Activity  { name: string; days: string[]; deferredDays?: string[] }
+export interface SousGroup { sous: string | null; activities: Activity[] }
+export interface Domain    {
   key: string; label: string; abbr: string;
   color: string; bg: string; dark: string; light: string;
   sousGroups: SousGroup[];
 }
 
-const DOMAINS: Domain[] = [
+export const DOMAINS: Domain[] = [
   // Mathématiques — Case B: no sous-domaine → "Pas de sous-domaine"
   {
     key: "maths", label: "Mathématiques", abbr: "MATH",

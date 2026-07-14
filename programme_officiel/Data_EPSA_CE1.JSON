@@ -1,0 +1,383 @@
+[
+  {
+    "niveau": "CE1",
+    "document_ref": "guide_etape_2",
+    "domaines": [
+      {
+        "nom": "Education Physique, Sportive et Artistique",
+        "sous_domaines": [
+          {
+            "nom": "Education physique et sportive",
+            "activites": [
+              {
+                "nom": "Activités physiques et sportives",
+                "page_source": 320,
+                "competences_base": [
+                  {
+                    "description": "Intégrer des activités motrices, des règles de base et des techniques simples dans des situations d’initiation sportive",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "intégrer des activités motrices, des règles de base et des techniques simples dans des situations de jeux de ballon au but",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Pratiquer des exercices physiques",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Pratiquer des exercices d’assouplissement",
+                                "contenus": [
+                                  "Activités motrices du train supérieur (balancement des bras, cercle des bras, flexion/extension, rotation des poignets, attraper, tirer, etc.)",
+                                  "Activités motrices du train inférieur (marcher, courir, flexion de jambes, sauter, quadrupédie, pousser...)"
+                                ]
+                              },
+                              {
+                                "titre": "Pratiquer des exercices de mise en route de l’organisme (échauffement)",
+                                "contenus": [
+                                  "Marche sportive",
+                                  "Petites foulées entrecoupées d’exercices d’étirement et d’assouplissement"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Pratiquer des jeux pré-sportifs",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Pratiquer le jeu de ballon au but",
+                                "contenus": [
+                                  "Règles de base : dimensions du terrain, nombre de joueurs, rôle des joueurs, fautes et sanctions",
+                                  "Techniques de base : conduite de balle, passe, réception, tir"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "intégrer des activités motrices, des règles de base, des techniques simples et la coordination corporelle dans des situations d’initiation en athlétisme",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Pratiquer des exercices physiques",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Pratiquer des exercices d’assouplissement",
+                                "contenus": [
+                                  "Activités motrices du train supérieur",
+                                  "Activités motrices du train inférieur"
+                                ]
+                              },
+                              {
+                                "titre": "Pratiquer des exercices de mise en route de l’organisme (échauffement)",
+                                "contenus": [
+                                  "Marche sportive, petites foulées entrecoupées d’exercices d’étirement et d’assouplissement"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Pratiquer l’athlétisme",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Pratiquer la course de vitesse",
+                                "contenus": [
+                                  "Bonne répartition de l’effort sur l’ensemble du parcours",
+                                  "Des foulées à amplitude large",
+                                  "Bonne coordination corporelle",
+                                  "Ne pas ralentir à la vue de la ligne d’arrivée (si possible accélérer)",
+                                  "Ne pas courir en zigzag au risque d’allonger la distance à parcourir",
+                                  "Accroissement de la fréquence des foulées"
+                                ]
+                              },
+                              {
+                                "titre": "Pratiquer le saut en longueur",
+                                "contenus": [
+                                  "Activités préparatoires : à saute mouton, saut à cloche pied, saut à pieds joints",
+                                  "Techniques de saut en longueur : course d’élan rapide, jambe d’attaque le plus près possible de la planche d’appel sans mordre, sauter vers le haut et vers l’avant, se cambrer vers l’avant à l’atterrissage pour aller le plus loin possible"
+                                ]
+                              },
+                              {
+                                "titre": "Pratiquer le lancer de précision",
+                                "contenus": [
+                                  "Activités préparatoires : balancement de bras, assouplissement des épaules, flexion des jambes, inclinaison du tronc (latérale, d’avant en arrière...)",
+                                  "Techniques de lancer de précision (atteindre une cible fixe ou mobile) : viser juste, doser son lancer, appréciation correcte de la vitesse de déplacement de la cible"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nom": "Education artistique",
+            "activites": [
+              {
+                "nom": "Arts plastiques",
+                "page_source": 312,
+                "competences_base": [
+                  {
+                    "description": "Intégrer des formes, des couleurs et des techniques élémentaires de reproduction et d’expression artistique dans des situations de décoration",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "Intégrer des formes, des couleurs, des matériaux et des techniques élémentaires de reproduction et d'expression dans des situations de modelage d'objets ou d'animaux de la vie courante",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Préparer le matériau de modelage et reproduire un objet",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier des matériaux de modelage",
+                                "contenus": [
+                                  "Pâte à modeler, argile, kaolin, etc."
+                                ]
+                              },
+                              {
+                                "titre": "Préparer du matériau de modelage",
+                                "contenus": [
+                                  "Préparation de l’argile : tamisage, dosage, malaxage"
+                                ]
+                              },
+                              {
+                                "titre": "Reproduire un objet",
+                                "contenus": [
+                                  "Divers objets ou animaux de la vie courante : canari, seau, chien, porc, chèvre, pot, écuelle, calebasse, poupée, gourde",
+                                  "Caractéristiques de chaque objet à dégager en situation"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "Intégrer des formes, des couleurs et des techniques élémentaires de reproduction et d’expression dans des situations de dessin et de coloriage d’objets de la vie courante ou de scènes de la vie régionale",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Produire un dessin thématique",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier des formes, des couleurs et des techniques d’expression artistique",
+                                "contenus": [
+                                  "Formes : cercle, carré, rectangle, triangle, etc.",
+                                  "Couleurs : couleurs primaires, secondaires",
+                                  "Techniques : trait, point, hachure, aplat, etc."
+                                ]
+                              },
+                              {
+                                "titre": "Dessiner un objet ou une scène thématique",
+                                "contenus": [
+                                  "Dessin d’un objet ou d’un animal de la vie courante",
+                                  "Dessin d’une scène de la vie régionale (scène de marché, de lutte, de pêche, de culture...)"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Réaliser des maquettes d’objets",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier des objets de forme géométrique",
+                                "contenus": [
+                                  "Boîtes de formes variées : cube, parallélépipède, cône, cylindre, etc."
+                                ]
+                              },
+                              {
+                                "titre": "Réaliser des maquettes d’objets",
+                                "contenus": [
+                                  "Confection d’objets en volume"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Education musicale",
+                "page_source": 315,
+                "competences_base": [
+                  {
+                    "description": "Intégrer la reproduction de mélodies, de rythmes divers, la gestuelle simple et la coordination des mouvements dans des situations d’interprétation et d’appréciation de chants tirés du répertoire local",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "intégrer des paroles, des mélodies, des sons d'instruments à percussion, des techniques vocales et la gestuelle corporelle appropriée dans des situations d’interprétation de chants simples",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Reproduire des sons d'instruments",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier des sons d’instruments à percussion",
+                                "contenus": [
+                                  "Instruments à percussion à identifier : tama, djembé, sabar, tambour, balafon, maracas, flûte, kora, guitare et autres instruments locaux"
+                                ]
+                              },
+                              {
+                                "titre": "Imiter des sons d’instruments à percussion",
+                                "contenus": [
+                                  "Instruments à percussion à imiter : tama, djembé, sabar, tambour, balafon, maracas, flûte, kora, guitare et autres instruments locaux (imitation avec les ressources de la voix et d’autres parties du corps)"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Interpréter des chants",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Fredonner la mélodie d’un chant",
+                                "contenus": [
+                                  "Mélodies de chants tirés du milieu (berceuse, comptine...)"
+                                ]
+                              },
+                              {
+                                "titre": "Exécuter un chant tiré du folklore local",
+                                "contenus": [
+                                  "Chants simples tirés du folklore, un morceau d’orchestre local",
+                                  "Gestuelle : gestes expressifs des mains, des bras, du corps, de la tête, etc.",
+                                  "Tenue de corps : posture appropriée (corps droit, regard droit devant soi, jambes légèrement écartées)"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "intégrer des paroles, des mélodies d'instruments à cordes, des techniques vocales et la gestuelle appropriée dans des situations d’interprétation de chants tirés du répertoire local",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Reproduire des sons d'instruments",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier des sons d’instruments à cordes",
+                                "contenus": [
+                                  "Instruments à cordes à identifier : guitare, kora, riti..."
+                                ]
+                              },
+                              {
+                                "titre": "Imiter des sons d’instruments à cordes",
+                                "contenus": [
+                                  "Instruments à cordes à imiter : guitare, kora, riti... (imitation avec les ressources de la voix et d’autres parties du corps)"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Interpréter un chant avec un accompagnement instrumental",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Exécuter un chant avec l’accompagnement d’un instrument à cordes",
+                                "contenus": [
+                                  "Chants à interpréter : chants tirés du milieu, hymne national, chants de marche, chants initiatiques (circoncision, mariage, tatouage, etc.), chant des lutteurs, louanges...",
+                                  "Instruments à cordes : guitare, kora, riti..."
+                                ]
+                              },
+                              {
+                                "titre": "Accompagner l’exécution d’un chant avec un instrument à cordes",
+                                "contenus": [
+                                  "Chants à accompagner : chants tirés du milieu, hymne national (couplets 1 et 2 et le refrain), chants initiatiques (circoncision, mariage, tatouage, etc.), chant des lutteurs, louanges...",
+                                  "Instruments à cordes : guitare, kora, riti..."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Arts scéniques",
+                "page_source": 319,
+                "competences_base": [
+                  {
+                    "description": "Intégrer des techniques d’imitation, de jeu de rôles, de mise en scène et de déguisement simples dans des situations de dramatisation relatives à des scènes de vie courante ou imaginaires",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "intégrer des attitudes et des mimes dans des situations d’imitation d’une personne",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Imiter une personne dans le désarroi",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Imiter un enfant accusé de vol",
+                                "contenus": [
+                                  "Situations à construire : un élève qui accuse de vol son voisin de table ; une fille qui accuse son frère d’avoir mangé son morceau de pain ; etc.",
+                                  "Deux cas de figures : l’enfant est coupable ; l’enfant est innocent",
+                                  "Sentiments à construire : la peur, le désarroi, la crainte, la confusion (pour le coupable) ; la surprise, l’indignation, la frustration, la colère, la révolte (pour l’innocent)"
+                                ]
+                              },
+                              {
+                                "titre": "Imiter une femme victime de vol",
+                                "contenus": [
+                                  "Situations à construire : une femme qui découvre le vol de ses bijoux ; une marchande victime de vol à l’étalage ; etc.",
+                                  "Sentiments à traduire : l’indignation, la colère, le désarroi, tristesse, l’inquiétude, l’émoi"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Imiter une personne réjouie",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Imiter un enfant qui reçoit un cadeau",
+                                "contenus": [
+                                  "Situations à construire : au retour de voyage d’un parent ; à l’occasion d’une fête ; etc.",
+                                  "Sentiments à traduire : joie, gaieté, satisfaction, jubilation, exultation..."
+                                ]
+                              },
+                              {
+                                "titre": "Imiter un élève qui vient d’apprendre sa réussite à l’examen",
+                                "contenus": [
+                                  "Situations à construire : proclamation, affichage, annonce par téléphone, information par un proche...",
+                                  "Sentiments à traduire : agréable surprise, joie, gaieté, satisfaction, jubilation, exultation..."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "intégrer des attitudes et des mimes dans des situations d’interprétation d’un rôle",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Jouer à ...",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Jouer à un personnage aimé",
+                                "contenus": [
+                                  "Clown, grands-parents, une personne aimée, etc."
+                                ]
+                              },
+                              {
+                                "titre": "Jouer à un personnage antipathique",
+                                "contenus": [
+                                  "Ivrogne, vantard, etc."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

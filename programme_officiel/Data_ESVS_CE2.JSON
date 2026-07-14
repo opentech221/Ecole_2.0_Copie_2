@@ -1,0 +1,448 @@
+[
+  {
+    "niveau": "CE2",
+    "document_ref": "guide_etape_2",
+    "domaines": [
+      {
+        "nom": "Éducation à la Science et à la Vie Sociale",
+        "sous_domaines": [
+          {
+            "nom": "Découverte du monde",
+            "activites": [
+              {
+                "nom": "Histoire",
+                "page_source": 241,
+                "competences_base": [
+                  {
+                    "description": "intégrer des techniques de recherche (observation, enquête, étude documentaire, etc.) dans des situations de découverte de faits historiques du milieu proche.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 3",
+                        "description": "intégrer des techniques d’observation et d’enquête dans des situations de découverte de la notion de progrès, des faits saillants et des personnages marquants de l’histoire du milieu proche",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Découvrir l’idée de progrès.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir l’idée de progrès à travers les activités productives de l’homme.",
+                                "contenus": [
+                                  "l’alimentation, la chasse, élevage (hier, aujourd’hui)",
+                                  "la cueillette, agriculture, la pêche (hier, aujourd’hui)"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir l’idée de progrès à travers les activités culturelles et sociales.",
+                                "contenus": [
+                                  "le feu, l’art, la religion (hier, aujourd’hui)",
+                                  "l’habillement, l’habitat, la médecine (hier, aujourd’hui)"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Découvrir les faits saillants et les personnages marquants de l’histoire du milieu proche.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir des faits saillants de l’histoire du milieu proche.",
+                                "contenus": [
+                                  "Faits les plus saillants : batailles, faits marquants, figures historiques, événements repères (périodes de sécheresse, d’épidémies, de famine, d’abondance, etc.)"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir des personnages marquants de l’histoire du milieu proche.",
+                                "contenus": [
+                                  "Personnages marquants : rois, reines, personnalités religieuses et coutumières, héros, résistants, bienfaiteurs, artistes et sportifs, etc."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 4",
+                        "description": "intégrer des techniques de recherche dans des situations de découverte de l’organisation sociale, politique et économique des royaumes du Sénégal d’autrefois.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Découvrir l’histoire du Sénégal d’autrefois.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir les royaumes de la localité.",
+                                "contenus": [
+                                  "monographie des royaumes : origines, organisation (sociale, politique, économique), déclin"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Géographie",
+                "page_source": 251,
+                "competences_base": [
+                  {
+                    "description": "intégrer des techniques d’observation, de localisation et de représentation dans des situations de découverte de faits géographiques du milieu proche.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 3",
+                        "description": "intégrer des techniques d’observation et de représentation dans des situations de découverte du climat, de la végétation et de la carte de la région.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Découvrir le climat et la végétation de sa région.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier les éléments du climat.",
+                                "contenus": [
+                                  "la pluie, les vents, la température"
+                                ]
+                              },
+                              {
+                                "titre": "Identifier les éléments de la végétation.",
+                                "contenus": [
+                                  "végétation caractéristique de la savane, de la forêt, de la steppe, etc."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Représenter sa région.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier les limites et les signes conventionnels.",
+                                "contenus": [
+                                  "limites de la région, signes conventionnels, légende"
+                                ]
+                              },
+                              {
+                                "titre": "Effectuer la lecture d’une carte.",
+                                "contenus": [
+                                  "lecture de la carte régionale"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 4",
+                        "description": "intégrer des techniques d’observation, de localisation et de représentation dans des situations de découverte du mode de vie de l’homme au sein du milieu proche.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Découvrir les principales activités économiques de l’homme dans sa région.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir l’agriculture dans sa région.",
+                                "contenus": [
+                                  "techniques agricoles : traditionnelles, modernes",
+                                  "les produits : cultures vivrières, cultures industrielles",
+                                  "unités de transformation et de conservation (localisation, description)"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir l’élevage dans sa région.",
+                                "contenus": [
+                                  "les types d’élevage : extensif, intensif",
+                                  "les races élevées (bovines, ovines, équines, caprines, porcines, asines)",
+                                  "les techniques d’élevage (transhumance, embouche, insémination artificielle)",
+                                  "unités de transformation et de conservation"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir la pêche dans sa région.",
+                                "contenus": [
+                                  "types de pêche : artisanale, industrielle",
+                                  "techniques de pêche : à la ligne, à la nasse, au filet",
+                                  "les produits de la mer et des fleuves",
+                                  "unités de transformation et de conservation"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Découvrir le mode de vie de l’homme.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir les mouvements des populations.",
+                                "contenus": [
+                                  "sédentarisation, nomadisme, exode rural, transhumance",
+                                  "conséquences liées à chaque type de mouvement"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir les types d’habitation de l’homme.",
+                                "contenus": [
+                                  "hutte, villa, case, baraque, bidonville, immeuble, etc.",
+                                  "conséquences et mode de vie dans chaque type d’habitation"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir les voies et les moyens de communication.",
+                                "contenus": [
+                                  "voies de communication : terrestre (routes, pistes, chemin de fer), fluviale, maritime, aérienne",
+                                  "moyens de transport : véhicules à moteur, à traction animale, train, pirogue, bateau, avion, hélicoptère",
+                                  "moyens de communication : radio, téléphone, fax, cinéma, télévision, Internet"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Initiation scientifique et technologique",
+                "page_source": 262,
+                "competences_base": [
+                  {
+                    "description": "intégrer des démarches et des techniques (observation, manipulation, expérimentation, etc.) dans des situations de découverte scientifique et technologique du milieu proche",
+                    "paliers": [
+                      {
+                        "nom": "Palier 3",
+                        "description": "intégrer des techniques simples dans des situations d’entretien et de manipulation d’objets techniques courants (thermomètre, montre, radio, etc.).",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Manipuler des objets techniques.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Utiliser des objets techniques.",
+                                "contenus": [
+                                  "lampe tempête, bougie, lampe de poche, lampe électrique, fourneau malgache, foyer amélioré, réchaud",
+                                  "thermomètre, fer à repasser, montre, radio, téléphone"
+                                ]
+                              },
+                              {
+                                "titre": "Entretenir des objets techniques.",
+                                "contenus": [
+                                  "nettoyage, lavage, graissage, dépoussiérage"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 4",
+                        "description": "intégrer des techniques simples dans des situations de fabrication de maquettes d’objets techniques (voiturette, cerf-volant, toupie, etc.).",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Réaliser des objets techniques.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir le principe de fonctionnement de quelques objets techniques.",
+                                "contenus": [
+                                  "lampe à pile (circuit ouvert, circuit fermé)",
+                                  "types de mouvements : rotation (toupie, girouette), translation (tiroir), rotation et translation (voiturette)",
+                                  "sources énergétiques : pile, pétrole, essence, gaz, eau, vent, soleil, énergie mécanique"
+                                ]
+                              },
+                              {
+                                "titre": "Fabriquer des objets techniques.",
+                                "contenus": [
+                                  "maquettes d’objets techniques : circuit électrique simple à piles, lampe à pile, voiturette, toupie, poupée, cerf-volant, etc."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nom": "Éducation au développement durable",
+            "activites": [
+              {
+                "nom": "Vivre dans son milieu",
+                "page_source": 282,
+                "competences_base": [
+                  {
+                    "description": "intégrer des notions de base et des techniques simples dans des situations d’analyse et de proposition de solutions adaptées à des problèmes d’environnement, de nutrition, de population et de santé de son milieu proche",
+                    "paliers": [
+                      {
+                        "nom": "Palier 3",
+                        "description": "intégrer des notions de base et des techniques simples dans des situations d’analyse et de proposition de solutions adaptées à des problèmes de paludisme, d’IST et de VIH/ SIDA au sein de son milieu proche",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Découvrir des moyens de protection contre le paludisme.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier les causes, les facteurs favorisants et les manifestations du paludisme.",
+                                "contenus": [
+                                  "causes : le vecteur (l’anophèle), mode de transmission (piqûre)",
+                                  "facteurs favorisants : eaux stagnantes, manque d’assainissement",
+                                  "manifestations : maux de tête, fièvre, frissons, vomissement, etc."
+                                ]
+                              },
+                              {
+                                "titre": "Proposer des mesures de lutte contre le paludisme.",
+                                "contenus": [
+                                  "mesures préventives : utilisation de moustiquaires imprégnées, d’insecticide, lutte contre les eaux stagnantes, destructions des gîtes larvaires, recours précoce aux soins (Test de Diagnostic Rapide - TDR)"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Se protéger contre les IST et le VIH/ SIDA.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir les causes, les facteurs favorisants et les manifestations des IST et VIH /SIDA.",
+                                "contenus": [
+                                  "causes et facteurs favorisants : piqûre par un objet pointu ou tranchant souillé, partage d’objets souillés à des moments critiques (tatouage, injection, circoncision, excision, rasage, brossage des dents), avances douteuses de personnes plus âgées, manque d’hygiène des parties intimes",
+                                  "manifestations du SIDA : diarrhée prolongée, perte de poids, boutons"
+                                ]
+                              },
+                              {
+                                "titre": "Proposer des mesures de prévention contre les IST et le VIH/SIDA.",
+                                "contenus": [
+                                  "mesures de prévention : ne pas toucher à mains nues du sang, ne pas jouer avec des objets tranchants ou pointus ramassés, ne pas partager les objets tranchants (lames, aiguilles, brosses à dents), hygiène du petit linge (changer tous les jours, linge en coton séché au soleil), technique de la toilette intime"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 4",
+                        "description": "intégrer des notions de base dans des situations d’analyse et de proposition de solutions adaptées à des problèmes d’environnement et de population de son milieu proche",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Restaurer un environnement dégradé.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier les formes de dégradation de l’environnement dans son milieu.",
+                                "contenus": [
+                                  "désertification, érosion, pollution des sols et des eaux"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Analyser des problèmes de population.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier des problèmes de population du milieu.",
+                                "contenus": [
+                                  "mariages précoces, naissances rapprochées, mortalité maternelle et infantile, etc."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Vivre ensemble",
+                "page_source": 295,
+                "competences_base": [
+                  {
+                    "description": "intégrer des valeurs et des comportements dans des situations d’analyse et de proposition de solutions à des problèmes nés des relations humaines au sein du milieu proche",
+                    "paliers": [
+                      {
+                        "nom": "Palier 3",
+                        "description": "intégrer des devoirs et des droits (individuels et collectifs) dans des situations de vie en commun",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "S’acquitter de ses devoirs.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier ses principaux devoirs dans un groupe.",
+                                "contenus": [
+                                  "mes devoirs à l’école : implication, solidarité, entraide, respect du bien public et privé, sens de la coopération, respect de l’autre, participer à la vie de l’école",
+                                  "mes devoirs à la maison et dans le quartier : discrétion, implication, solidarité, assistance, hospitalité, sens de la dignité de l’autre, respect du bien public, patriotisme, participation à la prise en charge des problèmes"
+                                ]
+                              },
+                              {
+                                "titre": "Accomplir ses devoirs dans la vie en commun.",
+                                "contenus": [
+                                  "devoirs d’implication et de solidarité à l’école, à la maison et dans le quartier (situations concrètes vécues ou construites)"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Jouir de ses droits.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier ses droits.",
+                                "contenus": [
+                                  "les 10 principaux droits de l’enfant : droit d’être protégé(e), avoir un nom et nationalité, alimentation saine, être soigné(e), éducation, être nourri/logé, jouer/rire/rêver, accéder à l’information, être protégé(e) violence/exploitation, protection spéciale pour handicapés/réfugiés"
+                                ]
+                              },
+                              {
+                                "titre": "Défendre ses droits.",
+                                "contenus": [
+                                  "identification des situations de violation des droits (école, maison, quartier) et recherche de solutions"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 4",
+                        "description": "intégrer des idéaux de paix, des valeurs et des comportements dans des situations de proposition de solutions à des problèmes nés des relations humaines au sein de son milieu proche",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Promouvoir les idéaux de paix.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier les principaux facteurs et idéaux de paix.",
+                                "contenus": [
+                                  "tolérance, respect mutuel et compréhension entre les peuples",
+                                  "respect de la différence (religieuse, ethnique, politique, sociale, culturelle, d’opinion, etc.)",
+                                  "liberté, démocratie, égalité, droit, sens de l’intérêt général, fair-play, etc."
+                                ]
+                              },
+                              {
+                                "titre": "Vulgariser les facteurs et idéaux de paix.",
+                                "contenus": [
+                                  "identifier des manifestations remarquables de facteurs de paix",
+                                  "tirer les conséquences des situations où ils ont été bafoués",
+                                  "créer des situations pour illustrer l’expression de ces idéaux"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Promouvoir des valeurs et des comportements positifs.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier des valeurs et des comportements positifs du milieu.",
+                                "contenus": [
+                                  "valeurs et comportements positifs : implication, solidarité, hospitalité, discrétion, courtoisie, politesse, disponibilité, humilité, sens de la mesure, courage, abnégation, respect des anciens, respect des règles, etc."
+                                ]
+                              },
+                              {
+                                "titre": "Manifester des comportements conformes aux valeurs du milieu.",
+                                "contenus": [
+                                  "identifier des situations où ces valeurs ont été bafouées",
+                                  "tirer les conséquences et s’accorder sur les conduites à tenir",
+                                  "illustrer l’expression de ces valeurs dans la vie scolaire quotidienne"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

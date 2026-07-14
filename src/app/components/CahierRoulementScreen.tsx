@@ -1,9 +1,13 @@
-import { useState, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import {
   ArrowLeft, ChevronDown, ChevronUp, Printer,
-  Check, Clock, BookOpen, Users, TrendingUp, FileText,
+  Check, Clock, BookOpen, Users, TrendingUp, FileText, CalendarDays, Plus,
+  BellRing, X,
 } from "lucide-react";
+import { DOMAINS as PLANNING_DOMAINS, OA_CATALOG } from "./PlanningScreen";
+import { useAppContext } from "../contexts/AppContext";
+import { supabase, TABLES } from "../../lib/supabase";
 
 // ─── Activity color map (matches PlanningScreen) ──────────────────────────────
 
@@ -38,9 +42,212 @@ function tint(color: string, amount: number, background = "transparent"): string
 
 // ─── Timetable data ───────────────────────────────────────────────────────────
 
-type DayKey = "Lundi" | "Mardi" | "Mercredi" | "Jeudi" | "Vendredi";
+type DayKey = "Lundi" | "Mardi" | "Mercredi" | "Jeudi" | "Vendredi" | "Samedi";
 
-const DAYS: DayKey[] = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"];
+const DAYS: DayKey[] = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+
+interface JournalDomain {
+  id: string;
+  label: string;
+}
+
+const JOURNAL_DOMAIN_KEYS = ["maths", "langue", "esvs", "epsa"] as const;
+
+const JOURNAL_DOMAINS: JournalDomain[] = PLANNING_DOMAINS
+  .filter(domain => JOURNAL_DOMAIN_KEYS.includes(domain.key as (typeof JOURNAL_DOMAIN_KEYS)[number]))
+  .map(domain => ({ id: domain.key, label: domain.label }));
+
+type VisaStatus = "idle" | "pending" | "approved";
+
+interface JournalActivity {
+  id: string;
+  label: string;
+  domainId: string;
+  contents: string[];
+}
+
+interface JournalCellValue {
+  activityIds: string[];
+  contentsByActivity: Record<string, string[]>;
+  observation: string;
+}
+
+interface JournalEntry {
+  cells: Record<string, JournalCellValue>;
+  observations: string;
+  visaStatus: VisaStatus;
+}
+
+interface ActivityOption extends JournalActivity {}
+
+const ALL_ACTIVITY_OPTIONS: ActivityOption[] = PLANNING_DOMAINS
+  .filter(domain => JOURNAL_DOMAIN_KEYS.includes(domain.key as (typeof JOURNAL_DOMAIN_KEYS)[number]))
+  .flatMap(domain =>
+    domain.sousGroups.flatMap(group =>
+      group.activities.map(activity => {
+        const contents = (OA_CATALOG[activity.name] ?? [])
+          .flatMap(oa => oa.osItems.flatMap(os => os.contenus));
+        return {
+          id: activity.name,
+          label: activity.name,
+          domainId: domain.key,
+          contents: Array.from(new Set(contents)),
+        };
+      }),
+    ),
+  );
+
+const ACTIVITY_OPTIONS: ActivityOption[] = ALL_ACTIVITY_OPTIONS.filter(activity => activity.contents.length > 0);
+const EMPTY_ACTIVITY_OPTIONS: ActivityOption[] = ALL_ACTIVITY_OPTIONS.filter(activity => activity.contents.length === 0);
+
+interface ActivityColorPreset {
+  badge: string;
+  content: string;
+  dot: string;
+  panel: string;
+  action: string;
+}
+
+const ACTIVITY_COLOR_PRESETS: ActivityColorPreset[] = [
+  {
+    badge: "bg-blue-500/10 text-blue-600 border-blue-500/40 dark:bg-blue-500/20 dark:text-blue-300 dark:border-blue-700",
+    content: "text-blue-700 marker:text-blue-500 dark:text-blue-100 dark:marker:text-blue-300",
+    dot: "bg-blue-500 dark:bg-blue-300",
+    panel: "border-blue-500/35 dark:border-blue-700/90",
+    action: "border-blue-400/60 text-blue-600 hover:bg-blue-500/10 dark:border-blue-700 dark:text-blue-300 dark:hover:bg-blue-500/20",
+  },
+  {
+    badge: "bg-emerald-500/10 text-emerald-600 border-emerald-500/40 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border-emerald-700",
+    content: "text-emerald-700 marker:text-emerald-500 dark:text-emerald-100 dark:marker:text-emerald-300",
+    dot: "bg-emerald-500 dark:bg-emerald-300",
+    panel: "border-emerald-500/35 dark:border-emerald-700/90",
+    action: "border-emerald-400/60 text-emerald-600 hover:bg-emerald-500/10 dark:border-emerald-700 dark:text-emerald-300 dark:hover:bg-emerald-500/20",
+  },
+  {
+    badge: "bg-fuchsia-500/10 text-fuchsia-600 border-fuchsia-500/40 dark:bg-fuchsia-500/20 dark:text-fuchsia-300 dark:border-fuchsia-700",
+    content: "text-fuchsia-700 marker:text-fuchsia-500 dark:text-fuchsia-100 dark:marker:text-fuchsia-300",
+    dot: "bg-fuchsia-500 dark:bg-fuchsia-300",
+    panel: "border-fuchsia-500/35 dark:border-fuchsia-700/90",
+    action: "border-fuchsia-400/60 text-fuchsia-600 hover:bg-fuchsia-500/10 dark:border-fuchsia-700 dark:text-fuchsia-300 dark:hover:bg-fuchsia-500/20",
+  },
+  {
+    badge: "bg-amber-500/10 text-amber-700 border-amber-500/45 dark:bg-amber-500/20 dark:text-amber-300 dark:border-amber-700",
+    content: "text-amber-700 marker:text-amber-500 dark:text-amber-100 dark:marker:text-amber-300",
+    dot: "bg-amber-500 dark:bg-amber-300",
+    panel: "border-amber-500/35 dark:border-amber-700/90",
+    action: "border-amber-400/60 text-amber-700 hover:bg-amber-500/10 dark:border-amber-700 dark:text-amber-300 dark:hover:bg-amber-500/20",
+  },
+  {
+    badge: "bg-cyan-500/10 text-cyan-700 border-cyan-500/45 dark:bg-cyan-500/20 dark:text-cyan-300 dark:border-cyan-700",
+    content: "text-cyan-700 marker:text-cyan-500 dark:text-cyan-100 dark:marker:text-cyan-300",
+    dot: "bg-cyan-500 dark:bg-cyan-300",
+    panel: "border-cyan-500/35 dark:border-cyan-700/90",
+    action: "border-cyan-400/60 text-cyan-700 hover:bg-cyan-500/10 dark:border-cyan-700 dark:text-cyan-300 dark:hover:bg-cyan-500/20",
+  },
+  {
+    badge: "bg-rose-500/10 text-rose-600 border-rose-500/45 dark:bg-rose-500/20 dark:text-rose-300 dark:border-rose-700",
+    content: "text-rose-700 marker:text-rose-500 dark:text-rose-100 dark:marker:text-rose-300",
+    dot: "bg-rose-500 dark:bg-rose-300",
+    panel: "border-rose-500/35 dark:border-rose-700/90",
+    action: "border-rose-400/60 text-rose-600 hover:bg-rose-500/10 dark:border-rose-700 dark:text-rose-300 dark:hover:bg-rose-500/20",
+  },
+];
+
+function hashToHue(input: string): number {
+  let hash = 0;
+  for (let index = 0; index < input.length; index += 1) {
+    hash = input.charCodeAt(index) + ((hash << 5) - hash);
+    hash |= 0;
+  }
+  return Math.abs(hash) % 360;
+}
+
+function getActivityColor(activityId: string): ActivityColorPreset {
+  const colorIndex = hashToHue(activityId) % ACTIVITY_COLOR_PRESETS.length;
+  return ACTIVITY_COLOR_PRESETS[colorIndex];
+}
+
+const SCHOOL_MONTHS = [
+  { label: "Octobre", monthIndex: 9 },
+  { label: "Novembre", monthIndex: 10 },
+  { label: "Décembre", monthIndex: 11 },
+  { label: "Janvier", monthIndex: 0 },
+  { label: "Février", monthIndex: 1 },
+  { label: "Mars", monthIndex: 2 },
+  { label: "Avril", monthIndex: 3 },
+  { label: "Mai", monthIndex: 4 },
+  { label: "Juin", monthIndex: 5 },
+] as const;
+
+type WeekDayEntry = { dayKey: DayKey; date: Date };
+
+function formatDateKey(date: Date): string {
+  const year = date.getFullYear();
+  const month = `${date.getMonth() + 1}`.padStart(2, "0");
+  const day = `${date.getDate()}`.padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function getWeekKey(week: WeekDayEntry[]): string {
+  if (!week.length) return "no-week";
+  return formatDateKey(week[0].date);
+}
+
+function getSchoolYearStartYear(reference: Date): number {
+  const month = reference.getMonth();
+  if (month >= 9) return reference.getFullYear();
+  if (month <= 5) return reference.getFullYear() - 1;
+  return reference.getFullYear();
+}
+
+function getInitialSchoolMonth(): Date {
+  const today = new Date();
+  const month = today.getMonth();
+  if (month <= 5 || month >= 9) return new Date(today.getFullYear(), month, 1);
+  return new Date(today.getFullYear(), 9, 1);
+}
+
+function getSchoolMonthOptions(reference: Date) {
+  const startYear = getSchoolYearStartYear(reference);
+  return SCHOOL_MONTHS.map(item => {
+    const year = item.monthIndex >= 9 ? startYear : startYear + 1;
+    return {
+      ...item,
+      year,
+      key: `${year}-${item.monthIndex}`,
+    };
+  });
+}
+
+function getMonthWeeks(reference: Date) {
+  const weeks: WeekDayEntry[][] = [];
+  const firstDay = new Date(reference.getFullYear(), reference.getMonth(), 1);
+  const lastDay = new Date(reference.getFullYear(), reference.getMonth() + 1, 0);
+  let cursor = new Date(firstDay);
+  const startOffset = (cursor.getDay() + 6) % 7;
+  cursor.setDate(cursor.getDate() - startOffset);
+
+  while (cursor <= lastDay) {
+    const week: WeekDayEntry[] = [];
+    for (let i = 0; i < 6; i += 1) {
+      const dayDate = new Date(cursor);
+      dayDate.setDate(cursor.getDate() + i);
+      const dayKey = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"][i] as DayKey;
+      week.push({ dayKey, date: dayDate });
+    }
+    weeks.push(week);
+    cursor.setDate(cursor.getDate() + 6);
+  }
+
+  return weeks;
+}
+
+function formatWeekLabel(week: WeekDayEntry[]) {
+  if (!week.length) return "Semaine";
+  const start = week[0].date;
+  const end = week[week.length - 1].date;
+  return `Semaine du ${start.toLocaleDateString("fr-FR", { day: "2-digit", month: "short" })} au ${end.toLocaleDateString("fr-FR", { day: "2-digit", month: "short" })}`;
+}
 
 interface SlotDef {
   time: string;
@@ -85,6 +292,7 @@ const TIMETABLE: Record<DayKey, SlotDef[]> = {
     { time: "11h15", activity: "Orthographe",             ficheNum: 2, oaOs: "OA1 · OS1.2 — Appliquer les règles d'accord" },
     { time: "14h00", activity: "IST (Initiation Scientifique et Technologique)", ficheNum: 2, oaOs: "OA1 · OS1.2 — Réaliser une expérience simple" },
   ],
+  Samedi: [],
 };
 
 // ─── Status types ─────────────────────────────────────────────────────────────
@@ -413,17 +621,392 @@ function MarkPastille({
   );
 }
 
+function ActivityModal({
+  isOpen,
+  domain,
+  selectedIds,
+  onToggle,
+  onClose,
+}: {
+  isOpen: boolean;
+  domain: JournalDomain | null;
+  selectedIds: string[];
+  onToggle: (activityId: string) => void;
+  onClose: () => void;
+}) {
+  if (!isOpen || !domain) return null;
+  const options = ACTIVITY_OPTIONS.filter(option => option.domainId === domain.id);
+  const emptyOptions = EMPTY_ACTIVITY_OPTIONS.filter(option => option.domainId === domain.id);
+
+  return (
+    <div className="fixed inset-0 z-[90] flex items-center justify-center bg-black/55 p-4">
+      <div className="w-full max-w-[560px] rounded-2xl border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-900">
+        <div className="mb-3 flex items-center justify-between">
+          <p className="m-0 text-sm font-extrabold text-gray-900 dark:text-gray-100">Sélection des activités · {domain.label}</p>
+          <button className="text-xs font-bold text-gray-600 dark:text-gray-300" onClick={onClose}>Fermer</button>
+        </div>
+        {emptyOptions.length > 0 && (
+          <div className="mb-3 rounded-lg border border-amber-300 bg-amber-50 px-2 py-1.5 text-[11px] text-amber-700 dark:border-amber-700 dark:bg-amber-900/30 dark:text-amber-200">
+            {emptyOptions.length} activité(s) masquée(s) car aucun contenu n'est défini dans la planification.
+          </div>
+        )}
+        <div className="max-h-[340px] space-y-2 overflow-y-auto">
+          {options.length === 0 && (
+            <p className="text-xs text-gray-500 dark:text-gray-400">Aucune activité disponible avec contenus pour ce domaine.</p>
+          )}
+          {options.map(option => {
+            const tone = getActivityColor(option.id);
+            const checked = selectedIds.includes(option.id);
+            return (
+              <label key={option.id} className="flex items-center gap-2 rounded-lg border border-blue-500/30 bg-blue-50/40 px-2 py-2 dark:border-blue-700 dark:bg-slate-950">
+                <input type="checkbox" checked={checked} onChange={() => onToggle(option.id)} />
+                <span
+                  className={`rounded-full border px-2 py-0.5 text-[11px] font-bold ${tone.badge}`}
+                >
+                  {option.label}
+                </span>
+              </label>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ContentModal({
+  isOpen,
+  activity,
+  selectedContents,
+  filteredContents,
+  onToggle,
+  onClose,
+}: {
+  isOpen: boolean;
+  activity: ActivityOption | null;
+  selectedContents: string[];
+  filteredContents: string[];
+  onToggle: (content: string) => void;
+  onClose: () => void;
+}) {
+  if (!isOpen || !activity) return null;
+  const tone = getActivityColor(activity.id);
+
+  return (
+    <div className="fixed inset-0 z-[95] flex items-center justify-center bg-black/55 p-4">
+      <div className="w-full max-w-[620px] rounded-2xl border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-900">
+        <div className="mb-3 flex items-center justify-between">
+          <p className="m-0 text-sm font-extrabold text-gray-900 dark:text-gray-100">Contenus pédagogiques · {activity.label}</p>
+          <button className="text-xs font-bold text-gray-600 dark:text-gray-300" onClick={onClose}>Fermer</button>
+        </div>
+        <div className="max-h-[360px] space-y-2 overflow-y-auto">
+          {filteredContents.length === 0 ? (
+            <p className="text-xs text-gray-500 dark:text-gray-400">Tous les contenus disponibles sont déjà utilisés dans l'historique.</p>
+          ) : filteredContents.map(content => (
+            <label key={content} className="flex items-start gap-2 rounded-lg border border-blue-500/30 bg-blue-50/40 px-2 py-2 dark:border-blue-700 dark:bg-slate-950">
+              <input type="checkbox" checked={selectedContents.includes(content)} onChange={() => onToggle(content)} className="mt-0.5" />
+              <span className={`text-xs ${tone.content}`}>{content}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function JournalCell({
+  day,
+  domain,
+  value,
+  disabled,
+  onChange,
+  onOpenActivityModal,
+  onOpenContentModal,
+  onRemoveActivity,
+}: {
+  day: DayKey;
+  domain: JournalDomain;
+  value: JournalCellValue;
+  disabled: boolean;
+  onChange: (updates: Partial<JournalCellValue>) => void;
+  onOpenActivityModal: () => void;
+  onOpenContentModal: (activityId: string) => void;
+  onRemoveActivity: (activityId: string) => void;
+}) {
+  const selectedActivities = ACTIVITY_OPTIONS.filter(option => value.activityIds.includes(option.id));
+
+  return (
+    <div className="group flex min-h-[140px] flex-col gap-2 rounded-xl border border-blue-500/40 bg-white p-2.5 transition-all duration-200 hover:border-indigo-500 hover:bg-blue-50/30 dark:border-blue-700 dark:bg-slate-950 dark:hover:border-emerald-700 dark:hover:bg-slate-900">
+      <button
+        onClick={onOpenActivityModal}
+        disabled={disabled}
+        className="inline-flex min-h-[36px] items-center gap-2 self-start rounded-full border border-indigo-700/50 bg-indigo-600 px-3 py-1.5 text-xs font-bold text-white shadow-lg shadow-indigo-600/30 transition-all duration-200 hover:-translate-y-0.5 hover:bg-indigo-500 dark:border-indigo-500/40 dark:bg-indigo-600 dark:text-white"
+        style={{ cursor: disabled ? "not-allowed" : "pointer", opacity: disabled ? 0.65 : 1 }}
+      >
+        <Plus size={14} />
+        Ajouter activité
+      </button>
+
+      <div className="space-y-2">
+        {selectedActivities.map(activity => {
+          const tone = getActivityColor(activity.id);
+          const selectedContents = value.contentsByActivity?.[activity.id] ?? [];
+          return (
+            <div key={activity.id} className={`rounded-lg border bg-blue-50/30 p-2 transition-colors duration-200 dark:bg-slate-900 ${tone.panel}`}>
+              <div className="flex items-center justify-between gap-2">
+                <span className={`rounded-full border px-2 py-0.5 text-[11px] font-bold ${tone.badge}`}>
+                  {activity.label}
+                </span>
+                <div className="inline-flex items-center gap-1">
+                  <button
+                    className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-indigo-700/50 bg-indigo-600 text-white shadow-md shadow-indigo-600/30 transition-all duration-150 hover:bg-indigo-500"
+                    onClick={() => onOpenContentModal(activity.id)}
+                    disabled={disabled}
+                    title="Ajouter / modifier contenus"
+                  >
+                    <Plus size={12} />
+                  </button>
+                  <button
+                    className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-red-400/70 bg-red-500/10 text-red-600 transition-colors duration-150 hover:bg-red-500/20 dark:border-red-700 dark:bg-red-900/30 dark:text-red-300"
+                    onClick={() => onRemoveActivity(activity.id)}
+                    disabled={disabled}
+                    title="Supprimer l'activité"
+                  >
+                    <X size={12} />
+                  </button>
+                </div>
+              </div>
+              {selectedContents.length > 0 && (
+                <div className="mt-1.5 space-y-1">
+                  {selectedContents.map(content => (
+                    <div key={content} className={`flex items-start gap-1.5 text-[11px] ${tone.content}`}>
+                      <span className={`mt-[5px] h-1.5 w-1.5 rounded-full ${tone.dot}`} />
+                      <span>{content}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      <textarea
+        aria-label={`${domain.label} - ${day}`}
+        value={value.observation}
+        onChange={e => onChange({ observation: e.target.value })}
+        disabled={disabled}
+        rows={2}
+        placeholder="Observation rapide"
+        className="w-full resize-y rounded-[10px] border border-blue-500/40 bg-white px-2.5 py-2 text-xs text-gray-900 dark:border-blue-700 dark:bg-slate-900 dark:text-gray-100"
+      />
+    </div>
+  );
+}
+
 // ─── Main component ───────────────────────────────────────────────────────────
 
 export function CahierRoulementScreen() {
   const navigate = useNavigate();
+  const { activeClass } = useAppContext();
 
   // ── Shared view toggle ──
   const [view, setView] = useState<"cahier" | "evaluations">("cahier");
 
   // ── View 1: Cahier de Roulement ──
-  const [headerCollapsed, setHeaderCollapsed] = useState(false);
   const [selectedDay, setSelectedDay] = useState<DayKey>("Lundi");
+  const [selectedMonth, setSelectedMonth] = useState(() => getInitialSchoolMonth());
+  const [selectedWeekIndex, setSelectedWeekIndex] = useState(0);
+  const [weekSaturdayPrefs, setWeekSaturdayPrefs] = useState<Record<string, boolean>>({});
+  const [directorNotice, setDirectorNotice] = useState<string>("");
+  const [activityModalTarget, setActivityModalTarget] = useState<{ day: DayKey; domainId: string } | null>(null);
+  const [contentModalTarget, setContentModalTarget] = useState<{ day: DayKey; domainId: string; activityId: string } | null>(null);
+  const [dbUsedContents, setDbUsedContents] = useState<string[]>([]);
+
+  const schoolMonthOptions = useMemo(() => getSchoolMonthOptions(selectedMonth), [selectedMonth]);
+  const monthWeeks = useMemo(() => getMonthWeeks(selectedMonth), [selectedMonth]);
+  const selectedWeek = monthWeeks[selectedWeekIndex] ?? [];
+  const selectedWeekKey = useMemo(() => getWeekKey(selectedWeek), [selectedWeek]);
+  const selectedWeekIncludesSaturday = weekSaturdayPrefs[selectedWeekKey] ?? false;
+  const selectedWeekDays = useMemo(
+    () => (selectedWeekIncludesSaturday ? selectedWeek : selectedWeek.filter(day => day.dayKey !== "Samedi")),
+    [selectedWeek, selectedWeekIncludesSaturday],
+  );
+  const selectedWeekLabel = useMemo(() => formatWeekLabel(selectedWeekDays), [selectedWeekDays]);
+
+  useEffect(() => {
+    if (selectedWeekIndex >= monthWeeks.length) {
+      setSelectedWeekIndex(0);
+    }
+  }, [monthWeeks.length, selectedWeekIndex]);
+
+  useEffect(() => {
+    if (!selectedWeekDays.some(item => item.dayKey === selectedDay)) {
+      setSelectedDay(selectedWeekDays[0]?.dayKey ?? "Lundi");
+    }
+  }, [selectedDay, selectedWeekDays]);
+
+  const defaultJournalEntry = (): JournalEntry => ({
+    cells: {},
+    observations: "",
+    visaStatus: "idle",
+  });
+
+  useEffect(() => {
+    let mounted = true;
+    async function loadDbUsedContents() {
+      const { data, error } = await supabase
+        .from(TABLES.documents)
+        .select("title")
+        .eq("class_id", activeClass)
+        .eq("type", "planning")
+        .ilike("title", "JOURNAL_CONTENT|%");
+
+      if (error || !mounted) return;
+      const fromDb = new Set<string>();
+      (data ?? []).forEach(row => {
+        const parts = row.title.split("|");
+        const encoded = parts[parts.length - 1] ?? "";
+        if (encoded) fromDb.add(decodeURIComponent(encoded));
+      });
+      setDbUsedContents(Array.from(fromDb));
+    }
+
+    loadDbUsedContents();
+    return () => {
+      mounted = false;
+    };
+  }, [activeClass]);
+
+  const [journalEntries, setJournalEntries] = useState<Record<DayKey, JournalEntry>>(() => {
+    const initial: Record<DayKey, JournalEntry> = {} as Record<DayKey, JournalEntry>;
+    DAYS.forEach(day => {
+      initial[day] = defaultJournalEntry();
+    });
+    return initial;
+  });
+
+  const updateJournalEntry = (day: DayKey, patch: Partial<JournalEntry>) => {
+    setJournalEntries(prev => ({
+      ...prev,
+      [day]: { ...(prev[day] ?? defaultJournalEntry()), ...patch },
+    }));
+  };
+
+  const updateCellValue = (day: DayKey, domainId: string, patch: Partial<JournalCellValue>) => {
+    const currentEntry = journalEntries[day] ?? defaultJournalEntry();
+    setJournalEntries(prev => ({
+      ...prev,
+      [day]: {
+        ...currentEntry,
+        cells: {
+          ...(currentEntry.cells ?? {}),
+          [domainId]: {
+            ...(currentEntry.cells?.[domainId] ?? { activityIds: [], contentsByActivity: {}, observation: "" }),
+            ...patch,
+          },
+        },
+      },
+    }));
+  };
+
+  const toggleActivityInCell = (day: DayKey, domainId: string, activityId: string) => {
+    const currentEntry = journalEntries[day] ?? defaultJournalEntry();
+    const currentValue = currentEntry.cells?.[domainId] ?? { activityIds: [], contentsByActivity: {}, observation: "" };
+    const nextIds = currentValue.activityIds.includes(activityId)
+      ? currentValue.activityIds.filter(id => id !== activityId)
+      : [...currentValue.activityIds, activityId];
+
+    const nextContentsByActivity = { ...(currentValue.contentsByActivity ?? {}) };
+    if (!nextIds.includes(activityId)) {
+      delete nextContentsByActivity[activityId];
+    }
+
+    updateCellValue(day, domainId, { activityIds: nextIds, contentsByActivity: nextContentsByActivity });
+  };
+
+  const removeActivityInCell = (day: DayKey, domainId: string, activityId: string) => {
+    const activity = ACTIVITY_OPTIONS.find(option => option.id === activityId);
+    const ok = window.confirm(`Supprimer l'activite "${activity?.label ?? activityId}" et tous ses contenus associes ?`);
+    if (!ok) return;
+
+    const currentEntry = journalEntries[day] ?? defaultJournalEntry();
+    const currentValue = currentEntry.cells?.[domainId] ?? { activityIds: [], contentsByActivity: {}, observation: "" };
+    const nextIds = currentValue.activityIds.filter(id => id !== activityId);
+    const nextContentsByActivity = { ...(currentValue.contentsByActivity ?? {}) };
+    delete nextContentsByActivity[activityId];
+
+    updateCellValue(day, domainId, { activityIds: nextIds, contentsByActivity: nextContentsByActivity });
+  };
+
+  const persistContentSelection = async (payload: { day: DayKey; domainId: string; activityId: string; content: string }) => {
+    const { day, domainId, activityId, content } = payload;
+    await supabase.from(TABLES.documents).insert({
+      class_id: activeClass,
+      type: "planning",
+      title: `JOURNAL_CONTENT|${selectedWeekLabel}|${day}|${domainId}|${encodeURIComponent(activityId)}|${encodeURIComponent(content)}`,
+      subtitle: `Journal ${day}`,
+      meta: "journal-content-selection",
+    });
+  };
+
+  const toggleContentInCell = (day: DayKey, domainId: string, activityId: string, content: string) => {
+    const currentEntry = journalEntries[day] ?? defaultJournalEntry();
+    const currentValue = currentEntry.cells?.[domainId] ?? { activityIds: [], contentsByActivity: {}, observation: "" };
+    const currentContents = currentValue.contentsByActivity?.[activityId] ?? [];
+    const alreadySelected = currentContents.includes(content);
+
+    const nextContents = alreadySelected
+      ? currentContents.filter(item => item !== content)
+      : [...currentContents, content];
+
+    updateCellValue(day, domainId, {
+      contentsByActivity: {
+        ...(currentValue.contentsByActivity ?? {}),
+        [activityId]: nextContents,
+      },
+    });
+
+    if (!alreadySelected) {
+      setDbUsedContents(prev => Array.from(new Set([...prev, content])));
+      void persistContentSelection({ day, domainId, activityId, content });
+    }
+  };
+
+  const usedContentForCell = (day: DayKey, domainId: string) => {
+    const dayIndex = selectedWeekDays.findIndex(item => item.dayKey === day);
+    if (dayIndex < 0) return [];
+
+    const usedContents = new Set<string>(dbUsedContents);
+
+    selectedWeekDays.forEach((weekDay, index) => {
+      if (index > dayIndex) return;
+
+      const entry = journalEntries[weekDay.dayKey];
+      if (!entry) return;
+
+      Object.entries(entry.cells ?? {}).forEach(([currentDomainId, cell]) => {
+        // Exclure uniquement la cellule courante, mais inclure les autres colonnes du meme jour.
+        if (index === dayIndex && currentDomainId === domainId) return;
+
+        Object.values(cell.contentsByActivity ?? {}).forEach(contents => {
+          contents.forEach(content => usedContents.add(content));
+        });
+      });
+    });
+
+    return Array.from(usedContents);
+  };
+
+  const handleDirectorVisa = (day: DayKey) => {
+    const entry = journalEntries[day] ?? defaultJournalEntry();
+    const nextStatus: VisaStatus = entry.visaStatus === "idle" ? "pending" : entry.visaStatus === "pending" ? "approved" : "approved";
+    updateJournalEntry(day, { visaStatus: nextStatus });
+    const message = nextStatus === "pending"
+      ? `Demande de visa envoyée au directeur pour ${day} • résumé de la journée prêt.`
+      : `Visa approuvé pour ${day} • le directeur a validé la saisie.`;
+    setDirectorNotice(message);
+  };
 
   // Activity states: key = `${day}-${index}`
   const [activityStates, setActivityStates] = useState<Record<string, ActivityState>>({});
@@ -491,6 +1074,33 @@ export function CahierRoulementScreen() {
     window.print();
   }
 
+  const activityModalDomain = activityModalTarget
+    ? JOURNAL_DOMAINS.find(domain => domain.id === activityModalTarget.domainId) ?? null
+    : null;
+
+  const activityModalEntry = activityModalTarget
+    ? (journalEntries[activityModalTarget.day]?.cells?.[activityModalTarget.domainId] ?? { activityIds: [], contentsByActivity: {}, observation: "" })
+    : null;
+
+  const contentModalActivity = contentModalTarget
+    ? ACTIVITY_OPTIONS.find(option => option.id === contentModalTarget.activityId) ?? null
+    : null;
+
+  const contentModalCell = contentModalTarget
+    ? (journalEntries[contentModalTarget.day]?.cells?.[contentModalTarget.domainId] ?? { activityIds: [], contentsByActivity: {}, observation: "" })
+    : null;
+
+  const contentModalSelected = contentModalTarget
+    ? (contentModalCell?.contentsByActivity?.[contentModalTarget.activityId] ?? [])
+    : [];
+
+  const contentModalFiltered = contentModalTarget && contentModalActivity
+    ? contentModalActivity.contents.filter(content => {
+      const used = usedContentForCell(contentModalTarget.day, contentModalTarget.domainId);
+      return !used.includes(content) || contentModalSelected.includes(content);
+    })
+    : [];
+
   return (
     <div
       className="flex flex-col overflow-hidden"
@@ -499,7 +1109,7 @@ export function CahierRoulementScreen() {
       {/* ── Print CSS ── */}
       <style>{`
         @media print {
-          @page { size: A4 portrait; margin: 10mm 12mm; }
+          @page { size: A4 landscape; margin: 8mm 10mm; }
           .no-print { display: none !important; }
           body { background: #fff !important; }
           .print-root { height: auto !important; overflow: visible !important; }
@@ -511,7 +1121,7 @@ export function CahierRoulementScreen() {
       <div
         className="bg-card flex-shrink-0"
         style={{
-          boxShadow: "0 1px 0 var(--border), 0 2px 10px rgba(0,0,0,0.06)",
+          boxShadow: "0 1px 0 var(--border), 0 2px 10px rgba(0,0,0,0.08)",
           zIndex: 50, position: "relative",
         }}
       >
@@ -535,7 +1145,7 @@ export function CahierRoulementScreen() {
               <span>Accueil</span>
             </button>
             <p style={{ fontSize: "14px", fontWeight: 700, color: "var(--primary)", flex: 1, margin: 0 }}>
-              Cahier de Roulement
+              Cahier de journal
             </p>
             <button
               onClick={handlePrint}
@@ -552,120 +1162,58 @@ export function CahierRoulementScreen() {
             </button>
           </div>
 
-          {/* Collapsible controls */}
-          <div style={{
-            maxHeight: headerCollapsed ? "0px" : "220px",
-            overflow: "hidden",
-            transition: "max-height 360ms cubic-bezier(0.4,0,0.2,1)",
-          }}>
-            {/* Day selector tabs (View 1 only) */}
-            {view === "cahier" && (
-              <div style={{ paddingTop: "10px", paddingBottom: "6px" }}>
-                <div
-                  style={{
-                    display: "flex", gap: "4px",
-                    backgroundColor: "var(--muted)",
-                    borderRadius: "14px", padding: "3px",
-                  }}
-                >
-                  {DAYS.map(day => (
+          {view === "cahier" && (
+            <div className="no-print border-t border-gray-200 pt-3 pb-3 dark:border-gray-700">
+              <div className="mb-2 flex items-center gap-2">
+                <CalendarDays className="h-[18px] w-[18px] text-gray-700 dark:text-gray-200" />
+                <p className="m-0 text-[13px] font-extrabold text-gray-900 dark:text-gray-100">{selectedWeekLabel}</p>
+              </div>
+              <div className="mb-2 flex flex-wrap gap-2">
+                {schoolMonthOptions.map(option => (
+                  <button
+                    key={option.key}
+                    onClick={() => {
+                      setSelectedMonth(new Date(option.year, option.monthIndex, 1));
+                      setSelectedWeekIndex(0);
+                    }}
+                    className={`rounded-full border px-3 py-2 text-xs font-bold ${selectedMonth.getMonth() === option.monthIndex ? "border-blue-500 bg-blue-50 text-blue-700 dark:border-blue-700 dark:bg-slate-800 dark:text-blue-300" : "border-indigo-400/40 bg-white text-gray-700 dark:border-blue-700 dark:bg-slate-900 dark:text-gray-200"}`}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {monthWeeks.map((week, index) => (
+                  <div
+                    key={`${week[0].date.toISOString()}-${index}`}
+                    className={`group relative rounded-full border pr-7 ${index === selectedWeekIndex ? "border-blue-500 bg-blue-50 dark:border-blue-700 dark:bg-slate-800" : "border-indigo-400/40 bg-white dark:border-blue-700 dark:bg-slate-900"}`}
+                  >
                     <button
-                      key={day}
-                      onClick={() => setSelectedDay(day)}
-                      style={{
-                        flex: 1, minHeight: "40px",
-                        borderRadius: "11px", border: "none",
-                        fontSize: "11px", fontWeight: 700,
-                        fontFamily: "'Plus Jakarta Sans', sans-serif",
-                        cursor: "pointer",
-                        backgroundColor: selectedDay === day ? "var(--primary)" : "transparent",
-                        color: selectedDay === day ? "var(--primary-foreground)" : "var(--muted-foreground)",
-                        boxShadow: selectedDay === day ? "0 2px 8px rgba(26,54,93,0.22)" : "none",
-                        transition: "all 180ms ease",
-                      }}
+                      onClick={() => setSelectedWeekIndex(index)}
+                      className={`rounded-full px-3 py-2 text-xs font-bold ${index === selectedWeekIndex ? "text-blue-700 dark:text-blue-300" : "text-gray-700 dark:text-gray-200"}`}
                     >
-                      {day.slice(0, 3)}
+                      {formatWeekLabel((weekSaturdayPrefs[getWeekKey(week)] ?? false) ? week : week.filter(day => day.dayKey !== "Samedi"))}
                     </button>
-                  ))}
-                </div>
+                    <button
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        const weekKey = getWeekKey(week);
+                        setWeekSaturdayPrefs(prev => ({
+                          ...prev,
+                          [weekKey]: !(prev[weekKey] ?? false),
+                        }));
+                        setSelectedWeekIndex(index);
+                      }}
+                      title={(weekSaturdayPrefs[getWeekKey(week)] ?? false) ? "Retirer le samedi" : "Ajouter le samedi"}
+                      className={`absolute right-1 top-1/2 inline-flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded-full border text-[10px] transition-colors ${weekSaturdayPrefs[getWeekKey(week)] ?? false ? "border-emerald-500/70 bg-emerald-500/20 text-emerald-700 dark:border-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300" : "border-blue-500/40 bg-blue-500/10 text-blue-700 hover:bg-blue-500/20 dark:border-blue-700 dark:bg-slate-950 dark:text-blue-300"}`}
+                    >
+                      <Plus size={10} />
+                    </button>
+                  </div>
+                ))}
               </div>
-            )}
-
-            {/* Date + class stats */}
-            <div
-              style={{
-                display: "flex", alignItems: "center", gap: "12px",
-                paddingTop: "6px", paddingBottom: "10px",
-              }}
-            >
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <p style={{ fontSize: "12px", color: "var(--muted-foreground)", margin: 0 }}>
-                  <span style={{ fontWeight: 700, color: "var(--primary)", fontSize: "14px" }}>
-                    {view === "cahier" ? selectedDay : "Grille d'évaluations"}
-                  </span>
-                  {view === "cahier" && (
-                    <span style={{ marginLeft: "8px" }}>
-                      — CE2 · Trimestre 1
-                    </span>
-                  )}
-                </p>
-              </div>
-              {view === "cahier" && (
-                <div style={{ display: "flex", gap: "8px", flexShrink: 0 }}>
-                  <div style={{
-                    display: "flex", alignItems: "center", gap: "4px",
-                    backgroundColor: "#dcfce7", borderRadius: "999px",
-                    padding: "4px 10px",
-                  }}>
-                    <Check style={{ width: "12px", height: "12px", color: "#059669" }} />
-                    <span style={{ fontSize: "11px", fontWeight: 700, color: "#059669" }}>
-                      {doneCount} fait{doneCount !== 1 ? "s" : ""}
-                    </span>
-                  </div>
-                  <div style={{
-                    display: "flex", alignItems: "center", gap: "4px",
-                    backgroundColor: "#fef3c7", borderRadius: "999px",
-                    padding: "4px 10px",
-                  }}>
-                    <Clock style={{ width: "12px", height: "12px", color: "#d97706" }} />
-                    <span style={{ fontSize: "11px", fontWeight: 700, color: "#d97706" }}>
-                      {inProgressCount}
-                    </span>
-                  </div>
-                  <div style={{
-                    display: "flex", alignItems: "center", gap: "4px",
-                    backgroundColor: "var(--muted)", borderRadius: "999px",
-                    padding: "4px 10px",
-                  }}>
-                    <Users style={{ width: "12px", height: "12px", color: "var(--muted-foreground)" }} />
-                    <span style={{ fontSize: "11px", fontWeight: 700, color: "var(--muted-foreground)" }}>25 élèves</span>
-                  </div>
-                </div>
-              )}
             </div>
-          </div>
-
-          {/* Toggle tab */}
-          <div
-            className="no-print flex justify-center"
-            style={{ paddingBottom: "4px", paddingTop: "2px", borderTop: "1px solid var(--border)" }}
-          >
-            <button
-              onClick={() => setHeaderCollapsed(o => !o)}
-              style={{
-                display: "inline-flex", alignItems: "center", gap: "6px",
-                fontSize: "11px", color: "var(--muted-foreground)", fontWeight: 600,
-                fontFamily: "'Plus Jakarta Sans', sans-serif",
-                padding: "4px 14px", minHeight: "28px",
-                borderRadius: "999px", border: "none",
-                backgroundColor: "transparent", cursor: "pointer",
-              }}
-            >
-              {headerCollapsed
-                ? <><ChevronDown style={{ width: "14px", height: "14px" }} />Afficher les filtres</>
-                : <><ChevronUp style={{ width: "14px", height: "14px" }} />Masquer les filtres</>}
-            </button>
-          </div>
+          )}
         </div>
       </div>
 
@@ -674,7 +1222,7 @@ export function CahierRoulementScreen() {
         className="no-print bg-card flex-shrink-0"
         style={{
           borderBottom: "1px solid var(--border)",
-          boxShadow: "0 1px 6px rgba(0,0,0,0.05)",
+          boxShadow: "0 1px 6px rgba(0,0,0,0.15)",
           zIndex: 40, position: "relative",
         }}
       >
@@ -749,143 +1297,96 @@ export function CahierRoulementScreen() {
           className="print-scroll"
         >
 
-          {/* ── VIEW 1: Cahier de Roulement ── */}
+          {/* ── VIEW 1: Cahier de journal ── */}
           {view === "cahier" && (
-            <div style={{ paddingTop: "16px", paddingBottom: "32px" }}>
+            <div className="rounded-2xl bg-white/80 px-2 pb-8 pt-4 dark:bg-slate-900" style={{ paddingTop: "16px", paddingBottom: "32px" }}>
+              {directorNotice && <div className="mb-3 rounded-xl border border-gray-200 bg-blue-50 px-3 py-2.5 text-xs text-blue-700 dark:border-gray-700 dark:bg-blue-900/20 dark:text-blue-200"><BellRing size={14} style={{ display: "inline-block", marginRight: "6px" }} />{directorNotice}</div>}
 
               {isDesktop ? (
-                /* ── Desktop: 5-column week grid — all days side-by-side ── */
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "12px" }}>
-                  {DAYS.map(day => {
-                    const daySlots = TIMETABLE[day];
-                    const dayDone = daySlots.filter((_, i) => getActState(day, i).status === "fait").length;
-                    const dayPct  = Math.round((dayDone / daySlots.length) * 100);
-                    return (
-                      <div key={day}>
-                        {/* Day header */}
-                        <div style={{
-                          marginBottom: "8px",
-                          padding: "8px 10px",
-                          borderRadius: "10px",
-                          backgroundColor: "var(--primary)",
-                          display: "flex", alignItems: "center", justifyContent: "space-between",
-                        }}>
-                          <span style={{ fontSize: "12px", fontWeight: 800, color: "#fff" }}>{day}</span>
-                          <span style={{
-                            fontSize: "10px", fontWeight: 700,
-                            padding: "2px 8px", borderRadius: "999px",
-                            backgroundColor: dayPct === 100 ? "#059669" : dayPct > 0 ? "#d97706" : "rgba(255,255,255,0.15)",
-                            color: dayPct === 100 ? "#fff" : dayPct > 0 ? "#fff" : "rgba(255,255,255,0.6)",
-                          }}>
-                            {dayPct}%
-                          </span>
-                        </div>
-
-                        {/* Slots — compact vertical stack */}
-                        <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-                          {daySlots.map((slot, idx) => {
-                            const state   = getActState(day, idx);
-                            const color   = getColor(slot.activity);
-                            const isDone  = state.status === "fait";
-                            const isCours = state.status === "en-cours";
-                            return (
-                              <div
-                                key={idx}
-                                style={{
-                                  borderRadius: "10px",
-                                  overflow: "hidden",
-                                  backgroundColor: "var(--card)",
-                                  borderLeft:   `4px solid ${color}`,
-                                  borderTop:    `1px solid ${color}22`,
-                                  borderRight:  `1px solid ${color}22`,
-                                  borderBottom: `1px solid ${color}22`,
-                                  boxShadow: `0 1px 6px ${color}12`,
-                                  opacity: isDone ? 0.75 : 1,
-                                }}
-                              >
-                                {/* Compact header */}
-                                <div style={{
-                                  padding: "6px 10px",
-                                  backgroundColor: `${color}0e`,
-                                  borderBottom: `1px solid ${color}18`,
-                                  display: "flex", alignItems: "center", gap: "6px",
-                                }}>
-                                  <span style={{ fontSize: "10px", fontWeight: 800,
-                                                 color, flexShrink: 0 }}>{slot.time}</span>
-                                  <span style={{ fontSize: "11px", fontWeight: 700,
-                                                 color: "var(--primary)", flex: 1, minWidth: 0,
-                                                 overflow: "hidden", textOverflow: "ellipsis",
-                                                 whiteSpace: "nowrap" }}>
-                                    {slot.activity}
-                                  </span>
-                                </div>
-
-                                {/* Status pills — compact */}
-                                <div style={{ padding: "6px 8px", display: "flex", gap: "4px", flexWrap: "wrap" }}>
-                                  {(["fait", "en-cours", "a-reporter"] as const).map(s => {
-                                    const cfg = { fait: { label:"✓ Fait", c:"#059669" }, "en-cours": { label:"⏳", c:"#d97706" }, "a-reporter": { label:"↩", c:"#dc2626" } }[s];
-                                    const active = state.status === s;
-                                    return (
-                                      <button
-                                        key={s}
-                                        onClick={() => setActState(day, idx, { status: active ? null : s })}
-                                        style={{
-                                          minHeight: "28px", padding: "0 8px",
-                                          borderRadius: "999px", border: `1px solid ${cfg.c}`,
-                                          fontSize: "10px", fontWeight: 700,
-                                          backgroundColor: active ? cfg.c : "transparent",
-                                          color: active ? "#fff" : cfg.c,
-                                          cursor: "pointer", flexShrink: 0,
-                                          fontFamily: "'Plus Jakarta Sans', sans-serif",
-                                          transition: "all 150ms ease",
-                                        }}
-                                      >
-                                        {cfg.label}
-                                      </button>
-                                    );
-                                  })}
-                                </div>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    );
-                  })}
+                <div style={{ overflowX: "auto" }}>
+                  <table className="min-w-[1000px] w-full border-collapse border-2 border-blue-500/50 dark:border-emerald-700">
+                    <thead>
+                      <tr>
+                        <th className="border border-blue-500/40 bg-blue-50 px-2.5 py-2.5 text-left text-[11px] uppercase text-blue-700 dark:border-blue-700 dark:bg-slate-800 dark:text-blue-300">Jour</th>
+                        {JOURNAL_DOMAINS.map(domain => (
+                          <th key={domain.id} className="border-2 border-indigo-400/50 bg-blue-50 px-2.5 py-2.5 text-left text-[11px] uppercase text-blue-700 dark:border-blue-700 dark:bg-slate-800 dark:text-blue-300">{domain.label}</th>
+                        ))}
+                        <th className="border border-blue-500/40 bg-blue-50 px-2.5 py-2.5 text-left text-[11px] uppercase text-blue-700 dark:border-blue-700 dark:bg-slate-800 dark:text-blue-300">Observations</th>
+                        <th className="border border-blue-500/40 bg-blue-50 px-2.5 py-2.5 text-left text-[11px] uppercase text-blue-700 dark:border-blue-700 dark:bg-slate-800 dark:text-blue-300">Visa</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {selectedWeekDays.map(({ dayKey, date }) => {
+                        const entry = journalEntries[dayKey] ?? defaultJournalEntry();
+                        const dayLabel = date.toLocaleDateString("fr-FR", { weekday: "short", day: "2-digit", month: "short" });
+                        return (
+                          <tr key={dayKey} className="border border-blue-300/40 dark:border-slate-700">
+                            <td className="min-w-[110px] border border-blue-300/40 bg-white p-2.5 align-top dark:border-slate-700 dark:bg-slate-950">
+                              <div className="font-extrabold text-gray-900 dark:text-gray-100">{dayKey}</div>
+                              <div className="text-xs text-gray-500 dark:text-gray-400">{dayLabel}</div>
+                            </td>
+                            {JOURNAL_DOMAINS.map(domain => (
+                              <td key={domain.id} className="border-[1.5px] border-indigo-400/50 bg-white p-2 align-top dark:border-blue-700 dark:bg-slate-950">
+                                <JournalCell
+                                  day={dayKey}
+                                  domain={domain}
+                                  value={entry.cells?.[domain.id] ?? { activityIds: [], contentsByActivity: {}, observation: "" }}
+                                  disabled={entry.visaStatus === "approved"}
+                                  onChange={patch => updateCellValue(dayKey, domain.id, patch)}
+                                  onOpenActivityModal={() => setActivityModalTarget({ day: dayKey, domainId: domain.id })}
+                                  onOpenContentModal={(activityId) => setContentModalTarget({ day: dayKey, domainId: domain.id, activityId })}
+                                  onRemoveActivity={(activityId) => removeActivityInCell(dayKey, domain.id, activityId)}
+                                />
+                              </td>
+                            ))}
+                            <td className="border border-blue-300/40 bg-white p-2 align-top dark:border-slate-700 dark:bg-slate-950">
+                              <textarea aria-label={`Observations - ${dayKey}`} value={entry.observations} onChange={e => updateJournalEntry(dayKey, { observations: e.target.value })} disabled={entry.visaStatus === "approved"} rows={4} placeholder="Observations, incidents, points de vigilance…" className="min-h-[92px] w-full resize-y rounded-[10px] border border-blue-500/40 bg-white px-2.5 py-2 text-xs text-gray-900 dark:border-blue-700 dark:bg-slate-900 dark:text-gray-100" />
+                            </td>
+                            <td className="border border-blue-300/40 bg-white p-2 align-top dark:border-slate-700 dark:bg-slate-950">
+                              <button onClick={() => handleDirectorVisa(dayKey)} className="min-h-[42px] rounded-full border border-blue-500/40 px-3 font-bold text-gray-900 dark:border-blue-700 dark:text-gray-100" style={{ backgroundColor: entry.visaStatus === "approved" ? "#dcfce7" : entry.visaStatus === "pending" ? "#e5e7eb" : "transparent", cursor: "pointer" }}>
+                                {entry.visaStatus === "approved" ? "Approuvé" : entry.visaStatus === "pending" ? "En attente" : "Demander un visa"}
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
                 </div>
               ) : (
-                /* ── Mobile: single-day timeline (original behavior) ── */
-                <div style={{ display: "flex", flexDirection: "column", gap: "0px" }}>
-                  {slots.map((slot, idx) => {
-                    const state = getActState(selectedDay, idx);
-                    const isLast = idx === slots.length - 1;
+                <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                  {selectedWeekDays.map(({ dayKey }) => {
+                    const entry = journalEntries[dayKey] ?? defaultJournalEntry();
+                    const isActive = selectedDay === dayKey;
                     return (
-                      <div key={idx} style={{ display: "flex", gap: "12px" }}>
-                        {/* Timeline line + dot */}
-                        <div style={{
-                          display: "flex", flexDirection: "column",
-                          alignItems: "center", flexShrink: 0, width: "20px",
-                          paddingTop: "16px",
-                        }}>
-                          <div style={{
-                            width: "10px", height: "10px", borderRadius: "50%",
-                            backgroundColor: getColor(slot.activity), flexShrink: 0,
-                            boxShadow: `0 0 0 3px ${getColor(slot.activity)}28`,
-                          }} />
-                          {!isLast && (
-                            <div style={{
-                              flex: 1, width: "2px", backgroundColor: "var(--border)",
-                              marginTop: "4px", marginBottom: "4px", minHeight: "24px",
-                            }} />
-                          )}
-                        </div>
-                        {/* Card */}
-                        <div style={{ flex: 1, minWidth: 0, paddingBottom: isLast ? "0" : "12px" }}>
-                          <ActivityCard
-                            slot={slot} state={state}
-                            onChange={patch => setActState(selectedDay, idx, patch)}
-                          />
-                        </div>
+                      <div key={dayKey} className={`overflow-hidden rounded-[14px] border-2 ${isActive ? "border-blue-500 dark:border-emerald-700" : "border-indigo-400/50 dark:border-blue-700"} bg-white dark:bg-slate-900`}>
+                        <button onClick={() => setSelectedDay(dayKey)} className={`w-full border-none px-3.5 py-3 text-left font-extrabold ${isActive ? "bg-blue-50 text-blue-700 dark:bg-slate-800 dark:text-blue-300" : "bg-transparent text-gray-900 dark:text-gray-100"}`} style={{ cursor: "pointer" }}>{dayKey}</button>
+                        {selectedDay === dayKey && (
+                          <div style={{ padding: "12px", display: "flex", flexDirection: "column", gap: "10px" }}>
+                            {JOURNAL_DOMAINS.map(domain => (
+                              <div key={domain.id}>
+                                <p className="m-0 mb-1.5 text-xs font-bold text-gray-900 dark:text-gray-100">{domain.label}</p>
+                                <JournalCell
+                                  day={dayKey}
+                                  domain={domain}
+                                  value={entry.cells?.[domain.id] ?? { activityIds: [], contentsByActivity: {}, observation: "" }}
+                                  disabled={entry.visaStatus === "approved"}
+                                  onChange={patch => updateCellValue(dayKey, domain.id, patch)}
+                                  onOpenActivityModal={() => setActivityModalTarget({ day: dayKey, domainId: domain.id })}
+                                  onOpenContentModal={(activityId) => setContentModalTarget({ day: dayKey, domainId: domain.id, activityId })}
+                                  onRemoveActivity={(activityId) => removeActivityInCell(dayKey, domain.id, activityId)}
+                                />
+                              </div>
+                            ))}
+                            <div>
+                              <p className="m-0 mb-1.5 text-xs font-bold text-gray-900 dark:text-gray-100">Observations</p>
+                              <textarea aria-label={`Observations - ${dayKey}`} value={entry.observations} onChange={e => updateJournalEntry(dayKey, { observations: e.target.value })} disabled={entry.visaStatus === "approved"} rows={3} placeholder="Observations du jour" className="w-full resize-y rounded-[10px] border border-blue-500/40 bg-white px-2.5 py-2 text-xs text-gray-900 dark:border-blue-700 dark:bg-slate-950 dark:text-gray-100" />
+                            </div>
+                            <button onClick={() => handleDirectorVisa(dayKey)} className="min-h-[42px] rounded-full border border-blue-500/40 px-3 font-bold text-gray-900 dark:border-blue-700 dark:text-gray-100" style={{ backgroundColor: entry.visaStatus === "approved" ? "#dcfce7" : entry.visaStatus === "pending" ? "#e5e7eb" : "transparent" }}>
+                              {entry.visaStatus === "approved" ? "Visa approuvé" : entry.visaStatus === "pending" ? "Visa en attente" : "Demander un visa"}
+                            </button>
+                          </div>
+                        )}
                       </div>
                     );
                   })}
@@ -1103,6 +1604,35 @@ export function CahierRoulementScreen() {
           )}
         </div>
       </div>
+
+      <ActivityModal
+        isOpen={Boolean(activityModalTarget)}
+        domain={activityModalDomain}
+        selectedIds={activityModalEntry?.activityIds ?? []}
+        onToggle={(activityId) => {
+          if (!activityModalTarget) return;
+          const selected = activityModalEntry?.activityIds?.includes(activityId) ?? false;
+          if (selected) {
+            const activity = ACTIVITY_OPTIONS.find(option => option.id === activityId);
+            const ok = window.confirm(`Retirer l'activite "${activity?.label ?? activityId}" ? Les contenus lies seront supprimes.`);
+            if (!ok) return;
+          }
+          toggleActivityInCell(activityModalTarget.day, activityModalTarget.domainId, activityId);
+        }}
+        onClose={() => setActivityModalTarget(null)}
+      />
+
+      <ContentModal
+        isOpen={Boolean(contentModalTarget)}
+        activity={contentModalActivity}
+        selectedContents={contentModalSelected}
+        filteredContents={contentModalFiltered}
+        onToggle={(content) => {
+          if (!contentModalTarget) return;
+          toggleContentInCell(contentModalTarget.day, contentModalTarget.domainId, contentModalTarget.activityId, content);
+        }}
+        onClose={() => setContentModalTarget(null)}
+      />
 
       {/* ══ FLOATING MASTERY BANNER (Evaluations view only) ════════════════════ */}
       {view === "evaluations" && (

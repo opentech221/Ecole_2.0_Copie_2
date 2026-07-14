@@ -1,0 +1,690 @@
+[
+  {
+    "niveau": "CP",
+    "document_ref": "guide_etape_1",
+    "domaines": [
+      {
+        "nom": "Mathématiques",
+        "sous_domaines": [
+          {
+            "nom": null,
+            "activites": [
+              {
+                "nom": "Activités numériques",
+                "page_source": 128,
+                "competences_base": [
+                  {
+                    "description": "Intégrer des notions ensemblistes élémentaires et des opérations portant sur les nombres entiers de 0 à 100 dans des situations de résolution de problèmes de calculs numériques",
+                    "paliers": [
+                      {
+                        "nom": "Palier 4",
+                        "description": "Intégrer des opérations arithmétiques portant sur les nombres de 0 à 50 dans des situations de résolution de problèmes concrets de construction et de calculs numériques.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Utiliser les nombres de 0 à 20",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Utiliser les nombres de 0 à 20",
+                                "contenus": [
+                                  "Écriture des nombres de 0 à 20",
+                                  "Opérations sur les nombres de 0 à 20"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Maitriser les nombres de 21 à 50/ utiliser l’addition et la soustraction",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir les nombres 21; 22",
+                                "contenus": [
+                                  "Les nombres 21; 22",
+                                  "les signes <, =, >",
+                                  "Unité dizaine",
+                                  "Base de numération (jeux d’échange)"
+                                ]
+                              },
+                              {
+                                "titre": "Composer et décomposer les nombres 21; 22",
+                                "contenus": [
+                                  "Les écritures additives des nombres 21; 22"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir les nombres 23; 24",
+                                "contenus": [
+                                  "Les nombres 23; 24",
+                                  "Les signes <, =, >",
+                                  "Unité dizaine",
+                                  "Base de numération (jeux d’échange)"
+                                ]
+                              },
+                              {
+                                "titre": "Composer et décomposer les nombres 23; 24",
+                                "contenus": [
+                                  "Les écritures additives des nombres 23; 24"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir les nombres de 25 à 29",
+                                "contenus": [
+                                  "Les nombres de 25 à 29",
+                                  "Les signes <, =, >",
+                                  "Unité dizaine",
+                                  "Base de numération (jeux d’échange)"
+                                ]
+                              },
+                              {
+                                "titre": "Composer et décomposer les nombres de 25 à 29",
+                                "contenus": [
+                                  "Les écritures additives des nombres de 25 à 29"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir les nombres de 30 à 34",
+                                "contenus": [
+                                  "Les nombres de 30 à 34",
+                                  "Les signes <, =, >",
+                                  "Unité dizaine",
+                                  "Base de numération (jeux d’échange)"
+                                ]
+                              },
+                              {
+                                "titre": "Composer et décomposer les nombres de 30 à 34",
+                                "contenus": [
+                                  "Les écritures additives des nombres de 30 à 34"
+                                ]
+                              },
+                              {
+                                "titre": "Identifier l’opération",
+                                "contenus": [
+                                  "Le sens de l’addition",
+                                  "Le sens de la soustraction"
+                                ]
+                              },
+                              {
+                                "titre": "Appliquer les mécanismes opératoires (addition, soustraction)",
+                                "contenus": [
+                                  "Addition avec retenue",
+                                  "Soustraction avec emprunt"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir les nombres de 35 à 39",
+                                "contenus": [
+                                  "Les nombres de 35 à 39",
+                                  "Les signes <, =, >",
+                                  "Unité dizaine",
+                                  "Base de numération (jeux d’échanges)"
+                                ]
+                              },
+                              {
+                                "titre": "Utiliser les nombres de 0 à 39",
+                                "contenus": [
+                                  "Les écritures additives des nombres de 0 à 39",
+                                  "Addition",
+                                  "Soustraction"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir les nombres de 40 à 44",
+                                "contenus": [
+                                  "Les nombres de 40 à 44",
+                                  "Les signes <, =, >",
+                                  "Unité dizaine",
+                                  "Base de numération (jeux d’échanges)"
+                                ]
+                              },
+                              {
+                                "titre": "Utiliser les nombres de 0 à 44",
+                                "contenus": [
+                                  "Les écritures additives des nombres de 0 à 44",
+                                  "Addition",
+                                  "Soustraction"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir les nombres de 45 à 50",
+                                "contenus": [
+                                  "Les nombres de 45 à 50",
+                                  "Les signes <, =, >",
+                                  "Unité dizaine",
+                                  "Base de numération (jeux d’échanges)"
+                                ]
+                              },
+                              {
+                                "titre": "Utiliser les nombres de 0 à 50",
+                                "contenus": [
+                                  "Les écritures additives des nombres de 0 à 50",
+                                  "Addition",
+                                  "Soustraction"
+                                ]
+                              },
+                              {
+                                "titre": "Reconnaître les nombres pairs et impairs",
+                                "contenus": [
+                                  "Les nombres de 0 à 50"
+                                ]
+                              },
+                              {
+                                "titre": "Ajouter 2; 3; 5 ou 10",
+                                "contenus": [
+                                  "Les nombres de 0 à 50"
+                                ]
+                              },
+                              {
+                                "titre": "Trouver le double ou la moitié d’un nombre",
+                                "contenus": [
+                                  "Les nombres de 0 à 50"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 5",
+                        "description": "Intégrer des opérations arithmétiques portant sur les nombres entiers de 0 à 79 dans des situations de résolution de problèmes concrets de construction et de calculs numériques",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Maitriser les nombres de 51 à 79/ utiliser les quatre opérations",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir les nombres de 51 à 59",
+                                "contenus": [
+                                  "Les nombres de 51 à 59",
+                                  "Les signes <, =, >",
+                                  "Unité dizaine",
+                                  "Base de numération (jeux d’échanges)"
+                                ]
+                              },
+                              {
+                                "titre": "Utiliser les nombres de 0 à 59",
+                                "contenus": [
+                                  "Les écritures additives des nombres de 0 à 59",
+                                  "Addition",
+                                  "Soustraction"
+                                ]
+                              },
+                              {
+                                "titre": "Effectuer des opérations portant sur les nombres de 0 à 59",
+                                "contenus": [
+                                  "Unité, dizaine",
+                                  "Base de numération",
+                                  "Addition avec retenue",
+                                  "Soustraction avec emprunt"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir les nombres de 60 à 69",
+                                "contenus": [
+                                  "Les nombres de 60 à 69",
+                                  "Les signes <, =, >",
+                                  "Unité dizaine",
+                                  "Base de numération (jeux d’échanges)"
+                                ]
+                              },
+                              {
+                                "titre": "Utiliser les nombres de 0 à 69",
+                                "contenus": [
+                                  "Les écritures additives des nombres de 0 à 69",
+                                  "Addition (avec et sans retenue)",
+                                  "Soustraction (avec et sans emprunt)"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir les nombres de 70 à 79",
+                                "contenus": [
+                                  "Les nombres de 70 à 79",
+                                  "Les signes <, =, >",
+                                  "Unité dizaine",
+                                  "Base de numération (jeux d’échanges)"
+                                ]
+                              },
+                              {
+                                "titre": "Utiliser les nombres de 0 à 79",
+                                "contenus": [
+                                  "Les écritures additives des nombres de 0 à 79",
+                                  "Addition (avec et sans retenue)",
+                                  "Soustraction (avec et sans emprunt)"
+                                ]
+                              },
+                              {
+                                "titre": "Identifier l’opération",
+                                "contenus": [
+                                  "Le sens de la multiplication",
+                                  "Le sens de la division (partage)"
+                                ]
+                              },
+                              {
+                                "titre": "Ajouter ou retrancher : 2; 3; 5 ou 10",
+                                "contenus": [
+                                  "Les nombres entiers de 0 à 79"
+                                ]
+                              },
+                              {
+                                "titre": "Trouver le double ou la moitié d’un nombre",
+                                "contenus": [
+                                  "Les nombres entiers de 0 à 79"
+                                ]
+                              },
+                              {
+                                "titre": "Construire et mémoriser les tables de multiplication par 2 et par 3",
+                                "contenus": [
+                                  "Les tables de multiplication par 2 et par 3"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 6",
+                        "description": "Intégrer des notions ensemblistes élémentaires et des opérations portant sur les nombres entiers de 0 à 100 dans des situations de résolution de problèmes de calculs numériques.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Maitriser les nombres de 81 à 100/ utiliser les quatre opérations",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir les nombres de 80 à 89",
+                                "contenus": [
+                                  "Les nombres de 80 à 89",
+                                  "Les signes <, =, >",
+                                  "Unité dizaine",
+                                  "Base de numération (jeux d’échange)"
+                                ]
+                              },
+                              {
+                                "titre": "Utiliser les nombres de 0 à 89",
+                                "contenus": [
+                                  "Ecritures additives",
+                                  "Ecritures multiplicatives",
+                                  "Ecritures du partage des nombres de 0 à 89",
+                                  "Addition (avec et sans retenue)",
+                                  "Soustraction (avec et sans emprunt)"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir les nombres de 90 à 99",
+                                "contenus": [
+                                  "Les nombres de 90 à 99",
+                                  "Les signes <, =, >",
+                                  "Unité dizaine",
+                                  "Base de numération (jeux d’échanges)"
+                                ]
+                              },
+                              {
+                                "titre": "Utiliser les nombres de 0 à 99",
+                                "contenus": [
+                                  "Ecritures additives",
+                                  "Ecritures multiplicatives",
+                                  "Ecritures du partage des nombres de 0 à 99",
+                                  "Addition (avec et sans retenue)",
+                                  "Soustraction (avec et sans emprunt)"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir le nombre 100, la centaine",
+                                "contenus": [
+                                  "Les nombres de 0 à 100",
+                                  "Les signes <, =, >",
+                                  "Unité dizaine",
+                                  "Base de numération (jeux d’échanges)"
+                                ]
+                              },
+                              {
+                                "titre": "Utiliser les nombres de 0 à 100",
+                                "contenus": [
+                                  "Ecritures additives",
+                                  "Ecritures multiplicatives",
+                                  "Ecritures du partage des nombres de 0 à 100",
+                                  "Addition (avec et sans retenue)",
+                                  "Soustraction (avec et sans emprunt)"
+                                ]
+                              },
+                              {
+                                "titre": "Ajouter ou retrancher : 2; 3; 5 ou 10",
+                                "contenus": [
+                                  "Les nombres entiers de 0 à 100"
+                                ]
+                              },
+                              {
+                                "titre": "Trouver le double ou la moitié d’un nombre",
+                                "contenus": [
+                                  "Les nombres entiers de 0 à 100"
+                                ]
+                              },
+                              {
+                                "titre": "Mémoriser les tables de multiplication par 2 et par 3",
+                                "contenus": [
+                                  "Les tables de multiplication par 2 et par 3"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Activités géométriques",
+                "page_source": 181,
+                "competences_base": [
+                  {
+                    "description": "Intégrer des notions de structuration de l’espace, les formes de figures planes et de solides familiers ainsi que les techniques d’utilisation d’instruments de traçage dans des situations de résolution de problèmes de reproduction d’objets géométriques.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 4 (3 bis)",
+                        "description": "Intégrer des formes de lignes et des notions de structuration de l’espace dans des situations de résolution de problèmes de représentation graphique d’itinéraires.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Représenter graphiquement des itinéraires",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Représenter sur une feuille l’itinéraire suivi en indiquant les repères",
+                                "contenus": [
+                                  "Tracé d’un itinéraire comportant des repères connus"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 5",
+                        "description": "Intégrer des notions de structuration de l’espace, les formes de figures planes et de solides familiers ainsi que les techniques d’utilisation d’instruments de traçage dans des situations de résolution de problèmes de reproduction d’objets géométriques.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Utiliser les instruments de traçage",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Utiliser la règle, le double décimètre, le crayon",
+                                "contenus": [
+                                  "Techniques de traçage"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Construire des lignes",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Construire des lignes",
+                                "contenus": [
+                                  "Lignes droites",
+                                  "Lignes courbes",
+                                  "Lignes brisées",
+                                  "Frises"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Reproduire et découper des figures planes simples",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Reproduire et découper des figures planes simples",
+                                "contenus": [
+                                  "Carré",
+                                  "Rectangle",
+                                  "Triangle",
+                                  "Rond (sans le compas)"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Activités de mesure",
+                "page_source": 207,
+                "competences_base": [
+                  {
+                    "description": "Intégrer les notions de longueurs, de capacités, de masses, de durées et de monnaie ainsi que les techniques d’utilisation des instruments non conventionnels, conventionnels et usuels dans des situations de résolution de problèmes concrets de mesure",
+                    "paliers": [
+                      {
+                        "nom": "Palier 4",
+                        "description": "Intégrer les notions de longueurs et de capacités ainsi que les techniques d’utilisation d’instruments non conventionnels, conventionnels et usuels dans des situations de résolution de problèmes concrets de mesure.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Estimer et comparer des longueurs",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Comparer des longueurs à l’aide d’instruments non conventionnels",
+                                "contenus": [
+                                  "Plus court/ plus long",
+                                  "Plus loin/ plus près",
+                                  "Plus…que/moins… que",
+                                  "Aussi… que",
+                                  "Instruments : pas, pied, empan, coudée, bâton, ficelle"
+                                ]
+                              },
+                              {
+                                "titre": "Utiliser des instruments conventionnels et usuels de mesure de longueur",
+                                "contenus": [
+                                  "Mètre",
+                                  "Double-décimètre"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Estimer et comparer des capacités",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Comparer des capacités à l’aide d’instruments non conventionnels",
+                                "contenus": [
+                                  "Beaucoup/peu",
+                                  "Plus…que/moins… que",
+                                  "Aussi… que",
+                                  "Bouteille, tasse, etc."
+                                ]
+                              },
+                              {
+                                "titre": "Utiliser des instruments conventionnels et usuels de mesure de capacité",
+                                "contenus": [
+                                  "Litre",
+                                  "Quart de litre",
+                                  "Demi-litre"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 5",
+                        "description": "Intégrer les notions de longueurs, de capacités et de masses ainsi que des techniques d’utilisation d’instruments non conventionnels, conventionnels et usuels dans des situations de résolution de problèmes concrets de mesure.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Estimer et comparer des masses",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Comparer des masses à l’aide d’instruments non conventionnels",
+                                "contenus": [
+                                  "Lourd/ léger",
+                                  "Plus…que/moins… que",
+                                  "Aussi… que",
+                                  "Instruments : cailloux, pot, etc."
+                                ]
+                              },
+                              {
+                                "titre": "Utiliser des instruments conventionnels et usuels de mesure de masses",
+                                "contenus": [
+                                  "Kilogramme",
+                                  "Demi-kilogramme",
+                                  "Quart de kilogramme"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 6",
+                        "description": "Intégrer les notions de longueurs, de capacités, de masses, de durées et de monnaie ainsi que les techniques d’utilisation des instruments non conventionnels, conventionnels et usuels dans des situations de résolution de problèmes concrets de mesure.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Estimer et comparer des durées",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Comparer des durées à l’aide d’instruments non étalonnés",
+                                "contenus": [
+                                  "Long / court",
+                                  "Lent / rapide",
+                                  "Longtemps/ peu de temps",
+                                  "Le sablier, comptage"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Se repérer dans le temps",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Se repérer dans la semaine, dans le mois, dans l’année",
+                                "contenus": [
+                                  "Jour, semaine, mois, emploi du temps de la classe, calendrier, saisons"
+                                ]
+                              },
+                              {
+                                "titre": "Lire l’heure",
+                                "contenus": [
+                                  "Heure",
+                                  "Minute"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Utiliser la monnaie",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Utiliser la monnaie courante",
+                                "contenus": [
+                                  "Pièces : 5f, 10f, 25f, 50f, 100f"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Activités de résolution de problèmes",
+                "page_source": 241,
+                "competences_base": [
+                  {
+                    "description": "Intégrer des données et des consignes/questions d’un énoncé mathématique ainsi que les démarches de raisonnement dans des situations de recherche de solutions appropriées",
+                    "paliers": [
+                      {
+                        "nom": "Palier 4",
+                        "description": "Intégrer les données et les consignes/questions dans des situations de résolution de problèmes concrets d’analyse d’énoncés mathématiques.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Identifier les données d'un énoncé",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier les données d’un énoncé mathématique",
+                                "contenus": [
+                                  "Notion de problème",
+                                  "Notion de données",
+                                  "Informations numériques",
+                                  "Informations non numériques"
+                                ]
+                              },
+                              {
+                                "titre": "Identifier différents types de données d’une situation problème",
+                                "contenus": [
+                                  "Données utiles",
+                                  "Données inutiles",
+                                  "Données manquantes"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Identifier les questions et consignes",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier les questions-consignes d’un énoncé mathématique",
+                                "contenus": [
+                                  "Notion de consigne-question"
+                                ]
+                              },
+                              {
+                                "titre": "Identifier différents types de questions d’une situation problème",
+                                "contenus": [
+                                  "Question finale",
+                                  "Questions intermédiaires"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 5",
+                        "description": "Intégrer des données et des consignes/questions d’un énoncé mathématique ainsi que les démarches de raisonnement dans des situations de recherche de solutions appropriées.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Analyser les composantes d'un problème",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier différents types de données et de questions d’un problème",
+                                "contenus": [
+                                  "Données utiles",
+                                  "Données inutiles",
+                                  "Données manquantes",
+                                  "Question finale",
+                                  "Question intermédiaire"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Produire un énoncé",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Construire un énoncé mathématique",
+                                "contenus": [
+                                  "Données utiles",
+                                  "Données inutiles",
+                                  "Question finale"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Mener un raisonnement",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Appliquer une démarche appropriée",
+                                "contenus": [
+                                  "Démarche progressive"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

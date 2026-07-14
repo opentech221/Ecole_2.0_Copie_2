@@ -1,0 +1,241 @@
+[
+  {
+    "niveau": "CM2",
+    "document_ref": "guide_etape_3",
+    "domaines": [
+      {
+        "nom": "Langue et Communication",
+        "sous_domaines": [
+          {
+            "nom": "Communication Orale",
+            "activites": [
+              {
+                "nom": "Expression Orale",
+                "page_source": 74,
+                "competences_base": [
+                  {
+                    "description": "Intégrer le vocabulaire adéquat, les comportements non verbaux, le schéma intonatif, des structures et des règles syntaxiques dans des situations de compréhension et de production de messages oraux relatifs à la transmission d’informations et aux échanges verbaux [2, 3].",
+                    "paliers": [
+                      {
+                        "nom": "Palier 5",
+                        "description": "Intégrer le vocabulaire adéquat, les comportements non verbaux, le schéma intonatif et des règles syntaxiques dans des situations de transmission d’informations de type informatif [3, 4].",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Faire un exposé [4].",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Exposer une idée [3, 4].",
+                                "contenus": [
+                                  "La manière de présenter des idées",
+                                  "l’articulation",
+                                  "la clarté",
+                                  "le rythme de la parole",
+                                  "la maîtrise du souffle",
+                                  "la justesse des informations",
+                                  "la cohérence [3, 4]"
+                                ]
+                              },
+                              {
+                                "titre": "Exposer un programme (élection de délégués, par exemple) [3, 4].",
+                                "contenus": [
+                                  "La manière de présenter des idées",
+                                  "l’articulation",
+                                  "la clarté",
+                                  "le rythme de la parole",
+                                  "la maîtrise du souffle",
+                                  "la justesse des informations",
+                                  "la cohérence [3, 4]"
+                                ]
+                              },
+                              {
+                                "titre": "Exposer un projet [3, 4].",
+                                "contenus": [
+                                  "La manière de présenter des idées",
+                                  "l’articulation",
+                                  "la clarté",
+                                  "le rythme de la parole",
+                                  "la maîtrise du souffle",
+                                  "la justesse des informations",
+                                  "la cohérence [3, 4]"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Récitation",
+                "page_source": 74,
+                "competences_base": [
+                  {
+                    "description": "Mémoriser et restituer des textes en prose et en vers.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 5",
+                        "description": "Intégrer le vocabulaire adéquat, les comportements non verbaux, le schéma intonatif et des règles syntaxiques dans des situations de transmission d’informations de type informatif [4].",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Dire de mémoire un texte [4].",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Restituer un poème [4].",
+                                "contenus": [
+                                  "Poèmes",
+                                  "Expression, intonation et gestes qui conviennent [4]"
+                                ]
+                              },
+                              {
+                                "titre": "Restituer un texte en prose [4].",
+                                "contenus": [
+                                  "Texte en prose",
+                                  "Expression, intonation et gestes qui conviennent [4]"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nom": "Communication Écrite",
+            "activites": [
+              {
+                "nom": "Lecture",
+                "page_source": 58,
+                "competences_base": [
+                  {
+                    "description": "Intégrer les mécanismes d’identification des mots et des stratégies de compréhension dans des situations de lecture de textes narratifs, descriptifs, injonctifs, informatifs, argumentatifs, dialogués et poétiques [3, 5].",
+                    "paliers": [
+                      {
+                        "nom": "Palier 5",
+                        "description": "Intégrer les mécanismes d’identification des mots et des stratégies de compréhension dans des situations de lecture et de compréhension de textes informatifs [3, 6].",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Comprendre des textes [3].",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Comprendre des textes narratifs [3].",
+                                "contenus": [
+                                  "Construction de sens à partir de textes."
+                                ]
+                              },
+                              {
+                                "titre": "Identifier des mots fréquents [3].",
+                                "contenus": [
+                                  "Mots fréquents Echelon n°15 2ème partie. Voir la liste à l’annexe 2 [7]."
+                                ]
+                              },
+                              {
+                                "titre": "Développer la fluidité de la lecture d'un texte narratif [3].",
+                                "contenus": [
+                                  "Lecture expressive à voix haute",
+                                  "Précision et rapidité [3]."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Production d'écrits",
+                "page_source": 58,
+                "competences_base": [
+                  {
+                    "description": "Intégrer le vocabulaire adéquat, les indices significatifs, des structures et des règles syntaxiques dans des situations de production de textes narratifs, descriptifs, injonctifs, informatifs, argumentatifs, dialogués et poétiques [3, 8, 9].",
+                    "paliers": [
+                      {
+                        "nom": "Palier 5",
+                        "description": "Intégrer le vocabulaire adéquat, les indices significatifs et des règles syntaxiques dans des situations de production de textes informatifs (explicatifs) [3].",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Maîtriser les outils de langue indispensables à la production d’écrits [3].",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Vocabulaire : Employer des mots adaptés au thème du texte à produire [3].",
+                                "contenus": [
+                                  "Recours à plusieurs procédés",
+                                  "Sens propre et sens figuré de quelques mots",
+                                  "Utilisation du dictionnaire (sens propre/figuré, mots inconnus)",
+                                  "Utilisation de différents dictionnaires pour résoudre des difficultés d’écriture [3]."
+                                ]
+                              },
+                              {
+                                "titre": "Grammaire : Identifier les constituants de la phrase complexe [3].",
+                                "contenus": [
+                                  "Proposition subordonnée relative complément de nom (dont)",
+                                  "Pronoms possessifs",
+                                  "Propositions subordonnées conjonctives : la complétive par 'que'",
+                                  "Analyse grammaticale de quelques mots",
+                                  "Analyse logique d'une phrase [3]."
+                                ]
+                              },
+                              {
+                                "titre": "Conjugaison : Conjuguer des verbes au subjonctif présent [3].",
+                                "contenus": [
+                                  "Verbes du 1er, 2ème et 3ème groupe au subjonctif présent",
+                                  "Verbes en –eter (acheter) aux temps étudiés [3]."
+                                ]
+                              },
+                              {
+                                "titre": "Orthographe : Maîtriser les accords et les formes préfixées [3].",
+                                "contenus": [
+                                  "Participe présent et adjectif verbal",
+                                  "Homophones : quand, quant, qu'en",
+                                  "Mots avec préfixe in-, im-, il- ou ir-",
+                                  "Convention de la coupe syllabique à la ligne",
+                                  "Dictée [3]."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Produire des textes informatifs [3].",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Rédiger un texte informatif [3].",
+                                "contenus": [
+                                  "Identifier les caractéristiques d’un texte informatif",
+                                  "Constituer un référentiel (banque de mots, etc.)",
+                                  "Établir une fiche de critères de réussite",
+                                  "S’exercer à rédiger un texte informatif [3]."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Copier un texte avec précision [3].",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Copier des textes informatifs [3].",
+                                "contenus": [
+                                  "Copie de 10 à 15 lignes avec variation des types de copie [3]."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
