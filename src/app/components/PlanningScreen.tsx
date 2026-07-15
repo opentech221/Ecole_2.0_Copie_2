@@ -380,6 +380,7 @@ function CascadeSelect({
     contenu: "Sélectionner le contenu…",
   };
   const filled = !!value && !disabled;
+  const normalizedOptions = Array.from(new Set(options));
 
   return (
     <div>
@@ -426,7 +427,7 @@ function CascadeSelect({
           }}
         >
           <option value="">{disabled ? "— étape précédente requise" : PLACEHOLDERS[level]}</option>
-          {options.map(o => <option key={o} value={o}>{o}</option>)}
+          {normalizedOptions.map((o, idx) => <option key={`${o}-${idx}`} value={o}>{o}</option>)}
         </select>
         <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none w-3.5 h-3.5"
                      style={{ color: disabled ? "#e2e8f0" : "#9ca3af" }} />
