@@ -1,4 +1,5 @@
 import { useMemo, useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
 import {
   ArrowLeft, ChevronDown, ChevronUp, Printer,
@@ -6,6 +7,7 @@ import {
   BellRing, X,
 } from "lucide-react";
 import { DOMAINS as PLANNING_DOMAINS, OA_CATALOG } from "./PlanningScreen";
+import { programmeNavFunctionApi } from "../../services/programmeNavFunctionApi";
 import { useAppContext } from "../contexts/AppContext";
 import { supabase, TABLES } from "../../lib/supabase";
 
@@ -79,26 +81,6 @@ interface JournalEntry {
 }
 
 interface ActivityOption extends JournalActivity {}
-
-const ALL_ACTIVITY_OPTIONS: ActivityOption[] = PLANNING_DOMAINS
-  .filter(domain => JOURNAL_DOMAIN_KEYS.includes(domain.key as (typeof JOURNAL_DOMAIN_KEYS)[number]))
-  .flatMap(domain =>
-    domain.sousGroups.flatMap(group =>
-      group.activities.map(activity => {
-        const contents = (OA_CATALOG[activity.name] ?? [])
-          .flatMap(oa => oa.osItems.flatMap(os => os.contenus));
-        return {
-          id: activity.name,
-          label: activity.name,
-          domainId: domain.key,
-          contents: Array.from(new Set(contents)),
-        };
-      }),
-    ),
-  );
-
-const ACTIVITY_OPTIONS: ActivityOption[] = ALL_ACTIVITY_OPTIONS.filter(activity => activity.contents.length > 0);
-const EMPTY_ACTIVITY_OPTIONS: ActivityOption[] = ALL_ACTIVITY_OPTIONS.filter(activity => activity.contents.length === 0);
 
 interface ActivityColorPreset {
   badge: string;
@@ -624,19 +606,23 @@ function MarkPastille({
 function ActivityModal({
   isOpen,
   domain,
+  activityOptions,
+  emptyActivityOptions,
   selectedIds,
   onToggle,
   onClose,
 }: {
   isOpen: boolean;
   domain: JournalDomain | null;
+  activityOptions: ActivityOption[];
+  emptyActivityOptions: ActivityOption[];
   selectedIds: string[];
   onToggle: (activityId: string) => void;
   onClose: () => void;
 }) {
   if (!isOpen || !domain) return null;
-  const options = ACTIVITY_OPTIONS.filter(option => option.domainId === domain.id);
-  const emptyOptions = EMPTY_ACTIVITY_OPTIONS.filter(option => option.domainId === domain.id);
+  const options = activityOptions.filter(option => option.domainId === domain.id);
+  const emptyOptions = emptyActivityOptions.filter(option => option.domainId === domain.id);
 
   return (
     <div className="fixed inset-0 z-[90] flex items-center justify-center bg-black/55 p-4">
@@ -717,6 +703,7 @@ function ContentModal({
 function JournalCell({
   day,
   domain,
+  activityOptions,
   value,
   disabled,
   onChange,
@@ -726,6 +713,7 @@ function JournalCell({
 }: {
   day: DayKey;
   domain: JournalDomain;
+  activityOptions: ActivityOption[];
   value: JournalCellValue;
   disabled: boolean;
   onChange: (updates: Partial<JournalCellValue>) => void;
@@ -733,7 +721,7 @@ function JournalCell({
   onOpenContentModal: (activityId: string) => void;
   onRemoveActivity: (activityId: string) => void;
 }) {
-  const selectedActivities = ACTIVITY_OPTIONS.filter(option => value.activityIds.includes(option.id));
+  const selectedActivities = activityOptions.filter(option => value.activityIds.includes(option.id));
 
   return (
     <div className="group flex min-h-[140px] flex-col gap-2 rounded-xl border border-blue-500/40 bg-white p-2.5 transition-all duration-200 hover:border-indigo-500 hover:bg-blue-50/30 dark:border-blue-700 dark:bg-slate-950 dark:hover:border-emerald-700 dark:hover:bg-slate-900">
@@ -809,6 +797,64 @@ function JournalCell({
 export function CahierRoulementScreen() {
   const navigate = useNavigate();
   const { activeClass } = useAppContext();
+
+  const allProgrammeActivities = useMemo(
+    () => Array.from(new Set(PLANNING_DOMAINS.flatMap((d) => d.sousGroups.flatMap((sg) => sg.activities.map((a) => a.name))))),
+    [],
+  );
+
+  const officialCatalogQuery = useQuery({
+    queryKey: ["programme-nav", "cahier-activity-content"],
+    queryFn: async () => {
+      const entries = await Promise.all(
+        allProgrammeActivities.map(async (activity) => {
+          const res = await programmeNavFunctionApi.getCurriculum({ activite: activity });
+          const contents = (res.data.detail?.paliers ?? [])
+            .flatMap((p) => p.oas)
+            .flatMap((oa) => oa.os)
+            .flatMap((os) => os.contenus);
+          return [activity, Array.from(new Set(contents))] as const;
+        }),
+      );
+
+      const out: Record<string, string[]> = {};
+      for (const [activity, contents] of entries) out[activity] = contents;
+      return out;
+    },
+  });
+
+  const allActivityOptions = useMemo(() => {
+    const official = officialCatalogQuery.data;
+    return PLANNING_DOMAINS
+      .filter(domain => JOURNAL_DOMAIN_KEYS.includes(domain.key as (typeof JOURNAL_DOMAIN_KEYS)[number]))
+      .flatMap(domain =>
+        domain.sousGroups.flatMap(group =>
+          group.activities.map(activity => {
+            const fallback = (OA_CATALOG[activity.name] ?? [])
+              .flatMap(oa => oa.osItems.flatMap(os => os.contenus));
+            const contents = official?.[activity.name]?.length
+              ? official[activity.name]
+              : Array.from(new Set(fallback));
+            return {
+              id: activity.name,
+              label: activity.name,
+              domainId: domain.key,
+              contents,
+            };
+          }),
+        ),
+      );
+  }, [officialCatalogQuery.data]);
+
+  const activityOptions = useMemo(
+    () => allActivityOptions.filter(activity => activity.contents.length > 0),
+    [allActivityOptions],
+  );
+
+  const emptyActivityOptions = useMemo(
+    () => allActivityOptions.filter(activity => activity.contents.length === 0),
+    [allActivityOptions],
+  );
 
   // ── Shared view toggle ──
   const [view, setView] = useState<"cahier" | "evaluations">("cahier");
@@ -926,7 +972,7 @@ export function CahierRoulementScreen() {
   };
 
   const removeActivityInCell = (day: DayKey, domainId: string, activityId: string) => {
-    const activity = ACTIVITY_OPTIONS.find(option => option.id === activityId);
+    const activity = activityOptions.find(option => option.id === activityId);
     const ok = window.confirm(`Supprimer l'activite "${activity?.label ?? activityId}" et tous ses contenus associes ?`);
     if (!ok) return;
 
@@ -1083,7 +1129,7 @@ export function CahierRoulementScreen() {
     : null;
 
   const contentModalActivity = contentModalTarget
-    ? ACTIVITY_OPTIONS.find(option => option.id === contentModalTarget.activityId) ?? null
+    ? activityOptions.find(option => option.id === contentModalTarget.activityId) ?? null
     : null;
 
   const contentModalCell = contentModalTarget
@@ -1330,6 +1376,7 @@ export function CahierRoulementScreen() {
                                 <JournalCell
                                   day={dayKey}
                                   domain={domain}
+                                  activityOptions={activityOptions}
                                   value={entry.cells?.[domain.id] ?? { activityIds: [], contentsByActivity: {}, observation: "" }}
                                   disabled={entry.visaStatus === "approved"}
                                   onChange={patch => updateCellValue(dayKey, domain.id, patch)}
@@ -1369,6 +1416,7 @@ export function CahierRoulementScreen() {
                                 <JournalCell
                                   day={dayKey}
                                   domain={domain}
+                                  activityOptions={activityOptions}
                                   value={entry.cells?.[domain.id] ?? { activityIds: [], contentsByActivity: {}, observation: "" }}
                                   disabled={entry.visaStatus === "approved"}
                                   onChange={patch => updateCellValue(dayKey, domain.id, patch)}
@@ -1608,12 +1656,14 @@ export function CahierRoulementScreen() {
       <ActivityModal
         isOpen={Boolean(activityModalTarget)}
         domain={activityModalDomain}
+        activityOptions={activityOptions}
+        emptyActivityOptions={emptyActivityOptions}
         selectedIds={activityModalEntry?.activityIds ?? []}
         onToggle={(activityId) => {
           if (!activityModalTarget) return;
           const selected = activityModalEntry?.activityIds?.includes(activityId) ?? false;
           if (selected) {
-            const activity = ACTIVITY_OPTIONS.find(option => option.id === activityId);
+            const activity = activityOptions.find(option => option.id === activityId);
             const ok = window.confirm(`Retirer l'activite "${activity?.label ?? activityId}" ? Les contenus lies seront supprimes.`);
             if (!ok) return;
           }

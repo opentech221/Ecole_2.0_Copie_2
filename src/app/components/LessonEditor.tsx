@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect, useMemo } from "react";
 import { createPortal }                          from "react-dom";
 import { useLocation, useNavigate }              from "react-router";
+import { useQuery }                              from "@tanstack/react-query";
 import { useProfileGuard }                       from "../../hooks/useProfileGuard";
+import { programmeNavFunctionApi, type ProgrammeCurriculumDetail } from "../../services/programmeNavFunctionApi";
 import { ProfileGuardLoader }                    from "./ProfileGuardLoader";
 import {
   ArrowLeft, Save, FileDown, Check, Sparkles, Loader2,
@@ -587,6 +589,15 @@ export function LessonEditor() {
   const niveau      = (state?.niveau      as string|undefined) ?? "CE2";
   const domaine     = (state?.domaine     as string|undefined) ?? "ESVS";
   const sousDomaine = (state?.sousDomaine as string|undefined) ?? "Découverte du monde";
+
+  const officialTriangulationQuery = useQuery({
+    queryKey: ["programme-nav", "lesson-editor-triangulation", discipline],
+    queryFn: async () => {
+      const res = await programmeNavFunctionApi.getCurriculum({ activite: discipline });
+      return res.data.detail;
+    },
+    enabled: Boolean(discipline),
+  });
   // ── Triangulation table: discipline → { palier, competence (CB) } ──────────
   // When the fiche is created from the planning grid (fromPlanning === true), the
   // system deterministically maps the selected discipline to the official Palier
@@ -677,9 +688,19 @@ export function LessonEditor() {
     },
   };
 
+  const getOfficialTriangulation = (detail: ProgrammeCurriculumDetail | null | undefined) => {
+    if (!detail) return null;
+    const palier = detail.paliers[0]?.nom ?? "";
+    const competence = detail.competence ?? "";
+    if (!palier || !competence) return null;
+    return { palier, competence };
+  };
+
   // When arriving from the planning grid, discipline is known → triangulate Palier + CB.
   const fromPlanning  = !!(state?.fromPlanning);
-  const triangulated  = fromPlanning ? (CONTENT_TRIANGULATION[discipline] ?? null) : null;
+  const triangulated  = fromPlanning
+    ? (getOfficialTriangulation(officialTriangulationQuery.data) ?? CONTENT_TRIANGULATION[discipline] ?? null)
+    : null;
   // isTriangulated = we have deterministic values → lock Palier + CB as read-only
   const isTriangulated = fromPlanning && !!triangulated;
 
@@ -694,6 +715,12 @@ export function LessonEditor() {
   const [competence, setCompetence] = useState(
     triangulated?.competence || (state?.competence as string|undefined) || ""
   );
+
+  useEffect(() => {
+    if (!fromPlanning || !triangulated) return;
+    setPalier(triangulated.palier);
+    setCompetence(triangulated.competence);
+  }, [fromPlanning, triangulated]);
   // ── Merge flag from Screen 2 checkbox ──────────────────────────────────────
   const merged      = (state?.merged      as boolean|undefined) ?? false;
 

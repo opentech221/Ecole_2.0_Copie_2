@@ -1,8 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useNavigate }                 from "react-router";
+import { useQuery }                    from "@tanstack/react-query";
 import { useProfileGuard }             from "../../hooks/useProfileGuard";
 import { ProfileGuardLoader }          from "./ProfileGuardLoader";
 import { ChevronLeft, ChevronDown, ChevronRight, Info, HelpCircle, Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
+import { programmeNavFunctionApi }     from "../../services/programmeNavFunctionApi";
+import { QK }                          from "../../lib/queryClient";
 
 // ─── APC Data ─────────────────────────────────────────────────────────────────
 
@@ -549,15 +552,62 @@ export function ContextSelector() {
   // Section C
   const [checked, setChecked] = useState<Set<string>>(new Set());
 
+  const filtersQuery = useQuery({
+    queryKey: QK.programmeNavFilters(),
+    queryFn: async () => {
+      const res = await programmeNavFunctionApi.getFilters();
+      return res.data;
+    },
+  });
+
+  const niveauxData = filtersQuery.data?.niveaux ?? [];
+  const domainesData = filtersQuery.data?.domaines ?? [];
+  const sousDomainesData = filtersQuery.data?.sous_domaines ?? [];
+
+  const selectedNiveau = niveauxData.find((n) => n.nom === niveau);
+  const selectedDomaine = domainesData.find((d) => d.nom === domaine && (!selectedNiveau || d.niveau_id === selectedNiveau.id));
+  const selectedSousDomaine = sousDomainesData.find((s) => s.nom === sousDomaine && (!selectedDomaine || s.domaine_id === selectedDomaine.id));
+
+  const programmeCurriculumQuery = useQuery({
+    queryKey: [
+      "programme-nav",
+      "curriculum",
+      selectedNiveau?.id ?? null,
+      selectedDomaine?.id ?? null,
+      selectedSousDomaine?.id ?? null,
+      discipline || null,
+    ] as const,
+    queryFn: async () => {
+      const res = await programmeNavFunctionApi.getCurriculum({
+        niveauId: selectedNiveau?.id,
+        domaineId: selectedDomaine?.id,
+        sousDomaineId: selectedSousDomaine?.id,
+        activite: discipline || undefined,
+      });
+      return res.data;
+    },
+    enabled: Boolean(selectedNiveau && selectedDomaine),
+  });
+
   const isMaths    = domaine === "Mathématiques";
-  const sousOpts   = SOUS_DOMAINES[domaine] ?? [];
+  const sousOpts   = useMemo(() => {
+    if (selectedDomaine) {
+      return sousDomainesData
+        .filter((s) => s.domaine_id === selectedDomaine.id)
+        .map((s) => s.nom)
+        .filter((s): s is string => Boolean(s));
+    }
+    return SOUS_DOMAINES[domaine] ?? [];
+  }, [selectedDomaine, sousDomainesData, domaine]);
 
   // Discipline options depend on whether the domaine uses sous-domaine-level filtering
-  const discOpts: string[] = isMaths
-    ? (DISCIPLINES_BY_DOMAINE[domaine] ?? [])
-    : sousDomaine
-      ? (DISCIPLINES_BY_SOUS_DOMAINE[sousDomaine] ?? [])
-      : [];
+  const discOpts: string[] = programmeCurriculumQuery.data?.disciplines?.length
+    ? programmeCurriculumQuery.data.disciplines
+    : isMaths
+      ? (DISCIPLINES_BY_DOMAINE[domaine] ?? [])
+      : sousDomaine
+        ? (DISCIPLINES_BY_SOUS_DOMAINE[sousDomaine] ?? [])
+        : [];
 
   // For Langue et Communication with no sous-domaine yet, show all disciplines flat
   const allLangDisc = domaine === "Langue et Communication" && !sousDomaine
@@ -578,14 +628,46 @@ export function ContextSelector() {
   const [showMissingHints, setShowMissingHints] = useState(false);
 
   // ── Derived values ────────────────────────────────────────────────────────
-  const competence = COMPETENCES[discipline] ?? "";
-  const oaList     = OBJECTIFS[discipline]   ?? [];
+  const curriculumDetail = programmeCurriculumQuery.data?.detail;
+
+  const competence = curriculumDetail?.competence || COMPETENCES[discipline] || "";
+
+  const paliersOpts = curriculumDetail?.paliers?.length
+    ? curriculumDetail.paliers.map((p) => p.nom)
+    : PALIERS;
+
+  const oaList: OAEntry[] = useMemo(() => {
+    if (!curriculumDetail) return OBJECTIFS[discipline] ?? [];
+    const selectedPalier = curriculumDetail.paliers.find((p) => p.nom === palier);
+    if (!selectedPalier) return [];
+    return selectedPalier.oas.map((oa) => ({
+      oa: oa.titre,
+      os: oa.os.map((o) => o.titre),
+    }));
+  }, [curriculumDetail, discipline, palier]);
+
+  const contenusByOs = useMemo(() => {
+    const out: Record<string, string[]> = {};
+    if (curriculumDetail) {
+      for (const p of curriculumDetail.paliers) {
+        for (const oa of p.oas) {
+          for (const os of oa.os) {
+            out[os.titre] = os.contenus;
+          }
+        }
+      }
+    }
+    return out;
+  }, [curriculumDetail]);
+
   const oaEntry    = oaIdx !== "" ? oaList[oaIdx] : undefined;
   const osOpts     = oaEntry?.os ?? [];
 
   // CORE FIX: contenus are now filtered strictly by the selected OS key.
   // If no OS is selected, the panier is empty — no orphan chips appear.
-  const contenus = selectedOS ? (CONTENUS_BY_OS[selectedOS] ?? []) : [];
+  const contenus = selectedOS
+    ? (contenusByOs[selectedOS] ?? CONTENUS_BY_OS[selectedOS] ?? [])
+    : [];
 
   const requiresSousDomaine = Boolean(domaine) && !isMaths && sousOpts.length > 0;
   const missingFields: string[] = [];
@@ -768,7 +850,7 @@ export function ContextSelector() {
                 label="Niveau"
                 value={niveau}
                 onChange={(v) => { setNiveau(v); resetFrom("domaine"); setDomaine(""); }}
-                options={NIVEAUX}
+                options={niveauxData.length ? niveauxData.map((n) => n.nom) : NIVEAUX}
                 placeholder="Sélectionner le niveau…"
               />
 
@@ -776,7 +858,9 @@ export function ContextSelector() {
                 label="Domaine"
                 value={domaine}
                 onChange={(v) => { setDomaine(v); resetFrom("domaine"); }}
-                options={DOMAINES}
+                options={selectedNiveau
+                  ? domainesData.filter((d) => d.niveau_id === selectedNiveau.id).map((d) => d.nom)
+                  : DOMAINES}
                 placeholder="Sélectionner le domaine…"
                 disabled={!niveau}
                 disabledReason="Sélectionnez d'abord un niveau."
@@ -863,7 +947,7 @@ export function ContextSelector() {
                 label="Palier"
                 value={palier}
                 onChange={(v) => { setPalier(v); resetFrom("palier"); }}
-                options={PALIERS}
+                options={paliersOpts}
                 placeholder="Sélectionner le palier…"
                 disabled={!discipline}
                 disabledReason="Sélectionnez d'abord une discipline."

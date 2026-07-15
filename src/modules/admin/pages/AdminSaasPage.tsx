@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/ui/ca
 import { Badge } from "@/app/components/ui/badge";
 import { Button } from "@/app/components/ui/button";
 import { useAdminSaasMetrics } from "../hooks/useAdminSaasMetrics";
+import { ProgrammeNavigationWorkspace } from "../components/ProgrammeNavigationWorkspace";
 
 export function AdminSaasPage() {
   const metrics = useAdminSaasMetrics();
@@ -192,6 +193,8 @@ export function AdminSaasPage() {
             </div>
           </CardContent>
         </Card>
+
+        <ProgrammeNavigationWorkspace />
       </div>
     </div>
   );
