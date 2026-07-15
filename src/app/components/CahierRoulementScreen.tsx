@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
 import {
@@ -799,6 +799,7 @@ function JournalCell({
 export function CahierRoulementScreen() {
   const navigate = useNavigate();
   const { activeClass } = useAppContext();
+  const canPersistJournalContentRef = useRef(true);
 
   const allProgrammeActivities = useMemo(
     () => Array.from(new Set(PLANNING_DOMAINS.flatMap((d) => d.sousGroups.flatMap((sg) => sg.activities.map((a) => a.name))))),
@@ -992,14 +993,26 @@ export function CahierRoulementScreen() {
   };
 
   const persistContentSelection = async (payload: { day: DayKey; domainId: string; activityId: string; content: string }) => {
+    if (!canPersistJournalContentRef.current) return;
+
     const { day, domainId, activityId, content } = payload;
-    await supabase.from(TABLES.documents).insert({
+    const { error } = await supabase.from(TABLES.documents).insert({
       class_id: activeClass,
       type: "planning",
       title: `JOURNAL_CONTENT|${selectedWeekLabel}|${day}|${domainId}|${encodeURIComponent(activityId)}|${encodeURIComponent(content)}`,
       subtitle: `Journal ${day}`,
       meta: "journal-content-selection",
     });
+
+    if (!error) return;
+
+    // If RLS/permission rejects insert, stop retrying this auxiliary persistence path.
+    if (error.code === "42501" || /permission|rls|forbidden|not allowed/i.test(error.message ?? "")) {
+      canPersistJournalContentRef.current = false;
+      if (import.meta.env.DEV) {
+        console.warn("Journal content persistence disabled (documents insert forbidden by policy).");
+      }
+    }
   };
 
   const toggleContentInCell = (day: DayKey, domainId: string, activityId: string, content: string) => {
