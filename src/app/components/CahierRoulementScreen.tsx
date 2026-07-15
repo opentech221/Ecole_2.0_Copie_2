@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { DOMAINS as PLANNING_DOMAINS, OA_CATALOG } from "./PlanningScreen";
 import { programmeNavFunctionApi } from "../../services/programmeNavFunctionApi";
+import { canonicalizeActivityLabel, resolveCatalogByActivity } from "../../lib/programmeActivityLabel";
 import { useAppContext } from "../contexts/AppContext";
 import { supabase, TABLES } from "../../lib/supabase";
 
@@ -35,7 +36,8 @@ const ACTIVITY_COLORS: Record<string, string> = {
 };
 
 function getColor(name: string): string {
-  return ACTIVITY_COLORS[name] ?? "var(--secondary)";
+  const canonical = canonicalizeActivityLabel(name);
+  return ACTIVITY_COLORS[canonical] ?? ACTIVITY_COLORS[name] ?? "var(--secondary)";
 }
 
 function tint(color: string, amount: number, background = "transparent"): string {
@@ -808,12 +810,13 @@ export function CahierRoulementScreen() {
     queryFn: async () => {
       const entries = await Promise.all(
         allProgrammeActivities.map(async (activity) => {
-          const res = await programmeNavFunctionApi.getCurriculum({ activite: activity });
+          const canonicalActivity = canonicalizeActivityLabel(activity);
+          const res = await programmeNavFunctionApi.getCurriculum({ activite: canonicalActivity });
           const contents = (res.data.detail?.paliers ?? [])
             .flatMap((p) => p.oas)
             .flatMap((oa) => oa.os)
             .flatMap((os) => os.contenus);
-          return [activity, Array.from(new Set(contents))] as const;
+          return [canonicalActivity, Array.from(new Set(contents))] as const;
         }),
       );
 
@@ -821,6 +824,8 @@ export function CahierRoulementScreen() {
       for (const [activity, contents] of entries) out[activity] = contents;
       return out;
     },
+    staleTime: 1000 * 60 * 15,
+    retry: 1,
   });
 
   const allActivityOptions = useMemo(() => {
@@ -830,14 +835,15 @@ export function CahierRoulementScreen() {
       .flatMap(domain =>
         domain.sousGroups.flatMap(group =>
           group.activities.map(activity => {
-            const fallback = (OA_CATALOG[activity.name] ?? [])
+            const canonicalActivity = canonicalizeActivityLabel(activity.name);
+            const fallback = (resolveCatalogByActivity(OA_CATALOG, canonicalActivity) ?? [])
               .flatMap(oa => oa.osItems.flatMap(os => os.contenus));
-            const contents = official?.[activity.name]?.length
-              ? official[activity.name]
+            const contents = official?.[canonicalActivity]?.length
+              ? official[canonicalActivity]
               : Array.from(new Set(fallback));
             return {
-              id: activity.name,
-              label: activity.name,
+              id: canonicalActivity,
+              label: canonicalActivity,
               domainId: domain.key,
               contents,
             };

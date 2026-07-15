@@ -6,6 +6,7 @@ import {
   ChevronDown, ChevronUp, Printer,
 } from "lucide-react";
 import { programmeNavFunctionApi, type ProgrammeCurriculumDetail } from "../../services/programmeNavFunctionApi";
+import { canonicalizeActivityLabel, resolveCatalogByActivity } from "../../lib/programmeActivityLabel";
 
 // ─── Calendar ─────────────────────────────────────────────────────────────────
 
@@ -446,7 +447,8 @@ function SessionBlock({
   ficheNum: number;      // global sequential number for this session within its activity row
   oaCatalog?: Record<string, OaItem[]>;
 }) {
-  const oaList   = oaCatalog?.[actName] ?? OA_CATALOG[actName] ?? [];
+  const baseCatalog = oaCatalog ?? OA_CATALOG;
+  const oaList = resolveCatalogByActivity(baseCatalog, actName) ?? [];
   const selOa    = oaList.find(o => o.oa === drop.oa);
   const osList   = selOa?.osItems ?? [];
   const selOs    = osList.find(o => o.os === drop.os);
@@ -684,8 +686,9 @@ export function PlanningScreen() {
     queryFn: async () => {
       const entries = await Promise.all(
         allPlanningActivities.map(async (activity) => {
-          const res = await programmeNavFunctionApi.getCurriculum({ activite: activity });
-          return [activity, res.data.detail] as const;
+          const canonicalActivity = canonicalizeActivityLabel(activity);
+          const res = await programmeNavFunctionApi.getCurriculum({ activite: canonicalActivity });
+          return [canonicalActivity, res.data.detail] as const;
         }),
       );
 
@@ -695,6 +698,8 @@ export function PlanningScreen() {
       }
       return mapped;
     },
+    staleTime: 1000 * 60 * 15,
+    retry: 1,
   });
 
   const [term,         setTerm]         = useState(0);

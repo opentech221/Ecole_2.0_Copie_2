@@ -24,6 +24,8 @@ export function useProgrammeNavigation(params: NavParams = {}) {
       const res = await programmeNavFunctionApi.getTree(params);
       return res.data as ProgrammeTreeNiveau[];
     },
+    staleTime: 1000 * 60 * 10,
+    retry: 1,
   });
 
   const flatQuery = useQuery({
@@ -35,6 +37,8 @@ export function useProgrammeNavigation(params: NavParams = {}) {
         meta: res.meta as ProgrammeFlatMeta,
       };
     },
+    staleTime: 1000 * 60 * 5,
+    retry: 1,
   });
 
   const filtersQuery = useQuery({
@@ -49,6 +53,8 @@ export function useProgrammeNavigation(params: NavParams = {}) {
       });
       return res.data as ProgrammeFilters;
     },
+    staleTime: 1000 * 60 * 30,
+    retry: 1,
   });
 
   const trimmedSearch = (params.search ?? "").trim();
@@ -59,6 +65,8 @@ export function useProgrammeNavigation(params: NavParams = {}) {
       return res.data as ProgrammeNavigationRow[];
     },
     enabled: trimmedSearch.length >= 2,
+    staleTime: 1000 * 30,
+    retry: 1,
   });
 
   return {

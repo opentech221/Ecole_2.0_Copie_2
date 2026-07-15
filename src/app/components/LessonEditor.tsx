@@ -4,6 +4,7 @@ import { useLocation, useNavigate }              from "react-router";
 import { useQuery }                              from "@tanstack/react-query";
 import { useProfileGuard }                       from "../../hooks/useProfileGuard";
 import { programmeNavFunctionApi, type ProgrammeCurriculumDetail } from "../../services/programmeNavFunctionApi";
+import { canonicalizeActivityLabel }             from "../../lib/programmeActivityLabel";
 import { ProfileGuardLoader }                    from "./ProfileGuardLoader";
 import {
   ArrowLeft, Save, FileDown, Check, Sparkles, Loader2,
@@ -589,14 +590,17 @@ export function LessonEditor() {
   const niveau      = (state?.niveau      as string|undefined) ?? "CE2";
   const domaine     = (state?.domaine     as string|undefined) ?? "ESVS";
   const sousDomaine = (state?.sousDomaine as string|undefined) ?? "Découverte du monde";
+  const canonicalDiscipline = useMemo(() => canonicalizeActivityLabel(discipline), [discipline]);
 
   const officialTriangulationQuery = useQuery({
-    queryKey: ["programme-nav", "lesson-editor-triangulation", discipline],
+    queryKey: ["programme-nav", "lesson-editor-triangulation", canonicalDiscipline],
     queryFn: async () => {
-      const res = await programmeNavFunctionApi.getCurriculum({ activite: discipline });
+      const res = await programmeNavFunctionApi.getCurriculum({ activite: canonicalDiscipline });
       return res.data.detail;
     },
     enabled: Boolean(discipline),
+    staleTime: 1000 * 60 * 30,
+    retry: 1,
   });
   // ── Triangulation table: discipline → { palier, competence (CB) } ──────────
   // When the fiche is created from the planning grid (fromPlanning === true), the
@@ -699,7 +703,7 @@ export function LessonEditor() {
   // When arriving from the planning grid, discipline is known → triangulate Palier + CB.
   const fromPlanning  = !!(state?.fromPlanning);
   const triangulated  = fromPlanning
-    ? (getOfficialTriangulation(officialTriangulationQuery.data) ?? CONTENT_TRIANGULATION[discipline] ?? null)
+    ? (getOfficialTriangulation(officialTriangulationQuery.data) ?? CONTENT_TRIANGULATION[canonicalDiscipline] ?? CONTENT_TRIANGULATION[discipline] ?? null)
     : null;
   // isTriangulated = we have deterministic values → lock Palier + CB as read-only
   const isTriangulated = fromPlanning && !!triangulated;

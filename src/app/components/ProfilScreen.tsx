@@ -478,12 +478,16 @@ export function ProfilScreen() {
               <ImageTile
                 label="Logo de l'école" hint="JPG, PNG — max 2 Mo"
                 currentUrl={profilePhotoUrl || profile?.logoUrl} uploading={uploading}
-                onUpload={f => uploadFile(f, "logo")}
+                onUpload={async (f) => {
+                  await uploadFile(f, "logo");
+                }}
               />
               <ImageTile
                 label="Signature" hint="Fond blanc recommandé"
                 currentUrl={profile?.signatureUrl} uploading={uploading}
-                onUpload={f => uploadFile(f, "signature")}
+                onUpload={async (f) => {
+                  await uploadFile(f, "signature");
+                }}
               />
             </div>
           </Card>

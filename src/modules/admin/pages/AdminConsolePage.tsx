@@ -343,7 +343,7 @@ export function AdminConsolePage() {
               detailLoading={userDetailQuery.isLoading}
               busy={busyAction}
               onCreateUser={(payload) => createUserMutation.mutate(payload)}
-              onUpdateUser={(payload) => updateUserMutation.mutate(payload)}
+              onUpdateUser={(payload) => updateUserMutation.mutate({ userId: payload.userId, payload })}
               onSuspendUser={(payload) => suspendUserMutation.mutate(payload)}
               onReactivateUser={(payload) => reactivateUserMutation.mutate(payload)}
               onResetPassword={(payload) => resetPasswordMutation.mutate(payload)}
