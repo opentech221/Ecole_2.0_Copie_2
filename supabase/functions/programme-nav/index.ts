@@ -24,12 +24,17 @@ type NavRow = {
 const app = new Hono();
 app.use("*", logger(console.log));
 
-const defaultOrigins = ["*.github.dev", "*.vercel.app", "http://localhost:5173"];
-const rawOrigins = Deno.env.get("ALLOWED_ORIGINS") ?? defaultOrigins.join(",");
-const ALLOWED_ORIGIN_PATTERNS = rawOrigins
+const defaultOrigins = [
+  "*.github.dev",
+  "*.vercel.app",
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+];
+const envOrigins = (Deno.env.get("ALLOWED_ORIGINS") ?? "")
   .split(",")
   .map((o) => o.trim())
   .filter(Boolean);
+const ALLOWED_ORIGIN_PATTERNS = Array.from(new Set([...defaultOrigins, ...envOrigins]));
 
 function isOriginAllowed(origin: string): boolean {
   if (!origin) return true;

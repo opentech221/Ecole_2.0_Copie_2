@@ -11,11 +11,16 @@ app.use("*", logger(console.log));
 const defaultOrigins = [
   "*.github.dev",
   "*.vercel.app",
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
   "https://ecole-2-0-copie-2-opentechsn.vercel.app",
 ];
 
-const rawOrigins = Deno.env.get("ALLOWED_ORIGINS") ?? defaultOrigins.join(",");
-const allowedOriginPatterns = rawOrigins.split(",").map((o) => o.trim()).filter(Boolean);
+const envOrigins = (Deno.env.get("ALLOWED_ORIGINS") ?? "")
+  .split(",")
+  .map((o) => o.trim())
+  .filter(Boolean);
+const allowedOriginPatterns = Array.from(new Set([...defaultOrigins, ...envOrigins]));
 
 function isOriginAllowed(origin: string): boolean {
   if (!origin) return true;
@@ -51,7 +56,7 @@ app.use(
   "/*",
   cors({
     origin: (origin) => (isOriginAllowed(origin) ? origin : false),
-    allowHeaders: ["Authorization", "Content-Type"],
+    allowHeaders: ["Authorization", "Content-Type", "apikey"],
     allowMethods: ["GET", "POST", "PATCH", "OPTIONS"],
     exposeHeaders: ["Content-Length"],
     maxAge: 600,

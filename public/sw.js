@@ -268,7 +268,18 @@ self.addEventListener("fetch", (event) => {
   }
 
   if (isSensitiveRequest(request, url)) {
-    event.respondWith(fetch(request));
+    event.respondWith(
+      (async () => {
+        try {
+          return await fetch(request);
+        } catch {
+          return new Response(JSON.stringify({ error: "Réseau indisponible" }), {
+            status: 503,
+            headers: { "Content-Type": "application/json" },
+          });
+        }
+      })(),
+    );
     return;
   }
 
