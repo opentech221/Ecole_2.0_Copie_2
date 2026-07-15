@@ -102,6 +102,19 @@ function normalizeText(value: string | null | undefined) {
     .trim();
 }
 
+function toTokenSet(value: string) {
+  return new Set(
+    normalizeText(value)
+      .replace(/[^a-z0-9\s]/g, " ")
+      .split(/\s+/)
+      .filter(Boolean),
+  );
+}
+
+function tokenSignature(value: string) {
+  return Array.from(toTokenSet(value)).sort().join("|");
+}
+
 function applyFilters(
   query: any,
   params: {
@@ -391,9 +404,34 @@ registerGet("/curriculum", async (c) => {
     return c.json({ data: { disciplines, detail: null } });
   }
 
-  const activiteIds = navRows
-    .filter((row) => row.activite_nom === activiteNom)
-    .map((row) => row.activite_id);
+  const normalizedQuery = normalizeText(activiteNom);
+  const queryTokens = toTokenSet(activiteNom);
+  const queryTokenSignature = tokenSignature(activiteNom);
+
+  let matchedRows = navRows.filter((row) => normalizeText(row.activite_nom) === normalizedQuery);
+
+  if (matchedRows.length === 0) {
+    matchedRows = navRows.filter((row) => {
+      const normalizedRow = normalizeText(row.activite_nom);
+      return normalizedRow.includes(normalizedQuery) || normalizedQuery.includes(normalizedRow);
+    });
+  }
+
+  if (matchedRows.length === 0) {
+    matchedRows = navRows.filter((row) => tokenSignature(row.activite_nom) === queryTokenSignature);
+  }
+
+  if (matchedRows.length === 0 && queryTokens.size > 0) {
+    matchedRows = navRows.filter((row) => {
+      const rowTokens = toTokenSet(row.activite_nom);
+      for (const token of queryTokens) {
+        if (!rowTokens.has(token)) return false;
+      }
+      return true;
+    });
+  }
+
+  const activiteIds = matchedRows.map((row) => row.activite_id);
 
   if (activiteIds.length === 0) {
     return c.json({ data: { disciplines, detail: null } });
