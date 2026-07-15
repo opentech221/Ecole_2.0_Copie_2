@@ -131,6 +131,15 @@ export const OA_CATALOG: Record<string, OaItem[]> = {
           contenus: ["Accord dans le groupe nominal", "Accord sujet-verbe simple", "Majuscule et ponctuation en fin de phrase"] },
       ] },
   ],
+  "Vocabulaire": [
+    { oa: "OA1 · Enrichir le lexique pour mieux comprendre et produire",
+      osItems: [
+        { os: "OS1.1 · Comprendre le sens des mots en contexte",
+          contenus: ["Champ lexical d'un thème", "Synonymes et antonymes usuels", "Repérage des mots inconnus dans un texte"] },
+        { os: "OS1.2 · Utiliser un vocabulaire précis à l'oral et à l'écrit",
+          contenus: ["Réemploi des mots nouveaux en phrase", "Familles de mots simples", "Lexique de la vie scolaire et quotidienne"] },
+      ] },
+  ],
   "Expression orale": [
     { oa: "OA1 · S'exprimer oralement de façon claire",
       osItems: [

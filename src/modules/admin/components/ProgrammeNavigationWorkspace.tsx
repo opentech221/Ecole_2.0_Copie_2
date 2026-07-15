@@ -10,6 +10,31 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Skeleton } from "@/app/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/ui/tabs";
 import { useProgrammeNavigation } from "@/hooks/useProgrammeNavigation";
+import type { ProgrammeNavigationRow } from "@/services/programmeNavigationApi";
+
+type FlatDisplayRow = ProgrammeNavigationRow & {
+  row_key: string;
+  activite_display_nom: string;
+  source_activite_nom: string | null;
+};
+
+const PEDAGOGICAL_ACTIVITY_EXPANSIONS: Record<string, string[]> = {
+  "Production d'écrits": ["Production d'écrits", "Grammaire", "Conjugaison", "Orthographe", "Vocabulaire"],
+  "Expression orale et récitation": ["Expression orale et récitation", "Expression orale", "Récitation"],
+  "Activités physiques et sportives": ["Activités physiques et sportives", "EPS"],
+};
+
+function expandFlatRows(rows: ProgrammeNavigationRow[]): FlatDisplayRow[] {
+  return rows.flatMap((row) => {
+    const labels = PEDAGOGICAL_ACTIVITY_EXPANSIONS[row.activite_nom] ?? [row.activite_nom];
+    return labels.map((label, index) => ({
+      ...row,
+      row_key: index === 0 ? row.activite_id : `${row.activite_id}::${label}`,
+      activite_display_nom: label,
+      source_activite_nom: label === row.activite_nom ? null : row.activite_nom,
+    }));
+  });
+}
 
 function EmptyState({ message }: { message: string }) {
   return (
@@ -56,14 +81,14 @@ export function ProgrammeNavigationWorkspace() {
     isLoadingFilters,
   } = useProgrammeNavigation(navParams);
 
-  const activeRows = flat;
+  const activeRows = useMemo(() => expandFlatRows(flat), [flat]);
 
   const sortedRows = useMemo(() => {
     const rows = [...activeRows];
     const mul = sortDir === "asc" ? 1 : -1;
 
     rows.sort((a, b) => {
-      if (sortBy === "activite") return mul * a.activite_nom.localeCompare(b.activite_nom, "fr");
+      if (sortBy === "activite") return mul * a.activite_display_nom.localeCompare(b.activite_display_nom, "fr");
       if (sortBy === "niveau") return mul * a.niveau_nom.localeCompare(b.niveau_nom, "fr");
       if (sortBy === "domaine") return mul * a.domaine_nom.localeCompare(b.domaine_nom, "fr");
       const aTotal = a.competences_count + a.paliers_count + a.oa_count + a.os_count + a.contenus_count;
@@ -322,8 +347,17 @@ export function ProgrammeNavigationWorkspace() {
                     </thead>
                     <tbody>
                       {sortedRows.map((row) => (
-                        <tr key={row.activite_id} className="border-t border-slate-200/60 dark:border-slate-800">
-                          <td className="px-3 py-2 font-medium">{row.activite_nom}</td>
+                        <tr key={row.row_key} className="border-t border-slate-200/60 dark:border-slate-800">
+                          <td className="px-3 py-2 font-medium">
+                            <div className="flex flex-wrap items-center gap-2">
+                              <span>{row.activite_display_nom}</span>
+                              {row.source_activite_nom && (
+                                <span className="rounded-full border border-slate-300 px-1.5 py-0.5 text-[10px] text-slate-500 dark:border-slate-700 dark:text-slate-400">
+                                  alias de {row.source_activite_nom}
+                                </span>
+                              )}
+                            </div>
+                          </td>
                           <td className="px-3 py-2">{row.niveau_nom}</td>
                           <td className="px-3 py-2">{row.domaine_nom}</td>
                           <td className="px-3 py-2">{row.sous_domaine_nom ?? "Sans nom"}</td>
@@ -338,7 +372,7 @@ export function ProgrammeNavigationWorkspace() {
 
                 <div className="mt-3 flex flex-col gap-2 border-t border-slate-200/70 pt-3 text-xs text-muted-foreground dark:border-slate-800 sm:flex-row sm:items-center sm:justify-between">
                   <span>
-                    Page {flatMeta?.page ?? page} / {flatMeta?.pageCount ?? 1} · {flatMeta?.total ?? activeRows.length} activité(s)
+                    Page {flatMeta?.page ?? page} / {flatMeta?.pageCount ?? 1} · {activeRows.length} activité(s) affichée(s)
                   </span>
                   <div className="flex items-center gap-2">
                     <Button

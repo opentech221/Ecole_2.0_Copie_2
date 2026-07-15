@@ -25,6 +25,7 @@ const ACTIVITY_LOOKUP_ALIASES: Record<string, string[]> = {
   [normalizeActivityLabel("Grammaire")]: ["Production d'écrits"],
   [normalizeActivityLabel("Conjugaison")]: ["Production d'écrits"],
   [normalizeActivityLabel("Orthographe")]: ["Production d'écrits"],
+  [normalizeActivityLabel("Vocabulaire")]: ["Production d'écrits"],
   [normalizeActivityLabel("EPS")]: ["Activités physiques et sportives"],
   [normalizeActivityLabel("Expression orale")]: ["Expression Orale", "Expression orale et récitation"],
 };

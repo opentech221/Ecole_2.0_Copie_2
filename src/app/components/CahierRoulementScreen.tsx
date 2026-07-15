@@ -23,6 +23,7 @@ const ACTIVITY_COLORS: Record<string, string> = {
   "Grammaire":               "var(--secondary)",
   "Conjugaison":             "var(--accent-foreground)",
   "Orthographe":             "var(--destructive)",
+  "Vocabulaire":             "var(--primary)",
   "Expression orale":        "var(--secondary)",
   "Récitation":              "var(--accent-foreground)",
   "Histoire":                "var(--primary)",
@@ -60,6 +61,10 @@ const JOURNAL_DOMAIN_KEYS = ["maths", "langue", "esvs", "epsa"] as const;
 const JOURNAL_DOMAINS: JournalDomain[] = PLANNING_DOMAINS
   .filter(domain => JOURNAL_DOMAIN_KEYS.includes(domain.key as (typeof JOURNAL_DOMAIN_KEYS)[number]))
   .map(domain => ({ id: domain.key, label: domain.label }));
+
+const JOURNAL_ACTIVITY_SUPPLEMENTS: Array<{ domainId: string; label: string }> = [
+  { domainId: "langue", label: "Vocabulaire" },
+];
 
 type VisaStatus = "idle" | "pending" | "approved";
 
@@ -794,7 +799,10 @@ export function CahierRoulementScreen() {
   const canPersistJournalContentRef = useRef(true);
 
   const allProgrammeActivities = useMemo(
-    () => Array.from(new Set(PLANNING_DOMAINS.flatMap((d) => d.sousGroups.flatMap((sg) => sg.activities.map((a) => a.name))))),
+    () => Array.from(new Set([
+      ...PLANNING_DOMAINS.flatMap((d) => d.sousGroups.flatMap((sg) => sg.activities.map((a) => a.name))),
+      ...JOURNAL_ACTIVITY_SUPPLEMENTS.map((item) => item.label),
+    ])),
     [],
   );
 
@@ -823,7 +831,7 @@ export function CahierRoulementScreen() {
 
   const allActivityOptions = useMemo(() => {
     const official = officialCatalogQuery.data;
-    return PLANNING_DOMAINS
+    const baseOptions = PLANNING_DOMAINS
       .filter(domain => JOURNAL_DOMAIN_KEYS.includes(domain.key as (typeof JOURNAL_DOMAIN_KEYS)[number]))
       .flatMap(domain =>
         domain.sousGroups.flatMap(group =>
@@ -843,6 +851,29 @@ export function CahierRoulementScreen() {
           }),
         ),
       );
+
+    const supplementOptions: ActivityOption[] = JOURNAL_ACTIVITY_SUPPLEMENTS.map((item) => {
+      const canonicalActivity = canonicalizeActivityLabel(item.label);
+      const fallback = (resolveCatalogByActivity(OA_CATALOG, canonicalActivity) ?? [])
+        .flatMap((oa) => oa.osItems.flatMap((os) => os.contenus));
+      const contents = official?.[canonicalActivity]?.length
+        ? official[canonicalActivity]
+        : Array.from(new Set(fallback));
+
+      return {
+        id: canonicalActivity,
+        label: canonicalActivity,
+        domainId: item.domainId,
+        contents,
+      };
+    });
+
+    const uniqueById = new Map<string, ActivityOption>();
+    for (const option of [...baseOptions, ...supplementOptions]) {
+      if (!uniqueById.has(option.id)) uniqueById.set(option.id, option);
+    }
+
+    return Array.from(uniqueById.values());
   }, [officialCatalogQuery.data]);
 
   const activityOptions = useMemo(() => allActivityOptions, [allActivityOptions]);
