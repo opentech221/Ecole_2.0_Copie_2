@@ -113,6 +113,24 @@ export const OA_CATALOG: Record<string, OaItem[]> = {
           contenus: ["Articles définis : le, la, les", "Articles indéfinis : un, une, des", "Contraction de l'article"] },
       ] },
   ],
+  "Conjugaison": [
+    { oa: "OA1 · Conjuguer les verbes usuels aux temps de base",
+      osItems: [
+        { os: "OS1.1 · Identifier le verbe et son infinitif",
+          contenus: ["Repérage du verbe dans la phrase", "Infinitif des verbes fréquents", "Groupes de verbes usuels"] },
+        { os: "OS1.2 · Conjuguer au présent de l'indicatif",
+          contenus: ["Terminaisons du 1er groupe", "Conjugaison des verbes être/avoir", "Accord sujet-verbe au présent"] },
+      ] },
+  ],
+  "Orthographe": [
+    { oa: "OA1 · Appliquer les règles orthographiques d'usage",
+      osItems: [
+        { os: "OS1.1 · Orthographier correctement les mots fréquents",
+          contenus: ["Mots outils usuels", "Dictée de groupes de mots", "Copie sans erreur de phrases simples"] },
+        { os: "OS1.2 · Respecter les accords de base",
+          contenus: ["Accord dans le groupe nominal", "Accord sujet-verbe simple", "Majuscule et ponctuation en fin de phrase"] },
+      ] },
+  ],
   "Expression orale": [
     { oa: "OA1 · S'exprimer oralement de façon claire",
       osItems: [
@@ -688,7 +706,7 @@ export function PlanningScreen() {
       const entries = await Promise.all(
         allPlanningActivities.map(async (activity) => {
           const canonicalActivity = canonicalizeActivityLabel(activity);
-          const res = await programmeNavFunctionApi.getCurriculum({ activite: canonicalActivity });
+          const res = await programmeNavFunctionApi.getCurriculumResolved({ activite: canonicalActivity });
           return [canonicalActivity, res.data.detail] as const;
         }),
       );

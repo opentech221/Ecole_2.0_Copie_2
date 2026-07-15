@@ -595,7 +595,7 @@ export function LessonEditor() {
   const officialTriangulationQuery = useQuery({
     queryKey: ["programme-nav", "lesson-editor-triangulation", canonicalDiscipline],
     queryFn: async () => {
-      const res = await programmeNavFunctionApi.getCurriculum({ activite: canonicalDiscipline });
+      const res = await programmeNavFunctionApi.getCurriculumResolved({ activite: canonicalDiscipline });
       return res.data.detail;
     },
     enabled: Boolean(discipline),

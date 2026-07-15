@@ -1,5 +1,6 @@
 import { supabase } from "../lib/supabase";
 import { projectId, publicAnonKey } from "../../utils/supabase/info";
+import { getActivityLookupCandidates } from "../lib/programmeActivityLabel";
 import type {
   ProgrammeNavigationRow,
 } from "./programmeNavigationApi";
@@ -150,5 +151,33 @@ export const programmeNavFunctionApi = {
     activite?: string;
   }) {
     return getJson<{ data: { disciplines: string[]; detail: ProgrammeCurriculumDetail | null } }>("/curriculum", params);
+  },
+
+  async getCurriculumResolved(params?: {
+    niveauId?: string;
+    domaineId?: string;
+    sousDomaineId?: string;
+    activite?: string;
+  }) {
+    if (!params?.activite) {
+      return getJson<{ data: { disciplines: string[]; detail: ProgrammeCurriculumDetail | null } }>("/curriculum", params);
+    }
+
+    const candidates = getActivityLookupCandidates(params.activite);
+    let lastResponse: { data: { disciplines: string[]; detail: ProgrammeCurriculumDetail | null } } | null = null;
+
+    for (const candidate of candidates) {
+      const response = await getJson<{ data: { disciplines: string[]; detail: ProgrammeCurriculumDetail | null } }>("/curriculum", {
+        ...params,
+        activite: candidate,
+      });
+
+      lastResponse = response;
+      if (response.data.detail?.paliers?.length) {
+        return response;
+      }
+    }
+
+    return lastResponse ?? getJson<{ data: { disciplines: string[]; detail: ProgrammeCurriculumDetail | null } }>("/curriculum", params);
   },
 };

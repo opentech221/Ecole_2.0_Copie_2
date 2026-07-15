@@ -578,7 +578,7 @@ export function ContextSelector() {
       discipline || null,
     ] as const,
     queryFn: async () => {
-      const res = await programmeNavFunctionApi.getCurriculum({
+      const res = await programmeNavFunctionApi.getCurriculumResolved({
         niveauId: selectedNiveau?.id,
         domaineId: selectedDomaine?.id,
         sousDomaineId: selectedSousDomaine?.id,

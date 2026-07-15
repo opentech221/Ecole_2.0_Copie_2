@@ -609,7 +609,6 @@ function ActivityModal({
   isOpen,
   domain,
   activityOptions,
-  emptyActivityOptions,
   selectedIds,
   onToggle,
   onClose,
@@ -617,14 +616,12 @@ function ActivityModal({
   isOpen: boolean;
   domain: JournalDomain | null;
   activityOptions: ActivityOption[];
-  emptyActivityOptions: ActivityOption[];
   selectedIds: string[];
   onToggle: (activityId: string) => void;
   onClose: () => void;
 }) {
   if (!isOpen || !domain) return null;
   const options = activityOptions.filter(option => option.domainId === domain.id);
-  const emptyOptions = emptyActivityOptions.filter(option => option.domainId === domain.id);
 
   return (
     <div className="fixed inset-0 z-[90] flex items-center justify-center bg-black/55 p-4">
@@ -633,14 +630,9 @@ function ActivityModal({
           <p className="m-0 text-sm font-extrabold text-gray-900 dark:text-gray-100">Sélection des activités · {domain.label}</p>
           <button className="text-xs font-bold text-gray-600 dark:text-gray-300" onClick={onClose}>Fermer</button>
         </div>
-        {emptyOptions.length > 0 && (
-          <div className="mb-3 rounded-lg border border-amber-300 bg-amber-50 px-2 py-1.5 text-[11px] text-amber-700 dark:border-amber-700 dark:bg-amber-900/30 dark:text-amber-200">
-            {emptyOptions.length} activité(s) masquée(s) car aucun contenu n'est défini dans la planification.
-          </div>
-        )}
         <div className="max-h-[340px] space-y-2 overflow-y-auto">
           {options.length === 0 && (
-            <p className="text-xs text-gray-500 dark:text-gray-400">Aucune activité disponible avec contenus pour ce domaine.</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">Aucune activité disponible pour ce domaine.</p>
           )}
           {options.map(option => {
             const tone = getActivityColor(option.id);
@@ -812,7 +804,7 @@ export function CahierRoulementScreen() {
       const entries = await Promise.all(
         allProgrammeActivities.map(async (activity) => {
           const canonicalActivity = canonicalizeActivityLabel(activity);
-          const res = await programmeNavFunctionApi.getCurriculum({ activite: canonicalActivity });
+          const res = await programmeNavFunctionApi.getCurriculumResolved({ activite: canonicalActivity });
           const contents = (res.data.detail?.paliers ?? [])
             .flatMap((p) => p.oas)
             .flatMap((oa) => oa.os)
@@ -853,15 +845,7 @@ export function CahierRoulementScreen() {
       );
   }, [officialCatalogQuery.data]);
 
-  const activityOptions = useMemo(
-    () => allActivityOptions.filter(activity => activity.contents.length > 0),
-    [allActivityOptions],
-  );
-
-  const emptyActivityOptions = useMemo(
-    () => allActivityOptions.filter(activity => activity.contents.length === 0),
-    [allActivityOptions],
-  );
+  const activityOptions = useMemo(() => allActivityOptions, [allActivityOptions]);
 
   // ── Shared view toggle ──
   const [view, setView] = useState<"cahier" | "evaluations">("cahier");
@@ -1676,7 +1660,6 @@ export function CahierRoulementScreen() {
         isOpen={Boolean(activityModalTarget)}
         domain={activityModalDomain}
         activityOptions={activityOptions}
-        emptyActivityOptions={emptyActivityOptions}
         selectedIds={activityModalEntry?.activityIds ?? []}
         onToggle={(activityId) => {
           if (!activityModalTarget) return;
