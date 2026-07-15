@@ -28,11 +28,11 @@ export function useNotifications() {
   });
 
   const resolvedTenantId = tenantId || tenantsQuery.data?.[0]?.id || "";
-  const shouldPollUnread = Boolean(resolvedTenantId) && (typeof navigator === "undefined" || navigator.onLine);
+  const shouldPollUnread = Boolean(resolvedTenantId) && !import.meta.env.DEV && (typeof navigator === "undefined" || navigator.onLine);
 
   const listQuery = useQuery({
     queryKey: keys.list(resolvedTenantId, filters),
-    enabled: Boolean(resolvedTenantId),
+    enabled: Boolean(resolvedTenantId) && !import.meta.env.DEV,
     queryFn: () => notificationsClient.getNotifications(resolvedTenantId, filters),
   });
 

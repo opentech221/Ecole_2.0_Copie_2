@@ -2,11 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import { notificationsClient } from "../api/notificationsClient";
 
 export function useNotificationsUnreadCount(enabled = true) {
-  const shouldPoll = enabled && (typeof navigator === "undefined" || navigator.onLine);
+  const shouldPoll = enabled && !import.meta.env.DEV && (typeof navigator === "undefined" || navigator.onLine);
 
   const query = useQuery({
     queryKey: ["notifications", "unread", "all"],
-    enabled,
+    enabled: enabled && !import.meta.env.DEV,
     queryFn: async () => {
       try {
         return await notificationsClient.getUnreadCount();
