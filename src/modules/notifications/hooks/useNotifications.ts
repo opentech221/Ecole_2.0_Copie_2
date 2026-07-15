@@ -28,6 +28,7 @@ export function useNotifications() {
   });
 
   const resolvedTenantId = tenantId || tenantsQuery.data?.[0]?.id || "";
+  const shouldPollUnread = Boolean(resolvedTenantId) && (typeof navigator === "undefined" || navigator.onLine);
 
   const listQuery = useQuery({
     queryKey: keys.list(resolvedTenantId, filters),
@@ -38,8 +39,19 @@ export function useNotifications() {
   const unreadCountQuery = useQuery({
     queryKey: keys.unread(resolvedTenantId),
     enabled: Boolean(resolvedTenantId),
-    queryFn: () => notificationsClient.getUnreadCount(resolvedTenantId),
-    refetchInterval: 30_000,
+    queryFn: async () => {
+      try {
+        return await notificationsClient.getUnreadCount(resolvedTenantId);
+      } catch (error) {
+        if (import.meta.env.DEV) {
+          return { unreadCount: 0 };
+        }
+        throw error;
+      }
+    },
+    refetchInterval: shouldPollUnread ? 30_000 : false,
+    refetchIntervalInBackground: false,
+    retry: false,
   });
 
   const refresh = async () => {
