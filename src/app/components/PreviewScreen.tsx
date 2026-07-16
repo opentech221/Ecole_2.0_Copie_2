@@ -1,5 +1,8 @@
 import React, { useState, useLayoutEffect, useRef } from "react";
-import { useNavigate, useLocation } from "react-router";
+import { useNavigate, useLocation }                  from "react-router";
+import { useAppContext }                              from "../contexts/AppContext";
+import { useProfileGuard }                           from "../../hooks/useProfileGuard";
+import { ProfileGuardLoader }                        from "./ProfileGuardLoader";
 import {
   ArrowLeft, Download, Printer, Share2, Check,
   Maximize2, Minimize2, WifiOff, FileDown, ChevronDown,
@@ -309,8 +312,10 @@ function A4Document({
 // ─── Main Screen ──────────────────────────────────────────────────────────────
 
 export function PreviewScreen() {
-  const navigate  = useNavigate();
-  const { state } = useLocation() as { state: Record<string,unknown>|null };
+  const navigate               = useNavigate();
+  const { state }              = useLocation() as { state: Record<string,unknown>|null };
+  const { ief: profileIef, userName: profileName } = useAppContext();
+  const { loading, blocked, skip, hasEcoleNom } = useProfileGuard();
 
   // ── Route state from LessonEditor ──────────────────────────────────────────
   const fiches      = (state?.fiches      as FicheState[]|undefined) ?? [];
@@ -407,13 +412,18 @@ export function PreviewScreen() {
   const scaledH = zoomMode ? "auto" : `${A4_H * scale}px`;
   const chipColor = SEQ_COLORS[activeFicheIdx % SEQ_COLORS.length];
 
-  // Common props shared by every A4Document call
+  // Common props shared by every A4Document call.
+  // ief and enseignant fall back to the authenticated profile when not in route state.
   const commonProps = {
     ecole, dateHeure, niveau, palier, domaine,
     sousDomaine, discipline, competence, oa, os, merged, mergedFiche,
-    // Resource lists — bound from LessonEditor per-fiche state
     matSel, pedSel,
+    ief:        (state?.ief        as string | undefined) ?? profileIef,
+    enseignant: (state?.enseignant as string | undefined) ?? profileName,
   };
+
+  if (loading) return <ProfileGuardLoader loading />;
+  if (blocked) return <ProfileGuardLoader blocked onSkip={skip} />;
 
   return (
     <>
@@ -479,14 +489,14 @@ export function PreviewScreen() {
            style={{ fontFamily:"'Plus Jakarta Sans',sans-serif", backgroundColor:"#dde1e7" }}>
 
         {/* ══ STICKY HEADER ═══════════════════════════════════════════════════ */}
-        <div className="no-print sticky top-0 z-30 bg-white"
-             style={{ boxShadow:"0 1px 0 #e5e7eb, 0 2px 12px rgba(0,0,0,0.07)" }}>
+           <div className="no-print sticky top-0 z-30 bg-card"
+             style={{ boxShadow:"0 1px 0 var(--border), 0 2px 12px rgba(0,0,0,0.07)" }}>
           <div className="max-w-5xl mx-auto px-4 md:px-6">
 
             {/* Title row */}
             <div className="flex items-center gap-3 pt-3 pb-2 flex-wrap">
               <button onClick={() => navigate(-1)}
-                className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#1a365d] hover:text-[#3182ce] transition-colors shrink-0"
+                className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-primary hover:text-secondary transition-colors shrink-0"
                 style={{ minHeight:"44px" }}>
                 <ArrowLeft className="w-4 h-4"/>
                 <span className="hidden sm:inline">← Éditeur</span>
@@ -494,10 +504,10 @@ export function PreviewScreen() {
               </button>
 
               <div className="flex-1 min-w-0">
-                <h1 className="text-[15px] md:text-[17px] font-bold text-[#1a365d] truncate">
+                <h1 className="text-[15px] md:text-[17px] font-bold text-primary truncate">
                   {isMulti ? `${contenus.length} fiches générées` : "Fiche Prête à l'usage"}
                 </h1>
-                <p className="text-[11px] text-gray-400 mt-0.5 hidden md:block">
+                <p className="text-[11px] text-[var(--muted-foreground)] mt-0.5 hidden md:block">
                   {isMulti
                     ? `Mode fiches indépendantes · ${discipline}`
                     : `${contenus.length} séquence${contenus.length>1?"s":""} · ${discipline}`}
@@ -506,10 +516,10 @@ export function PreviewScreen() {
 
               {/* Offline badge */}
               <div className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 shrink-0"
-                   style={{ backgroundColor:"#f0fdf4", border:"1px solid #86efac" }}>
-                <WifiOff className="w-3 h-3" style={{ color:"#16a34a" }}/>
-                <Check   className="w-3 h-3" style={{ color:"#16a34a" }}/>
-                <span className="text-[10px] font-bold hidden sm:inline" style={{ color:"#15803d" }}>
+                   style={{ backgroundColor:"var(--accent)", border:"1px solid var(--border)" }}>
+                 <WifiOff className="w-3 h-3" style={{ color:"var(--secondary)" }}/>
+                 <Check   className="w-3 h-3" style={{ color:"var(--secondary)" }}/>
+                 <span className="text-[10px] font-bold hidden sm:inline" style={{ color:"var(--secondary)" }}>
                   Enregistré hors-ligne
                 </span>
               </div>
@@ -524,43 +534,55 @@ export function PreviewScreen() {
               <div className="flex flex-col gap-2 md:hidden">
                 {/* Row 1 — primary CTA */}
                 <button onClick={handleDownloadActive}
+                  disabled={!hasEcoleNom}
+                  title={!hasEcoleNom ? "Renseignez le nom de l'école dans votre profil" : undefined}
                   className="w-full inline-flex items-center justify-center gap-2 rounded-xl text-[14px] font-bold text-white transition-all active:scale-[0.98]"
                   style={{ minHeight:"48px",
-                           backgroundColor: downloaded?"#059669":"#1a365d",
-                           boxShadow:"0 3px 14px rgba(26,54,93,0.28)",
+                           backgroundColor: !hasEcoleNom ? "var(--muted)" : downloaded?"var(--secondary)":"var(--primary)",
+                           boxShadow: !hasEcoleNom ? "none" : "0 3px 14px color-mix(in srgb, var(--primary) 28%, transparent)",
+                           cursor: !hasEcoleNom ? "not-allowed" : "pointer",
                            transition:"background-color 200ms" }}>
                   {downloaded?<Check className="w-5 h-5 shrink-0"/>:<Download className="w-5 h-5 shrink-0"/>}
-                  {downloaded
-                    ? "Téléchargé !"
-                    : isMulti ? "Télécharger la fiche active (PDF)" : "Télécharger PDF"}
+                  {!hasEcoleNom
+                    ? "Nom d'école requis"
+                    : downloaded
+                      ? "Téléchargé !"
+                      : isMulti ? "Télécharger la fiche active (PDF)" : "Télécharger PDF"}
                 </button>
 
                 {/* Row 2 — secondary buttons */}
                 <div className="flex gap-2">
                   {isMulti ? (
                     <button onClick={handlePrintAll}
+                      disabled={!hasEcoleNom}
+                      title={!hasEcoleNom ? "Renseignez le nom de l'école dans votre profil" : undefined}
                       className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl text-[12px] font-semibold transition-all active:scale-95"
                       style={{ minHeight:"44px",
-                               color: batchDone?"#059669":"#1a365d",
-                               backgroundColor: batchDone?"#f0fdf4":"#eef4ff",
-                               border:`1.5px solid ${batchDone?"#86efac":"#bfdbfe"}` }}>
+                               cursor: !hasEcoleNom ? "not-allowed" : "pointer",
+                               color: !hasEcoleNom ? "var(--muted-foreground)" : batchDone?"var(--secondary)":"var(--primary)",
+                               backgroundColor: !hasEcoleNom ? "var(--muted)" : batchDone?"var(--accent)":"var(--accent)",
+                               border:`1.5px solid var(--border)` }}>
                       {batchDone?<Check className="w-4 h-4 shrink-0"/>:<FileDown className="w-4 h-4 shrink-0"/>}
                       {batchDone ? "Lot prêt !" : "Tout imprimer"}
                     </button>
                   ) : (
                     <button onClick={printActive}
+                      disabled={!hasEcoleNom}
+                      title={!hasEcoleNom ? "Renseignez le nom de l'école dans votre profil" : undefined}
                       className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl text-[13px] font-semibold transition-all active:scale-95"
-                      style={{ minHeight:"44px", color:"#1a365d",
-                               backgroundColor:"#f1f5f9", border:"1.5px solid #e2e8f0" }}>
+                      style={{ minHeight:"44px",
+                               cursor: !hasEcoleNom ? "not-allowed" : "pointer",
+                               color: !hasEcoleNom ? "var(--muted-foreground)" : "var(--primary)",
+                               backgroundColor:"var(--muted)", border:"1.5px solid var(--border)" }}>
                       <Printer className="w-4 h-4 shrink-0"/>Imprimer
                     </button>
                   )}
                   <button onClick={handleShare}
                     className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl text-[13px] font-semibold transition-all active:scale-95"
                     style={{ minHeight:"44px",
-                             color: shared?"#059669":"#1a365d",
-                             backgroundColor: shared?"#f0fdf4":"#f1f5f9",
-                             border:`1.5px solid ${shared?"#86efac":"#e2e8f0"}` }}>
+                             color: shared?"var(--secondary)":"var(--primary)",
+                             backgroundColor: shared?"var(--accent)":"var(--muted)",
+                             border:`1.5px solid var(--border)` }}>
                     {shared?<Check className="w-4 h-4 shrink-0"/>:<Share2 className="w-4 h-4 shrink-0"/>}
                     {shared?"Partagé !":isMulti?"Partager la fiche":"Partager"}
                   </button>
@@ -571,13 +593,18 @@ export function PreviewScreen() {
               <div className="hidden md:flex items-center gap-2 flex-wrap">
                 {/* Download active */}
                 <button onClick={handleDownloadActive}
+                  disabled={!hasEcoleNom}
+                  title={!hasEcoleNom ? "Renseignez le nom de l'école dans votre profil" : undefined}
                   className="inline-flex items-center gap-2 rounded-xl text-[13px] font-bold text-white shrink-0 transition-all active:scale-95"
                   style={{ minHeight:"44px", padding:"0 18px",
-                           backgroundColor: downloaded?"#059669":"#1a365d",
-                           boxShadow:"0 3px 12px rgba(26,54,93,0.25)", transition:"background-color 200ms" }}>
+                           backgroundColor: !hasEcoleNom ? "#cbd5e1" : downloaded?"#059669":"#1a365d",
+                           boxShadow: !hasEcoleNom ? "none" : "0 3px 12px rgba(26,54,93,0.25)",
+                           cursor: !hasEcoleNom ? "not-allowed" : "pointer",
+                           transition:"background-color 200ms" }}>
                   {downloaded?<Check className="w-4 h-4 shrink-0"/>:<Download className="w-4 h-4 shrink-0"/>}
-                  {downloaded?"Téléchargé !"
-                    : isMulti?"Télécharger la fiche active (PDF)":"Télécharger PDF"}
+                  {!hasEcoleNom ? "Nom d'école requis"
+                    : downloaded ? "Téléchargé !"
+                    : isMulti ? "Télécharger la fiche active (PDF)" : "Télécharger PDF"}
                 </button>
 
                 <div className="w-px h-6 bg-gray-200 shrink-0"/>
@@ -585,18 +612,25 @@ export function PreviewScreen() {
                 {/* Print all / Print active */}
                 {isMulti ? (
                   <button onClick={handlePrintAll}
+                    disabled={!hasEcoleNom}
+                    title={!hasEcoleNom ? "Renseignez le nom de l'école dans votre profil" : undefined}
                     className="inline-flex items-center gap-2 rounded-xl text-[13px] font-semibold shrink-0 transition-all active:scale-95"
                     style={{ minHeight:"44px", padding:"0 16px",
-                             color: batchDone?"#059669":"#1a365d",
-                             backgroundColor: batchDone?"#f0fdf4":"#eef4ff",
-                             border:`1.5px solid ${batchDone?"#86efac":"#bfdbfe"}` }}>
+                             cursor: !hasEcoleNom ? "not-allowed" : "pointer",
+                             color: !hasEcoleNom ? "#94a3b8" : batchDone?"#059669":"#1a365d",
+                             backgroundColor: !hasEcoleNom ? "#f1f5f9" : batchDone?"#f0fdf4":"#eef4ff",
+                             border:`1.5px solid ${!hasEcoleNom ? "#e2e8f0" : batchDone?"#86efac":"#bfdbfe"}` }}>
                     {batchDone?<Check className="w-4 h-4 shrink-0"/>:<FileDown className="w-4 h-4 shrink-0"/>}
                     {batchDone?"Lot prêt !":"Tout imprimer (lot)"}
                   </button>
                 ) : (
                   <button onClick={printActive}
+                    disabled={!hasEcoleNom}
+                    title={!hasEcoleNom ? "Renseignez le nom de l'école dans votre profil" : undefined}
                     className="inline-flex items-center gap-2 rounded-xl text-[13px] font-semibold shrink-0 transition-all active:scale-95"
-                    style={{ minHeight:"44px", padding:"0 16px", color:"#1a365d",
+                    style={{ minHeight:"44px", padding:"0 16px",
+                             cursor: !hasEcoleNom ? "not-allowed" : "pointer",
+                             color: !hasEcoleNom ? "#94a3b8" : "#1a365d",
                              backgroundColor:"#f1f5f9", border:"1.5px solid #e2e8f0" }}>
                     <Printer className="w-4 h-4 shrink-0"/>Imprimer
                   </button>
@@ -618,6 +652,40 @@ export function PreviewScreen() {
             </div>
           </div>
         </div>
+
+        {/* ══ ECOLE_NOM ENFORCEMENT BANNER (skip mode only) ══════════════════ */}
+        {!hasEcoleNom && (
+          <div className="no-print"
+               style={{
+                 backgroundColor: "#fff7ed",
+                 borderBottom:    "1px solid #fed7aa",
+                 padding:         "10px 20px",
+                 display:         "flex",
+                 alignItems:      "center",
+                 justifyContent:  "space-between",
+                 gap:             "12px",
+                 flexWrap:        "wrap",
+               }}>
+            <p style={{ fontSize:"12px", color:"#9a3412", margin:0, lineHeight:1.5 }}>
+              <strong>Mode test</strong> — le nom de l'école est manquant.
+              L'impression et le téléchargement sont désactivés pour les documents officiels.
+            </p>
+            <button
+              onClick={() => window.location.href = "/profil"}
+              style={{
+                padding:         "6px 14px", borderRadius:"8px",
+                backgroundColor: "#ea580c", color:"#fff",
+                fontSize:        "12px", fontWeight:700,
+                border:          "none", cursor:"pointer",
+                fontFamily:      "'Plus Jakarta Sans',sans-serif",
+                whiteSpace:      "nowrap",
+                flexShrink:      0,
+              }}
+            >
+              Compléter le profil
+            </button>
+          </div>
+        )}
 
         {/* ══ CANVAS AREA ═════════════════════════════════════════════════════ */}
         <div ref={canvasRef} className="no-print flex-1 flex flex-col items-center py-6 px-4"

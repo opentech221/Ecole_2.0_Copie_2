@@ -32,8 +32,8 @@ export function useDocumentsQuery(mockFallback: DocumentRow[] = []) {
       file: File;
       meta: Omit<DocumentRow, "id" | "created_at" | "file_path" | "class_id">;
     }) => {
-      const publicUrl = await documentsApi.upload(activeClass, meta.type, file);
-      return documentsApi.create({ ...meta, class_id: activeClass, file_path: publicUrl });
+      const bucketPath = await documentsApi.upload(activeClass, meta.type, file);
+      return documentsApi.create({ ...meta, class_id: activeClass, file_path: bucketPath });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QK.documents(activeClass) });

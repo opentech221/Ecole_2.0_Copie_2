@@ -1,0 +1,274 @@
+[
+  {
+    "niveau": "CP",
+    "document_ref": "guide_etape_1",
+    "domaines": [
+      {
+        "nom": "Éducation Physique, Sportive et Artistique",
+        "sous_domaines": [
+          {
+            "nom": "Éducation physique et sportive",
+            "activites": [
+              {
+                "nom": "Activités physiques et sportives",
+                "page_source": 243,
+                "competences_base": [
+                  {
+                    "description": "Intégrer des règles de base et des activités motrices simples dans des situations ludiques et sportives",
+                    "paliers": [
+                      {
+                        "nom": "Palier 3",
+                        "description": "Intégrer des règles de jeu, des activités motrices simples ainsi que des principes élémentaires de fair-play dans des situations ludiques et physiques",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Exécuter des exercices d’ordre",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Se déplacer en ordre",
+                                "contenus": [
+                                  "Marche en rang",
+                                  "pas cadencés",
+                                  "balancement des bras",
+                                  "tête haute",
+                                  "poitrine bombée"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Pratiquer des jeux traditionnels et modernes",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Pratiquer des jeux collectifs",
+                                "contenus": [
+                                  "Jeux de rôles",
+                                  "jeux de plein air"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 4",
+                        "description": "Intégrer des règles de jeu, des activités motrices simples ainsi que des principes élémentaires de fair-play dans des situations de jeux pré-sportifs",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Pratiquer des activités pré-sportives",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Appliquer des techniques de jeu",
+                                "contenus": [
+                                  "Règles spécifiques du sport",
+                                  "Adoption d'une attitude de fair-play"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nom": "Éducation artistique",
+            "activites": [
+              {
+                "nom": "Arts plastiques",
+                "page_source": 254,
+                "competences_base": [
+                  {
+                    "description": "Intégrer des formes, des couleurs ainsi que des techniques élémentaires de reproduction et d’expression artistique dans des situations de réalisation de dessins et de modelage",
+                    "paliers": [
+                      {
+                        "nom": "Palier 3",
+                        "description": "Intégrer des formes, des matériaux et des techniques élémentaires de reproduction et d’expression artistique dans des situations de décoration d’objets",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Discriminer des matériaux",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier des matériaux naturels",
+                                "contenus": [
+                                  "Sable",
+                                  "coquillage",
+                                  "bois",
+                                  "argile",
+                                  "fer"
+                                ]
+                              },
+                              {
+                                "titre": "Identifier des matériaux fabriqués par l’homme",
+                                "contenus": [
+                                  "Papier",
+                                  "tissus",
+                                  "plastique"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Décorer un objet",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Reconnaître diverses formes",
+                                "contenus": [
+                                  "Carré",
+                                  "rectangle",
+                                  "triangle",
+                                  "cercle",
+                                  "cube",
+                                  "boule"
+                                ]
+                              },
+                              {
+                                "titre": "Appliquer des techniques décoratives",
+                                "contenus": [
+                                  "Différentes techniques",
+                                  "Divers motifs décoratifs"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 4",
+                        "description": "Intégrer des formes, des couleurs et des matériaux dans des situations de réalisation d’objets décoratifs",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Réaliser des objets décoratifs",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier et reproduire des objets décoratifs",
+                                "contenus": [
+                                  "Techniques de reproduction",
+                                  "Matériaux de récupération"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Éducation musicale",
+                "page_source": 258,
+                "competences_base": [
+                  {
+                    "description": "Intégrer des mélodies, des rythmes divers, une gestuelle simple et la coordination des mouvements dans des situations d’interprétation de chants tirés du répertoire local",
+                    "paliers": [
+                      {
+                        "nom": "Palier 3 et 4",
+                        "description": "Interprétation et accompagnement musical de chants simples",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Interpréter des chants",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Interpréter le chant avec variations",
+                                "contenus": [
+                                  "Sons graves, aigus, longs, courts, forts, doux"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Arts scéniques",
+                "page_source": 266,
+                "competences_base": [
+                  {
+                    "description": "Intégrer des techniques simples d’imitation, de jeux de rôles, de mise en scène et de déguisement dans des situations de dramatisation de scènes de la vie courante ou imaginaires",
+                    "paliers": [
+                      {
+                        "nom": "Palier 3",
+                        "description": "Intégrer des techniques simples de jeu de rôles, de déguisement et de mise en scène dans des situations de dramatisation de scènes de la vie courante",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Déguiser en personnage",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier les éléments de déguisement d’un personnage",
+                                "contenus": [
+                                  "Habillement",
+                                  "masque",
+                                  "autres accessoires"
+                                ]
+                              },
+                              {
+                                "titre": "Donner l’aspect d’un personnage",
+                                "contenus": [
+                                  "Techniques de déguisement"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Imiter un personnage",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Prendre l’aspect d’un personnage typique",
+                                "contenus": [
+                                  "Mimiques",
+                                  "gestuelle expressive"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Interpréter un rôle",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Interpréter un rôle",
+                                "contenus": [
+                                  "Les répliques",
+                                  "la diction",
+                                  "la gestuelle",
+                                  "la mimique"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 4",
+                        "description": "Intégrer des techniques simples d’imitation, de jeu de rôles, de mise en scène et de déguisement dans des situations de dramatisation relatives à des scènes de vie courante ou imaginaires",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Dramatiser des scènes",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Dramatiser une saynète de sensibilisation",
+                                "contenus": [
+                                  "Thèmes d'actualité",
+                                  "dialogues appris"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,812 @@
+[
+  {
+    "niveau": "CE1",
+    "document_ref": "guide_etape_2",
+    "domaines": [
+      {
+        "nom": "Langue et Communication",
+        "sous_domaines": [
+          {
+            "nom": "Communication Orale",
+            "activites": [
+              {
+                "nom": "Expression orale et récitation",
+                "page_source": 61,
+                "competences_base": [
+                  {
+                    "description": "A la fin de l’étape, l’élève doit intégrer le vocabulaire adéquat, les comportements non verbaux, le schéma intonatif, des structures et des règles syntaxiques dans des situations de compréhension et de production de message oraux relatifs à la transmission d’information et aux échanges verbaux.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "Intégrer le vocabulaire adéquat, les comportements non verbaux, le schéma intonatif et des règles syntaxiques dans des situations de transmission d’informations de type narratif.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Relater un événement vécu ou entendu.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Relater un événement vécu, une expérience personnelle.",
+                                "contenus": [
+                                  "Le respect du thème",
+                                  "l’articulation",
+                                  "le rythme de la parole",
+                                  "la maîtrise du souffle",
+                                  "la fidélité",
+                                  "la concision",
+                                  "la cohérence (chronologie des faits, étapes de la narration) dans le récit",
+                                  "le lexique adapté (connecteurs, emploi de verbes d'action)"
+                                ]
+                              },
+                              {
+                                "titre": "Relater un fait divers, un événement entendu.",
+                                "contenus": [
+                                  "Le respect du thème",
+                                  "l’articulation",
+                                  "le rythme de la parole",
+                                  "la maîtrise du souffle",
+                                  "la fidélité",
+                                  "la concision",
+                                  "la cohérence",
+                                  "le lexique adapté"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Relater une histoire lue par un tiers ou par soi-même.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Relater une histoire à partir de la lecture de supports variés.",
+                                "contenus": [
+                                  "BD",
+                                  "conte",
+                                  "album",
+                                  "etc."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Dire de mémoire un texte (Récitation).",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Restituer un poème.",
+                                "contenus": [
+                                  "Poèmes, texte en prose",
+                                  "Expression, intonation et gestes qui conviennent"
+                                ]
+                              },
+                              {
+                                "titre": "Restituer un texte en prose.",
+                                "contenus": [
+                                  "Poèmes, texte en prose",
+                                  "Expression, intonation et gestes qui conviennent"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "Intégrer le vocabulaire adéquat, les comportements non verbaux, le schéma intonatif et des règles syntaxiques dans des situations de transmission d’informations de type descriptif.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Décrire un objet.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Décrire un objet, ses éléments caractéristiques, ses fonctions, etc.",
+                                "contenus": [
+                                  "le respect du thème",
+                                  "l’articulation",
+                                  "le rythme de la parole",
+                                  "la maîtrise du souffle",
+                                  "la fidélité",
+                                  "la concision",
+                                  "la cohérence",
+                                  "le lexique adapté (connecteurs, emploi de verbes d’état, d’adjectifs qualificatifs)"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Décrire un lieu.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Décrire un lieu, ses caractéristiques, sa situation, etc.",
+                                "contenus": [
+                                  "le respect du thème",
+                                  "l’articulation",
+                                  "le rythme de la parole",
+                                  "la maîtrise du souffle",
+                                  "la fidélité",
+                                  "la concision",
+                                  "la cohérence",
+                                  "le lexique adapté"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Décrire un animal.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Décrire un animal (domestique et/ ou sauvage), ses caractéristiques physiques, son caractère, etc.",
+                                "contenus": [
+                                  "le respect du thème",
+                                  "l’articulation",
+                                  "le rythme de la parole",
+                                  "la maîtrise du souffle",
+                                  "la fidélité",
+                                  "la concision",
+                                  "la cohérence",
+                                  "le lexique adapté"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Dire de mémoire un texte (Récitation).",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Restituer un poème.",
+                                "contenus": [
+                                  "Poèmes, texte en prose",
+                                  "Expression, intonation et gestes qui conviennent"
+                                ]
+                              },
+                              {
+                                "titre": "Restituer un texte en prose.",
+                                "contenus": [
+                                  "Poèmes, texte en prose",
+                                  "Expression, intonation et gestes qui conviennent"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 3",
+                        "description": "Intégrer le vocabulaire adéquat, les comportements non verbaux, le schéma intonatif et des règles syntaxiques dans des situations de transmission d’informations de type injonctif.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Faire agir.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Donner des conseils pratiques.",
+                                "contenus": [
+                                  "Suite de phrases courtes",
+                                  "énumération",
+                                  "déroulement logique des opérations",
+                                  "numérotation",
+                                  "emploi correct de formules impersonnelles (il faut + infinitif)",
+                                  "Utilisation de temps à valeur injonctive (impératif, infinitif, présent de l’indicatif, futur simple, subjonctif)"
+                                ]
+                              },
+                              {
+                                "titre": "Donner des ordres.",
+                                "contenus": [
+                                  "Phrases courtes",
+                                  "énumération",
+                                  "temps à valeur injonctive"
+                                ]
+                              },
+                              {
+                                "titre": "Donner des consignes.",
+                                "contenus": [
+                                  "Phrases courtes",
+                                  "déroulement logique",
+                                  "temps à valeur injonctive"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Dire de mémoire un texte (Récitation).",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Restituer un poème.",
+                                "contenus": [
+                                  "Poèmes, texte en prose",
+                                  "Expression, intonation et gestes qui conviennent"
+                                ]
+                              },
+                              {
+                                "titre": "Restituer un texte en prose.",
+                                "contenus": [
+                                  "Poèmes, texte en prose",
+                                  "Expression, intonation et gestes qui conviennent"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nom": "Communication Écrite",
+            "activites": [
+              {
+                "nom": "Lecture",
+                "page_source": 81,
+                "competences_base": [
+                  {
+                    "description": "Intégrer les mécanismes d’identification des mots et des stratégies de compréhension dans des situations de lecture de textes narratifs, descriptifs, injonctifs, informatifs, dialogués et poétiques.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "Intégrer les mécanismes d’identification des mots et des stratégies de compréhension dans des situations de lecture et de compréhension de textes narratifs.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Comprendre des textes narratifs (lus par soi-même, par l’adulte ou par un camarade).",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier les personnages d’un texte narratif et leurs caractéristiques.",
+                                "contenus": [
+                                  "Construction de sens à partir de textes narratifs : récits, contes, albums de littérature jeunesse, BD, etc.",
+                                  "Marques de ponctuation ou de parole (deux points, guillemets, etc.)",
+                                  "Termes désignant un même personnage (substituts)",
+                                  "Relations établies par les connecteurs (liaisons temporelles, spatiales, causales, etc.)",
+                                  "Temps des verbes marquant la chronologie des événements, etc.",
+                                  "Adoption de différentes stratégies pour soutenir sa compréhension"
+                                ]
+                              },
+                              {
+                                "titre": "Identifier le temps et les lieux d’un texte narratif.",
+                                "contenus": [
+                                  "Indicateurs temporels et spatiaux"
+                                ]
+                              },
+                              {
+                                "titre": "Identifier la succession des événements dans un texte narratif.",
+                                "contenus": [
+                                  "Chronologie des faits",
+                                  "étapes de la narration"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Maîtriser des correspondances graphophonologiques.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Lire /écrire des lettres-sons, des syllabes, des mots inconnus.",
+                                "contenus": [
+                                  "Renforcement de la combinatoire à partir des sons étudiés à la première étape",
+                                  "Etablissement de listes de mots contenant un même graphème",
+                                  "Mots à compléter par le graphème approprié",
+                                  "Lecture de séries de mots isolés",
+                                  "Exercices d’appariement (mots-objets)",
+                                  "Dictées de syllabes, de mots, de phrases, etc."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Identifier des mots fréquents.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Reconnaître instantanément des mots fréquents.",
+                                "contenus": [
+                                  "Mots fréquents Echelon n°8 de l’Echelle Dubois-Buyse",
+                                  "Savoir orthographier des mots fréquents"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Développer la fluidité de la lecture d’un texte narratif.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Lire à haute voix un texte narratif avec rapidité, précision et expression.",
+                                "contenus": [
+                                  "Lecture répétée de petits textes narratifs de complexité graduée, avec chronométrage",
+                                  "Lecture expressive à haute voix de textes narratifs divers",
+                                  "Lecture expressive à haute voix de textes narratifs divers de manière polyphonique (par plusieurs élèves) : narrateur, personnages"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "Intégrer les mécanismes d’identification des mots et des stratégies de compréhension dans des situations de lecture et de compréhension de textes descriptifs.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Comprendre des textes descriptifs.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier les caractéristiques de l'objet, du lieu ou de l'animal décrit.",
+                                "contenus": [
+                                  "Construction de sens à partir de textes descriptifs",
+                                  "Marques de ponctuation",
+                                  "Mots ou groupes de mots qui en remplacent d’autres (substituts : pronoms, synonyme, mot générique)",
+                                  "Connecteurs spatio-temporels",
+                                  "Adjectifs et adverbes qui permettent d’apporter des précisions",
+                                  "Verbes et temps verbaux",
+                                  "Adoption de différentes stratégies pour soutenir sa compréhension"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Maîtriser des correspondances graphophonologiques.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Lire /écrire des lettres-sons, des syllabes, des mots inconnus.",
+                                "contenus": [
+                                  "Renforcement de la combinatoire à partir des sons étudiés à la première étape",
+                                  "Etablissement de listes de mots contenant un même graphème",
+                                  "Mots à compléter par le graphème approprié",
+                                  "Lecture de séries de mots isolés",
+                                  "Exercices d’appariement (mots-objets)",
+                                  "Dictées de syllabes, de mots, de phrases, etc."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Identifier des mots fréquents.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Reconnaître instantanément des mots et savoir les orthographier.",
+                                "contenus": [
+                                  "Mots fréquents Echelon n°9 de l’Echelle Dubois-Buyse"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 3",
+                        "description": "Intégrer les mécanismes d’identification des mots et des stratégies de compréhension dans des situations de lecture et de compréhension de textes injonctifs.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Comprendre des textes injonctifs.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier les actions à réaliser et leur ordre.",
+                                "contenus": [
+                                  "Construction de sens à partir de textes injonctifs",
+                                  "Marques de ponctuation",
+                                  "Marques d’énumération",
+                                  "Connecteurs spatio-temporels",
+                                  "Temps des verbes (impératif, présent de l’indicatif), etc.",
+                                  "Adoption de différentes stratégies pour soutenir sa compréhension"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Maîtriser des correspondances graphophonologiques.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Lire /écrire des lettres-sons, des syllabes, des mots inconnus.",
+                                "contenus": [
+                                  "Renforcement de la combinatoire",
+                                  "Etablissement de listes de mots",
+                                  "Mots à compléter",
+                                  "Lecture de séries",
+                                  "Exercices d’appariement",
+                                  "Dictées"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Identifier des mots fréquents.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Reconnaître instantanément des mots et savoir les orthographier.",
+                                "contenus": [
+                                  "Mots fréquents Echelon n°10 de l’Echelle Dubois-Buyse"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Développer la fluidité de la lecture d’un texte injonctif.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Lire à haute voix un texte injonctif avec rapidité, précision et expression.",
+                                "contenus": [
+                                  "Lecture expressive à haute voix de textes injonctifs divers",
+                                  "Mise en place d’un fichier « dessins téléguidés » (dessins à accomplir sur ardoise d'après lecture)"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 4",
+                        "description": "Intégrer les mécanismes d’identification des mots et des stratégies de compréhension dans des situations de lecture et de compréhension de textes informatifs.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Comprendre des textes informatifs.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier le sujet central d’un texte informatif.",
+                                "contenus": [
+                                  "Hiérarchisation des informations",
+                                  "Présentation (causes/conséquences, problèmes/solutions, etc.)",
+                                  "Complémentarité texte/supports iconiques (tableau, schéma, plan, etc.)",
+                                  "Reformulation, résumé, réponses aux questions",
+                                  "Constat de ressemblances/différences entre plusieurs textes",
+                                  "Confrontation des points de vue",
+                                  "Techniques de consultation (table des matières, index, Internet, etc.)"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Maîtriser des correspondances graphophonologiques.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Lire /écrire des lettres-sons, des syllabes, des mots inconnus.",
+                                "contenus": [
+                                  "Renforcement de la combinatoire",
+                                  "Etablissement de listes",
+                                  "Lecture de séries",
+                                  "Dictées"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Identifier des mots fréquents.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Reconnaître instantanément des mots et savoir les orthographier.",
+                                "contenus": [
+                                  "Mots fréquents Echelons n°11 et n°12 (1ère partie) de l’Echelle Dubois-Buyse"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Développer la fluidité de la lecture d’un texte informatif.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Lire à voix haute un texte informatif avec rapidité, précision et expression.",
+                                "contenus": [
+                                  "Lecture répétée de petits textes informatifs avec chronométrage",
+                                  "Lecture expressive à voix haute"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 5",
+                        "description": "Intégrer les mécanismes d’identification des mots et des stratégies de compréhension dans des situations de lecture et de compréhension de textes dialogués.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Comprendre des textes dialogués.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier les personnages d’un texte dialogué, leur rôle et leur importance.",
+                                "contenus": [
+                                  "Perception des traits de caractère, sentiments, valeurs, comportements",
+                                  "Identification du temps et des lieux",
+                                  "Construction d’une interprétation mentale (« film » mental)",
+                                  "Reformulation, regroupement d'idées, anticipation",
+                                  "Réponses aux questions, avis personnel, appréciation des effets produits",
+                                  "Mise en réseaux de différents textes dialogués",
+                                  "Marques de ponctuation (deux points, guillemets, etc.)",
+                                  "Substituts, variété des verbes introducteurs de dialogue"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Maîtriser des correspondances graphophonologiques.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Lire /écrire des lettres-sons, des syllabes, des mots inconnus.",
+                                "contenus": [
+                                  "Renforcement de la combinatoire",
+                                  "Etablissement de listes",
+                                  "Lecture de séries",
+                                  "Dictées"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Identifier des mots fréquents.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Reconnaître instantanément des mots et savoir les orthographier.",
+                                "contenus": [
+                                  "Mots fréquents Echelon n°12 (2ème partie) de l’Echelle Dubois-Buyse"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Développer la fluidité de la lecture d’un texte dialogué.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Lire à voix haute un texte dialogué avec rapidité, précision et expression.",
+                                "contenus": [
+                                  "Lecture expressive à haute voix de textes dialogués de manière polyphonique",
+                                  "Echanges sur la diversité des interprétations"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 6",
+                        "description": "Intégrer les mécanismes d’identification des mots et des stratégies de compréhension dans des situations de lecture et de compréhension de textes poétiques.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Comprendre des textes poétiques.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier les thèmes et les images d'un texte poétique.",
+                                "contenus": [
+                                  "Construction de sens à partir de textes poétiques",
+                                  "Mise en page, vers, strophes, rimes",
+                                  "Sens propre/sens figuré, images poétiques (comparaisons, métaphores simples)",
+                                  "Évocation des sentiments, émotions, rythmes, sonorités",
+                                  "Avis personnel, mise en réseaux de textes poétiques",
+                                  "Stratégies de compréhension"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Maîtriser des correspondances graphophonologiques.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Lire /écrire des lettres-sons, des syllabes, des mots inconnus.",
+                                "contenus": [
+                                  "Renforcement de la combinatoire",
+                                  "Lecture de séries de mots",
+                                  "Dictées"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Identifier des mots fréquents.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Reconnaître instantanément des mots et savoir les orthographier.",
+                                "contenus": [
+                                  "Mots fréquents Echelon n°13 (1ère partie) de l’Echelle Dubois-Buyse"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Développer la fluidité de lecture d’un texte poétique.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Lire à voix haute un texte poétique avec rapidité, précision et expression.",
+                                "contenus": [
+                                  "Lecture expressive à haute voix",
+                                  "Variation des manières de dire et de l’intensité de la voix (chuchotant, fort, riant, etc.)"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Production d'écrits",
+                "page_source": 111,
+                "competences_base": [
+                  {
+                    "description": "A la fin de l’étape, l’élève doit intégrer le vocabulaire adéquat, les indices significatifs, des structures et et des règles syntaxiques dans des situations de production de textes narratifs, descriptifs, informatifs, injonctifs, dialogués et poétiques.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "Intégrer le vocabulaire adéquat, les indices significatifs et des règles syntaxiques dans des situations de production de textes narratifs.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Maîtriser les outils de langue indispensables à la production d’écrits.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Acquérir le sens de mots liés au thème du texte à produire et les employer dans des phrases qui en illustrent le sens (Vocabulaire).",
+                                "contenus": [
+                                  "Mots liés au thème du texte narratif à produire : utilisation dans des phrases d’emploi, classement par catégories sémantiques (champ lexical), etc.",
+                                  "Connecteurs : et, puis, d’abord, ensuite, etc.",
+                                  "Liste de mots: classement par « famille de mots »",
+                                  "Mots avec initiale différente, mots avec initiale identique (ordre alphabétique)"
+                                ]
+                              },
+                              {
+                                "titre": "Reconnaître une phrase dans un texte (Grammaire).",
+                                "contenus": [
+                                  "Indices de reconnaissance : majuscule, point",
+                                  "Types de phrases : déclarative, exclamative",
+                                  "Formes de phrases : affirmative, négative (ne... pas)",
+                                  "Nom commun / Nom propre (présence de la majuscule)",
+                                  "Les articles : un, une, le, la, les, des, l’, du, au, aux"
+                                ]
+                              },
+                              {
+                                "titre": "Ordonner des actions ou des événements selon la chronologie (Conjugaison).",
+                                "contenus": [
+                                  "Notion de passé, présent, futur ; Utilisation d’une « ligne du temps »",
+                                  "Verbes du 1er groupe (type « chanter ») : terminaisons du présent de l’indicatif",
+                                  "Verbes être et avoir au présent"
+                                ]
+                              },
+                              {
+                                "titre": "Ecrire des mots en respectant les règles liées au placement des voyelles (Orthographe).",
+                                "contenus": [
+                                  "c / ç ; c / qu /cu ; g /gu / ge ; s / ss",
+                                  "Le « ent » marqueur du pluriel vs le « ent » prononcé « an »",
+                                  "La règle n → m devant « b, p, m »",
+                                  "Homophones a/à",
+                                  "Mots fréquents : Echelon n°8",
+                                  "Dictée de phrases, de petits textes"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Produire des textes narratifs.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Rédiger un court texte narratif.",
+                                "contenus": [
+                                  "Production d'un texte de 3-4 lignes respectant la structure narrative",
+                                  "S'exercer à rédiger des textes narratifs"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "Intégrer le vocabulaire adéquat, les indices significatifs et des règles syntaxiques dans des situations de production de textes descriptifs.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Maîtriser les outils de langue indispensables à la production d’écrits.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Acquérir le sens de mots liés au thème du texte à produire (Vocabulaire).",
+                                "contenus": [
+                                  "Synonymes pour éviter les répétitions",
+                                  "Ordre d’intensité entre des mots",
+                                  "Noms des parties d’un tout",
+                                  "Notion de suffixes",
+                                  "Utilisation du dictionnaire"
+                                ]
+                              },
+                              {
+                                "titre": "Distinguer le genre et le nombre d’un nom (Grammaire).",
+                                "contenus": [
+                                  "Le genre et le nombre d’un nom",
+                                  "L’adjectif qualificatif",
+                                  "Accord de l’adjectif qualificatif avec le nom",
+                                  "Le verbe et son sujet"
+                                ]
+                              },
+                              {
+                                "titre": "Conjuguer à l’imparfait de l’indicatif (Conjugaison).",
+                                "contenus": [
+                                  "Verbes du 1er groupe à l’imparfait",
+                                  "Verbes être et avoir à l’imparfait",
+                                  "Verbes du 1er groupe au futur",
+                                  "Verbes être et avoir au futur"
+                                ]
+                              },
+                              {
+                                "titre": "Appliquer le féminin des noms et des adjectifs (Orthographe).",
+                                "contenus": [
+                                  "Féminin (règle générale)",
+                                  "Le pluriel des noms en « al »",
+                                  "Accord sujet – verbe",
+                                  "Accord en genre et en nombre de l’adjectif",
+                                  "Homophones on/ont",
+                                  "Mots fréquents : Echelon n°9",
+                                  "Dictée de phrases, de textes"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Produire des textes descriptifs.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Rédiger un court texte descriptif.",
+                                "contenus": [
+                                  "Ecriture de majuscules cursives (P, B, D, F, R, L, S)",
+                                  "Copie d'extraits de textes descriptifs",
+                                  "Rédaction de textes de 3-4 lignes"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 3",
+                        "description": "Intégrer le vocabulaire adéquat, les indices significatifs et des règles syntaxiques dans des situations de production de textes injonctifs.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Maîtriser les outils de langue indispensables à la production d’écrits.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Employer des prépositions courantes (Vocabulaire).",
+                                "contenus": [
+                                  "Prépositions : à, de, pour, etc.",
+                                  "Notion de préfixes",
+                                  "Recherche d'un verbe dans le dictionnaire (infinitif)"
+                                ]
+                              },
+                              {
+                                "titre": "Employer une phrase infinitive (Grammaire).",
+                                "contenus": [
+                                  "La phrase infinitive",
+                                  "Verbe d’action + mot le précisant (approche de l'adverbe)",
+                                  "Accord sujet – verbe",
+                                  "Déterminants démonstratifs : ce, ces, cet, cette",
+                                  "Chaînes d’accord dans le groupe nominal"
+                                ]
+                              },
+                              {
+                                "titre": "Employer le verbe impersonnel « il faut » (Conjugaison).",
+                                "contenus": [
+                                  "Il faut + infinitif",
+                                  "Impératif présent des verbes du premier groupe",
+                                  "Passé composé des verbes du premier groupe (être et avoir)"
+                                ]
+                              },
+                              {
+                                "titre": "Appliquer le pluriel des noms en « ou » (Orthographe).",
+                                "contenus": [
+                                  "Règle : ne pas + infinitif",
+                                  "Homophones son/sont",
+                                  "Mots fréquents : Echelon n°10",
+                                  "Dictée"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Produire des textes injonctifs.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Rédiger un court texte injonctif.",
+                                "contenus": [
+                                  "Ecriture de majuscules cursives (C, E, G, I, J, K)",
+                                  "Copie d'extraits de textes injonctifs",
+                                  "Rédaction des étapes de réalisation d'une tâche (3-4 lignes)"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

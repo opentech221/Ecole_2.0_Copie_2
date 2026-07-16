@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { useNavigate, useLocation } from "react-router";
+import { useNavigate } from "react-router";
 import {
   Plus, Eye, Bell, WifiOff, Download,
-  Calendar, Home, BookMarked, ChevronRight, Users,
+  Calendar, BookMarked, ChevronRight, Users, ShieldCheck,
 } from "lucide-react";
 import { useAppContext } from "../contexts/AppContext";
+import { useAuthContext } from "../contexts/AuthContext";
 
 // ─── WhatsApp icon ────────────────────────────────────────────────────────────
 
@@ -143,6 +143,7 @@ function ModuleCard({ badge, badgeIcon, gradient, shadowColor, accent, title, de
         <div className="flex items-center gap-2 relative">
           <button
             onClick={onClick}
+            aria-label={title}
             className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl font-bold transition-all active:scale-[0.97]"
             style={{ minHeight:"44px", fontSize:"13px", backgroundColor:accent, color:"#fff", boxShadow:`0 2px 10px ${accent}60` }}
           >
@@ -169,7 +170,7 @@ function FicheTicket({ fiche }: { fiche: FicheCard }) {
   const nc = NIVEAU_COLOR[fiche.niveau]   ?? DEFAULT_NIVEAU;
 
   return (
-    <div className="bg-white rounded-2xl overflow-hidden"
+    <div className="bg-card rounded-2xl overflow-hidden"
          style={{ boxShadow:"0 2px 12px rgba(26,54,93,0.08), 0 1px 3px rgba(26,54,93,0.05)" }}>
       <div className="flex">
         <div className="w-[5px] shrink-0" style={{ backgroundColor:dc.bar }}/>
@@ -182,7 +183,7 @@ function FicheTicket({ fiche }: { fiche: FicheCard }) {
               <BookMarked className="w-3.5 h-3.5" style={{ color:dc.bar }}/>
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="font-bold leading-snug text-[#1a365d] break-words text-[13px]">
+              <h3 className="font-bold leading-snug text-[var(--foreground)] break-words text-[13px]">
                 {fiche.domaine}
                 <span className="mx-1.5 font-normal opacity-40">·</span>
                 {fiche.discipline}
@@ -199,15 +200,15 @@ function FicheTicket({ fiche }: { fiche: FicheCard }) {
             <div className="flex items-start gap-1.5 mb-2">
               <span className="text-[10px] font-bold uppercase tracking-widest shrink-0 mt-0.5"
                     style={{ color:dc.bar, opacity:0.75 }}>Objet</span>
-              <span className="text-[10px] font-bold shrink-0 mt-0.5" style={{ color:"#64748b" }}>:</span>
-              <p className="text-[12px] leading-snug text-[#2d3748] font-medium break-words">
+              <span className="text-[10px] font-bold shrink-0 mt-0.5" style={{ color:"var(--muted-foreground)" }}>:</span>
+              <p className="text-[12px] leading-snug text-[var(--foreground)] font-medium break-words">
                 {fiche.objet}
               </p>
             </div>
             <div className="flex items-center gap-1.5">
-              <Calendar className="w-3 h-3 shrink-0" style={{ color:"#94a3b8" }}/>
-              <span className="text-[11px] text-gray-400">
-                Généré le : <span className="font-semibold text-gray-500">{fiche.date}</span>
+              <Calendar className="w-3 h-3 shrink-0" style={{ color:"var(--muted-foreground)" }}/>
+              <span className="text-[11px] text-[var(--muted-foreground)]">
+                Généré le : <span className="font-semibold text-[var(--foreground)]">{fiche.date}</span>
               </span>
             </div>
           </div>
@@ -216,15 +217,15 @@ function FicheTicket({ fiche }: { fiche: FicheCard }) {
           <div className="ml-9 flex gap-2">
             <button
               className="flex-1 flex items-center justify-center gap-1.5 rounded-xl py-2.5 text-[12px] font-semibold border-2 transition-all active:scale-95"
-              style={{ borderColor:"#1a365d", color:"#1a365d", backgroundColor:"transparent" }}
-              onMouseEnter={e=>{ (e.currentTarget as HTMLElement).style.backgroundColor="#1a365d"; (e.currentTarget as HTMLElement).style.color="#fff"; }}
-              onMouseLeave={e=>{ (e.currentTarget as HTMLElement).style.backgroundColor="transparent"; (e.currentTarget as HTMLElement).style.color="#1a365d"; }}
+              style={{ borderColor:"var(--primary)", color:"var(--primary)", backgroundColor:"transparent" }}
+              onMouseEnter={e=>{ (e.currentTarget as HTMLElement).style.backgroundColor="var(--primary)"; (e.currentTarget as HTMLElement).style.color="#fff"; }}
+              onMouseLeave={e=>{ (e.currentTarget as HTMLElement).style.backgroundColor="transparent"; (e.currentTarget as HTMLElement).style.color="var(--primary)"; }}
             >
               <Eye className="w-3.5 h-3.5 shrink-0"/>Modifier
             </button>
             <button
               className="flex items-center justify-center gap-1.5 rounded-xl px-4 py-2.5 text-[12px] font-semibold text-white transition-all active:scale-95"
-              style={{ backgroundColor:"#1a365d", boxShadow:"0 2px 8px rgba(26,54,93,0.25)" }}
+              style={{ backgroundColor:"var(--primary)", boxShadow:"0 2px 8px color-mix(in srgb, var(--primary) 25%, transparent)" }}
             >
               <Download className="w-3.5 h-3.5 shrink-0"/>PDF
             </button>
@@ -235,113 +236,36 @@ function FicheTicket({ fiche }: { fiche: FicheCard }) {
   );
 }
 
-// ─── Bottom navigation bar ────────────────────────────────────────────────────
-
-type NavTab = "accueil" | "planning";
-
-function BottomNav({ active, onTab }: { active: NavTab; onTab: (t: NavTab) => void }) {
-  return (
-    <div
-      className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md z-30 bg-white"
-      style={{ boxShadow:"0 -1px 0 #e5e7eb, 0 -4px 20px rgba(0,0,0,0.07)" }}
-    >
-      <div className="grid grid-cols-3 px-2 pb-safe">
-
-        {/* Accueil */}
-        <button
-          onClick={() => onTab("accueil")}
-          className="flex flex-col items-center justify-center gap-0.5 py-3 transition-all"
-          style={{ minHeight:"56px" }}
-        >
-          <Home
-            className="w-5 h-5"
-            style={{ color: active==="accueil" ? "#1a365d" : "#94a3b8" }}
-          />
-          <span
-            className="text-[10px] font-bold"
-            style={{ color: active==="accueil" ? "#1a365d" : "#94a3b8" }}
-          >
-            Accueil
-          </span>
-          {active==="accueil" && (
-            <span className="w-1 h-1 rounded-full bg-[#1a365d]"/>
-          )}
-        </button>
-
-        {/* Centre FAB — Nouvelle fiche */}
-        <div className="flex items-center justify-center py-2">
-          <button
-            className="w-14 h-14 rounded-2xl flex flex-col items-center justify-center gap-0.5 text-white transition-all active:scale-95"
-            style={{
-              background:"linear-gradient(135deg, #1a365d, #3182ce)",
-              boxShadow:"0 4px 16px rgba(26,54,93,0.35)",
-              marginTop:"-12px",
-            }}
-            onClick={() => { /* navigate to new fiche handled by parent */ }}
-          >
-            <Plus className="w-5 h-5 text-white" strokeWidth={2.5}/>
-            <span className="text-[8px] font-bold text-white/90 leading-none">Nouvelle</span>
-          </button>
-        </div>
-
-        {/* Planification */}
-        <button
-          onClick={() => onTab("planning")}
-          className="flex flex-col items-center justify-center gap-0.5 py-3 transition-all"
-          style={{ minHeight:"56px" }}
-        >
-          <Calendar
-            className="w-5 h-5"
-            style={{ color: active==="planning" ? "#3182ce" : "#94a3b8" }}
-          />
-          <span
-            className="text-[10px] font-bold"
-            style={{ color: active==="planning" ? "#3182ce" : "#94a3b8" }}
-          >
-            Planification
-          </span>
-          {active==="planning" && (
-            <span className="w-1 h-1 rounded-full bg-[#3182ce]"/>
-          )}
-        </button>
-
-      </div>
-    </div>
-  );
-}
+// BottomNav removed — AppLayout owns mobile navigation.
 
 // ─── Dashboard ────────────────────────────────────────────────────────────────
 
 export function Dashboard() {
   const navigate   = useNavigate();
-  const location   = useLocation();
   const { activeClass, role, userName, schoolName } = useAppContext();
-  const activeTab: NavTab = location.pathname === "/planning" ? "planning" : "accueil";
-
-  function handleTab(t: NavTab) {
-    if (t === "planning") navigate("/planning");
-    else navigate("/");
-  }
+  const { profile } = useAuthContext();
 
   return (
-    <div className="min-h-screen bg-slate-100 lg:bg-[#f4f6f9]" style={{ fontFamily:"'Plus Jakarta Sans',sans-serif" }}>
+    <div className="min-h-screen bg-background lg:bg-background" style={{ fontFamily:"'Plus Jakarta Sans',sans-serif" }}>
       {/* Mobile: centered card. Desktop: full-width, no card shadow */}
-      <div className="max-w-md lg:max-w-none mx-auto bg-[#f8f9fc] min-h-screen shadow-2xl lg:shadow-none flex flex-col relative">
+      <div className="max-w-md lg:max-w-none mx-auto bg-card min-h-screen shadow-2xl lg:shadow-none flex flex-col relative">
 
         {/* ── Header ──────────────────────────────────────────────── */}
-        <div className="bg-[#1a365d] px-4 lg:px-8 pt-5 pb-3">
+        <div className="px-4 lg:px-8 pt-5 pb-3" style={{ backgroundColor: "var(--card)", borderBottom: "1px solid var(--border)" }}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-[#3182ce] flex items-center justify-center text-white font-extrabold text-[10px] shrink-0">
-                {userName.replace(/\./g,"").split(" ").map((w:string)=>w[0]).join("").slice(0,2).toUpperCase()}
+              <div className="w-8 h-8 rounded-full bg-[var(--secondary)] flex items-center justify-center text-white font-extrabold text-[10px] shrink-0 overflow-hidden">
+                {profile?.logoUrl
+                  ? <img src={profile.logoUrl} alt="Profil" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  : userName.replace(/\./g,"").split(" ").map((w:string)=>w[0]).join("").slice(0,2).toUpperCase()}
               </div>
               <div>
-                <p className="text-blue-300/60 text-[9px] font-semibold uppercase tracking-widest leading-none">
+                <p className="text-[9px] font-semibold uppercase tracking-widest leading-none" style={{ color: "var(--muted-foreground)" }}>
                   {role === "director" ? "Direction — Vue Globale" : "Bonjour"}
                 </p>
-                <h1 className="text-white text-[13px] font-bold leading-tight">
+                <h1 className="text-[13px] font-bold leading-tight" style={{ color: "var(--foreground)" }}>
                   {userName}{" "}
-                  <span className="text-white/40 font-normal">
+                  <span className="font-normal" style={{ color: "var(--muted-foreground)" }}>
                     · {activeClass} · {schoolName.split(" ").slice(-2).join(" ")}
                   </span>
                 </h1>
@@ -349,22 +273,22 @@ export function Dashboard() {
             </div>
             <div className="flex items-center gap-1.5">
               <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full"
-                   style={{ backgroundColor:"rgba(16,185,129,0.18)" }}>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-pulse shrink-0"/>
-                <span className="text-[9px] font-semibold text-[#10b981]">Hors ligne</span>
+                     style={{ backgroundColor:"var(--muted)", border: "1px solid var(--border)" }}>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--secondary)] animate-pulse shrink-0"/>
+                  <span className="text-[9px] font-semibold" style={{ color: "var(--foreground)" }}>Hors ligne</span>
               </div>
-              <button className="relative p-1.5 rounded-lg bg-white/10 active:scale-95"
+              <button className="relative p-1.5 rounded-lg active:scale-95" style={{ backgroundColor: "var(--muted)" }}
                       aria-label="Notifications">
-                <Bell className="w-4 h-4 text-white"/>
-                <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-[#25d366] rounded-full"/>
+                <Bell className="w-4 h-4" style={{ color: "var(--muted-foreground)" }}/>
+                  <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-[var(--secondary)] rounded-full"/>
               </button>
             </div>
           </div>
         </div>
 
         {/* Wave */}
-        <div className="h-3 bg-[#1a365d]">
-          <div className="h-full bg-[#f8f9fc] rounded-t-[14px]"/>
+          <div className="h-3" style={{ backgroundColor: "var(--card)" }}>
+            <div className="h-full bg-card rounded-t-[14px]"/>
         </div>
 
         {/* ── Content ──────────────────────────────────────────────── */}
@@ -372,18 +296,18 @@ export function Dashboard() {
 
           {/* Section label */}
           <div className="flex items-center justify-between">
-            <p className="text-[12px] font-bold text-[#64748b] uppercase tracking-widest">
+            <p className="text-[12px] font-bold text-[var(--muted-foreground)] uppercase tracking-widest">
               Accès rapide
             </p>
             {/* Desktop quick-stat bar */}
             <div className="hidden lg:flex items-center gap-4">
               {[
-                { label:"Classe active", value:activeClass, color:"#1a365d" },
-                { label:"Trimestre",     value:"T3 · 2026", color:"#0f766e" },
-                { label:"Mode",          value:role === "director" ? "Direction" : "Enseignant", color:"#7c3aed" },
+                { label:"Classe active", value:activeClass, color:"var(--primary)" },
+                { label:"Trimestre",     value:"T3 · 2026", color:"var(--secondary)" },
+                { label:"Mode",          value:role === "director" ? "Direction" : "Enseignant", color:"var(--accent-foreground)" },
               ].map(s => (
                 <div key={s.label} className="flex items-center gap-1.5">
-                  <span style={{ fontSize:"9px", color:"#94a3b8", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em" }}>{s.label}</span>
+                  <span style={{ fontSize:"9px", color:"var(--muted-foreground)", fontWeight:600, textTransform:"uppercase", letterSpacing:"0.06em" }}>{s.label}</span>
                   <span style={{ fontSize:"12px", fontWeight:800, color:s.color }}>{s.value}</span>
                 </div>
               ))}
@@ -398,12 +322,12 @@ export function Dashboard() {
             <ModuleCard
               badge="Module 1"
               badgeIcon={<Calendar className="w-3.5 h-3.5 text-white/80"/>}
-              gradient="linear-gradient(135deg, #1a365d 0%, #2d4a8a 50%, #1e4976 100%)"
-              shadowColor="rgba(26,54,93,0.32)"
-              accent="#3182ce"
+              gradient="linear-gradient(135deg, #0b3a67 0%, #125a93 52%, #1b79b8 100%)"
+              shadowColor="rgba(11,58,103,0.34)"
+              accent="#2ea3e6"
               title="Planification"
               description="Planifiez vos semaines, suivez le taux de couverture du programme et accédez au référentiel officiel du CEB."
-              ctaLabel="Ouvrir le calendrier"
+              ctaLabel="Préparer ma semaine"
               onClick={() => navigate("/planning")}
             />
 
@@ -416,7 +340,7 @@ export function Dashboard() {
               accent="#0891b2"
               title="Gestion administrative et suivi des performances"
               description="Gérez la liste des élèves, suivez les présences au quotidien et générez les bulletins de notes trimestriels."
-              ctaLabel="Accéder au module"
+              ctaLabel="Piloter ma classe"
               onClick={() => navigate("/eleves")}
             />
 
@@ -429,7 +353,7 @@ export function Dashboard() {
               accent="#64748b"
               title="Cahier Journal et Registre d'Appel"
               description="Renseignez votre journal de classe quotidien et évaluez vos élèves avec la grille de maîtrise intégrée."
-              ctaLabel="Ouvrir le journal"
+              ctaLabel="Tenir mon journal"
               onClick={() => navigate("/cahier")}
             />
 
@@ -442,39 +366,67 @@ export function Dashboard() {
               accent="#ea580c"
               title="Documents générés"
               description="Consultez, imprimez et partagez vos fiches de préparation, bulletins et rapports trimestriels générés."
-              ctaLabel="Voir les documents"
+              ctaLabel="Consulter mes archives"
               onClick={() => navigate("/documents")}
+            />
+
+            {/* Module 5: Admin SaaS */}
+            <ModuleCard
+              badge="Module 5"
+              badgeIcon={<ShieldCheck className="w-3.5 h-3.5 text-white/80"/>}
+              gradient="linear-gradient(135deg, #111827 0%, #1f2937 50%, #374151 100%)"
+              shadowColor="rgba(17,24,39,0.32)"
+              accent="#0f766e"
+              title="Admin SaaS"
+              description="Centre d'administration pour le pilotage global : utilisateurs actifs, population pédagogique, sécurité et gouvernance de la plateforme."
+              ctaLabel="Ouvrir le centre"
+              onClick={() => navigate("/admin/saas")}
+            />
+
+            {/* Module 6: Programme Officiel */}
+            <ModuleCard
+              badge="Module 6"
+              badgeIcon={<BookMarked className="w-3.5 h-3.5 text-white/80"/>}
+              gradient="linear-gradient(135deg, #065f46 0%, #047857 50%, #0f766e 100%)"
+              shadowColor="rgba(6,95,70,0.30)"
+              accent="#0d9488"
+              title="Programme officiel"
+              description="Naviguez le référentiel réel DEMSG (niveau, domaine, sous-domaine, activité) et connectez la préparation pédagogique aux données officielles." 
+              ctaLabel="Ouvrir le module"
+              onClick={() => navigate("/programme")}
             />
 
           </div>
         </div>
 
-        {/* ── BOTTOM NAV — mobile only ─────────────────────────────── */}
-        <div className="lg:hidden">
-          <BottomNav active={activeTab} onTab={handleTab}/>
-        </div>
-
-        {/* ── FAB (centre, mobile only) ────────────────────────────── */}
-        <div
-          className="lg:hidden fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md z-40 pointer-events-none"
-          style={{ height:"68px" }}
+        {/* ── FAB "Nouvelle Fiche" — mobile only, floats above AppLayout's 64px bottom nav ── */}
+        <button
+          onClick={() => navigate("/new-fiche")}
+          className="lg:hidden"
+          style={{
+            position:  "fixed",
+            bottom:    "76px",          /* 64px nav + 12px gap */
+            right:     "20px",
+            zIndex:    300,
+            display:   "flex",
+            alignItems:      "center",
+            gap:             "7px",
+            padding:         "12px 18px",
+            borderRadius:    "50px",
+            background:      "linear-gradient(135deg, #059669 0%, #0d9488 100%)",
+            color:           "#fff",
+            fontWeight:      700,
+            fontSize:        "13px",
+            border:          "none",
+            cursor:          "pointer",
+            boxShadow:       "0 6px 24px rgba(5,150,105,0.40)",
+            fontFamily:      "'Plus Jakarta Sans', sans-serif",
+          }}
+          aria-label="Préparer une nouvelle fiche"
         >
-          <div className="pointer-events-auto absolute left-1/2 -translate-x-1/2"
-               style={{ bottom:"10px" }}>
-            <button
-              onClick={() => navigate("/new-fiche")}
-              className="w-14 h-14 rounded-2xl flex flex-col items-center justify-center gap-0.5 text-white transition-all active:scale-95"
-              style={{
-                background:"linear-gradient(135deg, #1a365d, #3182ce)",
-                boxShadow:"0 6px 20px rgba(26,54,93,0.40)",
-              }}
-              aria-label="Préparer une nouvelle fiche"
-            >
-              <Plus className="w-5 h-5 text-white" strokeWidth={2.5}/>
-              <span className="text-[7.5px] font-bold text-white/90 leading-tight text-center">Nouvelle<br/>fiche</span>
-            </button>
-          </div>
-        </div>
+          <Plus style={{ width: 16, height: 16, strokeWidth: 2.5 }} />
+          Nouvelle Fiche
+        </button>
 
       </div>
     </div>

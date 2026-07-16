@@ -5,7 +5,18 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "dev": "vite"
+    "dev": "vite",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "db:local:start": "npx supabase db start",
+    "db:local:reset": "npx supabase db reset",
+    "db:local:rebuild": "npx supabase db start && npx supabase db reset",
+    "db:local:query": "npx supabase db query",
+    "db:local:stop": "npx supabase stop",
+    "db:preflight": "bash scripts/db-preflight.sh",
+    "db:remote:link": "npx supabase link --project-ref $SUPABASE_PROJECT_REF",
+    "db:remote:push": "npx supabase db push"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",
@@ -67,13 +78,23 @@
     "sonner": "2.0.3",
     "tailwind-merge": "3.2.0",
     "tw-animate-css": "1.3.8",
-    "vaul": "1.1.2"
+    "vaul": "1.1.2",
+    "zod": "3.25.76"
   },
   "devDependencies": {
+    "@playwright/test": "1.54.2",
     "@tailwindcss/vite": "4.1.12",
+    "@testing-library/jest-dom": "6.8.0",
+    "@testing-library/react": "16.3.0",
+    "@testing-library/user-event": "14.6.1",
+    "@types/react-dom": "^18.3.7",
     "@vitejs/plugin-react": "4.7.0",
+    "jsdom": "26.1.0",
+    "lighthouse": "^13.4.0",
     "tailwindcss": "4.1.12",
-    "vite": "6.3.5"
+    "typescript": "5.9.2",
+    "vite": "6.3.5",
+    "vitest": "3.2.4"
   },
   "peerDependencies": {
     "react": "18.3.1",

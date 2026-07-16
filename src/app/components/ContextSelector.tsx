@@ -1,6 +1,11 @@
-import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router";
-import { ChevronLeft, ChevronDown, ChevronRight, Info, HelpCircle, Loader2 } from "lucide-react";
+import { useState, useEffect, useRef, useMemo } from "react";
+import { useNavigate }                 from "react-router";
+import { useQuery }                    from "@tanstack/react-query";
+import { useProfileGuard }             from "../../hooks/useProfileGuard";
+import { ProfileGuardLoader }          from "./ProfileGuardLoader";
+import { ChevronLeft, ChevronDown, ChevronRight, Info, HelpCircle, Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
+import { programmeNavFunctionApi }     from "../../services/programmeNavFunctionApi";
+import { QK }                          from "../../lib/queryClient";
 
 // ─── APC Data ─────────────────────────────────────────────────────────────────
 
@@ -456,7 +461,7 @@ const CHIP_COLORS: ChipColor[] = [
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
-function SectionLabel({ step, label, color = "#1a365d" }: { step: string; label: string; color?: string }) {
+function SectionLabel({ step, label, color = "var(--primary)" }: { step: string; label: string; color?: string }) {
   return (
     <div className="flex items-center gap-2.5 mb-4">
       <div
@@ -465,8 +470,8 @@ function SectionLabel({ step, label, color = "#1a365d" }: { step: string; label:
       >
         {step}
       </div>
-      <span className="text-[13px] font-bold text-[#1a365d] uppercase tracking-wider">{label}</span>
-      <div className="flex-1 h-px bg-[#1a365d]/10" />
+      <span className="text-[13px] font-bold text-primary uppercase tracking-wider">{label}</span>
+      <div className="flex-1 h-px bg-primary/10" />
     </div>
   );
 }
@@ -486,9 +491,9 @@ function Dropdown({
   return (
     <div className={`transition-opacity duration-200 ${isLocked && !loading ? "opacity-50" : "opacity-100"}`}>
       <div className="flex items-center justify-between mb-1.5">
-        <label className="text-[11px] font-bold text-[#2d3748] uppercase tracking-wider">{label}</label>
+        <label className="text-[11px] font-bold text-foreground uppercase tracking-wider">{label}</label>
         <div className="flex items-center gap-1.5">
-          {loading && <Loader2 className="w-3.5 h-3.5 text-[#3182ce] animate-spin"/>}
+          {loading && <Loader2 className="w-3.5 h-3.5 text-primary animate-spin"/>}
           {hint && !loading && <span className="text-[10px] text-gray-400">{hint}</span>}
         </div>
       </div>
@@ -501,10 +506,10 @@ function Dropdown({
             ${isLocked
               ? "bg-gray-50 border-gray-200 text-gray-400 cursor-not-allowed"
               : filled
-                ? "bg-[#eef4ff] border-[#3182ce] text-[#1a365d]"
-                : "bg-white border-gray-200 text-gray-400 hover:border-gray-300 focus:border-[#3182ce] cursor-pointer"
+                ? "bg-accent border-primary text-primary"
+                  : "bg-card border-border text-muted-foreground hover:border-primary focus:border-primary cursor-pointer"
             }`}
-          style={filled ? { boxShadow: "0 0 0 3px rgba(49,130,206,0.10)" } : {}}
+            style={filled ? { boxShadow: "0 0 0 3px color-mix(in srgb, var(--primary) 10%, transparent)" } : {}}
         >
           <option value="">{loading ? "Mise à jour…" : placeholder}</option>
           {options.map((o) => (
@@ -513,8 +518,8 @@ function Dropdown({
         </select>
         <span className="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none">
           {loading
-            ? <Loader2 className="w-4 h-4 text-[#3182ce] animate-spin"/>
-            : <ChevronDown className={`w-4 h-4 transition-colors ${filled ? "text-[#3182ce]" : "text-gray-300"}`}/>}
+            ? <Loader2 className="w-4 h-4 text-primary animate-spin"/>
+            : <ChevronDown className={`w-4 h-4 transition-colors ${filled ? "text-primary" : "text-gray-300"}`}/>} 
         </span>
       </div>
       {disabled && !loading && disabledReason && (
@@ -530,7 +535,8 @@ function Dropdown({
 // ─── Main component ───────────────────────────────────────────────────────────
 
 export function ContextSelector() {
-  const navigate = useNavigate();
+  const navigate          = useNavigate();
+  const { loading, blocked, skip } = useProfileGuard();
 
   // Section A
   const [niveau,      setNiveau]      = useState("");
@@ -546,15 +552,62 @@ export function ContextSelector() {
   // Section C
   const [checked, setChecked] = useState<Set<string>>(new Set());
 
+  const filtersQuery = useQuery({
+    queryKey: QK.programmeNavFilters(),
+    queryFn: async () => {
+      const res = await programmeNavFunctionApi.getFilters();
+      return res.data;
+    },
+  });
+
+  const niveauxData = filtersQuery.data?.niveaux ?? [];
+  const domainesData = filtersQuery.data?.domaines ?? [];
+  const sousDomainesData = filtersQuery.data?.sous_domaines ?? [];
+
+  const selectedNiveau = niveauxData.find((n) => n.nom === niveau);
+  const selectedDomaine = domainesData.find((d) => d.nom === domaine && (!selectedNiveau || d.niveau_id === selectedNiveau.id));
+  const selectedSousDomaine = sousDomainesData.find((s) => s.nom === sousDomaine && (!selectedDomaine || s.domaine_id === selectedDomaine.id));
+
+  const programmeCurriculumQuery = useQuery({
+    queryKey: [
+      "programme-nav",
+      "curriculum",
+      selectedNiveau?.id ?? null,
+      selectedDomaine?.id ?? null,
+      selectedSousDomaine?.id ?? null,
+      discipline || null,
+    ] as const,
+    queryFn: async () => {
+      const res = await programmeNavFunctionApi.getCurriculumResolved({
+        niveauId: selectedNiveau?.id,
+        domaineId: selectedDomaine?.id,
+        sousDomaineId: selectedSousDomaine?.id,
+        activite: discipline || undefined,
+      });
+      return res.data;
+    },
+    enabled: Boolean(selectedNiveau && selectedDomaine),
+  });
+
   const isMaths    = domaine === "Mathématiques";
-  const sousOpts   = SOUS_DOMAINES[domaine] ?? [];
+  const sousOpts   = useMemo(() => {
+    if (selectedDomaine) {
+      return sousDomainesData
+        .filter((s) => s.domaine_id === selectedDomaine.id)
+        .map((s) => s.nom)
+        .filter((s): s is string => Boolean(s));
+    }
+    return SOUS_DOMAINES[domaine] ?? [];
+  }, [selectedDomaine, sousDomainesData, domaine]);
 
   // Discipline options depend on whether the domaine uses sous-domaine-level filtering
-  const discOpts: string[] = isMaths
-    ? (DISCIPLINES_BY_DOMAINE[domaine] ?? [])
-    : sousDomaine
-      ? (DISCIPLINES_BY_SOUS_DOMAINE[sousDomaine] ?? [])
-      : [];
+  const discOpts: string[] = programmeCurriculumQuery.data?.disciplines?.length
+    ? programmeCurriculumQuery.data.disciplines
+    : isMaths
+      ? (DISCIPLINES_BY_DOMAINE[domaine] ?? [])
+      : sousDomaine
+        ? (DISCIPLINES_BY_SOUS_DOMAINE[sousDomaine] ?? [])
+        : [];
 
   // For Langue et Communication with no sous-domaine yet, show all disciplines flat
   const allLangDisc = domaine === "Langue et Communication" && !sousDomaine
@@ -568,21 +621,67 @@ export function ContextSelector() {
     "sousDomaine"|"discipline"|"palier"|"oa"|"os"|"contenus"|null
   >(null);
   const loadTimerRef = useRef<ReturnType<typeof setTimeout>|null>(null);
+  const missingHintsRef = useRef<HTMLDivElement | null>(null);
 
   const [merged,      setMerged]      = useState(false);
   const [tooltipOpen, setTooltipOpen] = useState(false);
+  const [showMissingHints, setShowMissingHints] = useState(false);
 
   // ── Derived values ────────────────────────────────────────────────────────
-  const competence = COMPETENCES[discipline] ?? "";
-  const oaList     = OBJECTIFS[discipline]   ?? [];
+  const curriculumDetail = programmeCurriculumQuery.data?.detail;
+
+  const competence = curriculumDetail?.competence || COMPETENCES[discipline] || "";
+
+  const paliersOpts = curriculumDetail?.paliers?.length
+    ? curriculumDetail.paliers.map((p) => p.nom)
+    : PALIERS;
+
+  const oaList: OAEntry[] = useMemo(() => {
+    if (!curriculumDetail) return OBJECTIFS[discipline] ?? [];
+    const selectedPalier = curriculumDetail.paliers.find((p) => p.nom === palier);
+    if (!selectedPalier) return [];
+    return selectedPalier.oas.map((oa) => ({
+      oa: oa.titre,
+      os: oa.os.map((o) => o.titre),
+    }));
+  }, [curriculumDetail, discipline, palier]);
+
+  const contenusByOs = useMemo(() => {
+    const out: Record<string, string[]> = {};
+    if (curriculumDetail) {
+      for (const p of curriculumDetail.paliers) {
+        for (const oa of p.oas) {
+          for (const os of oa.os) {
+            out[os.titre] = os.contenus;
+          }
+        }
+      }
+    }
+    return out;
+  }, [curriculumDetail]);
+
   const oaEntry    = oaIdx !== "" ? oaList[oaIdx] : undefined;
   const osOpts     = oaEntry?.os ?? [];
 
   // CORE FIX: contenus are now filtered strictly by the selected OS key.
   // If no OS is selected, the panier is empty — no orphan chips appear.
-  const contenus = selectedOS ? (CONTENUS_BY_OS[selectedOS] ?? []) : [];
+  const contenus = selectedOS
+    ? (contenusByOs[selectedOS] ?? CONTENUS_BY_OS[selectedOS] ?? [])
+    : [];
 
-  const canProceed = checked.size > 0;
+  const requiresSousDomaine = Boolean(domaine) && !isMaths && sousOpts.length > 0;
+  const missingFields: string[] = [];
+
+  if (!niveau) missingFields.push("Niveau");
+  if (!domaine) missingFields.push("Domaine");
+  if (requiresSousDomaine && !sousDomaine) missingFields.push("Sous-domaine");
+  if (!discipline) missingFields.push("Discipline / Activité");
+  if (!palier) missingFields.push("Palier");
+  if (oaIdx === "") missingFields.push("Objectif d'apprentissage");
+  if (!selectedOS) missingFields.push("Objectif spécifique");
+  if (checked.size === 0) missingFields.push("Au moins un contenu");
+
+  const canProceed = missingFields.length === 0;
 
   // progress
   const stepsA = [niveau, domaine, discipline].filter(Boolean).length;
@@ -632,6 +731,24 @@ export function ContextSelector() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedOS]);
 
+  useEffect(() => {
+    if (canProceed && showMissingHints) setShowMissingHints(false);
+  }, [canProceed, showMissingHints]);
+
+  useEffect(() => {
+    if (!showMissingHints) return;
+
+    function handleOutsideClick(event: MouseEvent) {
+      const target = event.target as Node;
+      if (missingHintsRef.current && !missingHintsRef.current.contains(target)) {
+        setShowMissingHints(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, [showMissingHints]);
+
   function toggleCheck(c: string) {
     setChecked((prev) => {
       const n = new Set(prev);
@@ -641,7 +758,11 @@ export function ContextSelector() {
   }
 
   function handleNext() {
-    if (!canProceed) return;
+    if (!canProceed) {
+      setShowMissingHints((prev) => !prev);
+      return;
+    }
+    setShowMissingHints(false);
     navigate("/select-lesson", {
       state: { niveau, domaine, sousDomaine, discipline, palier,
                oa: oaEntry?.oa ?? "", os: selectedOS,
@@ -649,44 +770,55 @@ export function ContextSelector() {
     });
   }
 
+  if (loading) return <ProfileGuardLoader loading />;
+  if (blocked) return <ProfileGuardLoader blocked onSkip={skip} />;
+
   return (
-    <div className="min-h-screen bg-[#f8f9fc]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+    <div className="min-h-screen bg-background" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       {/* Mobile: max-w-md card. Desktop: wider container, no shadow */}
-      <div className="max-w-md lg:max-w-4xl mx-auto bg-[#f8f9fc] min-h-screen shadow-2xl lg:shadow-none flex flex-col relative">
+      <div className="max-w-md lg:max-w-4xl mx-auto bg-card min-h-screen shadow-2xl lg:shadow-none flex flex-col relative">
 
         {/* ── Sticky header ─────────────────────────────────── */}
-        <div className="sticky top-0 z-20 bg-[#1a365d] shadow-md overflow-hidden">
+        <div
+          className="sticky top-0 z-20 overflow-hidden"
+          style={{
+            backgroundColor: "color-mix(in srgb, var(--card) 94%, var(--background) 6%)",
+            borderBottom: "1px solid var(--border)",
+            boxShadow: "0 8px 24px color-mix(in srgb, var(--foreground) 10%, transparent)",
+          }}
+        >
           <div className="flex items-center gap-1 px-3 py-4 lg:px-6">
             <button
               onClick={() => navigate("/")}
-              className="p-2 rounded-xl hover:bg-white/10 transition-colors active:scale-95 shrink-0"
+              className="p-2 rounded-xl transition-colors active:scale-95 shrink-0"
+              style={{ backgroundColor: "var(--muted)" }}
               aria-label="Retour"
             >
-              <ChevronLeft className="w-5 h-5 text-white" />
+              <ChevronLeft className="w-5 h-5" style={{ color: "var(--foreground)" }} />
             </button>
             <div className="flex-1 min-w-0">
-              <p className="text-blue-300 text-[10px] font-bold uppercase tracking-widest leading-none mb-0.5">
+              <p className="text-[10px] font-bold uppercase tracking-widest leading-none mb-0.5" style={{ color: "var(--muted-foreground)" }}>
                 Nouvelle Fiche · Étape 1 sur 2
               </p>
-              <h1 className="text-white text-[16px] font-bold leading-tight truncate">
+              <h1 className="text-[16px] font-bold leading-tight truncate" style={{ color: "var(--foreground)" }}>
                 Configuration APC
               </h1>
             </div>
             {/* Step badge */}
             <div className="shrink-0 flex flex-col items-center">
-              <span className="text-white/50 text-[10px] font-semibold">Cadrage</span>
+              <span className="text-[10px] font-semibold" style={{ color: "var(--muted-foreground)" }}>Cadrage</span>
               <div className="flex gap-1 mt-1">
-                <span className="w-6 h-1.5 rounded-full bg-white" />
-                <span className="w-6 h-1.5 rounded-full bg-white/25" />
+                <span className="w-6 h-1.5 rounded-full" style={{ backgroundColor: "var(--primary)" }} />
+                <span className="w-6 h-1.5 rounded-full" style={{ backgroundColor: "var(--muted)" }} />
               </div>
             </div>
           </div>
 
           {/* Progress bar */}
-          <div className="h-1 bg-white/10">
+          <div className="h-1" style={{ backgroundColor: "var(--muted)" }}>
             <div
-              className="h-full bg-[#3182ce] transition-all duration-500 ease-out"
-              style={{ width: `${progressPct}%` }}
+              className="h-full transition-all duration-500 ease-out"
+              style={{ width: `${progressPct}%`, backgroundColor: "var(--primary)" }}
             />
           </div>
         </div>
@@ -695,9 +827,9 @@ export function ContextSelector() {
         <div className="flex-1 overflow-y-auto pb-36 px-4 lg:px-6 pt-4 space-y-4">
 
           {/* Intro pill */}
-          <div className="flex items-start gap-2.5 bg-[#eef4ff] border border-[#3182ce]/20 rounded-xl px-4 py-3">
-            <Info className="w-4 h-4 text-[#3182ce] shrink-0 mt-0.5" />
-            <p className="text-[#1a365d] text-[12px] lg:text-[13px] leading-relaxed">
+          <div className="flex items-start gap-2.5 bg-accent border border-border rounded-xl px-4 py-3">
+            <Info className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+            <p className="text-foreground text-[12px] lg:text-[13px] leading-relaxed">
               Aucune saisie manuelle — sélectionnez chaque paramètre dans l'ordre. Les listes sont issues du programme officiel DEMSG.
             </p>
           </div>
@@ -708,7 +840,7 @@ export function ContextSelector() {
 
           {/* ══ SECTION A ═════════════════════════════════════ */}
           <div
-            className="bg-white rounded-2xl p-5 mb-4 lg:mb-0"
+            className="bg-card rounded-2xl p-5 mb-4 lg:mb-0"
             style={{ boxShadow: "0 2px 12px rgba(26,54,93,0.07), 0 1px 3px rgba(26,54,93,0.05)" }}
           >
             <SectionLabel step="A" label="Cadrage Institutionnel" />
@@ -718,7 +850,7 @@ export function ContextSelector() {
                 label="Niveau"
                 value={niveau}
                 onChange={(v) => { setNiveau(v); resetFrom("domaine"); setDomaine(""); }}
-                options={NIVEAUX}
+                options={niveauxData.length ? niveauxData.map((n) => n.nom) : NIVEAUX}
                 placeholder="Sélectionner le niveau…"
               />
 
@@ -726,7 +858,9 @@ export function ContextSelector() {
                 label="Domaine"
                 value={domaine}
                 onChange={(v) => { setDomaine(v); resetFrom("domaine"); }}
-                options={DOMAINES}
+                options={selectedNiveau
+                  ? domainesData.filter((d) => d.niveau_id === selectedNiveau.id).map((d) => d.nom)
+                  : DOMAINES}
                 placeholder="Sélectionner le domaine…"
                 disabled={!niveau}
                 disabledReason="Sélectionnez d'abord un niveau."
@@ -780,27 +914,27 @@ export function ContextSelector() {
 
           {/* ══ SECTION B ═════════════════════════════════════ */}
           <div
-            className={`bg-white rounded-2xl p-5 transition-all duration-300 mb-4 lg:mb-0 ${discipline ? "opacity-100" : "opacity-40 pointer-events-none"}`}
+            className={`bg-card rounded-2xl p-5 transition-all duration-300 mb-4 lg:mb-0 ${discipline ? "opacity-100" : "opacity-40 pointer-events-none"}`}
             style={{ boxShadow: "0 2px 12px rgba(26,54,93,0.07), 0 1px 3px rgba(26,54,93,0.05)" }}
           >
             <SectionLabel step="B" label="Alignement APC" />
 
             {/* Compétence de Base — read-only info box */}
             <div className="mb-4">
-              <p className="text-[11px] font-bold text-[#2d3748] uppercase tracking-wider mb-1.5">
+              <p className="text-[11px] font-bold uppercase tracking-wider mb-1.5" style={{ color: "var(--foreground)" }}>
                 Compétence de Base (CB)
               </p>
               <div
                 className={`rounded-xl px-4 py-3 flex gap-2.5 transition-all duration-300 ${
                   competence
-                    ? "bg-[#eef4ff] border-2 border-[#3182ce]/30"
+                    ? "bg-accent border-2 border-primary/30"
                     : "bg-gray-50 border-2 border-dashed border-gray-200"
                 }`}
               >
-                <Info className={`w-4 h-4 shrink-0 mt-0.5 ${competence ? "text-[#3182ce]" : "text-gray-300"}`} />
+                <Info className={`w-4 h-4 shrink-0 mt-0.5 ${competence ? "text-primary" : "text-gray-300"}`} />
                 <p
                   className={`text-[12px] leading-relaxed ${
-                    competence ? "text-[#1a365d] font-medium" : "text-gray-400 italic"
+                    competence ? "text-foreground font-medium" : "text-gray-400 italic"
                   }`}
                 >
                   {competence || "Sélectionnez une discipline (Section A) pour afficher la compétence de base officielle."}
@@ -813,7 +947,7 @@ export function ContextSelector() {
                 label="Palier"
                 value={palier}
                 onChange={(v) => { setPalier(v); resetFrom("palier"); }}
-                options={PALIERS}
+                options={paliersOpts}
                 placeholder="Sélectionner le palier…"
                 disabled={!discipline}
                 disabledReason="Sélectionnez d'abord une discipline."
@@ -823,11 +957,11 @@ export function ContextSelector() {
               {/* OA — native select; locked until palier is chosen */}
               <div className={`transition-opacity duration-200 ${!palier ? "opacity-50" : "opacity-100"}`}>
                 <div className="flex items-center justify-between mb-1.5">
-                  <p className="text-[11px] font-bold text-[#2d3748] uppercase tracking-wider">
+                  <p className="text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--foreground)" }}>
                     Objectif d'Apprentissage (OA)
                   </p>
                   {loadingStep === "oa" && (
-                    <Loader2 className="w-3.5 h-3.5 text-[#3182ce] animate-spin"/>
+                    <Loader2 className="w-3.5 h-3.5 text-primary animate-spin"/>
                   )}
                 </div>
                 <div className="relative">
@@ -843,10 +977,10 @@ export function ContextSelector() {
                       ${!palier || oaList.length === 0 || loadingStep === "oa"
                         ? "bg-gray-50 border-gray-200 text-gray-400 cursor-not-allowed"
                         : oaIdx !== ""
-                          ? "bg-[#eef4ff] border-[#3182ce] text-[#1a365d]"
-                          : "bg-white border-gray-200 text-gray-400 hover:border-gray-300 focus:border-[#3182ce] cursor-pointer"
+                          ? "bg-accent border-primary text-foreground"
+                          : "bg-card border-gray-200 text-gray-400 hover:border-gray-300 focus:border-primary cursor-pointer"
                       }`}
-                    style={oaIdx !== "" ? { boxShadow: "0 0 0 3px rgba(49,130,206,0.10)" } : {}}
+                    style={oaIdx !== "" ? { boxShadow: "0 0 0 3px color-mix(in srgb, var(--primary) 10%, transparent)" } : {}}
                   >
                     <option value="">
                       {loadingStep === "oa" ? "Mise à jour…" : "Sélectionner l'objectif d'apprentissage…"}
@@ -857,8 +991,8 @@ export function ContextSelector() {
                   </select>
                   <span className="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none">
                     {loadingStep === "oa"
-                      ? <Loader2 className="w-4 h-4 text-[#3182ce] animate-spin"/>
-                      : <ChevronDown className={`w-4 h-4 ${oaIdx !== "" ? "text-[#3182ce]" : "text-gray-300"}`}/>}
+                      ? <Loader2 className="w-4 h-4 text-primary animate-spin"/>
+                      : <ChevronDown className={`w-4 h-4 ${oaIdx !== "" ? "text-primary" : "text-gray-300"}`}/>} 
                   </span>
                 </div>
                 {oaIdx === "" && palier && oaList.length === 0 && (
@@ -869,11 +1003,11 @@ export function ContextSelector() {
               {/* OS — locked until an OA is chosen; changing it clears the panier */}
               <div className={`transition-opacity duration-200 ${oaIdx === "" ? "opacity-50" : "opacity-100"}`}>
                 <div className="flex items-center justify-between mb-1.5">
-                  <p className="text-[11px] font-bold text-[#2d3748] uppercase tracking-wider">
+                  <p className="text-[11px] font-bold uppercase tracking-wider" style={{ color: "var(--foreground)" }}>
                     Objectif Spécifique (OS)
                   </p>
                   {loadingStep === "os" && (
-                    <Loader2 className="w-3.5 h-3.5 text-[#3182ce] animate-spin"/>
+                    <Loader2 className="w-3.5 h-3.5 text-primary animate-spin"/>
                   )}
                 </div>
                 <div className="relative">
@@ -885,10 +1019,10 @@ export function ContextSelector() {
                       ${oaIdx === "" || osOpts.length === 0 || loadingStep === "os"
                         ? "bg-gray-50 border-gray-200 text-gray-400 cursor-not-allowed"
                         : selectedOS
-                          ? "bg-[#eef4ff] border-[#3182ce] text-[#1a365d]"
-                          : "bg-white border-gray-200 text-gray-400 hover:border-gray-300 focus:border-[#3182ce] cursor-pointer"
+                          ? "bg-accent border-primary text-foreground"
+                          : "bg-card border-gray-200 text-gray-400 hover:border-gray-300 focus:border-primary cursor-pointer"
                       }`}
-                    style={selectedOS ? { boxShadow: "0 0 0 3px rgba(49,130,206,0.10)" } : {}}
+                    style={selectedOS ? { boxShadow: "0 0 0 3px color-mix(in srgb, var(--primary) 10%, transparent)" } : {}}
                   >
                     <option value="">
                       {loadingStep === "os" ? "Mise à jour…" : "Sélectionner l'objectif spécifique…"}
@@ -899,12 +1033,12 @@ export function ContextSelector() {
                   </select>
                   <span className="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none">
                     {loadingStep === "os"
-                      ? <Loader2 className="w-4 h-4 text-[#3182ce] animate-spin"/>
-                      : <ChevronDown className={`w-4 h-4 ${selectedOS ? "text-[#3182ce]" : "text-gray-300"}`}/>}
+                      ? <Loader2 className="w-4 h-4 text-primary animate-spin"/>
+                      : <ChevronDown className={`w-4 h-4 ${selectedOS ? "text-primary" : "text-gray-300"}`}/>} 
                   </span>
                 </div>
                 {selectedOS && (
-                  <p className="mt-1 text-[10px] text-[#3182ce] font-semibold flex items-center gap-1">
+                  <p className="mt-1 text-[10px] font-semibold flex items-center gap-1" style={{ color: "var(--primary)" }}>
                     <Info className="w-3 h-3"/>
                     Le panier ci-dessous affiche uniquement les contenus liés à cet OS.
                   </p>
@@ -918,7 +1052,7 @@ export function ContextSelector() {
           {/* ══ SECTION C — full width below A+B grid ═════════ */}
           {/* Gate: requires selectedOS — not just discipline — to enforce strict cascade */}
           <div
-            className={`bg-white rounded-2xl p-5 transition-all duration-300 ${selectedOS || loadingStep === "contenus" ? "opacity-100" : "opacity-40 pointer-events-none"}`}
+            className={`bg-card rounded-2xl p-5 transition-all duration-300 ${selectedOS || loadingStep === "contenus" ? "opacity-100" : "opacity-40 pointer-events-none"}`}
             style={{ boxShadow: "0 2px 12px rgba(26,54,93,0.07), 0 1px 3px rgba(26,54,93,0.05)" }}
           >
             <SectionLabel step="C" label="Le Panier de Contenus" />
@@ -935,26 +1069,26 @@ export function ContextSelector() {
                   className="flex-1 flex items-center gap-2 rounded-lg px-3 py-1.5"
                   style={{
                     transition: "background-color 250ms ease, border-color 250ms ease",
-                    backgroundColor: checked.size > 0 ? "#f0fdf4" : "#f8fafc",
-                    border: `1.5px solid ${checked.size > 0 ? "#86efac" : "#e2e8f0"}`,
+                    backgroundColor: checked.size > 0 ? "color-mix(in srgb, var(--secondary) 12%, var(--background))" : "var(--muted)",
+                    border: `1.5px solid ${checked.size > 0 ? "color-mix(in srgb, var(--secondary) 28%, transparent)" : "var(--border)"}`,
                   }}
                 >
                   <span
                     className="w-1.5 h-1.5 rounded-full shrink-0"
                     style={{
                       transition: "background-color 250ms ease",
-                      backgroundColor: checked.size > 0 ? "#22c55e" : "#cbd5e1",
+                      backgroundColor: checked.size > 0 ? "var(--secondary)" : "#cbd5e1",
                     }}
                   />
                   <span
                     className="text-[11px] font-semibold"
                     style={{
                       transition: "color 250ms ease",
-                      color: checked.size > 0 ? "#15803d" : "#94a3b8",
+                      color: checked.size > 0 ? "var(--secondary)" : "#94a3b8",
                     }}
                   >
                     Sélection&nbsp;:&nbsp;
-                    <span style={{ fontWeight: 700, color: checked.size > 0 ? "#16a34a" : "#94a3b8" }}>
+                    <span style={{ fontWeight: 700, color: checked.size > 0 ? "var(--secondary)" : "#94a3b8" }}>
                       {checked.size} contenu{checked.size > 1 ? "s" : ""} choisi{checked.size > 1 ? "s" : ""}
                     </span>
                   </span>
@@ -974,19 +1108,19 @@ export function ContextSelector() {
             {loadingStep === "contenus" ? (
               /* Micro-loading spinner while OS filter is being applied */
               <div className="flex flex-col items-center justify-center py-8 gap-2.5">
-                <Loader2 className="w-6 h-6 text-[#3182ce] animate-spin"/>
-                <p className="text-[11px] text-[#3182ce] font-semibold">
+                <Loader2 className="w-6 h-6 text-primary animate-spin"/>
+                <p className="text-[11px] font-semibold" style={{ color: "var(--primary)" }}>
                   Filtrage des contenus…
                 </p>
               </div>
             ) : contenus.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-8 gap-2.5">
-                <div className="w-10 h-10 rounded-xl bg-[#f1f5f9] flex items-center justify-center">
-                  <svg viewBox="0 0 24 24" className="w-5 h-5 text-[#cbd5e1]" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <div className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth="1.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25" />
                   </svg>
                 </div>
-                <p className="text-[11px] text-[#94a3b8] text-center leading-relaxed">
+                <p className="text-[11px] text-center leading-relaxed text-muted-foreground">
                   {selectedOS
                     ? <>Aucun contenu trouvé pour cet OS.<br/>Vérifiez la base de données curriculaire.</>
                     : <>Sélectionnez un Objectif Spécifique (OS)<br/>pour afficher ses contenus.</>}
@@ -1061,8 +1195,8 @@ export function ContextSelector() {
 
         {/* ── Fixed bottom CTA ──────────────────────────────── */}
         <div
-          className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md px-4 pb-6 pt-8 pointer-events-none"
-          style={{ background: "linear-gradient(to top, #f8f9fc 55%, rgba(248,249,252,0) 100%)" }}
+          className="fixed bottom-[72px] lg:bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md lg:max-w-4xl px-4 lg:px-6 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] lg:pb-6 pt-8 pointer-events-none"
+          style={{ background: "transparent" }}
         >
           {/* ── Merge toggle + tooltip — only when ≥ 2 contenus selected ── */}
           {checked.size > 1 && (
@@ -1074,8 +1208,8 @@ export function ContextSelector() {
                   className="absolute left-0 right-0 rounded-2xl p-4 pointer-events-auto"
                   style={{
                     bottom: "calc(100% + 10px)",
-                    backgroundColor: "#fff",
-                    border: "1.5px solid #e2e8f0",
+                    backgroundColor: "var(--card)",
+                    border: "1.5px solid var(--border)",
                     boxShadow: "0 -4px 24px rgba(26,54,93,0.10), 0 2px 8px rgba(0,0,0,0.06)",
                     zIndex: 50,
                   }}
@@ -1088,7 +1222,7 @@ export function ContextSelector() {
                       width: 0, height: 0,
                       borderLeft: "7px solid transparent",
                       borderRight: "7px solid transparent",
-                      borderTop: "7px solid #e2e8f0",
+                      borderTop: "7px solid color-mix(in srgb, var(--border) 92%, transparent)",
                     }}
                   />
                   <div
@@ -1098,11 +1232,11 @@ export function ContextSelector() {
                       width: 0, height: 0,
                       borderLeft: "6px solid transparent",
                       borderRight: "6px solid transparent",
-                      borderTop: "6px solid #fff",
+                      borderTop: "6px solid var(--card)",
                     }}
                   />
 
-                  <p className="text-[11px] font-bold text-[#1a365d] uppercase tracking-wider mb-3">
+                  <p className="text-[11px] font-bold uppercase tracking-wider mb-3" style={{ color: "var(--foreground)" }}>
                     Comment ça marche ?
                   </p>
 
@@ -1110,17 +1244,17 @@ export function ContextSelector() {
                   <div className="flex items-start gap-2.5 mb-2.5">
                     <div
                       className="w-5 h-5 rounded-md flex items-center justify-center shrink-0 mt-0.5"
-                      style={{ backgroundColor: "#eef4ff", border: "1.5px solid #3182ce" }}
+                      style={{ backgroundColor: "var(--accent)", border: "1.5px solid var(--primary)" }}
                     >
                       <svg viewBox="0 0 10 8" style={{ width:9, height:9 }} fill="none">
-                        <path d="M1 4l3 3 5-6" stroke="#3182ce" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M1 4l3 3 5-6" stroke="var(--primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </div>
                     <div>
-                      <p className="text-[12px] font-bold text-[#1a365d] leading-none mb-1">COCHÉ</p>
-                      <p className="text-[11px] text-gray-500 leading-relaxed">
+                      <p className="text-[12px] font-bold leading-none mb-1" style={{ color: "var(--foreground)" }}>COCHÉ</p>
+                      <p className="text-[11px] leading-relaxed" style={{ color: "var(--muted-foreground)" }}>
                         Regroupe toutes vos séquences sélectionnées dans un seul grand déroulé continu
-                        <span className="font-semibold text-[#1a365d]"> (recommandé pour les séances consolidées)</span>.
+                        <span className="font-semibold" style={{ color: "var(--foreground)" }}> (recommandé pour les séances consolidées)</span>.
                       </p>
                     </div>
                   </div>
@@ -1129,14 +1263,14 @@ export function ContextSelector() {
                   <div className="flex items-start gap-2.5">
                     <div
                       className="w-5 h-5 rounded-md flex items-center justify-center shrink-0 mt-0.5"
-                      style={{ backgroundColor: "#f8fafc", border: "1.5px solid #e2e8f0" }}
+                      style={{ backgroundColor: "var(--muted)", border: "1.5px solid var(--border)" }}
                     >
-                      <div className="w-2 h-2 rounded-sm" style={{ backgroundColor: "#cbd5e1" }}/>
+                      <div className="w-2 h-2 rounded-sm" style={{ backgroundColor: "var(--muted-foreground)" }}/>
                     </div>
                     <div>
-                      <p className="text-[12px] font-bold text-[#2d3748] leading-none mb-1">DÉCOCHÉ</p>
-                      <p className="text-[11px] text-gray-500 leading-relaxed">
-                        Crée des onglets distincts <span className="font-semibold text-[#2d3748]">(Multi-Tabs)</span> sur
+                      <p className="text-[12px] font-bold leading-none mb-1" style={{ color: "var(--foreground)" }}>DÉCOCHÉ</p>
+                      <p className="text-[11px] leading-relaxed" style={{ color: "var(--muted-foreground)" }}>
+                        Crée des onglets distincts <span className="font-semibold" style={{ color: "var(--foreground)" }}>(Multi-Tabs)</span> sur
                         l'écran d'édition, vous permettant de préparer une fiche indépendante pour chaque contenu.
                       </p>
                     </div>
@@ -1148,8 +1282,8 @@ export function ContextSelector() {
               <div
                 className="w-full flex items-start gap-3 px-4 py-3 rounded-2xl transition-all cursor-pointer active:scale-[0.99]"
                 style={{
-                  backgroundColor: merged ? "#eef4ff" : "#f8fafc",
-                  border: `1.5px solid ${merged ? "#3182ce" : "#e2e8f0"}`,
+                  backgroundColor: merged ? "var(--accent)" : "var(--background)",
+                  border: `1.5px solid ${merged ? "var(--primary)" : "var(--border)"}`,
                 }}
                 onClick={() => { setMerged(o => !o); setTooltipOpen(false); }}
               >
@@ -1157,8 +1291,8 @@ export function ContextSelector() {
                 <div
                   className="w-5 h-5 rounded-md border-2 flex items-center justify-center shrink-0 mt-0.5 transition-all duration-150"
                   style={{
-                    backgroundColor: merged ? "#3182ce" : "#fff",
-                    borderColor:     merged ? "#3182ce" : "#d1d5db",
+                    backgroundColor: merged ? "var(--primary)" : "var(--background)",
+                    borderColor:     merged ? "var(--primary)" : "var(--border)",
                   }}
                 >
                   {merged && (
@@ -1171,7 +1305,7 @@ export function ContextSelector() {
                 {/* Label + info icon */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start gap-1.5 flex-wrap">
-                    <p className="text-[13px] font-semibold text-[#1a365d] leading-snug">
+                    <p className="text-[13px] font-semibold leading-snug" style={{ color: "var(--foreground)" }}>
                       Fusionner les contenus sélectionnés dans une seule fiche de préparation
                     </p>
                     {/* Info / tooltip trigger — stops propagation so it doesn't toggle checkbox */}
@@ -1183,12 +1317,12 @@ export function ContextSelector() {
                     >
                       <HelpCircle
                         className="w-4 h-4"
-                        style={{ color: tooltipOpen ? "#3182ce" : "#94a3b8" }}
+                        style={{ color: tooltipOpen ? "var(--primary)" : "var(--muted-foreground)" }}
                       />
                     </button>
                   </div>
                   <p className="text-[11px] mt-0.5 leading-tight"
-                     style={{ color: merged ? "#3182ce" : "#94a3b8" }}>
+                    style={{ color: merged ? "var(--primary)" : "var(--muted-foreground)" }}>
                     {merged
                       ? "Un seul tableau continu · toutes les séquences à la suite"
                       : "Par défaut : fiches indépendantes, un onglet par contenu"}
@@ -1199,8 +1333,8 @@ export function ContextSelector() {
                 <span
                   className="shrink-0 text-[10px] font-bold px-2 py-1 rounded-full mt-0.5"
                   style={{
-                    backgroundColor: merged ? "#3182ce" : "#e5e7eb",
-                    color:           merged ? "#fff"    : "#64748b",
+                    backgroundColor: merged ? "var(--primary)" : "var(--muted)",
+                    color:           merged ? "var(--primary-foreground)" : "var(--muted-foreground)",
                   }}
                 >
                   {merged ? "Fusionné" : "Onglets"}
@@ -1209,29 +1343,70 @@ export function ContextSelector() {
             </div>
           )}
 
-          <button
-            onClick={handleNext}
-            disabled={!canProceed}
-            className="w-full flex items-center justify-center gap-2.5 py-[15px] rounded-2xl font-semibold text-[15px] transition-all pointer-events-auto"
-            style={
-              canProceed
-                ? {
-                    backgroundColor: "#1a365d",
-                    color: "#ffffff",
-                    boxShadow: "0 6px 24px rgba(26,54,93,0.35), 0 2px 6px rgba(26,54,93,0.2)",
-                    opacity: 1,
-                  }
-                : { backgroundColor: "#e5e7eb", color: "#9ca3af", opacity: 0.5, cursor: "not-allowed" }
-            }
-          >
-            <span>Suivant : Choisir le Canevas de la Fiche</span>
-            <ChevronRight className="w-4 h-4 shrink-0" />
-          </button>
-          {!canProceed && discipline && contenus.length > 0 && (
-            <p className="text-center text-[11px] text-gray-400 mt-2 pointer-events-none">
-              Sélectionnez au moins un contenu dans la section C
-            </p>
-          )}
+          <div ref={missingHintsRef} className="relative pointer-events-auto flex justify-center lg:justify-end">
+            {showMissingHints && !canProceed && (
+              <div
+                className="absolute bottom-16 lg:bottom-14 left-1/2 -translate-x-1/2 lg:left-auto lg:translate-x-0 lg:right-0 w-[min(340px,calc(100vw-2rem))] rounded-2xl p-3"
+                style={{
+                  backgroundColor: "var(--card)",
+                  border: "1px solid var(--border)",
+                  boxShadow: "0 12px 28px color-mix(in srgb, var(--foreground) 12%, transparent)",
+                }}
+              >
+                <p className="text-[11px] font-bold uppercase tracking-wide mb-1.5" style={{ color: "var(--foreground)" }}>
+                  Champs à renseigner
+                </p>
+                <p className="text-[11px] mb-2" style={{ color: "var(--muted-foreground)" }}>
+                  Complétez ces éléments pour activer le bouton.
+                </p>
+                <ul className="space-y-1.5">
+                  {missingFields.slice(0, 6).map((field) => (
+                    <li key={field} className="flex items-center gap-1.5 text-[12px]" style={{ color: "var(--foreground)" }}>
+                      <AlertCircle className="w-3.5 h-3.5 shrink-0" style={{ color: "#f59e0b" }} />
+                      <span>{field}</span>
+                    </li>
+                  ))}
+                  {missingFields.length > 6 && (
+                    <li className="text-[11px]" style={{ color: "var(--muted-foreground)" }}>
+                      +{missingFields.length - 6} autre(s) champ(s)
+                    </li>
+                  )}
+                </ul>
+              </div>
+            )}
+
+            <button
+              onClick={handleNext}
+              className="h-12 sm:h-[50px] w-full max-w-[320px] lg:w-auto lg:max-w-none min-w-[160px] px-4 rounded-full flex items-center justify-center gap-2 transition-all active:scale-95"
+              aria-label={canProceed ? "Continuer vers le canevas" : "Afficher les champs manquants"}
+              title={canProceed ? "Continuer vers le canevas" : "Voir les champs manquants"}
+              style={
+                canProceed
+                  ? {
+                      backgroundColor: "var(--primary)",
+                      color: "var(--primary-foreground)",
+                      border: "1px solid color-mix(in srgb, var(--primary) 70%, var(--border))",
+                      boxShadow: "0 8px 24px color-mix(in srgb, var(--primary) 38%, transparent)",
+                    }
+                  : {
+                      backgroundColor: "color-mix(in srgb, var(--card) 78%, var(--muted) 22%)",
+                      color: "var(--muted-foreground)",
+                      border: "1px solid var(--border)",
+                      boxShadow: "0 8px 22px color-mix(in srgb, var(--foreground) 10%, transparent)",
+                    }
+              }
+            >
+              {canProceed ? (
+                <CheckCircle2 className="w-4 h-4 shrink-0" />
+              ) : (
+                <AlertCircle className="w-4 h-4 shrink-0" style={{ color: "#f59e0b" }} />
+              )}
+              <span className="text-[13px] font-semibold whitespace-nowrap">
+                {canProceed ? "Passer au canevas" : `Passer au canevas • ${missingFields.length}`}
+              </span>
+              <ChevronRight className="w-4 h-4 shrink-0" />
+            </button>
+          </div>
         </div>
 
       </div>

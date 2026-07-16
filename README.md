@@ -2,7 +2,7 @@
 
 ## Plateforme de Gestion Scolaire pour les Enseignants d'Afrique Francophone
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![License](https://img.shields.io/badge/License-%C3%A0%20d%C3%A9finir-lightgrey.svg)](ATTRIBUTIONS.md)
 [![React](https://img.shields.io/badge/React-18.x-blue.svg)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)](https://www.typescriptlang.org/)
 [![Supabase](https://img.shields.io/badge/Supabase-Backend-green.svg)](https://supabase.com/)
@@ -37,7 +37,7 @@ Dans les écoles primaires d'Afrique francophone, les enseignants gèrent des cl
 
 ### 📝 Éditeur de Leçons
 - Création et structuration de leçons par matière
-- Catalogue de leçons réutilisables
+- Workflow guidé via sélection de contexte + éditeur
 - Planification hebdomadaire et mensuelle
 - Historique et archivage des séquences pédagogiques
 
@@ -65,17 +65,14 @@ Dans les écoles primaires d'Afrique francophone, les enseignants gèrent des cl
 ### Frontend
 - **React 18** + **TypeScript** avec Vite pour des performances optimales
 - **Tailwind CSS 4** avec design system personnalisé
-- **Motion** pour des animations fluides
+- **Thématisation avancée** (light, dark, emerald, ocean)
 - **React Router 7** pour la navigation côté client
-- **React Hook Form** pour la gestion des formulaires
-- **React DnD** pour le glisser-déposer
-- **Recharts** pour les visualisations de données
 - **Radix UI** pour les composants accessibles
 
 ### Backend
 - **Supabase** (PostgreSQL + RLS)
 - **Row Level Security** pour isoler les données par établissement
-- **Real-time subscriptions** pour les mises à jour en direct
+- **Policies Storage durcies** par classe/propriétaire
 - **TanStack React Query** pour la gestion de l'état serveur
 
 ---
@@ -84,31 +81,162 @@ Dans les écoles primaires d'Afrique francophone, les enseignants gèrent des cl
 
 ### Prérequis
 - Node.js 18+
-- npm ou yarn
+- npm (ou pnpm)
 - Compte Supabase (gratuit)
 
 ### Étapes
 
 ```bash
 # 1. Cloner le repository
-git clone https://github.com/opentech221/ecole2.0.git
-cd ecole2.0
+git clone https://github.com/opentech221/Ecole_2.0_Copie_2.git
+cd Ecole_2.0_Copie_2
 
 # 2. Installer les dépendances
 npm install
 
-# 3. Configurer les variables d'environnement
-cp .env.example .env.local
-
-# 4. Éditer .env.local avec vos clés
-# VITE_SUPABASE_URL=votre_url_supabase
-# VITE_SUPABASE_ANON_KEY=votre_cle_anonyme
-
-# 5. Lancer le serveur de développement
+# 3. Lancer le serveur de développement
 npm run dev
 ```
 
+Note: le client Supabase utilise actuellement `utils/supabase/info.tsx`.
+Pour un déploiement standard, externaliser ensuite les clés en variables d'environnement.
+
 Le site sera accessible sur `http://localhost:5173`
+
+## 🗄️ Workflow Supabase Local Et Distant
+
+### Initialisation (une seule fois)
+
+```bash
+npx supabase init
+```
+
+### Local: developper et tester les migrations sans dashboard distant
+
+```bash
+# Demarrer Postgres local Supabase
+npm run db:local:start
+
+# Rejouer toutes les migrations locales (000, 001, 002, ...)
+npm run db:local:reset
+
+# Executer une requete SQL locale
+npm run db:local:query -- "select * from supabase_migrations.schema_migrations order by version;"
+
+# Arreter les services locaux
+npm run db:local:stop
+```
+
+### Distant: pousser les migrations depuis le terminal
+
+```bash
+# 1) Se connecter (token perso Supabase)
+npx supabase login
+
+# 2) Lier le repo au projet distant
+export SUPABASE_PROJECT_REF="votre_project_ref"
+npm run db:remote:link
+
+# 3) Pousser les migrations vers la base distante
+npm run db:remote:push
+```
+
+### Astuce equipe
+
+Avant chaque PR backend:
+1. `npm run db:local:reset`
+2. verifier que les migrations passent de zero sans erreur
+3. seulement ensuite faire `npm run db:remote:push`
+
+Option automatisée en une commande:
+
+```bash
+npm run db:preflight
+```
+
+Ce preflight exécute:
+1. start DB locale
+2. reset complet des migrations
+3. verification des versions appliquees
+4. build frontend
+
+## Documentation Interne
+
+- Guide exploitation admin: [guidelines/admin-exploitation-runbook.md](guidelines/admin-exploitation-runbook.md)
+
+## PWA (Installable Android/iOS)
+
+L'application est configurée en Progressive Web App avec:
+- manifest: `public/manifest.webmanifest`
+- service worker: `public/sw.js`
+- fallback offline: `public/offline.html`
+- icones: `public/icons/*`
+- push web: abonnement navigateur + réception via service worker
+- background sync: synchronisation différée des actions notifications hors ligne
+
+### Lancer en local
+
+```bash
+npm install
+npm run dev
+```
+
+Pour tester le service worker localement, préférer un build preview:
+
+```bash
+npm run build
+npx vite preview
+```
+
+### Build production
+
+```bash
+npm run build
+```
+
+### Variables d'environnement PWA avancée
+
+- `VITE_VAPID_PUBLIC_KEY`: clé publique VAPID exposée au frontend pour l'abonnement push
+- `VAPID_PUBLIC_KEY`: clé publique lue côté fonction Edge
+- `VAPID_PRIVATE_KEY`: clé privée VAPID pour signer les push
+- `VAPID_SUBJECT`: contact VAPID, ex. `mailto:admin@ecole20.app`
+
+Sans ces variables, la PWA reste installable/offline, mais le push web reste désactivé.
+
+### Tester l'installation mobile
+
+Android (Chrome):
+1. Ouvrir l'app en HTTPS.
+2. Attendre le bouton `Installer l'app`.
+3. Installer puis relancer depuis l'ecran d'accueil.
+
+iOS (Safari):
+1. Ouvrir l'app en HTTPS.
+2. Partager.
+3. Choisir `Sur l'ecran d'accueil`.
+
+### HTTPS requis
+
+Le mode installable PWA et le service worker exigent HTTPS en production.
+Vercel/Supabase couvrent ce prerequis par defaut.
+
+### Limites iOS
+
+- Pas d'evenement `beforeinstallprompt` standard.
+- Le prompt d'installation est remplace par une indication utilisateur.
+- Fonctionnalites avancees (push/background sync) plus limitees que sur Android.
+
+### Checklist debug PWA
+
+1. Verifier `Application > Manifest` dans DevTools.
+2. Verifier `Application > Service Workers` (scope `/`, statut actif).
+3. Confirmer que `sw.js` et `manifest.webmanifest` renvoient HTTP 200.
+4. Vider cache/service worker puis recharger hard (`Ctrl+Shift+R`).
+5. Tester offline avec DevTools Network `Offline` et navigation vers une route SPA.
+6. Verifier qu'aucune requete API sensible authentifiee n'est servie stale sans reseau.
+7. Verifier `PushManager` et les permissions navigateur avant de tester les notifications push.
+8. Sur Vercel, verifier que l'URL finale publique n'est pas protegee par SSO si vous voulez tester l'installabilite sur mobile externe.
+
 
 ---
 
@@ -155,6 +283,7 @@ Ce projet est ouvert aux contributions !
 ### 🔄 Phase 2 — Optimisation (En cours)
 - [x] Design system unifié
 - [x] Dark mode
+- [x] Workflow migrations local/distant (Supabase CLI)
 - [ ] Tests utilisateurs en conditions réelles
 - [ ] Mode offline pour zones à faible connexion
 - [ ] Optimisations performances mobiles
@@ -179,14 +308,15 @@ Ce projet est ouvert aux contributions !
 **Pays :** Sénégal 🇸🇳
 
 Pour toute question ou collaboration :
-- Ouvrir une [Issue](https://github.com/opentech221/ecole2.0/issues)
-- Ou une [Discussion](https://github.com/opentech221/ecole2.0/discussions)
+- Ouvrir une [Issue](https://github.com/opentech221/Ecole_2.0_Copie_2/issues)
+- Ou une [Discussion](https://github.com/opentech221/Ecole_2.0_Copie_2/discussions)
 
 ---
 
 ## 🎖️ Licence
 
-Ce projet est sous licence **MIT** — voir le fichier [LICENSE](LICENSE) pour plus de détails.
+La licence du projet applicatif n'est pas encore formalisée dans un fichier `LICENSE` dédié.
+Les attributions et licences tierces utilisées sont documentées dans [ATTRIBUTIONS.md](ATTRIBUTIONS.md).
 
 Vous êtes libre de :
 - ✅ Utiliser le code pour vos projets
@@ -194,7 +324,7 @@ Vous êtes libre de :
 - ✅ Distribuer avec ou sans modifications
 - ✅ Utiliser commercialement
 
-**Condition :** Inclure la licence et le copyright d'origine.
+**Condition :** Clarifier et ajouter une licence projet explicite avant diffusion publique large.
 
 ---
 

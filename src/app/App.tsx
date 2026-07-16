@@ -1,5 +1,5 @@
-import { RouterProvider }    from "react-router";
-import { Toaster }           from "sonner";
+import { RouterProvider }      from "react-router";
+import { Toaster }             from "sonner";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Analytics }         from "@vercel/analytics/react";
 import { SpeedInsights }     from "@vercel/speed-insights/react";
@@ -9,8 +9,6 @@ import { queryClient }       from "../lib/queryClient";
 
 export default function App() {
   return (
-    /* QueryClientProvider must wrap everything so every hook can call
-       useQueryClient() without error.                                   */
     <QueryClientProvider client={queryClient}>
       <AppProvider>
         <RouterProvider router={router} />

@@ -1,0 +1,506 @@
+[
+  {
+    "niveau": "CI",
+    "document_ref": "guide_etape_1",
+    "domaines": [
+      {
+        "nom": "Langue et Communication",
+        "sous_domaines": [
+          {
+            "nom": "Communication Orale",
+            "activites": [
+              {
+                "nom": "Langage",
+                "page_source": 67,
+                "competences_base": [
+                  {
+                    "description": "Intégrer le vocabulaire adéquat, les comportements non verbaux, le schéma intonatif, des structures et des règles syntaxiques simples dans des situations de compréhension et de production d’énoncés oraux relatifs au contact social, à la narration, à la description et à l’injonction",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "Intégrer le vocabulaire adéquat, les comportements non verbaux, le schéma intonatif, des structures et des règles syntaxiques simples dans des situations de production d’énoncés oraux relatifs à la prise de contact et à la prise de congé.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Développer de bonnes habitudes et la compréhension de consignes courantes",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Comprendre et exécuter des consignes courantes",
+                                "contenus": [
+                                  "levez-vous",
+                                  "je me lève"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Saluer une personne/ réagir à une salutation.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Saluer une personne et réagir",
+                                "contenus": [
+                                  "bonjour",
+                                  "bonsoir",
+                                  "monsieur",
+                                  "madame",
+                                  "comment ça va ?",
+                                  "papa",
+                                  "maman",
+                                  "le/la/les"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Se présenter et demander à son interlocuteur (trice) de se présenter.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Se présenter (nom, prénom)",
+                                "contenus": [
+                                  "mon nom",
+                                  "mon prénom",
+                                  "prénoms et noms des élèves de la classe"
+                                ]
+                              },
+                              {
+                                "titre": "Demander à l'interlocuteur de se présenter",
+                                "contenus": [
+                                  "j’habite",
+                                  "tu habites",
+                                  "classe",
+                                  "cour",
+                                  "école",
+                                  "je m’appelle",
+                                  "de",
+                                  "un",
+                                  "une"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Présenter quelqu'un (e).",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Présenter une personne tierce",
+                                "contenus": [
+                                  "Voici",
+                                  "voilà",
+                                  "garçon",
+                                  "fille",
+                                  "frère",
+                                  "sœur",
+                                  "élève",
+                                  "être",
+                                  "et",
+                                  "à",
+                                  "c’est",
+                                  "livre",
+                                  "ardoise",
+                                  "craie",
+                                  "tableau",
+                                  "il",
+                                  "avoir"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Saluer un groupe, se présenter en groupe.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Saluer un groupe et se présenter collectivement",
+                                "contenus": [
+                                  "Comment allez-vous ?",
+                                  "Nous sommes"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Prendre congé.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Prendre congé de son interlocuteur",
+                                "contenus": [
+                                  "au revoir",
+                                  "à demain",
+                                  "je me lève",
+                                  "il / elle sort",
+                                  "merci",
+                                  "sur",
+                                  "sous",
+                                  "devant",
+                                  "derrière",
+                                  "la porte",
+                                  "la table"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "Intégrer le vocabulaire adéquat, les comportements non verbaux, le schéma intonatif, des structures et des règles syntaxiques simples dans des situations de production d’énoncés oraux relatifs à la recherche d’informations.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Demander un renseignement/ Réagir.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Demander un renseignement sur un lieu",
+                                "contenus": [
+                                  "Où est... ?",
+                                  "C'est à côté de...",
+                                  "C'est là-bas"
+                                ]
+                              },
+                              {
+                                "titre": "Demander un renseignement sur le prix, le nombre.",
+                                "contenus": [
+                                  "Combien ça coûte ?",
+                                  "ça coûte (cent francs)…",
+                                  "Combien de….."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 3",
+                        "description": "Intégrer le vocabulaire adéquat, les comportements non verbaux, le schéma intonatif, des structures et des règles syntaxiques simples dans des situations de production d’énoncés oraux relatifs à l’expression de besoins, de goûts et de préférences.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Exprimer ses besoins, ses sentiments, ses sensations /Réagir.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Exprimer ses besoins, ses sentiments.",
+                                "contenus": [
+                                  "Avoir faim",
+                                  "avoir soif (présent indicatif)",
+                                  "Verbe être au présent + adjectif (ex : je suis content(e))",
+                                  "Phrases exclamatives : C’est beau ! C’est magnifique !",
+                                  "Négation : Ce n’est pas joli"
+                                ]
+                              },
+                              {
+                                "titre": "Exprimer ses sensations.",
+                                "contenus": [
+                                  "Avoir mal",
+                                  "avoir chaud",
+                                  "avoir froid (présent indicatif)"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Exprimer ses préférences /Réagir.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Exprimer son avis.",
+                                "contenus": [
+                                  "Verbe être au présent + d’accord",
+                                  "C’est vrai",
+                                  "C’est faux"
+                                ]
+                              },
+                              {
+                                "titre": "Exprimer ses préférences.",
+                                "contenus": [
+                                  "Verbe préférer au présent + complément",
+                                  "Verbe aimer au présent + complément"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 4",
+                        "description": "Intégrer le vocabulaire adéquat, les comportements non verbaux, le schéma intonatif, des structures et des règles syntaxiques simples dans des situations de production d’énoncés oraux relatifs à la demande de permission et de services.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Demander/donner une permission/un service.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Demander une permission.",
+                                "contenus": [
+                                  "Vouloir au présent + verbes usuels + complément + S’il vous plaît - Merci",
+                                  "Est-ce que + je/nous + pouvoir au présent+ verbe à l’infinitif + S’il vous plaît"
+                                ]
+                              },
+                              {
+                                "titre": "Demander un service.",
+                                "contenus": [
+                                  "Est-ce que + je /nous + pouvoir au présent+ verbe à l’infinitif + complément"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Récitation",
+                "page_source": 67,
+                "competences_base": [
+                  {
+                    "description": "Mémoriser et restituer des textes en prose et en vers",
+                    "paliers": [
+                      {
+                        "nom": "Paliers 1 à 4",
+                        "description": "Mémorisation et restitution de textes courts liés aux thèmes du contact social, de la recherche d'informations, des besoins et des services.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Restituer des comptines et des poèmes.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Mémoriser et restituer une comptine.",
+                                "contenus": [
+                                  "Comptines",
+                                  "Intonation et gestes adéquats"
+                                ]
+                              },
+                              {
+                                "titre": "Mémoriser et restituer un poème.",
+                                "contenus": [
+                                  "Poèmes",
+                                  "Intonation et gestes adéquats"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nom": "Communication Écrite",
+            "activites": [
+              {
+                "nom": "Lecture",
+                "page_source": 90,
+                "competences_base": [
+                  {
+                    "description": "Intégrer les mécanismes d’identification des mots et des stratégies de compréhension dans des situations de lecture de textes narratifs, descriptifs et injonctifs.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "Intégrer les mécanismes d’identification des mots et des stratégies de compréhension dans des situations de lecture de mots fréquents et usuels.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Maîtriser les graphismes de base.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Tenir correctement l’outil scripteur et les supports.",
+                                "contenus": [
+                                  "Techniques de préhension des outils",
+                                  "caractéristiques des supports"
+                                ]
+                              },
+                              {
+                                "titre": "Tracer les graphismes élémentaires",
+                                "contenus": [
+                                  "Ronds",
+                                  "points",
+                                  "lignes horizontales",
+                                  "lignes verticales",
+                                  "lignes obliques",
+                                  "courbes",
+                                  "boucles",
+                                  "cannes"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Identifier les composantes sonores du langage",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Distinguer des sons et identifier des rimes",
+                                "contenus": [
+                                  "Phonèmes",
+                                  "rimes"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Se familiariser avec le monde de l’écrit.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Acquérir globalement les lettres de l'alphabet",
+                                "contenus": [
+                                  "Lettres de l’alphabet"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Acquérir globalement des mots fréquents.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Reconnaître et lire des mots usuels",
+                                "contenus": [
+                                  "bonjour",
+                                  "papa",
+                                  "maman",
+                                  "classe",
+                                  "est",
+                                  "dans"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "Intégrer les mécanismes d’identification des mots et des stratégies de compréhension dans des situations de lecture de petits textes.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Lire et comprendre de petits textes.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Dégager l'idée générale et reformuler le texte",
+                                "contenus": [
+                                  "Petit texte lu par soi-même"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Maîtriser des correspondances graphophonologiques",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Lire/écrire des sons, des syllabes, des mots (a, i, t, o, l).",
+                                "contenus": [
+                                  "Sons : a, i, t, o, l",
+                                  "Combinatoire des sons",
+                                  "Syllabes et mots formés"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 3",
+                        "description": "Intégrer les mécanismes d’identification des mots et des stratégies de compréhension dans des situations de lecture de petits textes.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Maîtriser des correspondances graphophonologiques.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Lire/écrire des sons, des syllabes, des mots (n, e, p, d, m, b).",
+                                "contenus": [
+                                  "Sons : n, e, p, d, m, b",
+                                  "Combinatoire des sons",
+                                  "Syllabes et mots formés"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 4",
+                        "description": "Intégrer les mécanismes d’identification des mots et des stratégies de compréhension dans des situations de lecture de petits textes.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Maîtriser des correspondances graphophonologiques.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Lire/écrire des sons complexes.",
+                                "contenus": [
+                                  "Sons : f, u, ou, é=et, è=ê=ai=ei, s, r, au=eau=o, on=om",
+                                  "Phrases simples"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Production d'écrits",
+                "page_source": 124,
+                "competences_base": [
+                  {
+                    "description": "Intégrer le vocabulaire adéquat, des structures et des règles syntaxiques simples et des temps de l’indicatif et de l’impératif dans des situations de production d’énoncés d’au moins 2 phrases relatifs à la narration, à la description et à l’injonction.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "Intégrer le vocabulaire adéquat, des structures et des règles syntaxiques simples dans des situations de production d’énoncés écrits d’une à deux phrases relatifs au contact social.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Produire des énoncés écrits d'une à deux phrases.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Choisir des étiquettes pour écrire de petits énoncés.",
+                                "contenus": [
+                                  "Étiquettes mots (prénoms, objets de la classe)",
+                                  "Dessins ou scènes supports"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2 et 3",
+                        "description": "Intégrer le vocabulaire adéquat, des structures et des règles syntaxiques simples dans des situations de production d’énoncés écrits d’une à deux phrases adaptées à la situation de communication.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Produire oralement un énoncé pour le dicter à l’enseignant(e).",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Dicter un énoncé structuré au maître/à la maîtresse",
+                                "contenus": [
+                                  "Dictée à l’adulte",
+                                  "Énoncés d’une à deux phrases"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 4",
+                        "description": "Intégrer le vocabulaire adéquat, des structures et des règles syntaxiques simples dans des situations de production d’énoncés écrits de 1 à 2 phrases adaptées à la situation de communication.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Produire un énoncé écrit adapté",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Rédiger une à deux phrases",
+                                "contenus": [
+                                  "Mots acquis globalement",
+                                  "Structures syntaxiques simples"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

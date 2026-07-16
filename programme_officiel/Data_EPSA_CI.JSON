@@ -1,0 +1,343 @@
+[
+  {
+    "niveau": "CI",
+    "document_ref": "guide_etape_1",
+    "domaines": [
+      {
+        "nom": "Éducation Physique, Sportive et Artistique",
+        "sous_domaines": [
+          {
+            "nom": "Éducation physique et sportive",
+            "activites": [
+              {
+                "nom": "Activités physiques et sportives",
+                "page_source": 304,
+                "competences_base": [
+                  {
+                    "description": "Intégrer des règles de base et des activités motrices simples dans des situations ludiques et sportives",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "Intégrer des activités motrices simples dans des situations de tonification du corps et d’assouplissement musculaire",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Exécuter des activités motrices fondamentales",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Marcher",
+                                "contenus": [
+                                  "Marche sur place",
+                                  "marche sur des lignes",
+                                  "marche avec obstacles"
+                                ]
+                              },
+                              {
+                                "titre": "Courir",
+                                "contenus": [
+                                  "Course sur place",
+                                  "course en ligne droite",
+                                  "course en changeant de direction"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Réaliser des exercices de tonification et d’assouplissement",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Réaliser des exercices de tonification",
+                                "contenus": [
+                                  "Pompes",
+                                  "abdominaux",
+                                  "dorsaux"
+                                ]
+                              },
+                              {
+                                "titre": "Réaliser des exercices d’assouplissement",
+                                "contenus": [
+                                  "Flexion",
+                                  "extension",
+                                  "rotation"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "Intégrer des règles de jeu, des activités motrices simples ainsi que des principes élémentaires de fair-play dans des situations ludiques",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Pratiquer des jeux traditionnels et modernes",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Jouer à des jeux traditionnels",
+                                "contenus": [
+                                  "Jeux de société",
+                                  "jeux de rôles",
+                                  "jeux de plein air"
+                                ]
+                              },
+                              {
+                                "titre": "Jouer à des jeux modernes",
+                                "contenus": [
+                                  "Petits jeux collectifs"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Découvrir et respecter des règles de jeu et de fair-play",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier les règles d’un jeu",
+                                "contenus": [
+                                  "Règles spécifiques du jeu pratiqué"
+                                ]
+                              },
+                              {
+                                "titre": "Adopter une attitude de fair-play",
+                                "contenus": [
+                                  "Respect de l’arbitre",
+                                  "Respect des adversaires",
+                                  "Acceptation du verdict"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nom": "Éducation artistique",
+            "activites": [
+              {
+                "nom": "Arts plastiques",
+                "page_source": 314,
+                "competences_base": [
+                  {
+                    "description": "Intégrer des formes, des couleurs ainsi que des techniques élémentaires de reproduction et d’expression artistique dans des situations de réalisation de dessins et de modelage",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "Intégrer des techniques d’observation simples dans des situations de discrimination de formes et de couleurs",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Découvrir les différents modes d’expression",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Représenter les différentes sortes de traits",
+                                "contenus": [
+                                  "Plein",
+                                  "délié",
+                                  "modulé",
+                                  "continu",
+                                  "discontinu",
+                                  "le point"
+                                ]
+                              },
+                              {
+                                "titre": "Reconnaître différents modes d’expression",
+                                "contenus": [
+                                  "Objets peints",
+                                  "Objets dessinés",
+                                  "Produits de modelage"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "Intégrer des techniques simples d’observation ainsi que des techniques élémentaires de reproduction et d’expression artistique dans des situations de représentation d’objets",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Représenter des objets vus ou imaginés",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Modeler des objets (ou des êtres)",
+                                "contenus": [
+                                  "Argile",
+                                  "pâte à modeler"
+                                ]
+                              },
+                              {
+                                "titre": "Peindre des objets (ou des êtres)",
+                                "contenus": [
+                                  "Gouache",
+                                  "aquarelle",
+                                  "pigments naturels"
+                                ]
+                              },
+                              {
+                                "titre": "Dessiner des objets (ou des êtres)",
+                                "contenus": [
+                                  "Crayon",
+                                  "craie",
+                                  "fusain"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Éducation musicale",
+                "page_source": 325,
+                "competences_base": [
+                  {
+                    "description": "Intégrer des mélodies, des rythmes divers, une gestuelle simple et la coordination des mouvements dans des situations d’interprétation de chants tirés du répertoire local",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "Intégrer la discrimination de sons variés et la vocalise dans des situations d’exécution de mélodies simples",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Découvrir des sons et des voix",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier la provenance d’un son",
+                                "contenus": [
+                                  "Sons de l’environnement (animaux, objets, instruments)"
+                                ]
+                              },
+                              {
+                                "titre": "Identifier des timbres de voix",
+                                "contenus": [
+                                  "Voix d’homme",
+                                  "voix de femme",
+                                  "voix d’enfant"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Reproduire des sons, des rythmes et des mélodies",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Reproduire des sons",
+                                "contenus": [
+                                  "Sons vocaux",
+                                  "sons instrumentaux"
+                                ]
+                              },
+                              {
+                                "titre": "Reproduire des rythmes",
+                                "contenus": [
+                                  "Frappement de mains",
+                                  "frappement d'objets"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "Intégrer des mélodies et des rythmes divers dans des situations d’exécution de chants simples.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Chanter à l’unisson ou individuellement",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Chanter à l’unisson",
+                                "contenus": [
+                                  "Exécution en duo",
+                                  "Exécution en chœur"
+                                ]
+                              },
+                              {
+                                "titre": "Chanter individuellement",
+                                "contenus": [
+                                  "Exécution en solo"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Arts scéniques",
+                "page_source": 336,
+                "competences_base": [
+                  {
+                    "description": "Intégrer des techniques simples d’imitation, de jeux de rôles, de mise en scène et de déguisement dans des situations de dramatisation de scènes de la vie courante ou imaginaires",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "Intégrer des techniques simples d’imitation dans des situations de parodie de personnages",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Imiter des personnages",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Coordonner des gestes de manière expressive",
+                                "contenus": [
+                                  "Personnages typiques : ivrognes, étourdi, agressif, vaniteux, vieillard, enfant gâté",
+                                  "Autres personnages : artiste, chanteur, acteur, personnalité politique"
+                                ]
+                              },
+                              {
+                                "titre": "Coordonner des gestes et des paroles de manière expressive",
+                                "contenus": [
+                                  "Dialogues",
+                                  "mimiques"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "Intégrer des techniques simples de jeu de rôles et de déguisement dans des situations de dramatisation de scènes de la vie courante",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Dramatiser des scènes familières",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Utiliser des éléments de déguisement",
+                                "contenus": [
+                                  "Habillement",
+                                  "masques",
+                                  "accessoires divers"
+                                ]
+                              },
+                              {
+                                "titre": "Jouer une scène familière",
+                                "contenus": [
+                                  "Scènes de marchandage",
+                                  "scènes de dispute",
+                                  "scènes de sensibilisation"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

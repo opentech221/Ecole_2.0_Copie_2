@@ -31,7 +31,7 @@ export default function ErrorBoundary() {
           justifyContent: "center",
           minHeight:      "100vh",
           padding:        "40px 20px",
-          backgroundColor:"#f8f9fc",
+          backgroundColor:"var(--background)",
           fontFamily:     "'Plus Jakarta Sans', sans-serif",
           textAlign:      "center",
         }}
@@ -41,8 +41,8 @@ export default function ErrorBoundary() {
           width:           "64px",
           height:          "64px",
           borderRadius:    "50%",
-          backgroundColor: "#fef2f2",
-          border:          "2px solid #fca5a5",
+          backgroundColor: "var(--accent)",
+          border:          "2px solid var(--border)",
           display:         "flex",
           alignItems:      "center",
           justifyContent:  "center",
@@ -52,22 +52,22 @@ export default function ErrorBoundary() {
           ⚠️
         </div>
 
-        <h2 style={{ fontSize:"20px", fontWeight:800, color:"#1a365d", margin:"0 0 8px" }}>
+        <h2 style={{ fontSize:"20px", fontWeight:800, color:"var(--primary)", margin:"0 0 8px" }}>
           Une erreur est survenue
         </h2>
 
-        <p style={{ fontSize:"14px", color:"#64748b", margin:"0 0 6px", maxWidth:"480px" }}>
+        <p style={{ fontSize:"14px", color:"var(--muted-foreground)", margin:"0 0 6px", maxWidth:"480px" }}>
           L'application a rencontré un problème technique. Vos données sont en sécurité.
         </p>
 
         {message && (
           <p style={{
             fontSize:        "11px",
-            color:           "#94a3b8",
+            color:           "var(--muted-foreground)",
             margin:          "0 0 28px",
             maxWidth:        "480px",
             fontFamily:      "monospace",
-            backgroundColor: "#f1f5f9",
+            backgroundColor: "var(--card)",
             padding:         "6px 12px",
             borderRadius:    "6px",
             wordBreak:       "break-word",
@@ -82,14 +82,14 @@ export default function ErrorBoundary() {
             minHeight:       "44px",
             padding:         "0 24px",
             borderRadius:    "12px",
-            backgroundColor: "#1a365d",
+            backgroundColor: "var(--primary)",
             color:           "#fff",
             fontFamily:      "'Plus Jakarta Sans', sans-serif",
             fontWeight:      700,
             fontSize:        "14px",
             border:          "none",
             cursor:          "pointer",
-            boxShadow:       "0 4px 14px rgba(26,54,93,0.28)",
+            boxShadow:       "0 4px 14px color-mix(in srgb, var(--primary) 28%, transparent)",
           }}
         >
           Recharger la page

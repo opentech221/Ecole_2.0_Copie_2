@@ -1,0 +1,629 @@
+[
+  {
+    "niveau": "CP",
+    "document_ref": "guide_etape_1",
+    "domaines": [
+      {
+        "nom": "Langue et Communication",
+        "sous_domaines": [
+          {
+            "nom": "Communication Orale",
+            "activites": [
+              {
+                "nom": "Langage",
+                "page_source": 155,
+                "competences_base": [
+                  {
+                    "description": "Intégrer le vocabulaire adéquat, les comportements non verbaux, le schéma intonatif, des structures et des règles syntaxiques simples dans des situations de compréhension et de production d’énoncés oraux relatifs au contact social, à la narration, à la description et à l’injonction",
+                    "paliers": [
+                      {
+                        "nom": "Palier 5",
+                        "description": "Intégrer le vocabulaire adéquat, les comportements non verbaux, le schéma intonatif, des structures et des règles syntaxiques simples dans des situations de production d’énoncés oraux relatifs à l’invitation et à la recommandation.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Inviter quelqu’un(e)/ réagir.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Inviter quelqu’un(e)/réagir.",
+                                "contenus": [
+                                  "Je (nous) t’ (vous) invite + compléments (verbes ou noms)",
+                                  "Je t’invite / nous t’invitons à mon anniversaire.",
+                                  "Je (nous) t’invite à manger.",
+                                  "d’accord ; merci."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Recommander quelque chose / réagir.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Recommander quelque chose / réagir.",
+                                "contenus": [
+                                  "Tu dois… (ex : tu dois faire attention aux voitures)",
+                                  "Il faut… (ex : il faut arroser avant de balayer)"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 6",
+                        "description": "Intégrer le vocabulaire adéquat, les comportements non verbaux, le schéma intonatif, des structures et des règles syntaxiques simples dans des situations de production d’énoncés oraux relatifs à la narration.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Relater un événement.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Relater ce qu’on a fait.",
+                                "contenus": [
+                                  "Gestion des temps utilisés dans la narration (présent et passé)",
+                                  "Verbes d’action usuels : aller, jouer, manger, fermer, ouvrir, etc., au présent et au passé composé.",
+                                  "Connecteurs : autrefois, hier, aujourd’hui, demain ; pendant, au même moment ; d’abord, ensuite, enfin, avant, après, et, puis ; mais, donc, alors"
+                                ]
+                              },
+                              {
+                                "titre": "Relater ce qu’a fait un(e) autre.",
+                                "contenus": [
+                                  "Verbes d'action usuels au présent et au passé composé",
+                                  "Utilisation des pronoms personnels sujet"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Raconter un conte.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Dire un conte entendu.",
+                                "contenus": [
+                                  "Contes du répertoire local"
+                                ]
+                              },
+                              {
+                                "titre": "Dire un conte lu.",
+                                "contenus": [
+                                  "Contes issus de supports écrits"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Raconter une histoire.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Reconstituer une histoire à partir d’une BD.",
+                                "contenus": [
+                                  "Bandes dessinées (supports visuels)"
+                                ]
+                              },
+                              {
+                                "titre": "Terminer une histoire entendue.",
+                                "contenus": [
+                                  "Histoires orales interrompues"
+                                ]
+                              },
+                              {
+                                "titre": "Raconter une petite histoire imaginée.",
+                                "contenus": [
+                                  "Récits de fiction créés par l'élève"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 7",
+                        "description": "Intégrer le vocabulaire adéquat, les comportements non verbaux, le schéma intonatif, des structures et des règles syntaxiques simples dans des situations de production d’énoncés oraux relatifs à la description.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Décrire un objet ou un lieu, un animal, une personne.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Décrire un objet ou un lieu.",
+                                "contenus": [
+                                  "Auxiliaire être au présent",
+                                  "Emploi des adjectifs qualificatifs usuels (forme, couleur, dimension, taille…)",
+                                  "Les comparatifs : comme, plus que, moins que, aussi que",
+                                  "Indicateurs de lieu : ici, là-bas, sur, sous, à côté, près de"
+                                ]
+                              },
+                              {
+                                "titre": "Décrire un animal.",
+                                "contenus": [
+                                  "Lexique des parties du corps de l'animal",
+                                  "Adjectifs de couleur et de taille"
+                                ]
+                              },
+                              {
+                                "titre": "Décrire une personne.",
+                                "contenus": [
+                                  "Vocabulaire du portrait physique et des vêtements"
+                                ]
+                              },
+                              {
+                                "titre": "Comparer des objets, des personnes des lieux, des animaux….",
+                                "contenus": [
+                                  "Plus … que, moins … que, aussi … que"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 8",
+                        "description": "Intégrer le vocabulaire adéquat, les comportements non verbaux, le schéma intonatif, des structures et des règles syntaxiques simples dans des situations de production d’énoncés oraux à caractère injonctif.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Donner des ordres et des interdits.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Donner des ordres.",
+                                "contenus": [
+                                  "Impératif présent",
+                                  "Verbes d'action usuels"
+                                ]
+                              },
+                              {
+                                "titre": "Faire des interdits.",
+                                "contenus": [
+                                  "Négation : ne pas, ne plus, ne jamais"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Récitation",
+                "page_source": 156,
+                "competences_base": [
+                  {
+                    "description": "Mémoriser et restituer des textes en prose et en vers",
+                    "paliers": [
+                      {
+                        "nom": "Paliers 5 à 8",
+                        "description": "Mémorisation et restitution de textes courts liés aux thèmes de l'invitation, de la narration, de la description et de l'injonction.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Restituer des comptines et des poèmes.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Mémoriser et restituer une comptine.",
+                                "contenus": [
+                                  "Poèmes, comptines.",
+                                  "Intonation et gestes qui conviennent."
+                                ]
+                              },
+                              {
+                                "titre": "Mémoriser et restituer un poème.",
+                                "contenus": [
+                                  "Poèmes, comptines.",
+                                  "Intonation et gestes qui conviennent."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nom": "Communication Écrite",
+            "activites": [
+              {
+                "nom": "Lecture",
+                "page_source": 216,
+                "competences_base": [
+                  {
+                    "description": "Intégrer les mécanismes d’identification des mots et des stratégies de compréhension dans des situations de lecture de textes narratifs, descriptifs et injonctifs.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 5",
+                        "description": "Intégrer les mécanismes d’identification des mots et des stratégies de compréhension dans des situations de lecture de petits textes.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Lire et comprendre de petits textes.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Dégager l’idée générale d’un petit texte lu par l’enseignant(e) ou par soi-même.",
+                                "contenus": [
+                                  "Construction de sens sur de petits textes : précision de ses intentions de lecture, activation de ses connaissances sur le texte, anticipation du contenu, recherche d’indices, traitement du texte, vérification de sa compréhension, reformulation du texte, résumé du texte."
+                                ]
+                              },
+                              {
+                                "titre": "Reformuler avec ses propres mots un petit texte.",
+                                "contenus": [
+                                  "Résumé et reformulation."
+                                ]
+                              },
+                              {
+                                "titre": "Donner son avis sur un petit texte.",
+                                "contenus": [
+                                  "Opinion et réaction personnelle."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Maîtriser des correspondances graphophonologiques.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Lire/écrire des sons, des syllabes, des mots.",
+                                "contenus": [
+                                  "Renforcement de la maîtrise de la combinatoire des sons appris au CI."
+                                ]
+                              },
+                              {
+                                "titre": "Former des syllabes et des mots.",
+                                "contenus": [
+                                  "Combinatoire et assemblage."
+                                ]
+                              },
+                              {
+                                "titre": "Maîtriser la graphie des lettres étudiées.",
+                                "contenus": [
+                                  "Écriture cursive (lettres ronds, coupes, ponts, boucles)."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Acquérir globalement des mots fréquents.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Reconnaître instantanément et transcrire des mots.",
+                                "contenus": [
+                                  "Echelons 2 et 3 de l’Echelle Dubois-Buyse",
+                                  "Mots invariables : alors, après assez, beaucoup.",
+                                  "Mots de la même famille."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Expliquer le sens de mots.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "S’appuyer sur la structure de mots pour en dégager le sens.",
+                                "contenus": [
+                                  "Mots de la même famille."
+                                ]
+                              },
+                              {
+                                "titre": "Identifier le sens d’un mot à partir de relations de sens associées.",
+                                "contenus": [
+                                  "Mots de sens opposés (antonymes)."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Développer la fluidité de la lecture.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Lire à voix haute un petit texte.",
+                                "contenus": [
+                                  "Lecture expressive de petits textes."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 6",
+                        "description": "Intégrer les mécanismes d’identification des mots et des stratégies de compréhension dans des situations de lecture de petits textes narratifs.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Lire et comprendre de petits textes narratifs.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Dégager l'idée générale, reformuler et donner son avis.",
+                                "contenus": [
+                                  "Textes narratifs.",
+                                  "Résumé du récit."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Maîtriser des correspondances graphophonologiques.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Lire/écrire des sons, des syllabes, des mots.",
+                                "contenus": [
+                                  "Sons : v-w ; oi ; ch ; é, es, er, ez ; f-ph ; eu-oeu (/ø/, /œ/) ; s=ss=c=ç ; s=z ; g=gu ; g=j ; gn ; in=ain=ein ; an=en=em=am.",
+                                  "Lecture et dictée de syllabes, de mots, de phrases simples."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Acquérir globalement des mots fréquents.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Reconnaître instantanément et transcrire des mots.",
+                                "contenus": [
+                                  "Echelons 4 et 5 de l’Echelle Dubois-Buyse",
+                                  "Mots invariables : combien, comment, déjà, depuis."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Expliquer le sens de mots.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "S'appuyer sur la structure et les relations de sens.",
+                                "contenus": [
+                                  "Le sens de quelques affixes (préfixes ou suffixes).",
+                                  "Mots de sens similaires (synonymes)."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 7",
+                        "description": "Intégrer les mécanismes d’identification des mots et des stratégies de compréhension dans des situations de lecture de petits textes descriptifs.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Lire et comprendre de petits textes descriptifs.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier les caractéristiques d'une description.",
+                                "contenus": [
+                                  "Portraits, descriptions de lieux ou d'objets."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Maîtriser des correspondances graphophonologiques.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Lire/écrire des sons complexes.",
+                                "contenus": [
+                                  "Sons : tr, pr, dr, br, cr, fr, gr ; ac ; oir, eur ; fl, pl , gl, bl, cl ; el, ec, es ; ette, erre, esse, elle, enne ; il, ill, ail, aill, euil, euill ; eil, eill, ouil, ouill."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Acquérir globalement des mots fréquents.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Reconnaître instantanément et transcrire des mots.",
+                                "contenus": [
+                                  "Échelon 6 de l’Échelle Dubois-Buyse",
+                                  "Mots invariables : derrière, dessus devant, enfin."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Expliquer le sens de mots.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier le degré d'intensité.",
+                                "contenus": [
+                                  "Classement de mots par degré d’intensité (ex : congelé, froid, tiède, chaud, brûlant)."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 8",
+                        "description": "Intégrer les mécanismes d’identification des mots et des stratégies de compréhension dans des situations de lecture de petits textes injonctifs.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Lire et comprendre de petits textes injonctifs.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier des consignes et des ordres.",
+                                "contenus": [
+                                  "Notices, règlements, modes d'emploi simples."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Maîtriser des correspondances graphophonologiques.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Lire/écrire des sons très complexes.",
+                                "contenus": [
+                                  "Sons : oy, ay, uy (y=2i) / ier, ié, ied, iez / iau, ieu, ien / ui / oin, ion / sc, st, sp / h, x."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Acquérir globalement des mots fréquents.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Reconnaître instantanément et transcrire des mots.",
+                                "contenus": [
+                                  "Echelon 7 de l’Echelle Dubois-Buyse",
+                                  "Mots invariables : jamais, pourquoi, pendant."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Expliquer le sens de mots.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Comprendre des métaphores courantes.",
+                                "contenus": [
+                                  "Exemple : avoir une faim de loup."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Production d'écrits",
+                "page_source": 281,
+                "competences_base": [
+                  {
+                    "description": "Intégrer le vocabulaire adéquat, des structures et des règles syntaxiques simples et des temps de l’indicatif et de l’impératif dans des situations de production d’énoncés d’au moins 2 phrases relatifs à la narration, à la description et à l’injonction.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 5",
+                        "description": "Intégrer le vocabulaire adéquat, des structures et des règles syntaxiques simples dans des situations de production d’énoncés écrits de 2 phrases adaptées à la situation de communication.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Produire un énoncé écrit adapté.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Produire oralement un énoncé pour le dicter à l’enseignant(e).",
+                                "contenus": [
+                                  "Dictée à l’adulte",
+                                  "Énoncés d’une à deux phrases."
+                                ]
+                              },
+                              {
+                                "titre": "Participer à la production d’un énoncé.",
+                                "contenus": [
+                                  "Écriture interactive.",
+                                  "Production collective sous la direction de l'enseignant."
+                                ]
+                              },
+                              {
+                                "titre": "Rédiger un énoncé adapté à la situation de communication.",
+                                "contenus": [
+                                  "Production écrite personnelle.",
+                                  "Remédiation différenciée."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 6",
+                        "description": "Intégrer le vocabulaire adéquat, des structures et des règles syntaxiques simples, le présent de l’indicatif dans des situations de production d’énoncés écrits d’au moins 2 phrases relatifs à la narration.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Relater par écrit des actions accomplies.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Relater par écrit des actions accomplies par soi ou par quelqu'un.",
+                                "contenus": [
+                                  "Verbes d’actions usuels au présent de l’indicatif.",
+                                  "Succession des actions (et, puis, avant, après, d’abord, ensuite, enfin, mais, car).",
+                                  "Emploi des pronoms : je, il, elle, nous, ils, elles.",
+                                  "Structure : sujet + verbe + complément."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Relater par écrit un conte, un récit, une bande dessinée.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Terminer par écrit un conte ou un récit lu.",
+                                "contenus": [
+                                  "Situation finale d'un récit."
+                                ]
+                              },
+                              {
+                                "titre": "Relater par écrit l’histoire racontée par une BD muette.",
+                                "contenus": [
+                                  "Légendage d'images séquentielles."
+                                ]
+                              },
+                              {
+                                "titre": "Rédiger une petite histoire imaginée.",
+                                "contenus": [
+                                  "Récit de fiction personnel."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 7",
+                        "description": "Intégrer le vocabulaire adéquat, des structures et des règles syntaxiques simples, le présent de l’indicatif dans des situations de production d’énoncés écrits d’au moins 2 phrases relatifs à la description.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Décrire par écrit à partir d’un support.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Rédiger une petite description d’un objet ou d'un lieu.",
+                                "contenus": [
+                                  "Adjectifs de forme, couleur, taille.",
+                                  "Indicateurs de lieu : ici, là-bas, à côté, sous, sur.",
+                                  "Verbe être au présent + attribut."
+                                ]
+                              },
+                              {
+                                "titre": "Rédiger une petite description d’un animal ou d'une personne.",
+                                "contenus": [
+                                  "Vocabulaire descriptif.",
+                                  "Adjectifs qualificatifs."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 8",
+                        "description": "Intégrer le vocabulaire adéquat, des structures et des règles syntaxiques simples, le présent de l’indicatif et de l’impératif dans des situations de production d’énoncés écrits d’au moins 2 phrases relatifs à l’injonction.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Produire des énoncés pour faire agir.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Ecrire des consignes pour faire exécuter des tâches.",
+                                "contenus": [
+                                  "Impératif présent.",
+                                  "Pronoms tu, vous.",
+                                  "Emploi de « il faut ».",
+                                  "Négation : ne pas, ne plus, ne jamais."
+                                ]
+                              },
+                              {
+                                "titre": "Ecrire des énoncés pour faire réaliser quelque chose.",
+                                "contenus": [
+                                  "Structures injonctives."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,8 +1,9 @@
 import React, { useState, useMemo, useEffect, useCallback, useRef } from "react";
-// (no server-side rendering import needed — HTML is built via template strings)
 import { useNavigate } from "react-router";
 import { useGradesMutation } from "../../hooks/useGradesMutation";
 import { PermissionGuard, ReadOnlyBadge } from "../../components/PermissionGuard";
+import { studentsApi } from "../../services/apiService";
+import { useAppContext } from "../contexts/AppContext";
 import {
   ArrowLeft, Users, UserCheck, UserX,
   Plus, Upload, Printer, ChevronDown, ChevronUp,
@@ -228,6 +229,7 @@ interface BulletinBodyProps {
   student:        Student;
   grades:         Record<string, GradeSet>;
   trimestre:      1|2|3;
+  activeClass:    string;
   moyT3:          number;
   absNJ:          number;
   decision:       { label: string; color: string; bg: string };
@@ -240,7 +242,7 @@ interface BulletinBodyProps {
 }
 
 function BulletinBody({
-  student, grades, trimestre, moyT3, absNJ, decision,
+  student, grades, trimestre, activeClass, moyT3, absNJ, decision,
   onGradeChange, gradeSchema, rank: rankProp,
   disciplineConfig, onToggle,
 }: BulletinBodyProps) {
@@ -308,7 +310,7 @@ function BulletinBody({
           {([
             ["Élève",           `${student.nom} ${student.prenom}`],
             ["Matricule",       student.matricule],
-            ["Classe",          "CE2"],
+            ["Classe",          activeClass],
             ["Trimestre",       `${trimLabel} Trimestre`],
             ["IEF",             "Inspection de Kolda"],
             ["École",           "Ilyaou Mamadou SEYDI"],
@@ -490,7 +492,7 @@ function BulletinBody({
         {statsRows.map(m => (
           <div key={m.label} className="bi-stat-cell"
                style={{ padding:"3px 6px", borderRadius:"4px",
-                        backgroundColor:"#f8fafc", border:"1px solid #e2e8f0" }}>
+                        backgroundColor:"var(--muted)", border:"1px solid var(--border)" }}>
             <p className="bi-stat-label"
                style={{ fontSize:"6.5px", color:"#64748b", fontWeight:700,
                         textTransform:"uppercase", letterSpacing:"0.05em", margin:0 }}>
@@ -693,6 +695,7 @@ function buildOneBulletinHtml(
   student:     Student,
   grades:      Record<string, GradeSet>,
   trimestre:   1|2|3,
+  classLabel:  string,
   schema:      Record<string, number>,
   rank:        number,
   absNJ:       number,
@@ -747,7 +750,7 @@ function buildOneBulletinHtml(
   const idRows = [
     ["Élève",           `${student.nom} ${student.prenom}`],
     ["Matricule",       student.matricule],
-    ["Classe",          "CE2"],
+    ["Classe",          classLabel],
     ["Trimestre",       `${trimLabel} Trimestre`],
     ["IEF",             "Inspection de Kolda"],
     ["École",           "Ilyaou Mamadou SEYDI"],
@@ -795,6 +798,7 @@ function buildOneBulletinHtml(
 function buildBatchPrintHtml(
   students:      Student[],
   trimestre:     1|2|3,
+  classLabel:    string,
   gradesMap:     Record<string, Record<string, GradeSet>>,
   gradeSchema:   Record<string, number>,
   computedRanks: Record<string, number>,
@@ -803,7 +807,7 @@ function buildBatchPrintHtml(
   const pages = students.map(s => {
     const g    = gradesMap[s.id] ?? getStudentGrades(s.id);
     const nj3  = totalAbsencesNJ(getAttendance(s.id, 20));
-    return buildOneBulletinHtml(s, g, trimestre, gradeSchema, computedRanks[s.id] ?? 0, nj3);
+    return buildOneBulletinHtml(s, g, trimestre, classLabel, gradeSchema, computedRanks[s.id] ?? 0, nj3);
   });
   return [
     "<!DOCTYPE html><html lang='fr'>",
@@ -834,6 +838,7 @@ function BatchPreviewModal({
   open, trimestre, onClose, sortKey, onSortChange, students,
   gradesMap, gradeSchema, computedRanks,
 }: BatchPreviewModalProps) {
+  const { activeClass } = useAppContext();
   const [isPrinting, setIsPrinting] = useState(false);
 
   // ── PRINT PORTAL ──────────────────────────────────────────────────────────
@@ -878,7 +883,7 @@ function BatchPreviewModal({
 
     // ── 2. Générer le document HTML complet (pure string, zero DOM React) ───
     const html = buildBatchPrintHtml(
-      validStudents, trimestre, gradesMap, gradeSchema, computedRanks
+      validStudents, trimestre, activeClass, gradesMap, gradeSchema, computedRanks
     );
 
     // ── 3. Créer le Blob et ouvrir dans un nouvel onglet ────────────────────
@@ -967,7 +972,7 @@ function BatchPreviewModal({
       style={{ backgroundColor:"#f4f6f9", fontFamily:"'Plus Jakarta Sans', sans-serif" }}
     >
       {/* ── Header ── */}
-      <div className="bg-[#1a365d] shrink-0"
+      <div className="bg-primary shrink-0"
            style={{ boxShadow:"0 2px 12px rgba(0,0,0,0.22)" }}>
 
         {/* Row 1: back, title, print CTA */}
@@ -1067,15 +1072,16 @@ function BatchPreviewModal({
               </div>
               {/* Visual bulletin card */}
               <div style={{
-                backgroundColor: "#fff",
+                backgroundColor: "var(--card)",
                 borderRadius:    "6px",
                 padding:         "0 10px 10px",
                 boxShadow:       "0 2px 14px rgba(0,0,0,0.10)",
-                border:          "1px solid #e2e8f0",
+                border:          "1px solid var(--border)",
                 width:           "100%",
                 fontFamily:      "Arial, Helvetica, sans-serif",
               }}>
                 <BulletinBody student={s} grades={g} trimestre={trimestre}
+                              activeClass={activeClass}
                               moyT3={m3} absNJ={nj3} decision={dec}
                               gradeSchema={gradeSchema} rank={computedRanks[s.id]} />
               </div>
@@ -1085,8 +1091,8 @@ function BatchPreviewModal({
       </div>
 
       {/* ── Bottom action bar ── */}
-      <div className="bg-white shrink-0 flex items-center justify-between gap-3 px-4 py-3"
-           style={{ borderTop:"1px solid #e5e7eb", boxShadow:"0 -2px 10px rgba(0,0,0,0.07)" }}>
+       <div className="bg-card shrink-0 flex items-center justify-between gap-3 px-4 py-3"
+         style={{ borderTop:"1px solid var(--border)", boxShadow:"0 -2px 10px rgba(0,0,0,0.07)" }}>
         <div className="min-w-0">
           <p className="text-[12px] font-semibold truncate" style={{ color:"#1a365d" }}>
             {students.length} bulletins
@@ -1152,12 +1158,12 @@ function AddStudentModal({
 
   const inputStyle: React.CSSProperties = {
     width:"100%", padding:"8px 12px", borderRadius:"10px",
-    border:"1.5px solid #e2e8f0", fontSize:"13px",
+    border:"1.5px solid var(--border)", fontSize:"13px",
     fontFamily:"'Plus Jakarta Sans',sans-serif", outline:"none",
-    backgroundColor:"#fff", color:"#1a365d",
+    backgroundColor:"var(--card)", color:"var(--foreground)",
   };
   const labelStyle: React.CSSProperties = {
-    fontSize:"10px", fontWeight:700, color:"#64748b",
+    fontSize:"10px", fontWeight:700, color:"var(--muted-foreground)",
     textTransform:"uppercase", letterSpacing:"0.06em",
     display:"block", marginBottom:"4px",
   };
@@ -1170,32 +1176,32 @@ function AddStudentModal({
            onClick={onClose} />
 
       {/* Sheet */}
-      <div className="fixed bottom-0 left-0 right-0 z-[460] bg-white"
+      <div className="fixed bottom-0 left-0 right-0 z-[460] bg-card"
            style={{ borderRadius:"20px 20px 0 0", maxHeight:"90vh",
                     display:"flex", flexDirection:"column",
                     boxShadow:"0 -8px 40px rgba(0,0,0,0.18)",
                     fontFamily:"'Plus Jakarta Sans',sans-serif" }}>
         {/* Handle */}
         <div style={{ display:"flex", justifyContent:"center", padding:"12px 0 4px" }}>
-          <div style={{ width:36, height:4, borderRadius:999, backgroundColor:"#e2e8f0" }} />
+          <div style={{ width:36, height:4, borderRadius:999, backgroundColor:"var(--border)" }} />
         </div>
 
         {/* Header */}
         <div className="flex items-center justify-between px-5 pb-3"
-             style={{ borderBottom:"1px solid #f1f5f9" }}>
+             style={{ borderBottom:"1px solid var(--border)" }}>
           <div>
-            <p style={{ fontSize:"17px", fontWeight:800, color:"#1a365d", margin:0 }}>
+            <p style={{ fontSize:"17px", fontWeight:800, color:"var(--foreground)", margin:0 }}>
               Ajouter un élève
             </p>
-            <p style={{ fontSize:"11px", color:"#94a3b8", margin:0 }}>
+            <p style={{ fontSize:"11px", color:"var(--muted-foreground)", margin:0 }}>
               Les champs Nom et Prénom sont obligatoires.
             </p>
           </div>
           <button onClick={onClose}
-                  style={{ width:32, height:32, borderRadius:"50%", backgroundColor:"#f1f5f9",
+                  style={{ width:32, height:32, borderRadius:"50%", backgroundColor:"var(--muted)",
                            display:"flex", alignItems:"center", justifyContent:"center",
                            border:"none", cursor:"pointer" }}>
-            <X style={{ width:16, height:16, color:"#475569" }} />
+            <X style={{ width:16, height:16, color:"var(--muted-foreground)" }} />
           </button>
         </div>
 
@@ -1236,9 +1242,9 @@ function AddStudentModal({
                           style={{
                             padding:"7px 16px", borderRadius:"10px", fontWeight:700,
                             fontSize:"13px", cursor:"pointer", border:"1.5px solid",
-                            backgroundColor: form.genre===g ? "#1a365d" : "#f8fafc",
+                            backgroundColor: form.genre===g ? "#1a365d" : "var(--muted)",
                             color: form.genre===g ? "#fff" : "#475569",
-                            borderColor: form.genre===g ? "#1a365d" : "#e2e8f0",
+                            borderColor: form.genre===g ? "#1a365d" : "var(--border)",
                           }}>
                     {g}
                   </button>
@@ -1305,6 +1311,7 @@ type View = "liste" | "registre" | "bulletin";
 
 export function ElevesScreen() {
   const navigate = useNavigate();
+  const { activeClass } = useAppContext();
   const [view,           setView]          = useState<View>("liste");
   const [selectedId,     setSelectedId]    = useState("1");
   const [showAddStudent, setShowAddStudent] = useState(false);
@@ -1320,9 +1327,7 @@ export function ElevesScreen() {
 
   const saveEdit = useCallback(async (id: string) => {
     if (editingNom.trim()) {
-      // In production: await updateStudent(id, { nom: editingNom });
-      const { toast } = await import("sonner");
-      toast.success(`Nom mis à jour → ${editingNom.trim()}`);
+      await studentsApi.update(id, { nom: editingNom.trim() });
     }
     setEditingId(null);
   }, [editingNom]);
@@ -1340,8 +1345,7 @@ export function ElevesScreen() {
     let undone = false;
     const timer = setTimeout(async () => {
       if (undone) return;
-      // In production: await studentsApi.delete(s.id, label);
-      // Row stays hidden; the cache invalidation would remove it server-side.
+      await studentsApi.delete(s.id, label);
     }, 5000);
 
     import("sonner").then(({ toast }) => {
@@ -1414,7 +1418,7 @@ export function ElevesScreen() {
   const { handleGradeChange } = useGradesMutation({
     gradesMap,
     setGradesMap,
-    activeClass: "CE2",        // replaced by useAppContext().activeClass in production
+    activeClass,               // from useAppContext() (P1.5)
     trimestre,
     gradeSchema,
     onSaveStatus: setSaveStatus,
@@ -1524,10 +1528,17 @@ export function ElevesScreen() {
   ];
 
   const handleAddStudent = async (form: NewStudentForm) => {
-    // In production, call studentsApi.create(...) here.
-    // For now, show a confirmation toast (data is local/mock).
-    const { toast } = await import("sonner");
-    toast.success(`${form.nom} ${form.prenom} ajouté(e) à la liste.`);
+    await studentsApi.create({
+      class_id:       activeClass,
+      matricule:      form.matricule,
+      nom:            form.nom,
+      prenom:         form.prenom,
+      genre:          form.genre as "F" | "M",
+      date_naissance: form.dateNaissance,
+      lieu_naissance: form.lieuNaissance,
+      tuteur_nom:     form.tuteurNom,
+      tuteur_phone:   form.tuteurPhone,
+    });
   };
 
   return (
@@ -1552,7 +1563,7 @@ export function ElevesScreen() {
       computedRanks={computedRanks}
     />
 
-    <div className="bg-[#f4f6f9] flex flex-col overflow-hidden"
+    <div className="bg-background flex flex-col overflow-hidden"
          style={{ height:"calc(100vh - 36px)", fontFamily:"'Plus Jakarta Sans',sans-serif" }}>
 
       {/* ══ PRINT CSS — one bulletin per A4 portrait page ═══════════════════
@@ -1758,37 +1769,37 @@ export function ElevesScreen() {
       `}</style>
 
       {/* ── STICKY HEADER ──────────────────────────────────────────────────── */}
-      <div className="no-print bg-white flex-shrink-0"
-           style={{ boxShadow:"0 1px 0 #e5e7eb, 0 2px 8px rgba(0,0,0,0.06)", zIndex:50 }}>
+       <div className="no-print bg-card flex-shrink-0"
+         style={{ boxShadow:"0 1px 0 var(--border), 0 2px 8px rgba(0,0,0,0.06)", zIndex:50 }}>
         <div className="max-w-6xl mx-auto px-4">
 
           {/* Nav row */}
           <div className="flex items-center gap-3 pt-3 pb-2">
             <button onClick={() => navigate("/")}
-              className="inline-flex items-center gap-1.5 font-semibold text-[#1a365d]
-                         hover:text-[#3182ce] transition-colors shrink-0"
+              className="inline-flex items-center gap-1.5 font-semibold text-primary
+                         hover:text-secondary transition-colors shrink-0"
               style={{ fontSize:"13px", minHeight:"40px" }}>
               <ArrowLeft className="w-4 h-4"/>
               <span className="hidden sm:inline">Accueil</span>
             </button>
             <div className="flex-1 min-w-0">
-              <h1 className="font-bold text-[#1a365d] truncate" style={{ fontSize:"15px" }}>
+              <h1 className="font-bold text-primary truncate" style={{ fontSize:"15px" }}>
                 Gestion des Élèves — CE2
               </h1>
-              <p className="text-gray-400 mt-0.5 hidden sm:block" style={{ fontSize:"10px" }}>
+              <p className="text-[var(--muted-foreground)] mt-0.5 hidden sm:block" style={{ fontSize:"10px" }}>
                 École Ilyaou Mamadou SEYDI · IEF Kolda · CE2
               </p>
             </div>
             {/* Trimestre selector */}
             <div className="flex items-center gap-1 p-0.5 rounded-lg shrink-0"
-                 style={{ backgroundColor:"#f1f5f9" }}>
+                 style={{ backgroundColor:"var(--muted)" }}>
               {([1,2,3] as (1|2|3)[]).map(t => (
                 <button key={t} onClick={() => setTrimestre(t)}
                   className="rounded-md font-bold transition-all"
                   style={{
                     minHeight:"32px", padding:"0 10px", fontSize:"11px",
-                    backgroundColor: trimestre===t ? "#1a365d" : "transparent",
-                    color:           trimestre===t ? "#fff" : "#64748b",
+                    backgroundColor: trimestre===t ? "var(--primary)" : "transparent",
+                    color:           trimestre===t ? "#fff" : "var(--muted-foreground)",
                   }}>
                   T{t}
                 </button>
@@ -1801,7 +1812,7 @@ export function ElevesScreen() {
               className="inline-flex items-center gap-1.5 rounded-xl font-bold transition-all active:scale-95 shrink-0"
               title="Ajouter un élève"
               style={{ minHeight:"36px", padding:"0 12px", fontSize:"12px",
-                       backgroundColor:"#3182ce", color:"#fff",
+                       backgroundColor:"var(--secondary)", color:"#fff",
                        boxShadow:"0 2px 8px rgba(49,130,206,0.30)" }}>
               <Plus className="w-4 h-4 shrink-0"/>
               <span className="hidden sm:inline">Ajouter</span>
@@ -1826,8 +1837,8 @@ export function ElevesScreen() {
                 className="inline-flex items-center gap-1.5 shrink-0 font-semibold transition-all"
                 style={{
                   minHeight:"40px", padding:"0 14px", fontSize:"12px",
-                  borderBottom: `2px solid ${view===tab.key ? "#1a365d" : "transparent"}`,
-                  color: view===tab.key ? "#1a365d" : "#64748b",
+                  borderBottom: `2px solid ${view===tab.key ? "var(--primary)" : "transparent"}`,
+                  color: view===tab.key ? "var(--foreground)" : "var(--muted-foreground)",
                   backgroundColor:"transparent",
                 }}>
                 {tab.icon}
@@ -1855,7 +1866,7 @@ export function ElevesScreen() {
                   { label:"Nombre de Garçons",value:garcons,         color:"#2563eb", icon:"👦" },
                   { label:"Taux de Parité",   value:`${tauxParite}%`,color:"#059669", icon:"⚖️" },
                 ].map(m => (
-                  <div key={m.label} className="bg-white rounded-2xl p-4"
+                     <div key={m.label} className="bg-card rounded-2xl p-4"
                        style={{ boxShadow:"0 1px 6px rgba(0,0,0,0.06)" }}>
                     <div className="flex items-center gap-2 mb-1">
                       <span style={{ fontSize:"18px" }}>{m.icon}</span>
@@ -1878,13 +1889,13 @@ export function ElevesScreen() {
                     placeholder="Rechercher un élève…"
                     className="w-full rounded-xl outline-none font-medium"
                     style={{ minHeight:"40px", padding:"0 12px 0 36px",
-                             fontSize:"13px", border:"1.5px solid #e2e8f0",
-                             backgroundColor:"#fff", fontFamily:"'Plus Jakarta Sans',sans-serif" }}/>
+                             fontSize:"13px", border:"1.5px solid var(--border)",
+                             backgroundColor:"var(--card)", color:"var(--foreground)", fontFamily:"'Plus Jakarta Sans',sans-serif" }}/>
                 </div>
                 {[
                   { icon:<Plus className="w-4 h-4"/>,   label:"Ajouter",   bg:"#1a365d", fg:"#fff" },
-                  { icon:<Upload className="w-4 h-4"/>, label:"Import CSV", bg:"#f1f5f9", fg:"#475569" },
-                  { icon:<Printer className="w-4 h-4"/>,label:"Export PDF", bg:"#f1f5f9", fg:"#475569" },
+                  { icon:<Upload className="w-4 h-4"/>, label:"Import CSV", bg:"var(--muted)", fg:"var(--muted-foreground)" },
+                  { icon:<Printer className="w-4 h-4"/>,label:"Export PDF", bg:"var(--muted)", fg:"var(--muted-foreground)" },
                 ].map(a => (
                   <button key={a.label}
                     className="inline-flex items-center gap-1.5 rounded-xl font-semibold transition-all active:scale-95"
@@ -1896,13 +1907,13 @@ export function ElevesScreen() {
               </div>
 
               {/* Table — full columns on desktop, scrollable on mobile */}
-              <div style={{ borderRadius:"16px", boxShadow:"0 2px 12px rgba(0,0,0,0.07)", background:"#fff" }}>
+              <div style={{ borderRadius:"16px", boxShadow:"0 2px 12px rgba(0,0,0,0.07)", background:"var(--card)" }}>
                 <div style={{ overflowX:"auto", WebkitOverflowScrolling:"touch" as "touch" }}>
                   <table style={{ borderCollapse:"separate", borderSpacing:0, width:"100%",
                                   /* On desktop, no fixed min-width forces scroll; on mobile we keep it */
                                   minWidth:"680px", tableLayout:"auto" }}>
                     <thead>
-                      <tr style={{ backgroundColor:"#f8fafc" }}>
+                      <tr style={{ backgroundColor:"var(--muted)" }}>
                         {[
                           { h:"#",                  w:"40px"  },
                           { h:"Matricule",          w:"100px" },
@@ -1915,9 +1926,9 @@ export function ElevesScreen() {
                         ].map(({ h, w }) => (
                           <th key={h} style={{
                             width: w, padding:"10px 8px", textAlign:"left",
-                            fontSize:"10px", fontWeight:800, color:"#64748b",
+                            fontSize:"10px", fontWeight:800, color:"var(--muted-foreground)",
                             textTransform:"uppercase", letterSpacing:"0.06em",
-                            borderBottom:"1px solid #e5e7eb",
+                            borderBottom:"1px solid var(--border)",
                             whiteSpace:"nowrap",
                           }}>{h}</th>
                         ))}
@@ -1932,14 +1943,14 @@ export function ElevesScreen() {
                         <tr key={s.id}
                           onClick={() => { if (!isEditing) { setSelectedId(s.id); setView("bulletin"); } }}
                           style={{
-                            backgroundColor: selectedId===s.id ? "#eff6ff" : i%2===0 ? "#fff" : "#fafafa",
+                            backgroundColor: selectedId===s.id ? "var(--accent)" : i%2===0 ? "var(--card)" : "var(--muted)",
                             cursor: isEditing ? "default" : "pointer",
                             transition:"background 150ms",
                           }}
-                          onMouseEnter={e=>{ if (!isEditing) (e.currentTarget as HTMLElement).style.backgroundColor="#f0f4ff"; }}
-                          onMouseLeave={e=>{ if (!isEditing) (e.currentTarget as HTMLElement).style.backgroundColor=selectedId===s.id?"#eff6ff":i%2===0?"#fff":"#fafafa"; }}>
+                          onMouseEnter={e=>{ if (!isEditing) (e.currentTarget as HTMLElement).style.backgroundColor="var(--muted)"; }}
+                          onMouseLeave={e=>{ if (!isEditing) (e.currentTarget as HTMLElement).style.backgroundColor=selectedId===s.id?"var(--accent)":i%2===0?"var(--card)":"var(--muted)"; }}>
                           <td style={{ padding:"10px 8px", fontSize:"11px", color:"#94a3b8", fontWeight:600 }}>{i+1}</td>
-                          <td style={{ padding:"10px 8px", fontSize:"11px", color:"#475569", fontWeight:700, fontFamily:"monospace", whiteSpace:"nowrap" }}>{s.matricule}</td>
+                          <td style={{ padding:"10px 8px", fontSize:"11px", color:"var(--muted-foreground)", fontWeight:700, fontFamily:"monospace", whiteSpace:"nowrap" }}>{s.matricule}</td>
                           {/* ── Name cell — switches to input when editing ── */}
                           <td style={{ padding:"6px 8px" }}>
                             {isEditing ? (
@@ -1956,7 +1967,7 @@ export function ElevesScreen() {
                                   }}
                                   style={{
                                     padding:"4px 8px", borderRadius:"8px", fontSize:"12px",
-                                    fontWeight:700, color:"#1e293b", border:"1.5px solid #3182ce",
+                                    fontWeight:700, color:"var(--foreground)", border:"1.5px solid var(--secondary)",
                                     outline:"none", width:"140px",
                                     fontFamily:"'Plus Jakarta Sans',sans-serif",
                                   }}
@@ -1976,7 +1987,7 @@ export function ElevesScreen() {
                                      style={{ fontSize:"10px", backgroundColor:s.genre==="F"?"#be185d":"#2563eb" }}>
                                   {s.prenom[0]}{s.nom[0]}
                                 </div>
-                                <p style={{ fontSize:"12px", fontWeight:700, color:"#1e293b", whiteSpace:"nowrap" }}>{s.nom} {s.prenom}</p>
+                                <p style={{ fontSize:"12px", fontWeight:700, color:"var(--foreground)", whiteSpace:"nowrap" }}>{s.nom} {s.prenom}</p>
                               </div>
                             )}
                           </td>
@@ -1987,11 +1998,11 @@ export function ElevesScreen() {
                               color:s.genre==="F"?"#be185d":"#1d4ed8",
                             }}>{s.genre}</span>
                           </td>
-                          <td style={{ padding:"10px 8px", fontSize:"11px", color:"#475569", whiteSpace:"nowrap" }}>
+                          <td style={{ padding:"10px 8px", fontSize:"11px", color:"var(--muted-foreground)", whiteSpace:"nowrap" }}>
                             {s.dateNaissance} · <span style={{ color:"#94a3b8" }}>{s.lieuNaissance}</span>
                           </td>
-                          <td style={{ padding:"10px 8px", fontSize:"11px", color:"#475569", whiteSpace:"nowrap" }}>{s.tuteurNom}</td>
-                          <td style={{ padding:"10px 8px", fontSize:"11px", color:"#475569", fontFamily:"monospace", whiteSpace:"nowrap" }}>{s.tuteurPhone}</td>
+                          <td style={{ padding:"10px 8px", fontSize:"11px", color:"var(--muted-foreground)", whiteSpace:"nowrap" }}>{s.tuteurNom}</td>
+                          <td style={{ padding:"10px 8px", fontSize:"11px", color:"var(--muted-foreground)", fontFamily:"monospace", whiteSpace:"nowrap" }}>{s.tuteurPhone}</td>
                           <td style={{ padding:"6px 8px" }}>
                             <div className="flex items-center gap-1.5">
                               {/* Bulletin button */}
@@ -2006,7 +2017,7 @@ export function ElevesScreen() {
                                 for the teacher who owns this class (or a director).
                                 Others see the "Lecture seule" badge instead.
                               */}
-                              <PermissionGuard ownerClassId="CE2" fallback={<ReadOnlyBadge />}>
+                              <PermissionGuard ownerClassId={activeClass} fallback={<ReadOnlyBadge />}>
                                 {/* Edit icon — blue pencil */}
                                 <button
                                   onClick={e=>{ e.stopPropagation(); startEdit(s.id, s.nom); }}
@@ -2038,7 +2049,7 @@ export function ElevesScreen() {
                     </tbody>
                   </table>
                 </div>
-                <div style={{ padding:"10px 16px", borderTop:"1px solid #f1f5f9",
+                <div style={{ padding:"10px 16px", borderTop:"1px solid var(--border)",
                               fontSize:"10px", color:"#94a3b8" }}>
                   {filtered.length} élève{filtered.length>1?"s":""} affiché{filtered.length>1?"s":""}
                   {search ? ` sur ${STUDENTS.length} total` : ""}
@@ -2054,7 +2065,7 @@ export function ElevesScreen() {
             <div>
               {/* Header: title + month picker + legend */}
               <div className="flex flex-wrap items-center gap-3 mb-3">
-                <p className="font-bold text-[#1a365d] shrink-0" style={{ fontSize:"13px" }}>
+                <p className="font-bold shrink-0" style={{ fontSize:"13px", color: "var(--foreground)" }}>
                   Registre de présences — {trimestre === 1 ? "1er" : trimestre === 2 ? "2ème" : "3ème"} Trimestre
                 </p>
                 {/* Month selector */}
@@ -2064,9 +2075,9 @@ export function ElevesScreen() {
                       style={{
                         minHeight:"30px", padding:"0 10px", borderRadius:"8px",
                         fontSize:"11px", fontWeight:700, border:"1.5px solid",
-                        borderColor: selectedMonth===idx ? "#1a365d" : "#e2e8f0",
-                        backgroundColor: selectedMonth===idx ? "#1a365d" : "#fff",
-                        color: selectedMonth===idx ? "#fff" : "#64748b",
+                        borderColor: selectedMonth===idx ? "var(--primary)" : "var(--border)",
+                        backgroundColor: selectedMonth===idx ? "var(--primary)" : "var(--card)",
+                        color: selectedMonth===idx ? "var(--primary-foreground)" : "var(--muted-foreground)",
                         cursor:"pointer",
                       }}>
                       {m.short}
@@ -2084,7 +2095,7 @@ export function ElevesScreen() {
                                    border:`1.5px solid ${s.color}` }}>
                       {s.label}
                     </span>
-                    <span style={{ fontSize:"10px", color:"#64748b" }}>{s.title}</span>
+                    <span style={{ fontSize:"10px", color:"var(--muted-foreground)" }}>{s.title}</span>
                   </div>
                 ))}
                 <span style={{ fontSize:"10px", color:"#94a3b8", marginLeft:"auto" }}>
@@ -2092,7 +2103,7 @@ export function ElevesScreen() {
                 </span>
               </div>
 
-              <div className="bg-white rounded-2xl overflow-hidden"
+                  <div className="bg-card rounded-2xl overflow-hidden"
                    style={{ boxShadow:"0 2px 12px rgba(0,0,0,0.07)", overflowX:"auto" }}>
                 <table style={{ borderCollapse:"collapse", minWidth:"900px", width:"100%" }}>
                   <thead>
@@ -2131,11 +2142,11 @@ export function ElevesScreen() {
                     {STUDENTS.map((s, ri) => {
                       const att = getStudentAtt(s.id);
                       const nj  = att.filter(a=>a==="ANJ").length;
-                      const rowBg = ri%2===0 ? "#fff" : "#f8fafc";
+                      const rowBg = ri%2===0 ? "var(--card)" : "var(--muted)";
                       return (
                         <tr key={s.id} style={{ backgroundColor:rowBg }}>
                           <td style={{
-                            padding:"6px 8px", fontSize:"10.5px", fontWeight:700, color:"#1e293b",
+                            padding:"6px 8px", fontSize:"10.5px", fontWeight:700, color:"var(--foreground)",
                             position:"sticky", left:0, backgroundColor:rowBg,
                             borderBottom:"1.5px solid #cbd5e1",
                             borderRight:"2px solid #cbd5e1", zIndex:5,
@@ -2214,8 +2225,8 @@ export function ElevesScreen() {
                   <select value={selectedId} onChange={e=>setSelectedId(e.target.value)}
                     style={{ minHeight:"40px", padding:"0 32px 0 12px", fontSize:"13px",
                              fontWeight:600, fontFamily:"'Plus Jakarta Sans',sans-serif",
-                             borderRadius:"10px", border:"1.5px solid #e2e8f0",
-                             backgroundColor:"#fff", color:"#1a365d", appearance:"none", cursor:"pointer" }}>
+                             borderRadius:"10px", border:"1.5px solid var(--border)",
+                             backgroundColor:"var(--card)", color:"var(--foreground)", appearance:"none", cursor:"pointer" }}>
                     {STUDENTS.map(s => (
                       <option key={s.id} value={s.id}>{s.nom} {s.prenom} ({s.matricule})</option>
                     ))}
@@ -2268,8 +2279,8 @@ export function ElevesScreen() {
                   onClick={() => setConfigMode(o => !o)}
                   className="inline-flex items-center gap-1.5 rounded-xl font-bold transition-all active:scale-95"
                   style={{ minHeight:"40px", padding:"0 14px", fontSize:"12px",
-                           backgroundColor: configMode ? "#f59e0b" : "#f1f5f9",
-                           color: configMode ? "#fff" : "#475569" }}
+                           backgroundColor: configMode ? "#f59e0b" : "var(--muted)",
+                           color: configMode ? "#fff" : "var(--muted-foreground)" }}
                 >
                   <Settings className="w-3.5 h-3.5 shrink-0"/>
                   Barème
@@ -2282,7 +2293,7 @@ export function ElevesScreen() {
                          fontSize:"11px", fontWeight:700,
                          backgroundColor:
                            saveStatus === "saved"  ? "#f0fdf4" :
-                           saveStatus === "error"  ? "#fef2f2" : "#f1f5f9",
+                           saveStatus === "error"  ? "#fef2f2" : "var(--muted)",
                          color:
                            saveStatus === "saved"  ? "#059669" :
                            saveStatus === "error"  ? "#dc2626" : "#94a3b8",
@@ -2382,13 +2393,14 @@ export function ElevesScreen() {
               )}
 
               {/* ── A4 Bulletin Preview — interactive grade inputs ── */}
-              <div className="no-print bg-white mx-auto"
+                  <div className="no-print bg-card mx-auto"
                    style={{ maxWidth:"794px", padding:"0 10px 10px",
                             boxShadow:"0 4px 24px rgba(0,0,0,0.12)",
                             fontFamily:"Arial, Helvetica, sans-serif",
-                            border:"1px solid #e2e8f0" }}>
+                       border:"1px solid var(--border)" }}>
                 <BulletinBody
                   student={student} grades={grades} trimestre={trimestre}
+                  activeClass={activeClass}
                   moyT3={moyT3} absNJ={absNJ} decision={decision}
                   onGradeChange={(disc, t, v) => handleGradeChange(student.id, disc, t, v)}
                   gradeSchema={gradeSchema}
@@ -2422,6 +2434,7 @@ export function ElevesScreen() {
                     return (
                       <div key={s.id} className="bulletin-print-item">
                         <BulletinBody student={s} grades={g} trimestre={trimestre}
+                                      activeClass={activeClass}
                                       moyT3={m3} absNJ={nj3} decision={dec} />
                       </div>
                     );
@@ -2430,6 +2443,7 @@ export function ElevesScreen() {
                   /* Single student */
                   <div className="bulletin-print-item">
                     <BulletinBody student={student} grades={grades} trimestre={trimestre}
+                                  activeClass={activeClass}
                                   moyT3={moyT3} absNJ={absNJ} decision={decision} />
                   </div>
                 )}
@@ -2443,7 +2457,7 @@ export function ElevesScreen() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                   {/* Average distribution bar chart */}
-                  <div className="bg-white rounded-2xl p-5"
+                     <div className="bg-card rounded-2xl p-5"
                        style={{ boxShadow:"0 2px 12px rgba(0,0,0,0.07)" }}>
                     <h3 className="font-bold text-[#1a365d] mb-4" style={{ fontSize:"13px" }}>
                       Distribution des moyennes — T{trimestre}
@@ -2458,7 +2472,7 @@ export function ElevesScreen() {
                           <span style={{ fontSize:"10px", color:"#475569", minWidth:"100px", fontWeight:600 }}>
                             {s.nom} {s.prenom.charAt(0)}.
                           </span>
-                          <div style={{ flex:1, height:"8px", backgroundColor:"#f1f5f9", borderRadius:"999px", overflow:"hidden" }}>
+                          <div style={{ flex:1, height:"8px", backgroundColor:"var(--muted)", borderRadius:"999px", overflow:"hidden" }}>
                             <div style={{ width:`${pct}%`, height:"100%", backgroundColor:col,
                                           borderRadius:"999px", transition:"width 500ms ease" }}/>
                           </div>
@@ -2479,7 +2493,7 @@ export function ElevesScreen() {
                       const best     = Math.max(...avgs);
                       const admis    = avgs.filter(m => m >= 5).length;
                       return (
-                        <div className="bg-white rounded-2xl p-5"
+                            <div className="bg-card rounded-2xl p-5"
                              style={{ boxShadow:"0 2px 12px rgba(0,0,0,0.07)" }}>
                           <h3 className="font-bold text-[#1a365d] mb-4" style={{ fontSize:"13px" }}>
                             Vue d'ensemble — Trimestre {trimestre}
@@ -2492,7 +2506,7 @@ export function ElevesScreen() {
                               { label:"Taux de réussite",     value:`${((admis/STUDENTS.length)*100).toFixed(0)}%`, color:admis/STUDENTS.length>=0.7?"#059669":"#d97706" },
                             ].map(m => (
                               <div key={m.label} style={{ padding:"10px 12px", borderRadius:"10px",
-                                                           backgroundColor:"#f8fafc", border:"1px solid #e2e8f0" }}>
+                                                           backgroundColor:"var(--muted)", border:"1px solid var(--border)" }}>
                                 <p style={{ fontSize:"9px", color:"#64748b", fontWeight:700,
                                             textTransform:"uppercase", margin:"0 0 4px" }}>{m.label}</p>
                                 <p style={{ fontSize:"20px", fontWeight:900, color:m.color, margin:0 }}>{m.value}</p>
@@ -2504,7 +2518,7 @@ export function ElevesScreen() {
                     })()}
 
                     {/* Domain breakdown */}
-                    <div className="bg-white rounded-2xl p-5"
+                    <div className="bg-card rounded-2xl p-5"
                          style={{ boxShadow:"0 2px 12px rgba(0,0,0,0.07)" }}>
                       <h3 className="font-bold text-[#1a365d] mb-3" style={{ fontSize:"13px" }}>
                         Moyenne par domaine
@@ -2528,7 +2542,7 @@ export function ElevesScreen() {
                                 {domAvg.toFixed(2)}/10
                               </span>
                             </div>
-                            <div style={{ height:"6px", backgroundColor:"#f1f5f9", borderRadius:"999px", overflow:"hidden" }}>
+                            <div style={{ height:"6px", backgroundColor:"var(--muted)", borderRadius:"999px", overflow:"hidden" }}>
                               <div style={{ width:`${pct}%`, height:"100%", backgroundColor:dom.color,
                                             borderRadius:"999px" }}/>
                             </div>

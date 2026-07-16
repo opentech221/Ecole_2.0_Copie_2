@@ -1,3 +1,7 @@
+/** @deprecated P2.2 — Not imported by any screen. Prefer useDocumentsQuery
+ * (React Query) for documents, or studentsApi directly for students.
+ * Safe to delete after confirming no external integrations depend on it.
+ */
 /**
  * useDocuments — CRUD hook for documents (metadata + Supabase Storage).
  *
@@ -41,11 +45,12 @@ export function useDocuments(mockFallback: DocumentRow[] = []) {
       file: File,
       meta: Omit<DocumentRow, "id" | "created_at" | "file_path" | "class_id">,
     ) => {
-      const publicUrl = await documentsApi.upload(activeClass, meta.type, file);
-      const created   = await documentsApi.create({
+      // upload() now returns the bucket-internal path (not a public URL)
+      const bucketPath = await documentsApi.upload(activeClass, meta.type, file);
+      const created    = await documentsApi.create({
         ...meta,
         class_id:  activeClass,
-        file_path: publicUrl,
+        file_path: bucketPath,
       });
       setDocuments(prev => [created, ...prev]);
       return created;
