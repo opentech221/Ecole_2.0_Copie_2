@@ -1,0 +1,444 @@
+[
+  {
+    "niveau": "CM2",
+    "document_ref": "guide_etape_3",
+    "domaines": [
+      {
+        "nom": "Éducation à la Science et à la Vie Sociale (ESVS)",
+        "sous_domaines": [
+          {
+            "nom": "Découverte du monde",
+            "activites": [
+              {
+                "nom": "Histoire",
+                "page_source": 251,
+                "competences_base": [
+                  {
+                    "description": "intégrer des démarches et techniques de recherche dans des situations de découverte des faits saillants de l’histoire du Sénégal, de l’Afrique de l’ouest et du reste du monde.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 3",
+                        "description": "intégrer des démarches et techniques de recherche dans des situations de découverte des faits saillants de l’histoire de l’Afrique de l’ouest.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Découvrir les faits saillants de l’histoire des grands empires noirs de l’Afrique de l’ouest.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir des faits saillants de l’histoire de l’empire du Ghana.",
+                                "contenus": [
+                                  "histoire de l’empire du Ghana : création ; situation ; limites ; organisation sociale, politique, militaire, administrative et économique ; faits saillants et personnages marquants ; apogée ; déclin."
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir des faits saillants de l’histoire de l’empire du Mali.",
+                                "contenus": [
+                                  "histoire de l’empire du Mali : création ; situation ; limites ; organisation sociale, politique, militaire, administrative et économique ; faits saillants et personnages marquants ; apogée ; déclin."
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir des faits saillants de l’histoire de l’empire du Gao.",
+                                "contenus": [
+                                  "histoire de l’empire du Gao : création ; situation ; limites ; organisation sociale, politique, militaire, administrative et économique ; faits saillants et personnages marquants ; apogée ; déclin."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Découvrir les causes et les conséquences des premiers contacts avec les Arabes.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir les causes des premiers contacts avec les Arabes.",
+                                "contenus": [
+                                  "causes des premiers contacts avec les Arabes : expansion de l’islam ; commerce (troc) ; esclavage."
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir les conséquences des premiers contacts avec les Arabes.",
+                                "contenus": [
+                                  "conséquences des premiers contacts avec les Arabes : influences de l’islam sur les structures sociales, politiques et économiques sur les grands empires noirs ; esclavage ; guerres ; migrations de populations ; etc."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 4",
+                        "description": "intégrer des démarches et techniques de recherche dans des situations de découverte des grandes inventions du 15ème siècle et l’essor scientifique des 19ème /20ème siècles.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Découvrir les progrès scientifiques et techniques du 15ème siècle.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir les grandes inventions et découvertes au 15ème siècle.",
+                                "contenus": [
+                                  "grandes inventions et découvertes au 15ème siècle : la boussole, la caravelle, le gouvernail, les progrès de l’imprimerie et de la cartographie, etc."
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir les raisons de l’expansion européenne.",
+                                "contenus": [
+                                  "raisons de l’expansion européenne : goût de l’aventure ; raisons économiques ; raisons politiques."
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir les conséquences des grandes inventions scientifiques et techniques du 15ème siècle.",
+                                "contenus": [
+                                  "conséquences des grandes inventions scientifiques et techniques du 15ème siècle : découverte de l’Afrique et de l’Amérique (les explorateurs) ; les missionnaires et l’évangélisation ; les comptoirs commerciaux ; la traite des nègres ; conquête coloniale ; résistances et marche vers l’indépendance ; amélioration des conditions d’hygiène, de la santé des populations, et de l’éducation."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Découvrir l’essor scientifique et technique des 19ème et 20ème siècles.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir les progrès scientifiques et techniques des 19ème et 20ème siècles.",
+                                "contenus": [
+                                  "progrès scientifiques et techniques des 19ème et 20ème siècles : les lois de la lumière et de l’électricité ; le cinéma ; le téléphone, le télégraphe, la dynamo ; rayons X et radioactivité ; découverte des microbes ; vaccin contre la rage ; les lois de la vie."
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir les conséquences des progrès scientifiques et techniques des 19ème et 20ème siècles.",
+                                "contenus": [
+                                  "conséquences des progrès scientifiques et techniques des 19ème et 20ème siècles : le machinisme, la mécanisation de l’agriculture, l’industrialisation, le capitalisme, l’amélioration de l’hygiène et de la santé ; la multiplication et le développement des moyens de communication..."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Géographie",
+                "page_source": 265,
+                "competences_base": [
+                  {
+                    "description": "intégrer des démarches et des techniques d’investigation dans des situations d’explication des interrelations entre l’homme et le milieu.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 3",
+                        "description": "intégrer des démarches et des techniques d’investigation dans des situations d’explication des interrelations entre les activités économiques, sociales, les ressources et les caractéristiques du milieu.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Découvrir les interrelations entre les activités économiques et les ressources du milieu.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir les activités économiques du milieu.",
+                                "contenus": [
+                                  "activités économiques du milieu : agriculture, élevage, pêche, industrie, artisanat, commerce, tourisme, etc."
+                                ]
+                              },
+                              {
+                                "titre": "Etablir les liens entre les activités économiques, les ressources et les potentialités du milieu.",
+                                "contenus": [
+                                  "ressources du milieu : produits tirés de ces activités",
+                                  "liens entre activités économiques, ressources et potentialités du milieu : vérification si les potentialités du milieu sont exploitées."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Découvrir les interrelations entre les activités économiques, sociales et les caractéristiques du milieu.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir les activités sociales du milieu.",
+                                "contenus": [
+                                  "activités sociales du milieu : cérémonies familiales (baptême, mariage, funérailles) et leurs pratiques ; cérémonies coutumières et religieuses."
+                                ]
+                              },
+                              {
+                                "titre": "Etablir les liens entre les activités économiques, et les pratiques sociales et culturelles du milieu.",
+                                "contenus": [
+                                  "pratiques sociales et culturelles du milieu",
+                                  "influence mutuelle entre la nature/rythme des activités économiques et les pratiques sociales/culturelles."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 4",
+                        "description": "intégrer des démarches et des techniques d’investigation dans des situations d’explication des interrelations entre les voies, les moyens de communication, les caractéristiques de la population et du milieu.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Découvrir les interrelations entre les activités économiques et les caractéristiques de la population.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir les caractéristiques de la population.",
+                                "contenus": [
+                                  "composition (hommes/femmes), pyramide des âges, hiérarchisation (autorité liée à l’âge, au sexe, au savoir-faire, composition ethnique, etc.)."
+                                ]
+                              },
+                              {
+                                "titre": "Etablir les liens entre activités économiques et les caractéristiques de la population.",
+                                "contenus": [
+                                  "activités économiques par rapport aux castes, au genre, à l’âge, etc."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Découvrir les interrelations entre les voies et moyens de communication et les caractéristiques du milieu.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir les différents voies et moyens de communication du milieu.",
+                                "contenus": [
+                                  "voies du milieu : routes, pistes, voies ferrées, fluviales, maritimes, aériennes.",
+                                  "moyens du milieu : tambour, fax, téléphone, messager, radio, télévision, lettre, télégramme."
+                                ]
+                              },
+                              {
+                                "titre": "Etablir les liens entre les voies et moyens de communication et les caractéristiques du milieu.",
+                                "contenus": [
+                                  "caractéristiques du milieu : relief, climat, cours d’eau, densité de population.",
+                                  "conditionnement des voies et moyens de communication par les caractéristiques du milieu."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Initiation scientifique et technologique (IST)",
+                "page_source": 277,
+                "competences_base": [
+                  {
+                    "description": "intégrer des principes, démarches et techniques dans des situations de réalisation d’objets courants et d’explication scientifique et technologique d’éléments et de phénomènes du milieu.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 3",
+                        "description": "intégrer des principes, démarches et techniques dans des situations d’utilisation et d’entretien d’objets techniques.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Utiliser des objets techniques courants.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Utiliser des outils technologiques courants.",
+                                "contenus": [
+                                  "utilisation du tournevis, de la truelle, du râteau, du pinceau, du marteau, des pinces, des ciseaux, des tenailles, de la poulie, divers types de robinets, etc.",
+                                  "utilisation d’une brouette (outil levier)."
+                                ]
+                              },
+                              {
+                                "titre": "Manipuler des appareils courants.",
+                                "contenus": [
+                                  "manipulation du téléphone, de la radio, de la télévision, de l’ordinateur, de l’appareil photo, du réchaud, de la cuisinière, du réfrigérateur."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Entretenir des objets techniques courants.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier des risques liés à un manque d’entretien.",
+                                "contenus": [
+                                  "détérioration (dysfonctionnement) ; asphyxie, incendie, explosion (fuite) ; court-circuit, électrocution."
+                                ]
+                              },
+                              {
+                                "titre": "Appliquer des techniques de maintenance (entretien, vérification et réparation).",
+                                "contenus": [
+                                  "identification des techniques : dépoussiérage, graissage, lavage, protection, débouchage, vérifications périodiques, vernissage, peinture, etc.",
+                                  "exemples d’objets à maintenir : bec de gaz, robinet, radio, ordinateur, télévision."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 4",
+                        "description": "intégrer des principes, démarches et techniques dans des situations d’explication scientifique de l’adaptation des êtres vivants au milieu.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Expliquer l'adaptation des êtres vivants au milieu.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Expliquer l’adaptation au milieu aquatique.",
+                                "contenus": [
+                                  "relation entre la forme du corps et le mode de déplacement.",
+                                  "relation entre l’organe de locomotion et le mode de déplacement.",
+                                  "relation entre l’organe et la respiration en milieu aquatique."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nom": "Éducation au développement durable",
+            "activites": [
+              {
+                "nom": "Vivre dans son milieu",
+                "page_source": 298,
+                "competences_base": [
+                  {
+                    "description": "intégrer des notions de base, des démarches et des techniques simples dans des situations d’explication et de proposition de solutions pertinentes à des problèmes d’environnement, de nutrition, de population et de santé du milieu.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 3",
+                        "description": "intégrer des notions de base, des démarches et des techniques simples dans des situations d’explication et de proposition de solutions pertinentes à des problèmes nés des interrelations entre dégradation des ressources, pauvreté, troubles nutritionnels et des maladies.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Proposer des solutions à des problèmes nés des interrelations entre dégradation des ressources et pauvreté.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Décrire les formes de dégradation des ressources.",
+                                "contenus": [
+                                  "déboisement, surexploitation, érosions, feux de brousse, pollution (marine), extraction du sable marin, etc."
+                                ]
+                              },
+                              {
+                                "titre": "Proposer des mesures de gestion des ressources pour lutter contre la pauvreté.",
+                                "contenus": [
+                                  "conséquences : diminution des revenus, paupérisation, exode rural, non satisfaction des besoins vitaux (nourriture, logement, santé, habitat, éducation).",
+                                  "mesures : exploitation rationnelle, protection (pare-feux, digues, brise-vent), restauration (reboisement, mise en défens, repos biologique)."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Proposer des solutions à des problèmes nés des interrelations entre troubles nutritionnels et certaines maladies.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Décrire les types de troubles nutritionnels et de maladies bucco-dentaires.",
+                                "contenus": [
+                                  "avitaminoses et leurs conséquences (vue, os, croissance) ; consommation de sucreries et santé bucco-dentaire (carie, gingivite, déchaussement)."
+                                ]
+                              },
+                              {
+                                "titre": "Proposer des mesures pour lutter contre les troubles nutritionnels et les maladies bucco-dentaires.",
+                                "contenus": [
+                                  "alimentation équilibrée, supplément en vitamines (A et D).",
+                                  "hygiène de la bouche (brossage après repas et avant coucher), suivi sanitaire."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 4",
+                        "description": "intégrer des notions de base, des démarches et des techniques simples dans des situations d’explication et de proposition de solutions pertinentes à des problèmes nés des interrelations entre taille de la famille, santé de la mère et de l’enfant (prévention des IST/VIH/SIDA par exemple).",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Prévenir les risques liés à la santé de la mère et de l'enfant.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier les interrelations entre taille de la famille et santé.",
+                                "contenus": [
+                                  "impact de la taille de la famille sur les ressources et la santé de la mère/enfant."
+                                ]
+                              },
+                              {
+                                "titre": "Proposer des mesures de prévention contre les IST/VIH/SIDA.",
+                                "contenus": [
+                                  "connaissance des modes de transmission (mère à enfant).",
+                                  "mesures de prévention : dépistage, suivi médical, hygiène."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Vivre ensemble",
+                "page_source": 312,
+                "competences_base": [
+                  {
+                    "description": "intégrer des connaissances, des aptitudes et des attitudes dans des situations d’explication et de proposition de solutions à des problèmes de relations humaines au sein du milieu.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 3",
+                        "description": "intégrer des modes d’organisation et des règles de fonctionnement dans des situations de découverte des organisations communautaires, sous-régionales et régionales.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Découvrir des organisations communautaires.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier des organisations communautaires.",
+                                "contenus": [
+                                  "types : ethnique, confrérique, confessionnelle, de ressortissants, socioprofessionnelle."
+                                ]
+                              },
+                              {
+                                "titre": "Décrire le fonctionnement d’organisations communautaires.",
+                                "contenus": [
+                                  "dénomination, date de création, missions, membres, ressources, etc."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Découvrir des organisations ouest-africaines et africaines.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier des organisations ouest-africaines et africaines.",
+                                "contenus": [
+                                  "UA, CEDEAO, UEMOA, OMVS, OMVG, CILSS, NEPAD, BAD, etc."
+                                ]
+                              },
+                              {
+                                "titre": "Décrire le fonctionnement d’organisations ouest-africaines et africaines.",
+                                "contenus": [
+                                  "missions, composition, membres, mode de fonctionnement, activités par type de mission."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 4",
+                        "description": "intégrer des connaissances sur les institutions nationales et internationales et les attributs de la souveraineté dans des situations de révision et d’évaluation globale.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Découvrir les institutions nationales et internationales.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier les attributs de la souveraineté nationale.",
+                                "contenus": [
+                                  "les 4 symboles et les 2 emblèmes du pays."
+                                ]
+                              },
+                              {
+                                "titre": "Décrire le fonctionnement des organisations nationales et internationales.",
+                                "contenus": [
+                                  "identification et description du fonctionnement d'institutions au niveau national et international."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

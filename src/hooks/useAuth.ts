@@ -36,6 +36,21 @@ interface AuthState {
   refreshProfile: () => Promise<void>;
 }
 
+type ProfileRow = {
+  id: string;
+  role: string | null;
+  full_name: string | null;
+  school_id: string | null;
+  class_id: string | null;
+  ecole_nom: string | null;
+  ief: string | null;
+  telephone: string | null;
+  adresse: string | null;
+  signature_url: string | null;
+  logo_url: string | null;
+  classe_active: string | null;
+};
+
 export function useAuth(): AuthState {
   const [session,  setSession]  = useState<Session | null>(null);
   const [profile,  setProfile]  = useState<UserProfile | null>(null);
@@ -58,19 +73,21 @@ export function useAuth(): AuthState {
       return;
     }
 
+    const row = data as unknown as ProfileRow;
+
     setProfile({
-      id:           data.id,
-      role:         (data.role ?? "teacher") as UserRole,
-      fullName:     data.full_name     ?? "",
-      schoolId:     data.school_id     ?? undefined,
-      classId:      data.class_id      ?? undefined,
-      ecoleName:    data.ecole_nom     ?? undefined,
-      ief:          data.ief           ?? undefined,
-      telephone:    data.telephone     ?? undefined,
-      adresse:      data.adresse       ?? undefined,
-      signatureUrl: data.signature_url ?? undefined,
-      logoUrl:      data.logo_url      ?? undefined,
-      classeActive: data.classe_active ?? undefined,
+      id:           row.id,
+      role:         (row.role ?? "teacher") as UserRole,
+      fullName:     row.full_name     ?? "",
+      schoolId:     row.school_id     ?? undefined,
+      classId:      row.class_id      ?? undefined,
+      ecoleName:    row.ecole_nom     ?? undefined,
+      ief:          row.ief           ?? undefined,
+      telephone:    row.telephone     ?? undefined,
+      adresse:      row.adresse       ?? undefined,
+      signatureUrl: row.signature_url ?? undefined,
+      logoUrl:      row.logo_url      ?? undefined,
+      classeActive: row.classe_active ?? undefined,
     });
   }
 

@@ -1,5 +1,6 @@
 import { supabase } from "@/lib/supabase";
 import { projectId } from "../../../../utils/supabase/info";
+import { publicAnonKey } from "../../../../utils/supabase/info";
 import { createNotificationSchema, notificationListFilterSchema, pushSubscriptionSchema, unsubscribePushSchema } from "../schemas";
 import type { NotificationCreateInput, NotificationListResult, NotificationTenant, NotificationUnreadCountResult, PushStatusResult } from "../types";
 
@@ -16,6 +17,7 @@ async function edgeRequest<T>(url: URL, init?: RequestInit): Promise<T> {
 
   const headers = new Headers(init?.headers ?? {});
   headers.set("Authorization", `Bearer ${token}`);
+  headers.set("apikey", publicAnonKey);
   if (init?.body && !headers.has("Content-Type")) {
     headers.set("Content-Type", "application/json");
   }

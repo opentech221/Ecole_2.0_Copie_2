@@ -1,0 +1,251 @@
+[
+  {
+    "niveau": "CE2",
+    "document_ref": "guide_etape_2",
+    "domaines": [
+      {
+        "nom": "Langue et Communication",
+        "sous_domaines": [
+          {
+            "nom": "Communication Orale",
+            "activites": [
+              {
+                "nom": "Expression orale et récitation",
+                "page_source": 95,
+                "competences_base": [
+                  {
+                    "description": "A la fin de l’étape, l’élève doit intégrer le vocabulaire adéquat, les comportements non verbaux, le schéma intonatif, des structures et des règles syntaxiques dans des situations de compréhension et de production de message oraux relatifs à la transmission d’information et aux échanges verbaux.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 4",
+                        "description": "Intégrer le vocabulaire adéquat, les comportements non verbaux, le schéma intonatif et des règles syntaxiques dans des situations de transmission d’informations de type informatif.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Donner des informations.",
+                            "objectifs_specifiques": [
+                              { "titre": "Annoncer un événement, une cérémonie, etc." },
+                              { "titre": "Donner des informations tirées de sa lecture." }
+                            ],
+                            "contenus": [
+                              "La manière de présenter des idées",
+                              "L’articulation",
+                              "La clarté",
+                              "Le rythme de la parole",
+                              "La maîtrise du souffle",
+                              "La justesse des informations",
+                              "La cohérence"
+                            ]
+                          },
+                          {
+                            "titre": "Expliquer une tâche.",
+                            "objectifs_specifiques": [
+                              { "titre": "Expliquer les actions nécessaires à la réalisation d’une tâche." }
+                            ]
+                          },
+                          {
+                            "titre": "Expliquer un mécanisme, un phénomène.",
+                            "objectifs_specifiques": [
+                              { "titre": "Expliquer l’utilisation d’un appareil simple." },
+                              { "titre": "Faire comprendre un phénomène." }
+                            ]
+                          },
+                          {
+                            "titre": "Dire de mémoire un texte (Récitation).",
+                            "objectifs_specifiques": [
+                              { "titre": "Restituer un poème." },
+                              { "titre": "Restituer un texte en prose." }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 5",
+                        "description": "Intégrer le vocabulaire adéquat, les comportements non verbaux, le schéma intonatif et des règles syntaxiques dans des situations d’échanges de type dialogué.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Converser au téléphone.",
+                            "objectifs_specifiques": [
+                              { "titre": "Demander des informations au téléphone." },
+                              { "titre": "Transmettre des informations au téléphone." },
+                              { "titre": "Répondre à une sollicitation au téléphone." }
+                            ]
+                          },
+                          {
+                            "titre": "Participer à un débat.",
+                            "objectifs_specifiques": [
+                              { "titre": "Participer à un débat (plusieurs séances)." }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 6",
+                        "description": "Intégrer le vocabulaire adéquat, les comportements non verbaux, le schéma intonatif et des règles syntaxiques dans des situations de transmission d’informations de type poétique.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Produire des énoncés poétiques.",
+                            "objectifs_specifiques": [
+                              { "titre": "A partir d’un modèle, inventer des énoncés, à la manière de…" }
+                            ]
+                          },
+                          {
+                            "titre": "Déclamer un texte poétique dans une mise en scène théâtrale.",
+                            "objectifs_specifiques": [
+                              { "titre": "Jouer le rôle d’un personnage dans une pièce de théâtre poétique." }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nom": "Communication Écrite",
+            "activites": [
+              {
+                "nom": "Lecture",
+                "page_source": 116,
+                "competences_base": [
+                  {
+                    "description": "Intégrer les mécanismes d’identification des mots et des stratégies de compréhension dans des situations de lecture de textes narratifs, descriptifs, injonctifs, informatifs, dialogués et poétiques.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 4",
+                        "description": "Intégrer les mécanismes d’identification des mots et des stratégies de compréhension dans des situations de lecture et de compréhension de textes informatifs.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Comprendre des textes informatifs.",
+                            "objectifs_specifiques": [
+                              { "titre": "Identifier le sujet central d’un texte informatif." },
+                              { "titre": "Hiérarchiser les informations fournies." },
+                              { "titre": "Repérer la façon de présenter les informations (causes/conséquences, problèmes/solutions, etc.)." },
+                              { "titre": "Identifier la complémentarité texte/supports iconiques (tableau, schéma, plan, croquis, etc.)." },
+                              { "titre": "Reformuler avec ses propres mots ; Résumer un texte." },
+                              { "titre": "Recourir à des techniques de consultation (table des matières, index, Internet)." }
+                            ]
+                          },
+                          {
+                            "titre": "Identifier des mots fréquents.",
+                            "objectifs_specifiques": [
+                              { "titre": "Reconnaître instantanément des mots : Echelons n°11 et n°12 (1ère partie) de l’Echelle Dubois-Buyse." }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 5",
+                        "description": "Intégrer les mécanismes d’identification des mots et des stratégies de compréhension dans des situations de lecture et de compréhension de textes dialogués.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Comprendre des textes dialogués.",
+                            "objectifs_specifiques": [
+                              { "titre": "Identifier les personnages, leur rôle et leur importance." },
+                              { "titre": "Repérer les marques de ponctuation spécifiques (deux points, guillemets, tirets)." },
+                              { "titre": "Identifier la variété des verbes introducteurs de dialogue." }
+                            ]
+                          },
+                          {
+                            "titre": "Identifier des mots fréquents.",
+                            "objectifs_specifiques": [
+                              { "titre": "Reconnaître instantanément des mots : Echelon n°12 (2ème partie) de l’Echelle Dubois-Buyse." }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 6",
+                        "description": "Intégrer les mécanismes d’identification des mots et des stratégies de compréhension dans des situations de lecture et de compréhension de textes poétiques.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Comprendre des textes poétiques.",
+                            "objectifs_specifiques": [
+                              { "titre": "Identifier les thèmes et les images d'un texte poétique." },
+                              { "titre": "Repérer la mise en page (vers, strophes, rimes)." },
+                              { "titre": "Distinguer sens propre et sens figuré." }
+                            ]
+                          },
+                          {
+                            "titre": "Identifier des mots fréquents.",
+                            "objectifs_specifiques": [
+                              { "titre": "Reconnaître instantanément des mots : Echelon n°13 (1ère partie) de l’Echelle Dubois-Buyse." }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Production d'écrits",
+                "page_source": 134,
+                "competences_base": [
+                  {
+                    "description": "A la fin de l’étape, l’élève doit intégrer le vocabulaire adéquat, les indices significatifs, des structures et et des règles syntaxiques dans des situations de production de textes narratifs, descriptifs, informatifs, injonctifs, dialogués et poétiques.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 4",
+                        "description": "Intégrer le vocabulaire adéquat, les indices significatifs et des règles syntaxiques dans des situations de production de textes informatifs.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Maîtriser les outils de langue indispensables à la production d’écrits",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Vocabulaire : Recherche du sens des mots",
+                                "contenus": [ "Définition", "Contraire", "Synonyme", "Radical", "Préfixes (in-, im-, ir-, il-)", "Suffixes", "Prépositions (par, jusque, vers, sans)" ]
+                              },
+                              {
+                                "titre": "Grammaire : Structures syntaxiques",
+                                "contenus": [ "Forme élidée et contractée de l’article (l’, au, du, aux, des)", "Négation (ne…pas, plus, jamais)", "Complément d'objet direct (COD)", "Complément d'objet indirect (COI)" ]
+                              },
+                              {
+                                "titre": "Conjugaison : Verbes et temps",
+                                "contenus": [ "2ème groupe (Présent, Futur, Imparfait, Passé composé)", "3ème groupe (Imparfait)", "Verbes en -ir" ]
+                              },
+                              {
+                                "titre": "Orthographe : Graphisme et majuscules",
+                                "contenus": [ "Majuscules cursives (H, W, X, Y, Z)", "Dictée de textes courts" ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Produire des textes informatifs",
+                            "objectifs_specifiques": [
+                              { "titre": "Rédiger un carton d'invitation ou une affiche." }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 5",
+                        "description": "Intégrer le vocabulaire adéquat, les indices significatifs et des règles syntaxiques dans des situations de production de textes dialogués.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Maîtriser les outils de langue pour le dialogue",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Vocabulaire et Grammaire",
+                                "contenus": [ "Verbes introducteurs de dialogue", "Intensité des verbes", "Abréviations du dictionnaire", "Compléments circonstanciels (lieu, temps)", "Ponctuation du dialogue" ]
+                              },
+                              {
+                                "titre": "Conjugaison",
+                                "contenus": [ "3ème groupe (Présent, Futur, Imparfait, Passé composé)" ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

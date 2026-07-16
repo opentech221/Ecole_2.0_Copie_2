@@ -1,9 +1,12 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router";
+import { useQuery } from "@tanstack/react-query";
 import {
   ArrowLeft, ChevronLeft, ChevronRight, FilePlus2,
   ChevronDown, ChevronUp, Printer,
 } from "lucide-react";
+import { programmeNavFunctionApi, type ProgrammeCurriculumDetail } from "../../services/programmeNavFunctionApi";
+import { canonicalizeActivityLabel, resolveCatalogByActivity } from "../../lib/programmeActivityLabel";
 
 // ─── Calendar ─────────────────────────────────────────────────────────────────
 
@@ -16,10 +19,29 @@ const TERM_COVERAGE = [28, 55, 82];
 
 // ─── Cascade data: OA → OS → Contenu ─────────────────────────────────────────
 
-interface OsItem { os: string; contenus: string[] }
-interface OaItem { oa: string; osItems: OsItem[] }
+export interface OsItem { os: string; contenus: string[] }
+export interface OaItem { oa: string; osItems: OsItem[] }
 
-const OA_CATALOG: Record<string, OaItem[]> = {
+function detailToOaItems(detail: ProgrammeCurriculumDetail | null | undefined): OaItem[] {
+  if (!detail) return [];
+
+  const items: OaItem[] = [];
+  for (const palier of detail.paliers) {
+    for (const oa of palier.oas) {
+      items.push({
+        oa: oa.titre,
+        osItems: oa.os.map((os) => ({
+          os: os.titre,
+          contenus: os.contenus,
+        })),
+      });
+    }
+  }
+
+  return items;
+}
+
+export const OA_CATALOG: Record<string, OaItem[]> = {
   "Activités Numériques": [
     { oa: "OA1 · Reconnaître et lire les nombres jusqu'à 1 000",
       osItems: [
@@ -89,6 +111,33 @@ const OA_CATALOG: Record<string, OaItem[]> = {
           contenus: ["Noms communs : définition", "Noms propres : personnes, lieux, pays", "Distinction nom commun / propre"] },
         { os: "OS1.2 · Identifier les déterminants articles",
           contenus: ["Articles définis : le, la, les", "Articles indéfinis : un, une, des", "Contraction de l'article"] },
+      ] },
+  ],
+  "Conjugaison": [
+    { oa: "OA1 · Conjuguer les verbes usuels aux temps de base",
+      osItems: [
+        { os: "OS1.1 · Identifier le verbe et son infinitif",
+          contenus: ["Repérage du verbe dans la phrase", "Infinitif des verbes fréquents", "Groupes de verbes usuels"] },
+        { os: "OS1.2 · Conjuguer au présent de l'indicatif",
+          contenus: ["Terminaisons du 1er groupe", "Conjugaison des verbes être/avoir", "Accord sujet-verbe au présent"] },
+      ] },
+  ],
+  "Orthographe": [
+    { oa: "OA1 · Appliquer les règles orthographiques d'usage",
+      osItems: [
+        { os: "OS1.1 · Orthographier correctement les mots fréquents",
+          contenus: ["Mots outils usuels", "Dictée de groupes de mots", "Copie sans erreur de phrases simples"] },
+        { os: "OS1.2 · Respecter les accords de base",
+          contenus: ["Accord dans le groupe nominal", "Accord sujet-verbe simple", "Majuscule et ponctuation en fin de phrase"] },
+      ] },
+  ],
+  "Vocabulaire": [
+    { oa: "OA1 · Enrichir le lexique pour mieux comprendre et produire",
+      osItems: [
+        { os: "OS1.1 · Comprendre le sens des mots en contexte",
+          contenus: ["Champ lexical d'un thème", "Synonymes et antonymes usuels", "Repérage des mots inconnus dans un texte"] },
+        { os: "OS1.2 · Utiliser un vocabulaire précis à l'oral et à l'écrit",
+          contenus: ["Réemploi des mots nouveaux en phrase", "Familles de mots simples", "Lexique de la vie scolaire et quotidienne"] },
       ] },
   ],
   "Expression orale": [
@@ -178,15 +227,15 @@ const OA_CATALOG: Record<string, OaItem[]> = {
 
 // days = unique session days after deduplication (2 slots on same day = 1 session).
 // deferredDays = days that had 2 slots → the 2nd slot is a deferred evaluation block.
-interface Activity  { name: string; days: string[]; deferredDays?: string[] }
-interface SousGroup { sous: string | null; activities: Activity[] }
-interface Domain    {
+export interface Activity  { name: string; days: string[]; deferredDays?: string[] }
+export interface SousGroup { sous: string | null; activities: Activity[] }
+export interface Domain    {
   key: string; label: string; abbr: string;
   color: string; bg: string; dark: string; light: string;
   sousGroups: SousGroup[];
 }
 
-const DOMAINS: Domain[] = [
+export const DOMAINS: Domain[] = [
   // Mathématiques — Case B: no sous-domaine → "Pas de sous-domaine"
   {
     key: "maths", label: "Mathématiques", abbr: "MATH",
@@ -358,6 +407,7 @@ function CascadeSelect({
     contenu: "Sélectionner le contenu…",
   };
   const filled = !!value && !disabled;
+  const normalizedOptions = Array.from(new Set(options));
 
   return (
     <div>
@@ -404,7 +454,7 @@ function CascadeSelect({
           }}
         >
           <option value="">{disabled ? "— étape précédente requise" : PLACEHOLDERS[level]}</option>
-          {options.map(o => <option key={o} value={o}>{o}</option>)}
+          {normalizedOptions.map((o, idx) => <option key={`${o}-${idx}`} value={o}>{o}</option>)}
         </select>
         <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none w-3.5 h-3.5"
                      style={{ color: disabled ? "#e2e8f0" : "#9ca3af" }} />
@@ -416,15 +466,17 @@ function CascadeSelect({
 // ─── Session block ────────────────────────────────────────────────────────────
 
 function SessionBlock({
-  day, actName, domain, drop, onDrop, onFiche, isDeferred, ficheNum,
+  day, actName, domain, drop, onDrop, onFiche, isDeferred, ficheNum, oaCatalog,
 }: {
   day: string; actName: string; domain: Domain;
   drop: DS; onDrop: (k: keyof DS, v: string) => void;
   onFiche: () => void;
   isDeferred?: boolean;  // true = this day had 2 timetable slots → deferred evaluation
   ficheNum: number;      // global sequential number for this session within its activity row
+  oaCatalog?: Record<string, OaItem[]>;
 }) {
-  const oaList   = OA_CATALOG[actName] ?? [];
+  const baseCatalog = oaCatalog ?? OA_CATALOG;
+  const oaList = resolveCatalogByActivity(baseCatalog, actName) ?? [];
   const selOa    = oaList.find(o => o.oa === drop.oa);
   const osList   = selOa?.osItems ?? [];
   const selOs    = osList.find(o => o.os === drop.os);
@@ -560,12 +612,13 @@ function SessionBlock({
 
 function WeekCell({
   cellId, actRow, domain, weekIdx,
-  expanded, onToggle, drops, onDrop, onFiche,
+  expanded, onToggle, drops, onDrop, onFiche, oaCatalog,
 }: {
   cellId: string; actRow: Activity; domain: Domain; weekIdx: number;
   expanded: boolean; onToggle: () => void;
   drops: DS[]; onDrop: (si: number, k: keyof DS, v: string) => void;
   onFiche: (si: number) => void;
+  oaCatalog?: Record<string, OaItem[]>;
 }) {
   const n        = actRow.days.length;
   // Discipline-specific accent for this cell
@@ -635,7 +688,8 @@ function WeekCell({
                   onDrop={(k, v) => onDrop(si, k, v)}
                   onFiche={() => onFiche(si)}
                   isDeferred={actRow.deferredDays?.includes(day)}
-                  ficheNum={ficheNum} />
+                  ficheNum={ficheNum}
+                  oaCatalog={oaCatalog} />
               );
             })}
           </div>
@@ -649,6 +703,32 @@ function WeekCell({
 
 export function PlanningScreen() {
   const navigate = useNavigate();
+
+  const allPlanningActivities = useMemo(
+    () => Array.from(new Set(DOMAINS.flatMap((d) => d.sousGroups.flatMap((sg) => sg.activities.map((a) => a.name))))),
+    [],
+  );
+
+  const officialCatalogQuery = useQuery({
+    queryKey: ["programme-nav", "planning-oa-catalog"],
+    queryFn: async () => {
+      const entries = await Promise.all(
+        allPlanningActivities.map(async (activity) => {
+          const canonicalActivity = canonicalizeActivityLabel(activity);
+          const res = await programmeNavFunctionApi.getCurriculumResolved({ activite: canonicalActivity });
+          return [canonicalActivity, res.data.detail] as const;
+        }),
+      );
+
+      const mapped: Record<string, OaItem[]> = {};
+      for (const [activity, detail] of entries) {
+        mapped[activity] = detailToOaItems(detail);
+      }
+      return mapped;
+    },
+    staleTime: 1000 * 60 * 15,
+    retry: 1,
+  });
 
   const [term,         setTerm]         = useState(0);
   const [monthIdx,     setMonthIdx]     = useState(0);
@@ -725,6 +805,7 @@ export function PlanningScreen() {
 
   const month    = MONTHS_BY_TERM[term][monthIdx];
   const domain   = DOMAINS[domainIdx];
+  const activeOaCatalog = officialCatalogQuery.data ?? OA_CATALOG;
   const coverage = TERM_COVERAGE[term];
   const coverageColor = coverage < 40 ? "#3182ce"
                       : coverage < 70 ? "#d97706"
@@ -1437,6 +1518,7 @@ export function PlanningScreen() {
                               drops={row.activity.days.map((_, si) => getDrop(cid, si))}
                               onDrop={(si, k, v) => setDrop(cid, si, k, v)}
                               onFiche={si => handleFiche(cid, si, row.activity, row.sous)}
+                              oaCatalog={activeOaCatalog}
                             />
                           </td>
                         );

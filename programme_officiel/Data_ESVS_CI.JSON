@@ -1,0 +1,487 @@
+[
+  {
+    "niveau": "CI",
+    "document_ref": "guide_etape_1",
+    "domaines": [
+      {
+        "nom": "Éducation à la Science et à la Vie Sociale",
+        "sous_domaines": [
+          {
+            "nom": "Découverte du monde",
+            "activites": [
+              {
+                "nom": "Histoire",
+                "page_source": 237,
+                "competences_base": [
+                  {
+                    "description": "intégrer des indicateurs temporels et des moyens variés dans des situations de structuration et de mesure du temps personnel et social.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "intégrer des indicateurs temporels de base dans des situations de repérage et d’ordonnancement de faits ou d’événements vécus.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Repérer des activités et des faits quotidiens",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier des moments de la journée ou de la semaine.",
+                                "contenus": [
+                                  "matin",
+                                  "midi",
+                                  "soir",
+                                  "jour",
+                                  "nuit",
+                                  "jours de la semaine"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Agencer des faits et des événements",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Utiliser des indicateurs de temps.",
+                                "contenus": [
+                                  "avant",
+                                  "après",
+                                  "aujourd’hui",
+                                  "hier",
+                                  "demain",
+                                  "en même temps",
+                                  "durant",
+                                  "pendant"
+                                ]
+                              },
+                              {
+                                "titre": "Ordonner des faits et des événements vécus selon leur ordre de succession.",
+                                "contenus": [
+                                  "repas",
+                                  "réveil",
+                                  "coucher",
+                                  "jeux",
+                                  "départ pour l’école"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "intégrer des faits quotidiens de sa vie personnelle, des phénomènes naturels de son milieu immédiat et des moyens non conventionnels dans des situations de mesure du temps personnel.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Construire la notion de durée.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Apprécier la durée de quelques activités ou faits.",
+                                "contenus": [
+                                  "lent/rapide",
+                                  "long/court",
+                                  "marche/course",
+                                  "voiture/âne",
+                                  "vacances/récréation"
+                                ]
+                              },
+                              {
+                                "titre": "Comparer des activités selon la durée.",
+                                "contenus": [
+                                  "plus lent que ; moins lent que",
+                                  "plus rapide que ; moins rapide que",
+                                  "plus long que ; moins long que",
+                                  "plus court que ; moins court que",
+                                  "plus longtemps ; moins longtemps",
+                                  "préparation du repas",
+                                  "balayage de la chambre",
+                                  "repas familial",
+                                  "sieste",
+                                  "jeux",
+                                  "aller à l’école"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Mesurer une durée.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Mesurer une durée avec des moyens non conventionnels.",
+                                "contenus": [
+                                  "battements de mains",
+                                  "comptage",
+                                  "sablier",
+                                  "clepsydre"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Géographie",
+                "page_source": 253,
+                "competences_base": [
+                  {
+                    "description": "intégrer des repères spatiaux et des moyens variés dans des situations de structuration et de mesure de l’espace vécu.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "intégrer des repères physiques et des indicateurs spatiaux dans des situations de structuration de son milieu immédiat.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Identifier des repères.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier des repères fixes dans son environnement immédiat.",
+                                "contenus": [
+                                  "à l’école (arbres, bâtiments, points d’eau)",
+                                  "aux alentours de l’école (puits, arbres, places publiques, bornes fontaine)"
+                                ]
+                              },
+                              {
+                                "titre": "Identifier des repères mobiles dans son environnement immédiat.",
+                                "contenus": [
+                                  "le jour (soleil : matin, midi, soir)",
+                                  "la nuit (lune, étoiles)"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Situer-se situer un élément.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Utiliser des notions de latéralisation et de topologie pour situer une position.",
+                                "contenus": [
+                                  "gauche / droite",
+                                  "devant / derrière",
+                                  "à côté de ; près de ; loin de ; ici ; là-bas",
+                                  "en face de ; derrière ; en haut ; en bas ; avant ; après",
+                                  "sous ; sur ; entre ; à l’intérieur ; au milieu"
+                                ]
+                              },
+                              {
+                                "titre": "Suivre un itinéraire à l’aide d’indications données.",
+                                "contenus": [
+                                  "à gauche, à droite, devant, derrière, à côté de, près de, après, entre, avant"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Représenter graphiquement.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Représenter graphiquement un itinéraire à suivre à l’aide de repères, de notions de latéralisation et de topologie",
+                                "contenus": [
+                                  "Tracé d’un itinéraire"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "intégrer des indicateurs spatiaux et des techniques d’observation dans des situations de localisation d’éléments de son milieu immédiat.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Découvrir son espace immédiat.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier les éléments les plus significatifs de son milieu immédiat.",
+                                "contenus": [
+                                  "personnes et animaux (à identifier en situation)",
+                                  "des éléments physiques et des plantes (à identifier en situation)"
+                                ]
+                              },
+                              {
+                                "titre": "Indiquer la position d’éléments à partir de repères donnés.",
+                                "contenus": [
+                                  "notions de la latéralisation (gauche, droite, devant, derrière)",
+                                  "notions de topologie (à côté de ; près de, loin de, ici, là-bas, avant, après, en face de, derrière, en haut, en bas, sous, sur, entre, à l’intérieur, dans, hors, dehors, dedans)"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Initiation scientifique et technologique",
+                "page_source": 271,
+                "competences_base": [
+                  {
+                    "description": "intégrer des notions, des techniques d’observation, d’expérimentation, d’utilisation et de réalisation d’objects courants dans des situations d’exploration scientifique et technologique du milieu immédiat.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "intégrer des concepts de base et des techniques d’observation dans des situations d’exploration du monde physique et technique dans son milieu immédiat.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Découvrir des éléments du monde physique et technique.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Décrire sommairement des éléments du monde physique et technique.",
+                                "contenus": [
+                                  "éléments naturels identifiés",
+                                  "éléments techniques identifiés"
+                                ]
+                              },
+                              {
+                                "titre": "Identifier les états de la matière.",
+                                "contenus": [
+                                  "état solide",
+                                  "état liquide",
+                                  "état gazeux"
+                                ]
+                              },
+                              {
+                                "titre": "Classer des éléments selon l’état de la matière",
+                                "contenus": [
+                                  "éléments à l’état solide",
+                                  "éléments à l’état liquide",
+                                  "éléments à l’état gazeux"
+                                ]
+                              },
+                              {
+                                "titre": "Identifier des outils.",
+                                "contenus": [
+                                  "outils d’ouvriers (marteau, pelle, truelle, stylo, lame, ciseaux, couteau, tournevis, pince)"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "intégrer des notions de base et des procédés d’expérimentation dans des situations d’exploration du monde biologique dans son milieu immédiat.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Identifier les éléments significatifs du milieu.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier des éléments du monde biologique.",
+                                "contenus": [
+                                  "animaux : vertébrés ou invertébrés ; domestiques ou sauvages",
+                                  "végétaux : à fleurs ou sans fleurs ; taille (arbres, arbuste, herbes)"
+                                ]
+                              },
+                              {
+                                "titre": "Identifier les étapes de développement d’une plante, d’un animal ou d’une personne.",
+                                "contenus": [
+                                  "plante : graine, germination, montaison, floraison, épiage (ou épiaison)",
+                                  "oiseau (la poule) : couvaison, éclosion, développement",
+                                  "personne : gestation, naissance, développement"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nom": "Éducation au développement durable",
+            "sous_domaines": [
+              {
+                "nom": null,
+                "activites": [
+                  {
+                    "nom": "Vivre dans son milieu",
+                    "page_source": 292,
+                    "competences_base": [
+                      {
+                        "description": "intégrer des notions de base et des techniques simples dans des situations d’identification et de proposition de solutions pratiques à des problèmes d’environnement, de nutrition, de population et de santé du milieu immédiat",
+                        "paliers": [
+                          {
+                            "nom": "Palier 1",
+                            "description": "intégrer des notions de base, de bons comportements, des techniques d’observation et des mesures préventives dans des situations de proposition de solutions à des problèmes de maladies et d’hygiène nés de l’interaction entre l’homme et son milieu immédiat.",
+                            "objectifs_apprentissage": [
+                              {
+                                "titre": "Proposer des solutions à des problèmes de santé du milieu immédiat.",
+                                "objectifs_specifiques": [
+                                  {
+                                    "titre": "Identifier des maladies dans son milieu.",
+                                    "contenus": [
+                                      "paludisme",
+                                      "IST/VIH et SIDA",
+                                      "bilharzioses",
+                                      "choléra",
+                                      "parasitoses intestinales"
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Proposer des solutions contre les maladies (mesures préventives).",
+                                    "contenus": [
+                                      "paludisme (utilisation de moustiquaires imprégnées, destruction des sites larvaires)",
+                                      "IST / VIH et SIDA (ne pas partager des objets pointus et/ou tranchants)",
+                                      "bilharzioses (éviter les baignades dans des eaux stagnantes)",
+                                      "choléra et parasitoses"
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "titre": "Proposer des solutions à des problèmes d’hygiène du milieu immédiat.",
+                                "objectifs_specifiques": [
+                                  {
+                                    "titre": "Proposer des solutions au manque d’hygiène individuelle et du milieu immédiat.",
+                                    "contenus": [
+                                      "hygiène individuelle (hygiène corporelle, vestimentaire et alimentaire)",
+                                      "hygiène du milieu (propreté de la classe, de l’école et de la maison, le péril fécal, la propreté des toilettes, la gestion des déchets à l’école et à la maison)"
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "nom": "Palier 2",
+                            "description": "intégrer des notions de base, des techniques d’observation et des mesures préventives dans des situations de proposition de solutions à des problèmes de gaspillage ou de dégradation des ressources nés de l’interaction entre l’homme et son milieu immédiat.",
+                            "objectifs_apprentissage": [
+                              {
+                                "titre": "Proposer des mesures préventives contre des risques d’intoxication alimentaire.",
+                                "objectifs_specifiques": [
+                                  {
+                                    "titre": "Proposer des solutions à des risques d’intoxication alimentaire dans son milieu.",
+                                    "contenus": [
+                                      "risques (produits périmés, pourris, fruits non mûrs, aliments exposés à la poussière, aux mouches)",
+                                      "solutions (bien protéger et bien conserver les aliments)"
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "titre": "Proposer des solutions à des problèmes de dégradation de l’environnement du milieu immédiat.",
+                                "objectifs_specifiques": [
+                                  {
+                                    "titre": "Proposer des solutions à des problèmes de dégradation de l’environnement du milieu immédiat.",
+                                    "contenus": [
+                                      "gaspillage ou dégradation des ressources"
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "nom": "Vivre ensemble",
+                    "page_source": 304,
+                    "competences_base": [
+                      {
+                        "description": "intégrer des aptitudes et des attitudes dans des situations d’identification et de proposition de solutions à des problèmes nés de relations humaines au sein du milieu immédiat",
+                        "paliers": [
+                          {
+                            "nom": "Palier 1",
+                            "description": "intégrer de bons comportements nés dans des situations de relations humaines au sein du milieu immédiat",
+                            "objectifs_apprentissage": [
+                              {
+                                "titre": "Manifester de bons comportements à l’école et dans la famille.",
+                                "objectifs_specifiques": [
+                                  {
+                                    "titre": "Se respecter soi-même.",
+                                    "contenus": [
+                                      "soin de son corps",
+                                      "soin de ses habits",
+                                      "soin de son matériel de travail",
+                                      "correction du langage (ne pas insulter, éviter d’être grossier)"
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Respecter les autres.",
+                                    "contenus": [
+                                      "salutations",
+                                      "correction du langage",
+                                      "envers les camarades, les aînés, les parents, les maîtres, l’adversaire de jeu, le plus faible"
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Être assidu et ponctuel.",
+                                    "contenus": [
+                                      "régularité",
+                                      "assiduité",
+                                      "ponctualité"
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Rendre service.",
+                                    "contenus": [
+                                      "entraide",
+                                      "solidarité",
+                                      "bonté",
+                                      "générosité"
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Dire la vérité.",
+                                    "contenus": [
+                                      "franchise",
+                                      "honnêteté",
+                                      "sincérité"
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "nom": "Palier 2",
+                            "description": "intégrer des règles de conduite et des valeurs dans des situations de relations humaines au sein du milieu immédiat",
+                            "objectifs_apprentissage": [
+                              {
+                                "titre": "Appliquer les dispositions des règlements de son milieu immédiat.",
+                                "objectifs_specifiques": [
+                                  {
+                                    "titre": "Respecter les règlements intérieurs scolaires.",
+                                    "contenus": [
+                                      "dispositions du règlement intérieur de la classe",
+                                      "dispositions du règlement intérieur de l’école"
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "titre": "Respecter les biens publics.",
+                                "objectifs_specifiques": [
+                                  {
+                                    "titre": "Proposer des mesures de sauvegarde des biens publics.",
+                                    "contenus": [
+                                      "nettoyage",
+                                      "entretien",
+                                      "respect (ne pas monter ou ne pas écrire sur les murs/panneaux)"
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

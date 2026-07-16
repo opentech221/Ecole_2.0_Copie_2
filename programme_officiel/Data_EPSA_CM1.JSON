@@ -1,0 +1,285 @@
+[
+  {
+    "niveau": "CM1",
+    "document_ref": "guide_etape_3",
+    "domaines": [
+      {
+        "nom": "Éducation Physique, Sportive et Artistique (EPSA)",
+        "sous_domaines": [
+          {
+            "nom": "Éducation physique et sportive",
+            "activites": [
+              {
+                "nom": "Activités physiques et sportives",
+                "page_source": 353,
+                "competences_base": [
+                  {
+                    "description": "Intégrer des règles de base, des activités motrices simples et des techniques élémentaires d’expression dans des situations de réalisation d’œuvres d’art et d’éducation physique et sportive.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "Participer à un tournoi de biathlon comprenant une épreuve de course et une épreuve de saut.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Participer à un concours de gestes techniques",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Participer à un concours de lancer de précision (ou d’adresse)",
+                                "contenus": [
+                                  "préparation matérielle : balle de tennis, une cible formée de deux carrés dont le petit (50 cm x 50 cm) est circonscrit dans le grand (60 cm x 60 cm) placée à 1,5 m du sol et distante de 6 m pour les filles et 7 m pour les garçons",
+                                  "résultat attendu : toucher le cœur de la cible"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nom": "Éducation artistique",
+            "activites": [
+              {
+                "nom": "Arts plastiques",
+                "page_source": 367,
+                "competences_base": [
+                  {
+                    "description": "Intégrer des règles de base, des activités motrices simples et des techniques élémentaires d’expression dans des situations de réalisation d’œuvres d’art et d’éducation physique et sportive.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "Réaliser des productions plastiques par le dessin d'observation et l'illustration.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Réaliser un dessin d’observation",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Réaliser un dessin d’observation",
+                                "contenus": [
+                                  "Dessins d’objets ou d’animaux à reproduire de mémoire : ustensiles de cuisine, outils d’artisan, animaux familiers, vêtements, etc.",
+                                  "dessin de mémoire du drapeau national"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Illustrer par le dessin un texte ou un thème",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Illustrer un texte (récitation, chant conte, etc.)",
+                                "contenus": [
+                                  "récitations ou chants appris en classe",
+                                  "contes ou textes lus en classe",
+                                  "textes produits par les élèves"
+                                ]
+                              },
+                              {
+                                "titre": "Illustrer un thème donné",
+                                "contenus": [
+                                  "exemples de thèmes à illustrer : scolarisation des filles",
+                                  "semaine de l’école de base",
+                                  "vaccination",
+                                  "hygiène",
+                                  "environnement",
+                                  "lutte contre le paludisme (ou toute autre maladie endémique du milieu)",
+                                  "etc."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Éducation musicale",
+                "page_source": 376,
+                "competences_base": [
+                  {
+                    "description": "Intégrer des règles de base, des activités motrices simples et des techniques élémentaires d’expression dans des situations de réalisation d’œuvres d’art et d’éducation physique et sportive.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 3",
+                        "description": "intégrer des paroles, des mélodies d’instruments à vent, des techniques vocales, une gestuelle simple et la coordination des mouvements dans des situations d’interprétation de chants",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Reproduire des sons d’instruments",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier des sons d’instruments à vent",
+                                "contenus": [
+                                  "Exemples d’instruments à vent : flûte, harmonica, etc."
+                                ]
+                              },
+                              {
+                                "titre": "Imiter des sons d’instruments à vent",
+                                "contenus": [
+                                  "Sons d’instruments à vent : flûte, harmonica",
+                                  "NB : imitation par les ressources de la voix et des autres parties du corps"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Interpréter un chant avec un accompagnement instrumental",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Exécuter un chant avec l’accompagnement d’un instrument à vent",
+                                "contenus": [
+                                  "chants à interpréter : chants tirés du milieu, hymne national, hymne de la jeunesse, chants de marche, chants initiatiques (circoncision, mariage, tatouage, etc.), chant des lutteurs, louanges, tassu, kébatu...",
+                                  "instruments à vent : flûte, harmonica, etc."
+                                ]
+                              },
+                              {
+                                "titre": "Accompagner l’exécution d’un chant avec un instrument à vent",
+                                "contenus": [
+                                  "chants à accompagner : chants tirés du milieu, hymne national, couplets 1 et 2 et le refrain, hymne de la jeunesse, chants initiatiques, etc.",
+                                  "instruments à vent : flûte, harmonica, etc.",
+                                  "tenue de corps : posture appropriée (corps droit, regard droit devant soi, jambes légèrement écartées)",
+                                  "gestuelle expressive (mains, tête)"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 4",
+                        "description": "intégrer des paroles, des mélodies d’instruments divers, des techniques vocales, une gestuelle simple et la coordination des mouvements dans des situations d’interprétation de chants",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Interpréter un chant sans accompagnement instrumental",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Fredonner la mélodie d'un chant",
+                                "contenus": [
+                                  "Mélodie de chants à fredonner : chants tirés du milieu, hymne national, hymne de la jeunesse, chants de marche, chants initiatiques (circoncision, mariage, tatouage, etc.), chant des lutteurs, louanges, tassu, kébatu..."
+                                ]
+                              },
+                              {
+                                "titre": "Exécuter un chant",
+                                "contenus": [
+                                  "Chants à exécuter : chants tirés du milieu, hymne national, (couplets 1 et 2 et le refrain), hymne de la jeunesse, chants initiatiques (circoncision, mariage, tatouage, etc.), chant des lutteurs, louanges, tassu, kébatu...",
+                                  "tenue de corps : posture appropriée (corps droit, regard droit devant soi, jambes légèrement écartées), gestuelle expressive (mains, tête)"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Interpréter un chant avec un accompagnement instrumental",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Exécuter un chant avec un accompagnement instrumental",
+                                "contenus": [
+                                  "chants à interpréter : chants tirés du milieu, hymne national, hymne de la jeunesse, chants de marche, chants initiatiques, etc.",
+                                  "instruments à percussion : balafon, maracas, tabala, tambour, tam-tam, tama, etc.",
+                                  "instruments à cordes : guitare, kora, riti, etc.",
+                                  "instruments à vent : flûte, harmonica, etc."
+                                ]
+                              },
+                              {
+                                "titre": "Accompagner l'exécution d'un chant avec un instrument",
+                                "contenus": [
+                                  "chants à accompagner : chants tirés du milieu, hymne national, (couplets 1 et 2 et le refrain), hymne de la jeunesse, chants initiatiques, etc.",
+                                  "instruments : percussion, cordes, vent",
+                                  "tenue de corps : posture appropriée (corps droit, regard droit devant soi, jambes légèrement écartées), gestuelle expressive (mains, tête)"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Arts scéniques",
+                "page_source": 385,
+                "competences_base": [
+                  {
+                    "description": "Intégrer des règles de base, des activités motrices simples et des techniques élémentaires d’expression dans des situations de réalisation d’œuvres d’art et d’éducation physique et sportive.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 2",
+                        "description": "intégrer les registres de la voix, des gestes, le jeu de rôles, le déguisement et l’organisation des décors dans des situations de représentation de sketchs",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Imiter un personnage célèbre",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Imiter une vedette",
+                                "contenus": [
+                                  "vedettes à imiter : des sportifs, des comédiens, des artistes, des reporters...",
+                                  "traits à imiter : façon de parler, de chanter, de danser, de se mouvoir, expression du visage, attitude, gestuelle, tics, tours de passe, etc."
+                                ]
+                              },
+                              {
+                                "titre": "Imiter un leader d'opinion",
+                                "contenus": [
+                                  "leaders d’opinion à imiter : femmes/hommes politiques ; dirigeants syndicaux, etc.",
+                                  "traits à imiter : façon de parler, de chanter, de se mouvoir, expression du visage, attitude, gestuelle, tics, etc."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Interpréter le rôle d'un personnage célèbre dans un sketch à deux personnes",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Interpréter le rôle d'une vedette dans un sketch à deux personnes",
+                                "contenus": [
+                                  "sketchs qui mettent en scène : une vedette du football avec un journaliste (après une victoire) ; un grand lutteur avec son féticheur (à la veille d’un combat) ; une athlète de renom avec son coach (à une séance d’entrainement)",
+                                  "éléments de contenus : les dialogues, les attitudes, les tics...",
+                                  "déguisement : approprié au regard du look de la vedette"
+                                ]
+                              },
+                              {
+                                "titre": "Interpréter le rôle d’un leader d’opinion dans un sketch à deux personnes",
+                                "contenus": [
+                                  "sketchs qui mettent en scène : une femme/un homme politique avec un adversaire (à la veille d’une élection) ; un(e) dirigeant(e) syndical(e) avec militant ; un chef religieux avec un(e) talibé(e) ; un chef religieux avec un envoyé du gouvernement à l’occasion d’une cérémonie religieuse",
+                                  "éléments de contenus : les dialogues, les attitudes, les tics...",
+                                  "déguisement : approprié au regard du leader"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 3",
+                        "description": "intégrer les registres de la voix, des gestes, le jeu de rôles, le déguisement et la mise en scène dans des situations de représentation de sketchs",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Imiter un personnage typique",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Jouer le rôle du personnage principal de l'histoire",
+                                "contenus": [
+                                  "lecture de l'histoire avec ses camarades",
+                                  "disposition des éléments du décor",
+                                  "distribution des rôles",
+                                  "interprétation du personnage principal pendant que les autres camarades donnent la réplique"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

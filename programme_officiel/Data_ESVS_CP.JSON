@@ -1,0 +1,490 @@
+[
+  {
+    "niveau": "CP",
+    "document_ref": "guide_etape_1",
+    "domaines": [
+      {
+        "nom": "Éducation à la Science et à la Vie Sociale",
+        "sous_domaines": [
+          {
+            "nom": "Découverte du monde",
+            "activites": [
+              {
+                "nom": "Histoire",
+                "page_source": 184,
+                "competences_base": [
+                  {
+                    "description": "intégrer des indicateurs temporels et des moyens variés dans des situations de structuration et de mesure du temps personnel et social.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 3",
+                        "description": "intégrer des notions de base, des indicateurs de temps dans des situations d’agencement d’événements sociaux et de phénomènes naturels de son milieu immédiat.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Classer des faits, des événements et des phénomènes selon un ordre de succession.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Utiliser des indicateurs temporels.",
+                                "contenus": [
+                                  "aujourd’hui, hier",
+                                  "aujourd’hui, hier, demain",
+                                  "pendant, en même temps que",
+                                  "Le temps qu’il fait",
+                                  "anniversaire",
+                                  "venir à l’école",
+                                  "jouer à la maison",
+                                  "lire au tableau"
+                                ]
+                              },
+                              {
+                                "titre": "Ordonner des faits, des événements et des phénomènes.",
+                                "contenus": [
+                                  "avant, après",
+                                  "pendant que, en même temps que",
+                                  "heure de rendez-vous",
+                                  "repas",
+                                  "film",
+                                  "la pluie",
+                                  "le coucher du soleil",
+                                  "prière"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 4",
+                        "description": "intégrer des indicateurs de temps et l’utilisation de moyens variés dans des situations de structuration et de mesure du temps personnel et social.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Mesurer le temps.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Utiliser des instruments de découpage du temps.",
+                                "contenus": [
+                                  "Emploi du temps",
+                                  "calendrier",
+                                  "activités d’une journée de classe",
+                                  "activités d’une journée de repos",
+                                  "événements dans le temps (anniversaire, baptême, fêtes)"
+                                ]
+                              },
+                              {
+                                "titre": "Utiliser des instruments de mesure du temps.",
+                                "contenus": [
+                                  "sablier",
+                                  "clepsydre",
+                                  "montres",
+                                  "horloges",
+                                  "pendules",
+                                  "temps pour effectuer une opération",
+                                  "recopier une phrase",
+                                  "lire un paragraphe",
+                                  "aller du fond de la classe au tableau"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Géographie",
+                "page_source": 205,
+                "competences_base": [
+                  {
+                    "description": "intégrer des repères spatiaux et des moyens variés dans des situations de structuration et de mesure de l’espace vécu.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 3",
+                        "description": "intégrer des techniques de repérage, de localisation et de rangement dans des situations d’organisation du milieu immédiat.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Repérer un élément dans un ensemble.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Montrer des éléments dans un ensemble.",
+                                "contenus": [
+                                  "crayon, craie, cahier, livre, stylo, ballon, chaussure, habit",
+                                  "voici, voilà"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Ordonner des éléments selon un critère.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Ordonner des éléments selon un critère.",
+                                "contenus": [
+                                  "du plus grand au plus petit ; du plus petit au plus grand",
+                                  "du plus lourd au plus léger, du plus léger au plus lourd",
+                                  "du plus épais au plus mince, du plus mince au plus épais",
+                                  "objets en plastique, en fer, en bois, en papier, en tissu",
+                                  "objets carrés, ronds, rectangulaires, triangulaires, longs, courts",
+                                  "objets pour écrire, pour lire, pour couper, pour transporter l’eau"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 4",
+                        "description": "intégrer des indicateurs, des repères spatiaux et l’utilisation de moyens variés dans des situations de structuration et de mesure de l’espace vécu.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Estimer des distances.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Estimer des distances parcourues.",
+                                "contenus": [
+                                  "c’est loin / c’est proche",
+                                  "c’est long / c’est court",
+                                  "distances dans l’espace immédiat (d’un point à un autre de la classe, de la cour, de l’école à la maison)"
+                                ]
+                              },
+                              {
+                                "titre": "Estimer des distances observées.",
+                                "contenus": [
+                                  "c’est loin / c’est proche",
+                                  "c’est long / c’est court"
+                                ]
+                              },
+                              {
+                                "titre": "Comparer des distances.",
+                                "contenus": [
+                                  "c’est plus loin que / c’est plus proche que",
+                                  "c’est plus long que / c’est plus court que",
+                                  "aussi loin que / aussi proche que",
+                                  "courtes distances dans l’espace immédiat"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Mesurer des distances.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Mesurer des distances et des longueurs avec des moyens non conventionnels.",
+                                "contenus": [
+                                  "un, deux, trois ou quatre doigts",
+                                  "empan",
+                                  "coudée",
+                                  "pied",
+                                  "pas",
+                                  "bras"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Initiation scientifique et technologique",
+                "page_source": 224,
+                "competences_base": [
+                  {
+                    "description": "intégrer des notions, des techniques d’observation, d’expérimentation, d’utilisation et de réalisation d’objets courants dans des situations d’exploration scientifique et technologique du milieu immédiat.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 3",
+                        "description": "intégrer des notions de base et des savoir-faire pratiques dans des situations d’utilisation d’objets techniques de son milieu immédiat.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Choisir des outils en fonction d’une tâche donnée.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier des outils.",
+                                "contenus": [
+                                  "marteau, pelle, truelle, stylo, lame, ciseaux, couteau, tournevis, pince",
+                                  "identification d’outils d’ouvriers"
+                                ]
+                              },
+                              {
+                                "titre": "Identifier des objets techniques.",
+                                "contenus": [
+                                  "jouets",
+                                  "fer à repasser",
+                                  "moulinet"
+                                ]
+                              },
+                              {
+                                "titre": "Manipuler des objets techniques.",
+                                "contenus": [
+                                  "serrer et desserrer un écrou",
+                                  "visser et dévisser une vis"
+                                ]
+                              },
+                              {
+                                "titre": "Identifier des techniques d’entretien.",
+                                "contenus": [
+                                  "nettoyage (dépoussiérage, lavage)",
+                                  "graissage",
+                                  "lubrification"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 4",
+                        "description": "intégrer des notions de base et des savoir-faire pratiques dans des situations de réalisation d’objets techniques de son milieu immédiat.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Découvrir la constitution d'un objet technique",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier les principales parties d’un objet technique",
+                                "contenus": [
+                                  "lampe de poche",
+                                  "paire de ciseaux",
+                                  "vélo",
+                                  "poste radio",
+                                  "boutons, antenne, roue, chaîne, guidon, pédale"
+                                ]
+                              },
+                              {
+                                "titre": "Donner les fonctions des différentes parties d’un objet technique",
+                                "contenus": [
+                                  "fonctions des parties identifiées"
+                                ]
+                              },
+                              {
+                                "titre": "Identifier les parties d’un modèle",
+                                "contenus": [
+                                  "poupée",
+                                  "vélo",
+                                  "voiturette",
+                                  "poste radio",
+                                  "boutons, habits"
+                                ]
+                              },
+                              {
+                                "titre": "Reproduire un modèle",
+                                "contenus": [
+                                  "poupée",
+                                  "vélo",
+                                  "voiturette",
+                                  "poste radio",
+                                  "matériel de récupération : fil de fer, tige, pots de conserve, morceaux de tissu"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nom": "Éducation au développement durable",
+            "sous_domaines": [
+              {
+                "nom": null,
+                "activites": [
+                  {
+                    "nom": "Vivre dans son milieu",
+                    "page_source": 245,
+                    "competences_base": [
+                      {
+                        "description": "intégrer des notions de base et des techniques simples dans des situations d’identification et de proposition de solutions pratiques à des problèmes d’environnement, de nutrition, de population et de santé du milieu immédiat",
+                        "paliers": [
+                          {
+                            "nom": "Palier 3",
+                            "description": "intégrer des notions de base, de bons comportements, des techniques simples d’observation et des mesures préventives dans des situations de propositions de solutions à des risques d’intoxication dans le milieu immédiat dans un contexte de relations humaines.",
+                            "objectifs_apprentissage": [
+                              {
+                                "titre": "Proposer des mesures préventives contre des risques d’intoxication alimentaire",
+                                "objectifs_specifiques": [
+                                  {
+                                    "titre": "Identifier les aliments impropres à la consommation",
+                                    "contenus": [
+                                      "produits périmés",
+                                      "produits pourris"
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Identifier des produits d’entretien domestiques",
+                                    "contenus": [
+                                      "détergents : différents types savon (solide, poudre, liquide)",
+                                      "désinfectants (crésyl, eau de javel)",
+                                      "insecticides",
+                                      "soude caustique (khémé)"
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Identifier des produits pharmaceutiques dangereux",
+                                    "contenus": [
+                                      "médicaments de la rue",
+                                      "médicaments périmés",
+                                      "médicaments contrefaits"
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Proposer des mesures préventives contre les intoxications liées à des produits pharmaceutiques",
+                                    "contenus": [
+                                      "ranger les médicaments hors de portée des enfants",
+                                      "ne pas envoyer les enfants prendre ou remettre des médicaments",
+                                      "respect des prescriptions",
+                                      "éviter l’automédication",
+                                      "ne pas utiliser les médicaments de la rue",
+                                      "respecter les normes de conservation",
+                                      "jeter les médicaments périmés"
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "nom": "Palier 4",
+                            "description": "intégrer des notions de base, des règles de conduite, des valeurs, des techniques simples d’observation et des mesures préventives dans des situations de propositions de solutions à des problèmes de dégradation de l’environnement de son milieu immédiat dans un contexte de relations humaines.",
+                            "objectifs_apprentissage": [
+                              {
+                                "titre": "Identifier les formes de dégradation de l’environnement immédiat",
+                                "objectifs_specifiques": [
+                                  {
+                                    "titre": "Identifier les formes de dégradation de l’environnement",
+                                    "contenus": [
+                                      "insalubrité (ordures, gravats, eaux usées, péril fécal)",
+                                      "pollution (bruits, mauvaises odeurs)"
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Identifier les principales causes et conséquences de la dégradation de l’environnement",
+                                    "contenus": [
+                                      "décharge sauvage",
+                                      "gravats",
+                                      "absence de ramassage régulier des ordures",
+                                      "pollution",
+                                      "maladies",
+                                      "cadre de vie agressé"
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Identifier les principales formes de dégradation des biens communs",
+                                    "contenus": [
+                                      "graffitis sur les murs",
+                                      "espaces transformés en pissotière",
+                                      "vandalisme sur les infrastructures et les équipements collectifs",
+                                      "affichage sauvage"
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Indiquer des solutions appropriées contre la dégradation des biens communs",
+                                    "contenus": [
+                                      "comportements civiques",
+                                      "aménagement de l’espace de vie (plantation d’arbres, aménagement de parterres de fleurs)",
+                                      "élevage des animaux dans des enclos"
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "nom": "Vivre ensemble",
+                    "page_source": 254,
+                    "competences_base": [
+                      {
+                        "description": "intégrer des aptitudes et des attitudes dans des situations d’identification et de proposition de solutions à des problèmes nés de relations humaines au sein du milieu immédiat",
+                        "paliers": [
+                          {
+                            "nom": "Palier 3",
+                            "description": "intégrer de bons comportements dans des situations de relations humaines au sein de son milieu immédiat",
+                            "objectifs_apprentissage": [
+                              {
+                                "titre": "Manifester de bons comportements à l’école et dans la famille",
+                                "objectifs_specifiques": [
+                                  {
+                                    "titre": "Venir à l’heure, ne pas s’absenter",
+                                    "contenus": [
+                                      "assiduité",
+                                      "ponctualité"
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Manifester de bons comportements individuels",
+                                    "contenus": [
+                                      "soin",
+                                      "bonté",
+                                      "franchise",
+                                      "honnêteté",
+                                      "sincérité"
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Manifester de bons comportements dans un groupe",
+                                    "contenus": [
+                                      "entraide",
+                                      "solidarité",
+                                      "coopération",
+                                      "respect des engagements",
+                                      "loyauté"
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "nom": "Palier 4",
+                            "description": "intégrer des notions de base, des règles de conduite et des valeurs dans des situations de relations humaines au sein de son milieu immédiat",
+                            "objectifs_apprentissage": [
+                              {
+                                "titre": "Appliquer les dispositions des règlements de son milieu immédiat",
+                                "objectifs_specifiques": [
+                                  {
+                                    "titre": "Respecter les règlements intérieurs scolaires",
+                                    "contenus": [
+                                      "dispositions du règlement intérieur de la classe",
+                                      "dispositions du règlement intérieur de l’école"
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Prendre des responsabilités dans la vie de la classe, de l’école et de la maison",
+                                    "contenus": [
+                                      "responsable du groupe de nettoyage",
+                                      "responsable du ravitaillement en eau",
+                                      "entretien du mobilier",
+                                      "décoration",
+                                      "ramassage et garde du matériel et des produits",
+                                      "acte de candidature à des postes dans la coopérative de classe ou le gouvernement scolaire",
+                                      "tête des équipes (sport et culture)",
+                                      "respect des engagements"
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

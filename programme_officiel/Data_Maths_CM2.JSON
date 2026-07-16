@@ -1,0 +1,1013 @@
+[
+  {
+    "niveau": "CM2",
+    "document_ref": "guide_etape_3",
+    "domaines": [
+      {
+        "nom": "Mathématiques",
+        "sous_domaines": [
+          {
+            "nom": null,
+            "activites": [
+              {
+                "nom": "Activités numériques",
+                "page_source": 189,
+                "competences_base": [
+                  {
+                    "description": "Intégrer les nombres entiers naturels, les nombres décimaux, les fractions ainsi que les quatre opérations arithmétiques (sens et techniques) dans des situations de résolution de problèmes de numération et de calculs",
+                    "paliers": [
+                      {
+                        "nom": "Palier 4",
+                        "description": "Intégrer les nombres entiers naturels ainsi que les quatre opérations arithmétiques (sens et techniques) dans des situations de résolution de problèmes de numération et de calculs",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Maîtriser les mécanismes de la numération décimale.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Utiliser les mécanismes de la numération décimale.",
+                                "contenus": [
+                                  "Les grands nombres",
+                                  "Classes des nombres (unité, dizaine, centaine, mille, million et milliard)"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Caractériser un nombre entier.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Utiliser à bon escient l’addition.",
+                                "contenus": [
+                                  "Le sens de l’addition."
+                                ]
+                              },
+                              {
+                                "titre": "Appliquer les mécanismes opératoires de l’addition.",
+                                "contenus": [
+                                  "L’addition : sans retenue, avec retenue"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Maîtriser l’addition des grands nombres.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Utiliser à bon escient l’addition.",
+                                "contenus": [
+                                  "Le sens de l’addition."
+                                ]
+                              },
+                              {
+                                "titre": "Appliquer les mécanismes opératoires de l’addition.",
+                                "contenus": [
+                                  "L’addition : sans retenue, avec retenue"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Maîtriser la soustraction des grands nombres.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Utiliser à bon escient la soustraction.",
+                                "contenus": [
+                                  "Le sens de la soustraction"
+                                ]
+                              },
+                              {
+                                "titre": "Appliquer les mécanismes opératoires de la soustraction",
+                                "contenus": [
+                                  "La soustraction : sans retenue, avec retenue"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Maîtriser la multiplication des grands nombres.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Utiliser à bon escient la multiplication",
+                                "contenus": [
+                                  "Le sens de la multiplication."
+                                ]
+                              },
+                              {
+                                "titre": "Appliquer les mécanismes opératoires de la multiplication",
+                                "contenus": [
+                                  "La multiplication avec plusieurs chiffres au multiplicateur."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Maîtriser la division des grands nombres.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Utiliser à bon escient la division.",
+                                "contenus": [
+                                  "La division avec plusieurs chiffres au dividende et au diviseur"
+                                ]
+                              },
+                              {
+                                "titre": "Appliquer les mécanismes opératoires de la division",
+                                "contenus": [
+                                  "La division avec plusieurs chiffres au dividende et au diviseur"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Maîtriser les tables de multiplication",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Utiliser les tables de multiplication 2 à 9.",
+                                "contenus": [
+                                  "Tables de 2 à 9"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Effectuer un calcul mental (objectif transversal)",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Effectuer des additions et des soustractions successives",
+                                "contenus": [
+                                  "Additions et soustractions successives (4 opérations maximum)"
+                                ]
+                              },
+                              {
+                                "titre": "Multiplier par 5, 25, 50, 10, 100, 1000, 20 11, 12.",
+                                "contenus": [
+                                  "Stratégies multiplicatives : par 5, 25, 50, 10, 100, 1000, 20 11, 12."
+                                ]
+                              },
+                              {
+                                "titre": "Calculer le carré d’un nombre.",
+                                "contenus": [
+                                  "Nombres de 1 à 12."
+                                ]
+                              },
+                              {
+                                "titre": "Diviser par 10, 20, 30, 5, 25.",
+                                "contenus": [
+                                  "Stratégies de division : par 10, 5, 20, 30, 25."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 5",
+                        "description": "Intégrer les nombres entiers naturels, les nombres décimaux ainsi que les quatre opérations arithmétiques dans des situations de résolution de problèmes de numération et de calculs.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Maîtriser le mécanisme de fonctionnement des nombres décimaux",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Lire et écrire les nombres décimaux",
+                                "contenus": [
+                                  "les nombres décimaux : lecture, écriture, changement d’unité, comparaison"
+                                ]
+                              },
+                              {
+                                "titre": "Comparer les nombres décimaux",
+                                "contenus": [
+                                  "les nombres décimaux : lecture, écriture, changement d’unité, comparaison"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Effectuer les opérations sur les décimaux",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Appliquer les mécanismes opératoires de l’addition.",
+                                "contenus": [
+                                  "L’addition : sans retenue, avec retenue"
+                                ]
+                              },
+                              {
+                                "titre": "Appliquer les mécanismes opératoires de la soustraction",
+                                "contenus": [
+                                  "La soustraction : sans emprunt , avec emprunt"
+                                ]
+                              },
+                              {
+                                "titre": "Appliquer les mécanismes opératoires de la multiplication",
+                                "contenus": [
+                                  "La multiplication : multiplicateur ou multiplicande entiers ou décimaux"
+                                ]
+                              },
+                              {
+                                "titre": "Appliquer les mécanismes opératoires de la division",
+                                "contenus": [
+                                  "La division : quotient décimal, quotient approché, dividende entier ou décimal, diviseur et dividende décimaux."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Maîtriser les tables de multiplication",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Utiliser les tables de multiplication de 9 à 11",
+                                "contenus": [
+                                  "Tables de 9 à 11"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Utiliser une stratégie de calcul mental sur les nombres décimaux (objectif transversal)",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Effectuer des additions et des soustractions successives",
+                                "contenus": [
+                                  "Additions et soustractions successives (4 opérations maximum)"
+                                ]
+                              },
+                              {
+                                "titre": "Multiplier par 0,5, 0,25, 0,2, 10, 100, 1000.",
+                                "contenus": [
+                                  "Stratégies multiplicatives : par 0,5, 0,25, 0,2, 10, 100, 1000."
+                                ]
+                              },
+                              {
+                                "titre": "Diviser par 0,1 ; 0,5 ; 0,25 ; 10, 100, 1000",
+                                "contenus": [
+                                  "Stratégies de division : par 0,1, 0,5, 0,25, 10, 100, 1000."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 6",
+                        "description": "Intégrer les nombres entiers naturels, les nombres décimaux, les fractions ainsi que les quatre opérations arithmétiques (sens et techniques) dans des situations de résolution de problèmes de numération et de calculs.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Maîtriser les mécanismes de fonctionnement des fractions.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Consolider la notion de fraction.",
+                                "contenus": [
+                                  "Fractions ordinaires, fractions décimales, nombres fractionnaires"
+                                ]
+                              },
+                              {
+                                "titre": "Comparer des fractions.",
+                                "contenus": [
+                                  "Simplification des fractions.",
+                                  "Réduction de fractions au même dénominateur.",
+                                  "Comparaison de fractions."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Appliquer les mécanismes des opérations arithmétiques sur les fractions.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Appliquer les mécanismes opératoires de l’addition et de la soustraction sur les fractions.",
+                                "contenus": [
+                                  "Addition et soustraction sur les fractions."
+                                ]
+                              },
+                              {
+                                "titre": "Appliquer les mécanismes opératoires de la multiplication sur les fractions.",
+                                "contenus": [
+                                  "Multiplication des fractions."
+                                ]
+                              },
+                              {
+                                "titre": "Appliquer les mécanismes opératoires de la division sur les fractions.",
+                                "contenus": [
+                                  "Division sur les fractions."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Prendre une fraction d’une grandeur.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Prendre une fraction d’une grandeur.",
+                                "contenus": [
+                                  "Fractions ordinaires et fractions décimales."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Trouver une grandeur dont on connaît une fraction.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Trouver une grandeur dont on connaît une fraction.",
+                                "contenus": [
+                                  "Fractions ordinaires et fractions décimales."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Découvrir la notion de pourcentage, Calculer une échelle.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir la notion de pourcentage.",
+                                "contenus": [
+                                  "Notion de pourcentage."
+                                ]
+                              },
+                              {
+                                "titre": "Utiliser la proportionnalité",
+                                "contenus": [
+                                  "Rapport de proportionnalité",
+                                  "La règle de trois."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Utiliser une stratégie de calcul mental sur les fractions (objectif transversal)",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Prendre la moitié, le tiers, le quart.",
+                                "contenus": [
+                                  "moitié, tiers, quart"
+                                ]
+                              },
+                              {
+                                "titre": "Prendre le double, le triple.",
+                                "contenus": [
+                                  "Double, triple,"
+                                ]
+                              },
+                              {
+                                "titre": "Multiplier par 1/5, 1/10 , 1/100 ;",
+                                "contenus": [
+                                  "Stratégies multiplicatives : par 1/5, 1/10, 1/100."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Activités géométriques",
+                "page_source": 201,
+                "competences_base": [
+                  {
+                    "description": "Intégrer les notions liées aux positions relatives des droites et aux angles, les propriétés de figures planes et de solides, les transformations ponctuelles ( symétrie, translation, agrandissement, réduction ) ainsi que des techniques d’utilisation d’instruments dans des situations de résolution de problèmes de constructions géométriques.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 5",
+                        "description": "Intégrer les notions liées aux positions relatives des droites et aux angles, les propriétés de figures planes (carré, rectangle, triangles, parallélogramme, losange, trapèze, cercle, ainsi que des techniques d’utilisation d’instruments dans des situations de résolution de problèmes de constructions géométriques.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "1. Reproduire des figures géométriques. 2. Découvrir les Propriétés élémentaires de figures géométriques planes. 3. Construire des figures géométriques à l’aide d’instruments (Règle, double décimètre, équerre, compas, rapporteur).",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Construire le carré et le rectangle.",
+                                "contenus": [
+                                  "Le carré et le rectangle : propriétés"
+                                ]
+                              },
+                              {
+                                "titre": "Construire le triangle.",
+                                "contenus": [
+                                  "Les triangles : propriétés."
+                                ]
+                              },
+                              {
+                                "titre": "Construire le parallélogramme.",
+                                "contenus": [
+                                  "Le parallélogramme : propriétés."
+                                ]
+                              },
+                              {
+                                "titre": "Construire le cercle.",
+                                "contenus": [
+                                  "Le cercle : propriétés."
+                                ]
+                              },
+                              {
+                                "titre": "Construire le losange.",
+                                "contenus": [
+                                  "Le losange : propriétés."
+                                ]
+                              },
+                              {
+                                "titre": "Construire le trapèze.",
+                                "contenus": [
+                                  "Le trapèze : propriétés."
+                                ]
+                              },
+                              {
+                                "titre": "Construire le tangram.",
+                                "contenus": [
+                                  "Le tangram"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 6",
+                        "description": "Intégrer les notions liées aux positions relatives des droites et aux angles, les propriétés de figures planes ( polygones réguliers, polygones irréguliers ) et de solides ( cube, pavé droit, cylindre, prisme doit ) ainsi que des techniques d’utilisation d’instruments dans des situations de résolution de problèmes de constructions géométriques.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Construire des polygones réguliers à l’aide d’instruments (Règle/ double décimètre, équerre, compas)",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Construire un hexagone.",
+                                "contenus": [
+                                  "L’hexagone : propriétés."
+                                ]
+                              },
+                              {
+                                "titre": "Construire un octogone.",
+                                "contenus": [
+                                  "l’octogone: propriétés."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Décomposer des polygones irréguliers à l’aide d’instruments (Règle, double décimètre, compas)",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Décomposer des polygones irréguliers à l’aide d’instruments (Règle, double décimètre, compas)",
+                                "contenus": [
+                                  "Polygones irréguliers"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "1. Reproduire des solides.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Construire le cube.",
+                                "contenus": [
+                                  "Le cube : propriétés."
+                                ]
+                              },
+                              {
+                                "titre": "Construire le pavé droit.",
+                                "contenus": [
+                                  "Le pavé droit : propriétés."
+                                ]
+                              },
+                              {
+                                "titre": "Construire le cylindre.",
+                                "contenus": [
+                                  "Le cylindre : propriétés"
+                                ]
+                              },
+                              {
+                                "titre": "Construire le prisme droit",
+                                "contenus": [
+                                  "Le prisme droit : propriétés."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 7",
+                        "description": "Intégrer les notions liées aux positions relatives des droites et aux angles, les propriétés de figures planes et de solides, les transformations ponctuelles ( symétrie, translation, agrandissement, réduction ), ainsi que des techniques d’utilisation d’instruments dans des situations de résolution de problèmes de constructions géométriques.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Découvrir et appliquer les notions élémentaires de symétrie par rapport à un axe.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir et appliquer les notions élémentaires de symétrie par rapport à un axe.",
+                                "contenus": [
+                                  "Figures symétriques; axe de symétrie"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Découvrir et appliquer les notions élémentaires de translation.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir et appliquer les notions élémentaires de translation.",
+                                "contenus": [
+                                  "Notion de translation",
+                                  "Image de figures obtenues par translation"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Découvrir et appliquer les procédés d’agrandissement et de réduction",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir et appliquer les procédés d’agrandissement et de réduction",
+                                "contenus": [
+                                  "Notion d’agrandissement et de réduction"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Activités de mesure",
+                "page_source": 216,
+                "competences_base": [
+                  {
+                    "description": "Intégrer les notions de longueur, de capacité, de masse, d’angle, d’aire, de volume, de durée et de monnaie ainsi que des techniques d’utilisation d’instruments conventionnels et les opérations arithmétiques dans des situations de résolution de problèmes de mesure et de calcul.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 4",
+                        "description": "Intégrer les notions de longueur, de capacité, de masse, d’angle et des techniques d’utilisation d’instruments conventionnels et les opérations arithmétiques dans des situations de résolution de problèmes de mesure et de calcul.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Effectuer des mesures et des calculs sur les longueurs.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Effectuer des mesures de longueur.",
+                                "contenus": [
+                                  "Mètre, multiples et sous multiples,"
+                                ]
+                              },
+                              {
+                                "titre": "Etablir les relations entre le mètre, ses multiples et ses sous multiples.",
+                                "contenus": [
+                                  "Mètre, multiples et sous multiples,"
+                                ]
+                              },
+                              {
+                                "titre": "Calculer un périmètre.",
+                                "contenus": [
+                                  "Périmètre du carré, périmètre du rectangle, périmètre du cercle."
+                                ]
+                              },
+                              {
+                                "titre": "Calculer des dimensions.",
+                                "contenus": [
+                                  "Côté du carré",
+                                  "longueur ou largeur du rectangle",
+                                  "diamètre ou rayon du cercle"
+                                ]
+                              },
+                              {
+                                "titre": "Effectuer des calculs sur les intervalles.",
+                                "contenus": [
+                                  "Les intervalles (ligne fermée, ligne ouverte )."
+                                ]
+                              },
+                              {
+                                "titre": "Effectuer des calculs sur les échelles",
+                                "contenus": [
+                                  "Notion d’échelle",
+                                  "Calcul d’une dimension réduite.",
+                                  "Calcul d’une dimension réelle."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Effectuer des mesures et des calculs sur les capacités.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Effectuer des mesures de capacité.",
+                                "contenus": [
+                                  "Litre, multiples et sous multiples."
+                                ]
+                              },
+                              {
+                                "titre": "Etablir les relations entre le litre, ses multiples et ses sous multiples.",
+                                "contenus": [
+                                  "Litre, multiples et sous multiples."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Effectuer des mesures et des calculs sur les masses.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Effectuer des mesures de masse.",
+                                "contenus": [
+                                  "Le kg, multiples et sous multiples."
+                                ]
+                              },
+                              {
+                                "titre": "Etablir les relations entre le kg, ses multiples et ses sous multiples.",
+                                "contenus": [
+                                  "Le kg, multiples et sous multiples."
+                                ]
+                              },
+                              {
+                                "titre": "Calculer des masses",
+                                "contenus": [
+                                  "Masse nette, masse brute, tare"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Effectuer des mesures d’angles.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Effectuer des mesures d’angles.",
+                                "contenus": [
+                                  "Utilisation du rapporteur et de l’équerre.",
+                                  "Le degré"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 5",
+                        "description": "Intégrer les notions de longueur, de capacité, de masse, d’angle, d’aire, de volume et de durée ainsi que des techniques d’utilisation d’instruments conventionnels et les opérations arithmétiques dans des situations de résolution de problèmes de mesure et de calcul",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Effectuer des calculs d’aires et de dimensions.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Etablir les relations entre le m2, ses multiples et ses sous multiples.",
+                                "contenus": [
+                                  "Le m2, multiples et sous multiples, conversion d’unités"
+                                ]
+                              },
+                              {
+                                "titre": "Calculer l’aire et la dimension du carré",
+                                "contenus": [
+                                  "Aire et dimension du carré"
+                                ]
+                              },
+                              {
+                                "titre": "Calculer l’aire et une dimension du rectangle",
+                                "contenus": [
+                                  "Aire et dimensions du rectangle"
+                                ]
+                              },
+                              {
+                                "titre": "Calculer l’aire et une dimension du triangle",
+                                "contenus": [
+                                  "Aire et dimensions du triangle"
+                                ]
+                              },
+                              {
+                                "titre": "Calculer l’aire et une dimension du parallélogramme.",
+                                "contenus": [
+                                  "Aire et dimensions du parallélogramme"
+                                ]
+                              },
+                              {
+                                "titre": "Calculer l’aire et la dimension du cercle.",
+                                "contenus": [
+                                  "Aire et dimension du cercle"
+                                ]
+                              },
+                              {
+                                "titre": "Calculer l’aire et la dimension du losange.",
+                                "contenus": [
+                                  "Aire et dimensions du losange"
+                                ]
+                              },
+                              {
+                                "titre": "Calculer l’aire et la dimension du trapèze.",
+                                "contenus": [
+                                  "Aire et dimensions du trapèze"
+                                ]
+                              },
+                              {
+                                "titre": "Calculer des aires diminuées ou augmentées.",
+                                "contenus": [
+                                  "Aires augmentées (encadrement) et diminuées (bordures, allées)."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Effectuer des calculs de volume et de dimensions.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Etablir les relations entre le m3 et ses sous multiples.",
+                                "contenus": [
+                                  "Le m3 et ses sous multiples, conversions d’unités."
+                                ]
+                              },
+                              {
+                                "titre": "Calculer le volume et l’arête du cube.",
+                                "contenus": [
+                                  "Volume du cube.",
+                                  "Arête du cube"
+                                ]
+                              },
+                              {
+                                "titre": "Calculer le volume et les dimensions du pavé droit.",
+                                "contenus": [
+                                  "Volume du pavé droit.",
+                                  "Surface de base, hauteur, longueur, largeur."
+                                ]
+                              },
+                              {
+                                "titre": "Calculer le volume et les dimensions du cylindre.",
+                                "contenus": [
+                                  "Volume du cylindre.",
+                                  "Surface de base, hauteur, rayon"
+                                ]
+                              },
+                              {
+                                "titre": "Etablir les relations entre volume, capacité et masse.",
+                                "contenus": [
+                                  "Volume, masse, capacité."
+                                ]
+                              },
+                              {
+                                "titre": "Calculer la masse volumique.",
+                                "contenus": [
+                                  "Masse volumique."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Effectuer des calculs de durée et de distances.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Etablir les relations entre les unités de durée.",
+                                "contenus": [
+                                  "Unités de mesure de durée : an, mois, semaine, jour, heure, minute, seconde."
+                                ]
+                              },
+                              {
+                                "titre": "Effectuer des calculs de durée.",
+                                "contenus": [
+                                  "Opérations sur les nombres complexes : addition, soustraction, multiplication et division"
+                                ]
+                              },
+                              {
+                                "titre": "Effectuer des calculs portant sur les mouvements uniformes.",
+                                "contenus": [
+                                  "Mouvements uniformes : distance parcourue, vitesse moyenne, durée du parcours."
+                                ]
+                              },
+                              {
+                                "titre": "Représenter graphiquement un mouvement uniforme.",
+                                "contenus": [
+                                  "Représentation graphique"
+                                ]
+                              },
+                              {
+                                "titre": "Effectuer des calculs portant sur le débit.",
+                                "contenus": [
+                                  "Le débit."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 6",
+                        "description": "Intégrer les notions de longueur, de capacité, de masse, d’angle, d’aire, de volume, de durée et de monnaie ainsi que des techniques d’utilisation d’instruments conventionnels et les opérations arithmétiques dans des situations de résolution de problèmes de mesure et de calcul.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Effectuer des calculs portant sur la monnaie.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Effectuer des calculs portant sur le budget familial.",
+                                "contenus": [
+                                  "Budget familial : gain, dépense, économie, dette."
+                                ]
+                              },
+                              {
+                                "titre": "Effectuer des calculs portant sur les prix.",
+                                "contenus": [
+                                  "Prix d’achat, prix de revient, prix de vente, perte, bénéfice, frais."
+                                ]
+                              },
+                              {
+                                "titre": "Trouver une grandeur connaissant son pourcentage.",
+                                "contenus": [
+                                  "Notion de pourcentage",
+                                  "Calcul d’un pourcentage."
+                                ]
+                              },
+                              {
+                                "titre": "Calculer un intérêt.",
+                                "contenus": [
+                                  "Calcul d’une grandeur."
+                                ]
+                              },
+                              {
+                                "titre": "Calculer le capital placé.",
+                                "contenus": [
+                                  "Intérêt annuel, intérêt rapporté à une durée.",
+                                  "Intérêt, calcul du capital."
+                                ]
+                              },
+                              {
+                                "titre": "Calculer le taux de placement.",
+                                "contenus": [
+                                  "Calcul du taux"
+                                ]
+                              },
+                              {
+                                "titre": "Calculer la durée de placement d’un capital.",
+                                "contenus": [
+                                  "Calcul de la durée d’un placement."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Résoudre des problèmes de partage.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Résoudre des problèmes de partage en parts égales.",
+                                "contenus": [
+                                  "Parts égales"
+                                ]
+                              },
+                              {
+                                "titre": "Résoudre des problèmes de partage en parts inégales.",
+                                "contenus": [
+                                  "parts inégales : part multiple, tant de plus/tant de moins."
+                                ]
+                              },
+                              {
+                                "titre": "Résoudre des problèmes de partage en parts proportionnelles.",
+                                "contenus": [
+                                  "Partages proportionnels : deux parts, plusieurs parts."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Calculer une moyenne.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Calculer une moyenne.",
+                                "contenus": [
+                                  "Notion de moyenne.",
+                                  "Masse moyenne, capacité moyenne, taille moyenne etc."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Résolution de problèmes",
+                "page_source": 228,
+                "competences_base": [
+                  {
+                    "description": "Intégrer des données, des consignes et des questions d’un énoncé mathématique ainsi que les démarches de raisonnement dans des situations de recherche de solutions appropriées.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 3",
+                        "description": "Intégrer des données, des consignes et des questions dans des situations d’analyse d’énoncés mathématiques.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Identifier et organiser les données d’un énoncé.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier et organiser les données d’un énoncé.",
+                                "contenus": [
+                                  "Types de données : utiles, inutiles, manquantes."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Traiter les consignes, les questions.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier et organiser les consignes, les questions.",
+                                "contenus": [
+                                  "Consignes",
+                                  "Questions finales",
+                                  "Questions intermédiaires"
+                                ]
+                              },
+                              {
+                                "titre": "Formuler des questions pour compléter un énoncé.",
+                                "contenus": [
+                                  "Enoncés.",
+                                  "Questions finales.",
+                                  "Questions intermédiaires"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Interpréter un énoncé.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Lire des données sur un schéma, un graphique, un tableau.",
+                                "contenus": [
+                                  "Tableaux, graphiques, schémas"
+                                ]
+                              },
+                              {
+                                "titre": "Représenter un problème, un énoncé à l’aide d’un dessin.",
+                                "contenus": [
+                                  "Tableaux, graphiques, schémas."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Construire un énoncé.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Construire un énoncé à partir de données.",
+                                "contenus": [
+                                  "Données numériques : (factures, tableaux, schémas, graphiques …)",
+                                  "Informations non numériques."
+                                ]
+                              },
+                              {
+                                "titre": "Construire un énoncé à partir de données.",
+                                "contenus": [
+                                  "Solutions de problèmes"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Trouver et corriger l'erreur dans une résolution.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Trouver et corriger l'erreur dans une résolution.",
+                                "contenus": [
+                                  "Types d’erreurs : erreur de calcul, erreur de raisonnement, erreur d’application de règles ou de formules."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Proposer une procédure de résolution de problème.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Raisonner sans les données numériques avec la démarche progressive.",
+                                "contenus": [
+                                  "Démarche progressive"
+                                ]
+                              },
+                              {
+                                "titre": "Raisonner sans les données numériques avec la démarche régressive.",
+                                "contenus": [
+                                  "Démarche régressive."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Vérifier des solutions.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Construire et appliquer des outils de vérification.",
+                                "contenus": [
+                                  "Démarches et outils de vérification."
+                                ]
+                              },
+                              {
+                                "titre": "Communiquer une solution.",
+                                "contenus": [
+                                  "Démarches et outils de communication."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

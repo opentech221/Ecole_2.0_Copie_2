@@ -205,7 +205,7 @@ export function ExecutiveOverview({ summary }: ExecutiveOverviewProps) {
                     <span className="text-muted-foreground">{item.users}</span>
                   </div>
                   <div className="h-2 rounded-full bg-slate-100 dark:bg-slate-900">
-                    <div className="h-2 rounded-full" style={{ width: `${Math.max(10, (item.users / Math.max(1, summary.business.kpis.activeUsers)) * 100)}%`, backgroundColor: palette[index % palette.length] }} />
+                    <div className="h-2 rounded-full" style={{ width: `${Math.max(10, (item.users / Math.max(1, summary.business?.kpis.activeUsers ?? 0)) * 100)}%`, backgroundColor: palette[index % palette.length] }} />
                   </div>
                 </div>
               ))}

@@ -74,13 +74,15 @@ export function UsersWorkspace({
   onImportCsv,
   onExportCsv,
 }: UsersWorkspaceProps) {
+  type CreateUserPayload = Parameters<UsersWorkspaceProps["onCreateUser"]>[0];
+
   const [createOpen, setCreateOpen] = useState(false);
   const [importOpen, setImportOpen] = useState(false);
-  const [createForm, setCreateForm] = useState({
+  const [createForm, setCreateForm] = useState<CreateUserPayload>({
     email: "",
     fullName: "",
-    roleCode: "support" as const,
-    status: "active" as const,
+    roleCode: "support",
+    status: "active",
     countryCode: "SN",
     acquisitionChannel: "direct",
     sendInvite: true,

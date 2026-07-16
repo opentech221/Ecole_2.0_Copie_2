@@ -1,0 +1,541 @@
+[
+  {
+    "niveau": "CE1",
+    "document_ref": "guide_etape_2",
+    "domaines": [
+      {
+        "nom": "Éducation à la Science et à la Vie Sociale",
+        "sous_domaines": [
+          {
+            "nom": "Découverte du monde",
+            "activites": [
+              {
+                "nom": "Histoire",
+                "page_source": 250,
+                "competences_base": [
+                  {
+                    "description": "intégrer des techniques de recherche (observation, enquête, étude documentaire, etc.) dans des situations de découverte de faits historiques du milieu proche.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "Intégrer des techniques d’observation et d’enquête dans des situations de découverte de la notion de temps et de l’histoire locale.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Découvrir la notion de temps.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Distinguer passé, présent et futur.",
+                                "contenus": [
+                                  "indicateurs de temps : aujourd’hui, hier, demain",
+                                  "avant, durant, en même temps, après",
+                                  "cette année, l’année dernière, année prochaine, il y a longtemps"
+                                ]
+                              },
+                              {
+                                "titre": "Se situer dans une tranche de temps.",
+                                "contenus": [
+                                  "activités supports : s’appuyer sur les activités scolaires, celles de la vie à ces différents moments (des activités déjà faites, à faire, qui se font en même temps)"
+                                ]
+                              },
+                              {
+                                "titre": "Situer des événements ou des faits dans le temps.",
+                                "contenus": [
+                                  "âge de quelques personnes",
+                                  "éléments contenus supports : âge des élèves, des maîtres, du directeur, des parents, etc."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Découvrir le passé local.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir le passé de sa famille.",
+                                "contenus": [
+                                  "passé d’une famille : histoire de sa famille (arbre généalogique sur trois générations)",
+                                  "histoire d’une famille bien connue (arbre généalogique sur trois générations)"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir le passé de son école.",
+                                "contenus": [
+                                  "passé de l’école : histoire de l’école : création, premier directeur, maîtres, parrain, extension (monographie)"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "intégrer des techniques d’observation et d’enquête dans des situations de découverte de l’organisation sociale du milieu proche.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Découvrir l’histoire du quartier (ou du village).",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir l’évolution du quartier (aujourd’hui, hier).",
+                                "contenus": [
+                                  "passé du quartier ou du village : origine, développement et transformation",
+                                  "organisation sociale, cérémonies familiales, ethnies, etc."
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Découvrir l’histoire de la commune ou de la communauté rurale.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir les faits et les figures historiques de la commune ou de la communauté rurale.",
+                                "contenus": [
+                                  "passé local : faits et figures historiques de la commune ou de la communauté rurale"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Géographie",
+                "page_source": 259,
+                "competences_base": [
+                  {
+                    "description": "intégrer des techniques d’observation, de localisation et de représentation dans des situations de découverte de faits géographiques du milieu proche.",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "intégrer des techniques d’observation et de représentation dans des situations de découverte des positions, des distances et de l’espace proche.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "S’orienter dans l’espace proche.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier les positions des objets ou des personnes (en utilisant le schéma corporel).",
+                                "contenus": [
+                                  "latéralité : gauche, droite",
+                                  "orientations : devant, derrière, à côté, en face, entre",
+                                  "positions : sur, sous, au-dessus, au-dessous, dedans, dehors"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Représenter son milieu proche.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Représenter des éléments de l’espace proche.",
+                                "contenus": [
+                                  "dessin de l’école",
+                                  "dessin de la classe",
+                                  "dessin de la maison"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Découvrir les saisons.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir les caractéristiques des saisons.",
+                                "contenus": [
+                                  "découverte des saisons : saison des pluies, saison sèche (période, durée, caractéristiques)",
+                                  "types d’activités"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "intégrer des techniques d’observation et de représentation dans des situations de découverte du relief et de l’hydrographie du milieu proche.",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Découvrir le relief de son milieu.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier les éléments du relief de son milieu.",
+                                "contenus": [
+                                  "découverte du relief du milieu proche : le sol (plat, accidenté, incliné)",
+                                  "formes (pente, colline, dune, vallée, cuvette)"
+                                ]
+                              },
+                              {
+                                "titre": "Représenter des éléments du relief.",
+                                "contenus": [
+                                  "croquis d'éléments du relief"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Découvrir les points d’eau et les cours d’eau.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Découvrir les points d’eau de son milieu.",
+                                "contenus": [
+                                  "découverte des points d’eau du milieu : puits, forage, bassins de rétention",
+                                  "Mare, lac, marigot"
+                                ]
+                              },
+                              {
+                                "titre": "Découvrir les cours d’eau de son milieu.",
+                                "contenus": [
+                                  "découverte des cours d’eau du milieu : sources, ruisseau, rivière",
+                                  "fleuve, mer, océan"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Initiation scientifique et technologique",
+                "page_source": 273,
+                "competences_base": [
+                  {
+                    "description": "intégrer des démarches et des techniques (observation, manipulation, expérimentation, etc.) dans des situations de découverte scientifique et technologique du milieu proche",
+                    "paliers": [
+                      {
+                        "nom": "Palier 1",
+                        "description": "intégrer des techniques d’observation et de description dans des situations de découverte de quelques fonctions de digestion et de respiration des êtres de son milieu proche (homme, autre animal, plante).",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Découvrir des caractéristiques, des besoins et des modes nutritionnels des êtres vivants.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier des caractéristiques et des besoins nutritionnels des êtres vivants.",
+                                "contenus": [
+                                  "caractéristiques des êtres : la plante (description, la plante a besoin de se nourrir)",
+                                  "l’homme (description du corps; la faim, la soif ; relation entre l’organe et le régime alimentaire)",
+                                  "un animal (description d’un animal familier ; la faim, la soif ; relation entre l’organe et le régime alimentaire)"
+                                ]
+                              },
+                              {
+                                "titre": "Classifier des êtres vivants selon le régime alimentaire.",
+                                "contenus": [
+                                  "classification selon le régime alimentaire (type d’aliment dominant)",
+                                  "les herbivores (régime alimentaire ; relation entre la dentition et le régime alimentaire)",
+                                  "les carnivores (régime alimentaire ; relation entre la dentition et le régime alimentaire)",
+                                  "les granivores, les insectivores (type d’aliments ; relation entre la dentition et régime alimentaire)",
+                                  "les omnivores (régime alimentaire ; relation entre la dentition et le régime alimentaire)"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Découvrir les modes de respiration des êtres vivants.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier le mode respiratoire de l’homme, de l’animal et de la plante.",
+                                "contenus": [
+                                  "modes respiratoires : respiration par les poumons (l’être humain, un autre animal)",
+                                  "respiration par les branchies (le poisson)",
+                                  "respiration par les feuilles (la plante)"
+                                ]
+                              },
+                              {
+                                "titre": "Classifier les êtres vivants selon le mode respiratoire.",
+                                "contenus": [
+                                  "classification selon le mode respiratoire : les êtres à respiration pulmonaire (relation entre le mode respiratoire et le milieu)",
+                                  "les êtres à respiration branchiale (relation entre le mode respiratoire et le milieu)",
+                                  "les êtres à respiration « par les feuilles » (relation entre le mode respiratoire et le milieu)"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 2",
+                        "description": "intégrer des techniques simples dans des situations d’entretien et de manipulation d’objets techniques courants (lampe, fer à repasser, téléphone, etc.).",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Manipuler des objets techniques.",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier des objets techniques.",
+                                "contenus": [
+                                  "objets techniques : lampe tempête, bougie, lampe de poche, lampe électrique"
+                                ]
+                              },
+                              {
+                                "titre": "Utiliser un objet technique courant.",
+                                "contenus": [
+                                  "démo de fonctionnement et usage correct"
+                                ]
+                              },
+                              {
+                                "titre": "Entretenir un objet technique courant.",
+                                "contenus": [
+                                  "nettoyage, lavage, graissage, dépoussiérage"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nom": "Éducation au développement durable",
+            "sous_domaines": [
+              {
+                "nom": null,
+                "activites": [
+                  {
+                    "nom": "Vivre dans son milieu",
+                    "page_source": 299,
+                    "competences_base": [
+                      {
+                        "description": "intégrer des notions de base et des techniques simples dans des situations d’analyse et de proposition de solutions adaptées à des problèmes d’environnement, de nutrition, de population et de santé de son milieu proche",
+                        "paliers": [
+                          {
+                            "nom": "Palier 1",
+                            "description": "intégrer des techniques simples dans des situations d’analyse et de proposition de solutions adaptées à des problèmes d’hygiène, de nutrition, de parasitose et de paludisme dans le milieu proche.",
+                            "objectifs_apprentissage": [
+                              {
+                                "titre": "Pratiquer des mesures d’hygiène corporelle et vestimentaire.",
+                                "objectifs_specifiques": [
+                                  {
+                                    "titre": "Pratiquer la propreté du corps.",
+                                    "contenus": [
+                                      "hygiène corporelle : mains, dents, peau, tête, yeux, oreilles, etc."
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Pratiquer la propreté des habits.",
+                                    "contenus": [
+                                      "hygiène vestimentaire : lavage, séchage, repassage"
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "titre": "Protéger les aliments et l’eau.",
+                                "objectifs_specifiques": [
+                                  {
+                                    "titre": "Appliquer des mesures de protection des aliments.",
+                                    "contenus": [
+                                      "protection des aliments contre les vecteurs (mouches, poussière, rats, cancrelats)"
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Appliquer des mesures de protection et de traitement de l’eau.",
+                                    "contenus": [
+                                      "protection et traitement de l’eau (puisage, transport, conservation, filtration, javellisation, ébullition)"
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "titre": "Lutter contre les parasitoses et le paludisme.",
+                                "objectifs_specifiques": [
+                                  {
+                                    "titre": "Identifier des parasitoses du milieu et les sources de contamination.",
+                                    "contenus": [
+                                      "parasitoses : types (vers intestinaux, vers de Guinée, bilharzies, etc.)",
+                                      "sources de contamination (eaux contaminées, aliments souillés ou mal cuits)"
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Proposer des mesures de prévention contre les parasitoses.",
+                                    "contenus": [
+                                      "mesures de prévention : (boire de l’eau potable, laver les aliments à consommer crus, bien cuire les aliments, porter des chaussures, utiliser des latrines)"
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Identifier les manifestations et les modes de transmission du paludisme.",
+                                    "contenus": [
+                                      "manifestations du paludisme : signes (maux de tête, fièvre, frissons, vomissements)",
+                                      "modes de transmission (piqûre d’anophèle femelle)"
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Proposer des mesures de lutte contre le paludisme.",
+                                    "contenus": [
+                                      "mesures de lutte : assainissement du milieu (destruction des gîtes larvaires), utilisation de moustiquaires imprégnées, etc."
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "nom": "Palier 2",
+                            "description": "intégrer des techniques simples dans des situations d’analyse et de proposition de solutions adaptées à des problèmes de dégradation de l’environnement de son milieu proche",
+                            "objectifs_apprentissage": [
+                              {
+                                "titre": "Restaurer un environnement dégradé.",
+                                "objectifs_specifiques": [
+                                  {
+                                    "titre": "Identifier les principales formes de dégradation dans son milieu.",
+                                    "contenus": [
+                                      "formes de dégradation : érosion éolienne, érosion hydrique",
+                                      "exploitation abusive de l’environnement (déboisement, feux de brousse, pêche à la dynamite...)"
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Appliquer des techniques et des mesures simples de restauration d’un environnement dégradé.",
+                                    "contenus": [
+                                      "techniques et mesures de restauration : protection côtière (digues de protection), brise-vent, reboisement, mise en défens"
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "titre": "Sauvegarder son environnement.",
+                                "objectifs_specifiques": [
+                                  {
+                                    "titre": "Identifier des comportements et des pratiques défavorables à la préservation de l’environnement proche.",
+                                    "contenus": [
+                                      "actions défavorables à l’environnement scolaire : jet d’objets sur les toitures, destruction ou mauvais entretien des mobiliers, parterres, clôtures, etc.",
+                                      "mauvaises pratiques : gaspillage de l’eau, dépôt sauvage d’ordures, le péril fécal"
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Appliquer des mesures et des techniques simples de sauvegarde de l’environnement proche.",
+                                    "contenus": [
+                                      "mesures de sauvegarde : respect des règles, brigades de surveillance, opération « set-setal »",
+                                      "techniques simples : pare-feux, plantation d’arbres, construction de puisards, pose de diguettes, etc."
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "nom": "Vivre ensemble",
+                    "page_source": 313,
+                    "competences_base": [
+                      {
+                        "description": "intégrer des valeurs et des comportements dans des situations d’analyse et de proposition de solutions à des problèmes nés des relations humaines au sein du milieu proche",
+                        "paliers": [
+                          {
+                            "nom": "Palier 1",
+                            "description": "intégrer des règles élémentaires de vie en commun et le civisme dans des situations de relations sociales au sein du milieu proche",
+                            "objectifs_apprentissage": [
+                              {
+                                "titre": "Respecter les règles de vie en commun.",
+                                "objectifs_specifiques": [
+                                  {
+                                    "titre": "Appliquer des règles élémentaires de civilité.",
+                                    "contenus": [
+                                      "règles de civilité : bon voisinage, respect du sommeil d'autrui, formules de politesse, courtoisie"
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Manifester des attitudes de respect à l’égard du plus faible.",
+                                    "contenus": [
+                                      "respect de la dignité et de l’intégrité physique et morale : ne pas dénigrer, ne pas maltraiter, ne pas agresser"
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Manifester du respect et de l’obéissance à l’égard des adultes.",
+                                    "contenus": [
+                                      "obéissance aux parents, adultes, enseignant(e)s : saluer le premier, aider spontanément, etc."
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "titre": "Respecter les règles élémentaires de civisme.",
+                                "objectifs_specifiques": [
+                                  {
+                                    "titre": "Manifester des attitudes de respect à l’égard des symboles de la Nation.",
+                                    "contenus": [
+                                      "signification des symboles (drapeau, hymnes, devise, fête nationale)",
+                                      "manifestation de respect (ne pas fouler au pied, saluer à la montée/descente, etc.)"
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Appliquer des dispositions élémentaires des principaux codes.",
+                                    "contenus": [
+                                      "code de la route (piéton, cycliste)",
+                                      "code de l’hygiène",
+                                      "code forestier"
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Manifester des attitudes de respect envers les biens publics et privés.",
+                                    "contenus": [
+                                      "respect des édifices et équipements publics (ne pas salir, ne pas casser)",
+                                      "respect des biens privés (voiture du particulier, murs du voisin)"
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "nom": "Palier 2",
+                            "description": "intégrer les différences et les diversités dans des situations de relations sociales au sein du milieu proche",
+                            "objectifs_apprentissage": [
+                              {
+                                "titre": "Respecter les différences.",
+                                "objectifs_specifiques": [
+                                  {
+                                    "titre": "Manifester des attitudes de respect à l’égard des différences « naturelles ».",
+                                    "contenus": [
+                                      "garçon/fille, valide/handicapé, sain/malade, etc.",
+                                      "ne pas mépriser, ne pas stigmatiser, montrer de la solidarité"
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Manifester des attitudes de respect à l’égard de la différence socioéconomiques et professionnelles.",
+                                    "contenus": [
+                                      "pauvre/riche, citadin/rural, instruit/illettré",
+                                      "reconnaître l’égale dignité, se montrer empathique"
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "titre": "Respecter les diversités.",
+                                "objectifs_specifiques": [
+                                  {
+                                    "titre": "Manifester des attitudes de respect à l’égard de la préférence d’autrui.",
+                                    "contenus": [
+                                      "diversité d’opinion, de choix, de goût et d’action"
+                                    ]
+                                  },
+                                  {
+                                    "titre": "Manifester des attitudes de respect à l’égard des diversités socioculturelles.",
+                                    "contenus": [
+                                      "ethnie, culture, religion, confrérie, race, caste",
+                                      "ne pas discriminer, accepter les apports de l’autre"
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

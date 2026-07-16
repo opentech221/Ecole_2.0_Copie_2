@@ -383,6 +383,19 @@ export function Dashboard() {
               onClick={() => navigate("/admin/saas")}
             />
 
+            {/* Module 6: Programme Officiel */}
+            <ModuleCard
+              badge="Module 6"
+              badgeIcon={<BookMarked className="w-3.5 h-3.5 text-white/80"/>}
+              gradient="linear-gradient(135deg, #065f46 0%, #047857 50%, #0f766e 100%)"
+              shadowColor="rgba(6,95,70,0.30)"
+              accent="#0d9488"
+              title="Programme officiel"
+              description="Naviguez le référentiel réel DEMSG (niveau, domaine, sous-domaine, activité) et connectez la préparation pédagogique aux données officielles." 
+              ctaLabel="Ouvrir le module"
+              onClick={() => navigate("/programme")}
+            />
+
           </div>
         </div>
 

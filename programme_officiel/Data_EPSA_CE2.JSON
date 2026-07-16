@@ -1,0 +1,294 @@
+[
+  {
+    "niveau": "CE2",
+    "document_ref": "guide_etape_2",
+    "domaines": [
+      {
+        "nom": "Éducation Physique, Sportive et Artistique",
+        "sous_domaines": [
+          {
+            "nom": "Éducation physique et sportive",
+            "activites": [
+              {
+                "nom": "Activités physiques et sportives",
+                "page_source": 323,
+                "competences_base": [
+                  {
+                    "description": "Intégrer des règles de base, des activités motrices et des techniques simples dans des situations d’initiation sportive [1].",
+                    "paliers": [
+                      {
+                        "nom": "Palier 3",
+                        "description": "Intégrer des activités motrices fondamentales, des règles de jeu et des techniques de base dans des situations de pratiques sportives [2].",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Pratiquer des exercices physiques",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Pratiquer des exercices d’assouplissement",
+                                "contenus": [
+                                  "Activités motrices du train supérieur (balancement, cercle des bras, flexion/extension, rotation poignets, attraper, tirer)",
+                                  "Activités motrices du train inférieur (marcher, courir, flexion de jambes, sauter, quadrupédie, pousser)"
+                                ]
+                              },
+                              {
+                                "titre": "Pratiquer des exercices de mise en route de l’organisme (échauffement)",
+                                "contenus": [
+                                  "Marche sportive",
+                                  "Petites foulées entrecoupées d’exercices d’étirement et d’assouplissement"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "titre": "Pratiquer des sports",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Pratiquer des activités sportives traditionnelles",
+                                "contenus": [
+                                  "Lutte (sans frappe)",
+                                  "Lutte au foulard",
+                                  "Autres sports traditionnels locaux"
+                                ]
+                              },
+                              {
+                                "titre": "Pratiquer des activités sportives modernes",
+                                "contenus": [
+                                  "Football",
+                                  "Volleyball",
+                                  "Autres sports collectifs selon disponibilité"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 4",
+                        "description": "Intégrer des activités motrices fondamentales, des techniques de base et des règles dans des situations de pratique et d’organisation d’activités sportives [3].",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Pratiquer des exercices physiques",
+                            "objectifs_specifiques": [
+                              { "titre": "Pratiquer des exercices d’assouplissement" },
+                              { "titre": "Pratiquer des exercices de mise en route (échauffement)" }
+                            ]
+                          },
+                          {
+                            "titre": "Pratiquer et organiser l'athlétisme",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Pratiquer des courses d'obstacles",
+                                "contenus": [
+                                  "Franchissement d'obstacles variés",
+                                  "Maintien de la vitesse"
+                                ]
+                              },
+                              {
+                                "titre": "Pratiquer le saut en hauteur",
+                                "contenus": [
+                                  "Course d'élan",
+                                  "Appel",
+                                  "Franchissement de la barre",
+                                  "Réception"
+                                ]
+                              },
+                              {
+                                "titre": "Pratiquer le lancer de poids",
+                                "contenus": [
+                                  "Tenue de l'engin",
+                                  "Position de départ",
+                                  "Extension du bras",
+                                  "Projection"
+                                ]
+                              },
+                              {
+                                "titre": "Jouer un rôle d’officiel",
+                                "contenus": [
+                                  "Arbitre",
+                                  "Juge",
+                                  "Chronométreur"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "nom": "Éducation artistique",
+            "activites": [
+              {
+                "nom": "Arts plastiques",
+                "page_source": 315,
+                "competences_base": [
+                  {
+                    "description": "Intégrer des formes, des couleurs et des techniques élémentaires de reproduction et d’expression artistique dans des situations de décoration [4, 5].",
+                    "paliers": [
+                      {
+                        "nom": "Palier 3",
+                        "description": "Intégrer des formes, des couleurs et des techniques élémentaires de reproduction et d’expression dans des situations de coloriage d’objets dessinés ou modelés [6].",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Colorier des objets",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Identifier des couleurs et des nuances",
+                                "contenus": [
+                                  "Couleurs primaires et secondaires",
+                                  "Nuances et dégradés"
+                                ]
+                              },
+                              {
+                                "titre": "Colorier un objet modelé ou dessiné",
+                                "contenus": [
+                                  "Harmonie des couleurs",
+                                  "Respect des contours"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 4",
+                        "description": "Intégrer des techniques de réalisation d’objets décoratifs par collage, pliage et coloriage [7, 8].",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Réaliser des objets décoratifs",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Confectionner des objets par pliage et collage",
+                                "contenus": [
+                                  "Fleurs",
+                                  "Avions",
+                                  "Enveloppes",
+                                  "Boîtes décoratives"
+                                ]
+                              },
+                              {
+                                "titre": "Colorier harmonieusement les objets confectionnés"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Éducation musicale",
+                "page_source": 327,
+                "competences_base": [
+                  {
+                    "description": "Intégrer la reproduction de mélodies, de rythmes divers, la gestuelle simple et la coordination des mouvements dans des situations d’interprétation et d’appréciation de chants tirés du répertoire local [4, 9].",
+                    "paliers": [
+                      {
+                        "nom": "Palier 3",
+                        "description": "Intégrer des paroles, des mélodies d’instruments à percussions et à cordes, des techniques vocales, la gestuelle appropriée ainsi que la coordination des mouvements dans l’interprétation de chants tirés du répertoire local [10].",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Reproduire des sons d'instruments",
+                            "objectifs_specifiques": [
+                              { "titre": "Identifier et imiter des sons d’instruments à percussions et à cordes [11]" }
+                            ]
+                          },
+                          {
+                            "titre": "Interpréter un chant avec accompagnement",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Exécuter un chant avec accompagnement instrumental (percussions et cordes)",
+                                "contenus": [
+                                  "Chants du milieu",
+                                  "Hymne national",
+                                  "Chants initiatiques, de marche ou de louanges"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 4",
+                        "description": "Intégrer des paroles, des mélodies d’instruments à vent, des techniques vocales, la gestuelle appropriée ainsi que la coordination des mouvements dans l’interprétation de chants tirés du répertoire local [12].",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Reproduire des sons d'instruments",
+                            "objectifs_specifiques": [
+                              { "titre": "Identifier et imiter des sons d’instruments à vent (flûte, etc.) [13]" }
+                            ]
+                          },
+                          {
+                            "titre": "Interpréter et accompagner un chant",
+                            "objectifs_specifiques": [
+                              { "titre": "Exécuter un chant avec accompagnement d'un instrument à vent" },
+                              { "titre": "Accompagner l'exécution d'un chant avec un instrument à vent" }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "nom": "Arts scéniques",
+                "page_source": 339,
+                "competences_base": [
+                  {
+                    "description": "Intégrer des techniques d’imitation, de jeu de rôles, de mise en scène et de déguisement simples dans des situations de dramatisation relatives à des scènes de vie courante ou imaginaires [14, 15].",
+                    "paliers": [
+                      {
+                        "nom": "Palier 3",
+                        "description": "Intégrer des registres de la voix, des gestes, des jeux de rôles, des mises en scène et des déguisements simples dans des situations de dramatisation de scènes de vie du milieu proche [16].",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Imiter des personnages publics",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Imiter un homme ou une femme politique célèbre du milieu proche",
+                                "contenus": [ "Registre de voix", "Gestuelle caractéristique", "Débit de parole" ]
+                              },
+                              {
+                                "titre": "Imiter un ou une artiste célèbre du milieu proche",
+                                "contenus": [ "Style", "Maintien", "Attitudes scéniques" ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "nom": "Palier 4",
+                        "description": "Intégrer les registres de la voix, des gestes, des attitudes, des déguisements et la mise en scène dans des situations de dramatisation imaginaires ou tirées de la vie du milieu proche [17].",
+                        "objectifs_apprentissage": [
+                          {
+                            "titre": "Interpréter le rôle d'un personnage de légende",
+                            "objectifs_specifiques": [
+                              {
+                                "titre": "Imiter un héros de film ou de bande dessinée",
+                                "contenus": [ "Exemples : Kirikou, Goorgoorlou, Tintin, Lucky Luke, Dora", "Façon de parler, de se déplacer, valeurs du personnage" ]
+                              },
+                              {
+                                "titre": "Jouer le rôle d’un personnage de contes ou de légendes",
+                                "contenus": [ "Exemples : Mami Wata, Fari l’ânesse, Coumba l’orpheline, Dieynaba", "Extraits des aventures de ces héros" ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
