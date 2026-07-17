@@ -154,11 +154,28 @@ Option automatisée en une commande:
 npm run db:preflight
 ```
 
+Astuce debug preflight (sans execution des commandes):
+
+```bash
+node scripts/db-preflight.mjs --dry-run
+```
+
+Checklist integrite/RLS (cross-platform):
+
+```bash
+# base locale
+npm run db:integrity:local
+
+# base distante liee
+npm run db:integrity:linked
+```
+
 Ce preflight exécute:
 1. start DB locale
 2. reset complet des migrations
 3. verification des versions appliquees
-4. build frontend
+4. checklist integrite/RLS (tables, index, FKs, policies, triggers)
+5. build frontend
 
 ## Documentation Interne
 

@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { CahierRoulementScreen } from "../../src/app/components/CahierRoulementScreen";
 
 vi.mock("../../src/app/contexts/AppContext", () => ({
@@ -28,16 +29,30 @@ vi.mock("../../src/lib/supabase", () => {
 });
 
 describe("CahierRoulementScreen journal view", () => {
+  function createTestQueryClient() {
+    return new QueryClient({
+      defaultOptions: {
+        queries: {
+          retry: false,
+        },
+      },
+    });
+  }
+
   beforeEach(() => {
     window.localStorage.clear();
   });
 
   it("renders the weekly journal structure and stores observations", async () => {
+    const queryClient = createTestQueryClient();
+
     await act(async () => {
       render(
-        <MemoryRouter>
-          <CahierRoulementScreen />
-        </MemoryRouter>
+        <QueryClientProvider client={queryClient}>
+          <MemoryRouter>
+            <CahierRoulementScreen />
+          </MemoryRouter>
+        </QueryClientProvider>
       );
     });
 

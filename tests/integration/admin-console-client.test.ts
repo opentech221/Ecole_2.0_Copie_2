@@ -40,4 +40,51 @@ describe("adminConsoleClient", () => {
     expect(result).toContain("id");
     expect(String(fetchMock.mock.calls[0]?.[0])).toContain("payments/export");
   });
+
+  it("throws when session is missing", async () => {
+    getSession.mockResolvedValue({ data: { session: null } });
+
+    const { adminConsoleClient } = await import("@/modules/admin/api/adminConsoleClient");
+
+    await expect(
+      adminConsoleClient.getSummary("11111111-1111-4111-8111-111111111111"),
+    ).rejects.toThrow("Session expirée, reconnectez-vous.");
+
+    expect(fetch).not.toHaveBeenCalled();
+  });
+
+  it("surfaces API error message from backend", async () => {
+    const fetchMock = vi.mocked(fetch);
+    fetchMock.mockResolvedValue(
+      new Response(JSON.stringify({ error: "Forbidden" }), {
+        status: 403,
+        headers: { "content-type": "application/json" },
+      }),
+    );
+
+    const { adminConsoleClient } = await import("@/modules/admin/api/adminConsoleClient");
+
+    await expect(
+      adminConsoleClient.getAudit("11111111-1111-4111-8111-111111111111"),
+    ).rejects.toThrow("Forbidden");
+  });
+
+  it("sets JSON content type for POST requests with body", async () => {
+    const fetchMock = vi.mocked(fetch);
+    fetchMock.mockResolvedValue(
+      new Response(JSON.stringify({ ok: true }), {
+        headers: { "content-type": "application/json" },
+      }),
+    );
+
+    const { adminConsoleClient } = await import("@/modules/admin/api/adminConsoleClient");
+    await adminConsoleClient.markPaymentOffline("11111111-1111-4111-8111-111111111111", "p1", {
+      note: "encaisse en classe",
+      amountCents: 2500,
+    });
+
+    const init = fetchMock.mock.calls[0]?.[1];
+    expect(new Headers(init?.headers).get("Content-Type")).toBe("application/json");
+    expect(String(fetchMock.mock.calls[0]?.[0])).toContain("tenantId=11111111-1111-4111-8111-111111111111");
+  });
 });
