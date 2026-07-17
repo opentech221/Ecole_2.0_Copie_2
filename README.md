@@ -177,6 +177,18 @@ Ce preflight exécute:
 4. checklist integrite/RLS (tables, index, FKs, policies, triggers)
 5. build frontend
 
+### Gate PR / Release (go-no-go)
+
+Avant merge sur `main`, verifier:
+1. `npm run db:preflight` passe localement
+2. `npm run test` passe (integration + unit)
+3. `npm run build` passe sans erreur bloquante
+4. `npm audit --json` retourne `total = 0`
+5. scenarii d'acces critiques valides:
+	- un enseignant ne peut pas agir hors de sa classe
+	- un directeur conserve l'acces global
+	- les zones reservees directeur restent bloquees pour enseignant
+
 ## Documentation Interne
 
 - Guide exploitation admin: [guidelines/admin-exploitation-runbook.md](guidelines/admin-exploitation-runbook.md)
