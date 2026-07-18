@@ -796,6 +796,8 @@ function JournalCell({
 export function CahierRoulementScreen() {
   const navigate = useNavigate();
   const { activeClass } = useAppContext();
+  const [journalHeaderCollapsed, setJournalHeaderCollapsed] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const canPersistJournalContentRef = useRef(true);
 
   const allProgrammeActivities = useMemo(
@@ -1150,6 +1152,20 @@ export function CahierRoulementScreen() {
     return () => mq.removeEventListener("change", handler);
   }, []);
 
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+
+    const sync = (matches: boolean) => {
+      setIsMobile(matches);
+      setJournalHeaderCollapsed(matches);
+    };
+
+    sync(mq.matches);
+    const handler = (e: MediaQueryListEvent) => sync(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
   function handlePrint() {
     window.print();
   }
@@ -1210,7 +1226,7 @@ export function CahierRoulementScreen() {
           {/* Nav row — always visible */}
           <div
             className="flex items-center gap-3"
-            style={{ paddingTop: "14px", paddingBottom: "8px", borderBottom: "1px solid var(--border)" }}
+            style={{ paddingTop: "12px", paddingBottom: "6px", borderBottom: "1px solid var(--border)" }}
           >
             <button
               onClick={() => navigate("/")}
@@ -1242,13 +1258,41 @@ export function CahierRoulementScreen() {
             </button>
           </div>
 
+          <div className="no-print flex justify-center py-1">
+            <button
+              onClick={() => setJournalHeaderCollapsed((value) => !value)}
+              className="inline-flex items-center gap-1 rounded-full font-semibold transition-all active:scale-95 hover:bg-gray-50"
+              style={{
+                fontSize: "10px",
+                color: "var(--muted-foreground)",
+                padding: "3px 12px",
+                minHeight: "24px",
+                border: "1px solid var(--border)",
+                backgroundColor: "var(--card)",
+              }}
+            >
+              {journalHeaderCollapsed
+                ? <><ChevronDown className="w-3 h-3" />Filtres semaine</>
+                : <><ChevronUp className="w-3 h-3" />Réduire</>}
+            </button>
+          </div>
+
           {view === "cahier" && (
-            <div className="no-print border-t border-gray-200 pt-3 pb-3 dark:border-gray-700">
-              <div className="mb-2 flex items-center gap-2">
+            <div
+              className="no-print border-t border-gray-200 dark:border-gray-700"
+              style={{
+                maxHeight: journalHeaderCollapsed ? "0px" : (isMobile ? "180px" : "220px"),
+                overflow: "hidden",
+                transition: "max-height 260ms cubic-bezier(0.4,0,0.2,1)",
+                paddingTop: journalHeaderCollapsed ? 0 : "10px",
+                paddingBottom: journalHeaderCollapsed ? 0 : "10px",
+              }}
+            >
+              <div className="mb-1.5 flex items-center gap-2">
                 <CalendarDays className="h-[18px] w-[18px] text-gray-700 dark:text-gray-200" />
                 <p className="m-0 text-[13px] font-extrabold text-gray-900 dark:text-gray-100">{selectedWeekLabel}</p>
               </div>
-              <div className="mb-2 flex flex-wrap gap-2">
+              <div className="mb-1.5 flex flex-wrap gap-1.5">
                 {schoolMonthOptions.map(option => (
                   <button
                     key={option.key}
@@ -1256,21 +1300,21 @@ export function CahierRoulementScreen() {
                       setSelectedMonth(new Date(option.year, option.monthIndex, 1));
                       setSelectedWeekIndex(0);
                     }}
-                    className={`rounded-full border px-3 py-2 text-xs font-bold ${selectedMonth.getMonth() === option.monthIndex ? "border-blue-500 bg-blue-50 text-blue-700 dark:border-blue-700 dark:bg-slate-800 dark:text-blue-300" : "border-indigo-400/40 bg-white text-gray-700 dark:border-blue-700 dark:bg-slate-900 dark:text-gray-200"}`}
+                    className={`rounded-full border px-2.5 py-1.5 text-[11px] font-bold ${selectedMonth.getMonth() === option.monthIndex ? "border-blue-500 bg-blue-50 text-blue-700 dark:border-blue-700 dark:bg-slate-800 dark:text-blue-300" : "border-indigo-400/40 bg-white text-gray-700 dark:border-blue-700 dark:bg-slate-900 dark:text-gray-200"}`}
                   >
                     {option.label}
                   </button>
                 ))}
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1.5">
                 {monthWeeks.map((week, index) => (
                   <div
                     key={`${week[0].date.toISOString()}-${index}`}
-                    className={`group relative rounded-full border pr-7 ${index === selectedWeekIndex ? "border-blue-500 bg-blue-50 dark:border-blue-700 dark:bg-slate-800" : "border-indigo-400/40 bg-white dark:border-blue-700 dark:bg-slate-900"}`}
+                    className={`group relative rounded-full border pr-6 ${index === selectedWeekIndex ? "border-blue-500 bg-blue-50 dark:border-blue-700 dark:bg-slate-800" : "border-indigo-400/40 bg-white dark:border-blue-700 dark:bg-slate-900"}`}
                   >
                     <button
                       onClick={() => setSelectedWeekIndex(index)}
-                      className={`rounded-full px-3 py-2 text-xs font-bold ${index === selectedWeekIndex ? "text-blue-700 dark:text-blue-300" : "text-gray-700 dark:text-gray-200"}`}
+                      className={`rounded-full px-2.5 py-1.5 text-[11px] font-bold ${index === selectedWeekIndex ? "text-blue-700 dark:text-blue-300" : "text-gray-700 dark:text-gray-200"}`}
                     >
                       {formatWeekLabel((weekSaturdayPrefs[getWeekKey(week)] ?? false) ? week : week.filter(day => day.dayKey !== "Samedi"))}
                     </button>
@@ -1285,7 +1329,7 @@ export function CahierRoulementScreen() {
                         setSelectedWeekIndex(index);
                       }}
                       title={(weekSaturdayPrefs[getWeekKey(week)] ?? false) ? "Retirer le samedi" : "Ajouter le samedi"}
-                      className={`absolute right-1 top-1/2 inline-flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded-full border text-[10px] transition-colors ${weekSaturdayPrefs[getWeekKey(week)] ?? false ? "border-emerald-500/70 bg-emerald-500/20 text-emerald-700 dark:border-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300" : "border-blue-500/40 bg-blue-500/10 text-blue-700 hover:bg-blue-500/20 dark:border-blue-700 dark:bg-slate-950 dark:text-blue-300"}`}
+                      className={`absolute right-1 top-1/2 inline-flex h-4 w-4 -translate-y-1/2 items-center justify-center rounded-full border text-[9px] transition-colors ${weekSaturdayPrefs[getWeekKey(week)] ?? false ? "border-emerald-500/70 bg-emerald-500/20 text-emerald-700 dark:border-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300" : "border-blue-500/40 bg-blue-500/10 text-blue-700 hover:bg-blue-500/20 dark:border-blue-700 dark:bg-slate-950 dark:text-blue-300"}`}
                     >
                       <Plus size={10} />
                     </button>

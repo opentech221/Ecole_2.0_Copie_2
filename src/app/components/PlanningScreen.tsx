@@ -740,6 +740,7 @@ export function PlanningScreen() {
   const [taxRetracted,     setTaxRetracted]      = useState(false);
   // Collapsible header accordion — hides all controls to maximise table space
   const [headerCollapsed,  setHeaderCollapsed]  = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [drops,         setDrops]         = useState<Record<string, DS>>({});
 
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -788,6 +789,20 @@ export function PlanningScreen() {
   useEffect(() => {
     if (expandedCells.size > 0 || allExpanded) setTaxRetracted(true);
   }, [expandedCells.size, allExpanded]);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+
+    const sync = (matches: boolean) => {
+      setIsMobile(matches);
+      setHeaderCollapsed(matches);
+    };
+
+    sync(mq.matches);
+    const handler = (e: MediaQueryListEvent) => sync(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
 
   // Auto-retract on horizontal swipe
   const handleScroll = useCallback(() => {
@@ -1020,19 +1035,19 @@ export function PlanningScreen() {
                The toggle tab below is always visible regardless of state.
              ─────────────────────────────────────────────────────────────── */}
           <div style={{
-            maxHeight: headerCollapsed ? "0px" : "400px",
+            maxHeight: headerCollapsed ? "0px" : (isMobile ? "280px" : "320px"),
             overflow: "hidden",
-            transition: "max-height 380ms cubic-bezier(0.4, 0, 0.2, 1)",
+            transition: "max-height 320ms cubic-bezier(0.4, 0, 0.2, 1)",
           }}>
 
           {/* ROW 1 — Trimestre */}
-          <div className="py-1.5">
+          <div className="py-1">
             <div className="flex gap-0.5 p-0.5 rounded-lg" style={{ backgroundColor: "var(--muted)" }}>
               {["Trimestre 1", "Trimestre 2", "Trimestre 3"].map((t, i) => (
                 <button key={t} onClick={() => changeTerm(i)}
                   className="flex-1 rounded-md font-bold transition-all"
                   style={{
-                    minHeight: "30px", fontSize: "10.5px",
+                    minHeight: "28px", fontSize: "10px",
                     backgroundColor: term === i ? "#1a365d" : "transparent",
                     color:           term === i ? "#fff" : "#64748b",
                     boxShadow:       term === i ? "0 1px 6px rgba(26,54,93,0.20)" : "none",
@@ -1044,38 +1059,38 @@ export function PlanningScreen() {
           </div>
 
           {/* ROW 2 — Month carousel + Coverage */}
-          <div className="flex items-center gap-2 pb-1.5 border-b border-gray-100">
+          <div className="flex items-center gap-2 pb-1 border-b border-gray-100">
             <div className="flex items-center flex-1 min-w-0">
               <button onClick={() => setMonthIdx(m => Math.max(0, m - 1))}
                 disabled={monthIdx === 0}
-                style={{ minWidth: "36px", minHeight: "36px" }}
+                style={{ minWidth: "34px", minHeight: "34px" }}
                 className="flex items-center justify-center rounded-lg transition-colors">
                 <ChevronLeft className="w-4 h-4"
                              style={{ color: monthIdx === 0 ? "#e2e8f0" : "#1a365d" }} />
               </button>
               <div className="flex-1 text-center min-w-0 px-1">
                 <p className="font-bold text-[#1a365d] truncate leading-none"
-                   style={{ fontSize: "12px" }}>
+                   style={{ fontSize: "11.5px" }}>
                   {month.label}
                 </p>
-                <p className="text-gray-400" style={{ fontSize: "8.5px" }}>
+                <p className="text-gray-400" style={{ fontSize: "8px" }}>
                   {["Trim. 1", "Trim. 2", "Trim. 3"][term]}
                 </p>
               </div>
               <button onClick={() => setMonthIdx(m => Math.min(2, m + 1))}
                 disabled={monthIdx === 2}
-                style={{ minWidth: "36px", minHeight: "36px" }}
+                style={{ minWidth: "34px", minHeight: "34px" }}
                 className="flex items-center justify-center rounded-lg transition-colors">
                 <ChevronRight className="w-4 h-4"
                               style={{ color: monthIdx === 2 ? "#e2e8f0" : "#1a365d" }} />
               </button>
             </div>
-            <div className="w-px h-6 bg-gray-200 shrink-0" />
-            <div className="shrink-0" style={{ minWidth: "76px" }}>
+            <div className="w-px h-5 bg-gray-200 shrink-0" />
+            <div className="shrink-0" style={{ minWidth: "70px" }}>
               <div className="flex items-center justify-between mb-0.5">
                 <span className="font-semibold text-gray-400 uppercase tracking-wide"
-                      style={{ fontSize: "7.5px" }}>Couverture</span>
-                <span className="font-bold" style={{ fontSize: "11px", color: coverageColor }}>
+                      style={{ fontSize: "7px" }}>Couverture</span>
+                <span className="font-bold" style={{ fontSize: "10.5px", color: coverageColor }}>
                   {coverage}%
                 </span>
               </div>
@@ -1087,13 +1102,13 @@ export function PlanningScreen() {
           </div>
 
           {/* ROW 3 — Domain tabs */}
-          <div className="flex gap-1.5 overflow-x-auto py-1.5" style={{ scrollbarWidth: "none" }}>
+          <div className="flex gap-1 overflow-x-auto py-1" style={{ scrollbarWidth: "none" }}>
             {DOMAINS.map((d, i) => (
               <button key={d.key} onClick={() => switchDomain(i)}
                 className="inline-flex items-center gap-1 rounded-full font-bold
                            shrink-0 transition-all active:scale-95"
                 style={{
-                  minHeight: "28px", padding: "0 10px", fontSize: "10.5px",
+                  minHeight: "26px", padding: "0 9px", fontSize: "10px",
                   backgroundColor: domainIdx === i ? d.color : d.bg,
                   color:           domainIdx === i ? "#fff"  : d.dark,
                   border:          domainIdx === i ? "none"  : `1.5px solid ${d.color}25`,
@@ -1109,13 +1124,13 @@ export function PlanningScreen() {
           </div>
 
           {/* ── ROW 4 — Print/PDF export ── */}
-          <div className="no-print pb-1.5">
+          <div className="no-print pb-1">
             <button
               onClick={handlePrint}
               className="w-full inline-flex items-center justify-center gap-1.5 rounded-xl font-bold
                          transition-all active:scale-95 hover:opacity-90"
               style={{
-                minHeight: "36px", fontSize: "11px",
+                minHeight: "32px", fontSize: "10.5px",
                 backgroundColor: "#0f172a", color: "#fff",
                 boxShadow: "0 2px 8px rgba(15,23,42,0.20)",
               }}
@@ -1138,8 +1153,8 @@ export function PlanningScreen() {
               className="inline-flex items-center gap-1 rounded-full font-semibold
                          transition-all active:scale-95 hover:bg-gray-50"
               style={{
-                fontSize: "10px", color: "var(--muted-foreground)",
-                padding: "3px 12px", minHeight: "24px",
+                fontSize: "9.5px", color: "var(--muted-foreground)",
+                padding: "2px 10px", minHeight: "22px",
               }}
             >
               {headerCollapsed
