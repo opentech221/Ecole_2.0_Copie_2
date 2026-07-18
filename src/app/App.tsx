@@ -5,24 +5,27 @@ import { Analytics }         from "@vercel/analytics/react";
 import { SpeedInsights }     from "@vercel/speed-insights/react";
 import { router }            from "./routes";
 import { AppProvider }       from "./contexts/AppContext";
+import { AuthProvider }      from "./contexts/AuthContext";
 import { queryClient }       from "../lib/queryClient";
 
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <AppProvider>
-        <RouterProvider router={router} />
-        {/* Global toast layer — used by apiService.performAction and
-            the Optimistic Undo handler in useGradesMutation.            */}
-        <Toaster
-          position="bottom-center"
-          richColors
-          closeButton
-          toastOptions={{ style: { fontFamily: "'Plus Jakarta Sans', sans-serif" } }}
-        />
-        <Analytics />
-        <SpeedInsights />
-      </AppProvider>
+      <AuthProvider>
+        <AppProvider>
+          <RouterProvider router={router} />
+          {/* Global toast layer — used by apiService.performAction and
+              the Optimistic Undo handler in useGradesMutation.            */}
+          <Toaster
+            position="bottom-center"
+            richColors
+            closeButton
+            toastOptions={{ style: { fontFamily: "'Plus Jakarta Sans', sans-serif" } }}
+          />
+          <Analytics />
+          <SpeedInsights />
+        </AppProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }
