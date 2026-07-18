@@ -117,17 +117,36 @@ export function ProgrammeNavigationWorkspace() {
   }
 
   useEffect(() => {
-    const next = new URLSearchParams(searchParams);
+    if (!filters) return;
 
+    const nextNiveauId = filters.niveaux.some((niveau) => niveau.id === niveauId) ? niveauId : "all";
+    const nextDomaineId =
+      nextNiveauId === "all"
+        ? (filters.domaines.some((domaine) => domaine.id === domaineId) ? domaineId : "all")
+        : filters.domaines.some((domaine) => domaine.id === domaineId && domaine.niveau_id === nextNiveauId)
+          ? domaineId
+          : "all";
+    const nextSousDomaineId =
+      nextDomaineId === "all"
+        ? (filters.sous_domaines.some((sousDomaine) => sousDomaine.id === sousDomaineId) ? sousDomaineId : "all")
+        : filters.sous_domaines.some((sousDomaine) => sousDomaine.id === sousDomaineId && sousDomaine.domaine_id === nextDomaineId)
+          ? sousDomaineId
+          : "all";
+
+    if (nextNiveauId !== niveauId) setNiveauId(nextNiveauId);
+    if (nextDomaineId !== domaineId) setDomaineId(nextDomaineId);
+    if (nextSousDomaineId !== sousDomaineId) setSousDomaineId(nextSousDomaineId);
+
+    const next = new URLSearchParams(searchParams);
     next.set("navView", tab);
-    if (niveauId === "all") next.delete("niveauId"); else next.set("niveauId", niveauId);
-    if (domaineId === "all") next.delete("domaineId"); else next.set("domaineId", domaineId);
-    if (sousDomaineId === "all") next.delete("sousDomaineId"); else next.set("sousDomaineId", sousDomaineId);
+    if (nextNiveauId === "all") next.delete("niveauId"); else next.set("niveauId", nextNiveauId);
+    if (nextDomaineId === "all") next.delete("domaineId"); else next.set("domaineId", nextDomaineId);
+    if (nextSousDomaineId === "all") next.delete("sousDomaineId"); else next.set("sousDomaineId", nextSousDomaineId);
     if (!search.trim()) next.delete("navSearch"); else next.set("navSearch", search.trim());
     if (page <= 1) next.delete("navPage"); else next.set("navPage", String(page));
 
     setSearchParams(next, { replace: true });
-  }, [tab, niveauId, domaineId, sousDomaineId, search, page, searchParams, setSearchParams]);
+  }, [filters, niveauId, domaineId, sousDomaineId, tab, search, page, searchParams, setSearchParams]);
 
   const domainOptions = useMemo(() => {
     if (!filters?.domaines) return [];
