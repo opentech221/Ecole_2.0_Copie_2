@@ -1281,7 +1281,7 @@ export function CahierRoulementScreen() {
             <div
               className="no-print border-t border-gray-200 dark:border-gray-700"
               style={{
-                maxHeight: journalHeaderCollapsed ? "0px" : (isMobile ? "180px" : "220px"),
+                maxHeight: journalHeaderCollapsed ? "0px" : "1000px",
                 overflow: "hidden",
                 transition: "max-height 260ms cubic-bezier(0.4,0,0.2,1)",
                 paddingTop: journalHeaderCollapsed ? 0 : "10px",
