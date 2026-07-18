@@ -93,8 +93,6 @@ const MOCK_PLANNING: Document[] = [
   makeDocument({ id:"p3", type:"planning", title:"Répartition Trimestrielle — Trimestre 3", subtitle:"CE2 · Avril → Juin 2026",      meta:"Mathématiques · Langue · ESVS · EPSA", date:"07/04/2026", badge:"Planning" }),
 ];
 
-const ALL_DOCS: Document[] = [...MOCK_PLANNING, ...MOCK_FICHES, ...MOCK_BULLETINS];
-
 type Filter = "all" | DocType;
 
 const TYPE_ICON: Record<DocType, React.ReactNode> = {
@@ -819,7 +817,7 @@ export function DocumentsScreen() {
                    style={{ backgroundColor: "var(--muted)" }}>
                 <FileText className="w-3.5 h-3.5 text-[#64748b]" />
                 <span style={{ fontSize: "12px", fontWeight: 700, color: "var(--muted-foreground)" }}>
-                  {ALL_DOCS.length} docs
+                  {allDocs.length} docs
                 </span>
               </div>
             </div>
@@ -857,9 +855,9 @@ export function DocumentsScreen() {
             {/* Stats bar */}
             <div className="grid grid-cols-3 gap-3 mb-4">
               {[
-                { label:"Fiches pédagogiques", value: MOCK_FICHES.length,    color:"#6d28d9", bg:"#ede9fe" },
-                { label:"Bulletins de notes",  value: MOCK_BULLETINS.length, color:"#065f46", bg:"#d1fae5" },
-                { label:"Tableaux de planning",value: MOCK_PLANNING.length,  color:"#1a365d", bg:"#dbeafe" },
+                { label:"Fiches pédagogiques", value: fiches.length,    color:"#6d28d9", bg:"#ede9fe" },
+                { label:"Bulletins de notes",  value: bulletins.length, color:"#065f46", bg:"#d1fae5" },
+                { label:"Tableaux de planning",value: planning.length,  color:"#1a365d", bg:"#dbeafe" },
               ].map(s => (
                  <div key={s.label} className="bg-card rounded-xl p-3 text-center"
                      style={{ boxShadow: "0 1px 6px rgba(0,0,0,0.06)" }}>
@@ -901,9 +899,9 @@ export function DocumentsScreen() {
             {filter === "all" && !search.trim() ? (
               <div className="space-y-6">
                 {[
-                  { label:"Tableaux de planification", docs: MOCK_PLANNING, icon: <Calendar className="w-4 h-4 text-[#1a365d]" />, count: MOCK_PLANNING.length },
-                  { label:"Fiches pédagogiques",       docs: MOCK_FICHES,   icon: <BookOpen className="w-4 h-4 text-[#6d28d9]" />, count: MOCK_FICHES.length },
-                  { label:"Bulletins de notes",        docs: MOCK_BULLETINS,icon: <FileText className="w-4 h-4 text-[#065f46]" />, count: MOCK_BULLETINS.length, suffix:" / 25 total" },
+                  { label:"Tableaux de planification", docs: planning,  icon: <Calendar className="w-4 h-4 text-[#1a365d]" />, count: planning.length },
+                  { label:"Fiches pédagogiques",       docs: fiches,    icon: <BookOpen className="w-4 h-4 text-[#6d28d9]" />, count: fiches.length },
+                  { label:"Bulletins de notes",        docs: bulletins, icon: <FileText className="w-4 h-4 text-[#065f46]" />, count: bulletins.length },
                 ].map(section => (
                   <section key={section.label}>
                     <div className="flex items-center gap-2 mb-2">
