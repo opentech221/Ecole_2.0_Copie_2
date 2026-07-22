@@ -397,6 +397,8 @@ function BulletinBody({
                           style={{ padding:"2px 6px", textAlign:"center",
                                    borderBottom:"1px solid #e5e7eb" }}>
                         <input
+                          id={`eleves_toggle_${disc}`}
+                          name={`toggle_${disc}`}
                           type="checkbox"
                           checked={enabled}
                           onChange={() => onToggle?.(disc)}
@@ -436,6 +438,8 @@ function BulletinBody({
                           {onGradeChange ? (
                             /* ── Live-grading input — clearly visible field ── */
                             <input
+                              id={`eleves_grade_${disc}_${t}`}
+                              name={`grade_${disc}_${t}`}
                               type="number"
                               inputMode="decimal"
                               step="0.25"
@@ -1212,14 +1216,14 @@ function AddStudentModal({
           {/* Nom / Prénom */}
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"12px" }}>
             <div>
-              <label style={labelStyle}>Nom *</label>
-              <input style={inputStyle} value={form.nom}
+              <label htmlFor="eleves_nom" style={labelStyle}>Nom *</label>
+              <input id="eleves_nom" name="nom" style={inputStyle} value={form.nom}
                      onChange={e => field("nom", e.target.value.toUpperCase())}
                      placeholder="DIALLO" required />
             </div>
             <div>
-              <label style={labelStyle}>Prénom *</label>
-              <input style={inputStyle} value={form.prenom}
+              <label htmlFor="eleves_prenom" style={labelStyle}>Prénom *</label>
+              <input id="eleves_prenom" name="prenom" style={inputStyle} value={form.prenom}
                      onChange={e => field("prenom", e.target.value)}
                      placeholder="Aminata" required />
             </div>
@@ -1228,8 +1232,8 @@ function AddStudentModal({
           {/* Matricule + Genre */}
           <div style={{ display:"grid", gridTemplateColumns:"1fr auto", gap:"12px", alignItems:"end" }}>
             <div>
-              <label style={labelStyle}>Matricule</label>
-              <input style={inputStyle} value={form.matricule}
+              <label htmlFor="eleves_matricule" style={labelStyle}>Matricule</label>
+              <input id="eleves_matricule" name="matricule" style={inputStyle} value={form.matricule}
                      onChange={e => field("matricule", e.target.value)}
                      placeholder="CE2-026" />
             </div>
@@ -1256,13 +1260,13 @@ function AddStudentModal({
           {/* Date + Lieu naissance */}
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"12px" }}>
             <div>
-              <label style={labelStyle}>Date de naissance</label>
-              <input style={inputStyle} type="date" value={form.dateNaissance}
+              <label htmlFor="eleves_dateNaissance" style={labelStyle}>Date de naissance</label>
+              <input id="eleves_dateNaissance" name="dateNaissance" style={inputStyle} type="date" value={form.dateNaissance}
                      onChange={e => field("dateNaissance", e.target.value)} />
             </div>
             <div>
-              <label style={labelStyle}>Lieu de naissance</label>
-              <input style={inputStyle} value={form.lieuNaissance}
+              <label htmlFor="eleves_lieuNaissance" style={labelStyle}>Lieu de naissance</label>
+              <input id="eleves_lieuNaissance" name="lieuNaissance" style={inputStyle} value={form.lieuNaissance}
                      onChange={e => field("lieuNaissance", e.target.value)}
                      placeholder="Kolda" />
             </div>
@@ -1271,14 +1275,14 @@ function AddStudentModal({
           {/* Tuteur */}
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"12px" }}>
             <div>
-              <label style={labelStyle}>Tuteur / Parent</label>
-              <input style={inputStyle} value={form.tuteurNom}
+              <label htmlFor="eleves_tuteurNom" style={labelStyle}>Tuteur / Parent</label>
+              <input id="eleves_tuteurNom" name="tuteurNom" style={inputStyle} value={form.tuteurNom}
                      onChange={e => field("tuteurNom", e.target.value)}
                      placeholder="Nom du tuteur" />
             </div>
             <div>
-              <label style={labelStyle}>Téléphone</label>
-              <input style={inputStyle} type="tel" inputMode="tel"
+              <label htmlFor="eleves_tuteurPhone" style={labelStyle}>Téléphone</label>
+              <input id="eleves_tuteurPhone" name="tuteurPhone" style={inputStyle} type="tel" inputMode="tel"
                      value={form.tuteurPhone}
                      onChange={e => field("tuteurPhone", e.target.value)}
                      placeholder="+221 77 000 0000" />

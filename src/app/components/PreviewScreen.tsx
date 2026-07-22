@@ -732,6 +732,8 @@ export function PreviewScreen() {
                   <div className="w-3 h-3 rounded-full shrink-0"
                        style={{ backgroundColor: chipColor }}/>
                   <select
+                    id="preview_ficheSelect"
+                    name="activeFiche"
                     value={activeFicheIdx}
                     onChange={e => setActiveFicheIdx(Number(e.target.value))}
                     className="flex-1 appearance-none outline-none text-[13px] font-semibold bg-transparent py-3"
@@ -745,9 +747,9 @@ export function PreviewScreen() {
                   <ChevronDown className="w-4 h-4 shrink-0 pointer-events-none"
                                style={{ color: chipColor }}/>
                 </div>
-                <p className="text-[10px] text-gray-400 mt-1.5 ml-1">
+                <label htmlFor="preview_ficheSelect" className="text-[10px] text-gray-400 mt-1.5 ml-1 block cursor-pointer">
                   Sélectionner la fiche à prévisualiser
-                </p>
+                </label>
               </div>
             </div>
           )}

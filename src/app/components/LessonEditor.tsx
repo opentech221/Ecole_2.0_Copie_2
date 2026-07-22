@@ -220,18 +220,20 @@ function AutoField({ label, value, icon }: { label:string; value:string; icon?:R
   );
 }
 
-function EditField({ label, value, onChange, type="text", placeholder="", icon }: {
+function EditField({ label, value, onChange, type="text", placeholder="", icon, id, name }: {
   label:string; value:string; onChange:(v:string)=>void;
-  type?:string; placeholder?:string; icon?:React.ReactNode;
+  type?:string; placeholder?:string; icon?:React.ReactNode; id?:string; name?:string;
 }) {
   const [focused, setFocused] = useState(false);
+  const fieldId = id || label.toLowerCase().replace(/\s+/g, '_');
+  const fieldName = name || fieldId;
   return (
     <div className="flex flex-col gap-1">
       <div className="flex items-center gap-1">
         {icon && <span className="shrink-0 text-[13px]" style={{ color:"var(--muted-foreground)" }}>{icon}</span>}
-        <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color:"var(--muted-foreground)" }}>{label}</span>
+        <label htmlFor={fieldId} className="text-[10px] font-bold uppercase tracking-wider" style={{ color:"var(--muted-foreground)" }}>{label}</label>
       </div>
-         <input type={type} value={value} onChange={e=>onChange(e.target.value)}
+         <input id={fieldId} name={fieldName} type={type} value={value} onChange={e=>onChange(e.target.value)}
         placeholder={placeholder}
            className="text-[13px] font-semibold text-primary px-3 py-2.5 rounded-xl outline-none w-full"
            style={{ fontFamily:"'Plus Jakarta Sans',sans-serif", minHeight:"44px",

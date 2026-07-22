@@ -389,12 +389,12 @@ function getActivityColor(actName: string): string {
 }
 
 function CascadeSelect({
-  level, value, options, onChange, disabled, color,
+  level, value, options, onChange, disabled, color, id, name,
 }: {
   level: "oa" | "os" | "contenu";
   value: string; options: string[];
   onChange: (v: string) => void;
-  disabled?: boolean; color: string;
+  disabled?: boolean; color: string; id?: string; name?: string;
 }) {
   const LABELS = {
     oa:      "OA — Objectif d'Apprentissage",
@@ -412,10 +412,10 @@ function CascadeSelect({
   return (
     <div>
       {/* Structural label — normal 8.5px bold caps so eye finds OA/OS/Contenu fast */}
-      <p className="text-[8.5px] font-bold uppercase tracking-widest mb-1"
-         style={{ color: disabled ? "#d1d5db" : filled ? color : "#94a3b8" }}>
+      <label htmlFor={id || `planning_${level}`} className="text-[8.5px] font-bold uppercase tracking-widest mb-1"
+         style={{ color: disabled ? "#d1d5db" : filled ? color : "#94a3b8", cursor: "pointer", display: "block" }}>
         {LABELS[level]}
-      </p>
+      </label>
 
       {/* When filled: show value in a compact #f8fafc card at 11px, keep select for edit */}
       {filled && (
@@ -436,6 +436,8 @@ function CascadeSelect({
 
       <div className="relative">
         <select
+          id={id || `planning_${level}`}
+          name={name || level}
           value={value}
           onChange={e => onChange(e.target.value)}
           disabled={disabled}
