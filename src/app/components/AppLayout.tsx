@@ -401,6 +401,7 @@ function MobileTopBar({ activeClass, onMenuOpen }: {
       </span>
       <button
         onClick={onMenuOpen}
+        aria-label="Ouvrir le menu de navigation"
         style={{
           width: 34, height: 34, borderRadius: "8px",
           backgroundColor: "var(--muted)", border: "1px solid var(--border)",
@@ -431,6 +432,7 @@ function MobileBottomNav() {
         const active = path === "/" ? pathname === "/" : pathname.startsWith(path);
         return (
           <button key={path} onClick={() => navigate(path)}
+            aria-label={label}
             style={{
               flex: 1, display: "flex", flexDirection: "column",
               alignItems: "center", justifyContent: "center",

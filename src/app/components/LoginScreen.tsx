@@ -211,7 +211,7 @@ export function LoginScreen() {
   }
 
   return (
-    <div style={{
+    <main style={{
       minHeight: "100vh",
       background: "linear-gradient(145deg, #0d1f3c 0%, #1a365d 60%, #2d4a7a 100%)",
       display: "flex", alignItems: "center", justifyContent: "center",
@@ -552,6 +552,6 @@ export function LoginScreen() {
           </button>
         </p>
       </div>
-    </div>
+    </main>
   );
 }

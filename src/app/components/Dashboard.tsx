@@ -130,9 +130,9 @@ function ModuleCard({ badge, badgeIcon, gradient, shadowColor, accent, title, de
         </div>
 
         {/* Title */}
-        <h3 className="text-white font-extrabold leading-snug mb-3 relative" style={{ fontSize:"15px" }}>
+        <h2 className="text-white font-extrabold leading-snug mb-3 relative" style={{ fontSize:"15px" }}>
           {title}
-        </h3>
+        </h2>
 
         {/* Description */}
         <p className="relative mb-4" style={{ fontSize:"12px", color:"rgba(255,255,255,0.70)", lineHeight:"1.6" }}>
@@ -145,7 +145,7 @@ function ModuleCard({ badge, badgeIcon, gradient, shadowColor, accent, title, de
             onClick={onClick}
             aria-label={title}
             className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl font-bold transition-all active:scale-[0.97]"
-            style={{ minHeight:"44px", fontSize:"13px", backgroundColor:accent, color:"#fff", boxShadow:`0 2px 10px ${accent}60` }}
+            style={{ minHeight:"44px", fontSize:"13px", backgroundColor:accent, color:"#fff", boxShadow:`0 2px 10px ${accent}60`, fontWeight: 700, textShadow: "0 1px 3px rgba(0,0,0,0.3)" }}
           >
             {ctaLabel}
           </button>
