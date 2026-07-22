@@ -113,14 +113,14 @@ export function PaymentDetailDialog({ open, onOpenChange, payment, busy, onRefun
                 <p className="mb-3 font-medium">Actions critiques</p>
                 <div className="space-y-3">
                   <div className="space-y-2">
-                    <label className="text-sm font-medium">Remboursement</label>
-                    <Input value={refundAmount} onChange={(event) => setRefundAmount(event.target.value)} placeholder="Montant en cents" />
-                    <Input value={refundReason} onChange={(event) => setRefundReason(event.target.value)} placeholder="Motif" />
+                    <label htmlFor="payment_refundAmount" className="text-sm font-medium">Remboursement</label>
+                    <Input id="payment_refundAmount" name="refundAmount" value={refundAmount} onChange={(event) => setRefundAmount(event.target.value)} placeholder="Montant en cents" />
+                    <Input id="payment_refundReason" name="refundReason" value={refundReason} onChange={(event) => setRefundReason(event.target.value)} placeholder="Motif" />
                     <Button className="w-full" disabled={busy} onClick={() => onRefund(Number(refundAmount) || 0, refundReason)}>Rembourser</Button>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-medium">Relance</label>
-                    <Textarea value={reminderMessage} onChange={(event) => setReminderMessage(event.target.value)} />
+                    <label htmlFor="payment_reminderMessage" className="text-sm font-medium">Relance</label>
+                    <Textarea id="payment_reminderMessage" name="reminderMessage" value={reminderMessage} onChange={(event) => setReminderMessage(event.target.value)} />
                     <Button variant="outline" className="w-full" disabled={busy} onClick={() => onReminder(reminderMessage)}>Envoyer une relance</Button>
                   </div>
                   <div className="space-y-2">

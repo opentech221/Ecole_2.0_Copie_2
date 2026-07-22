@@ -153,16 +153,19 @@ export function AdminConsolePage() {
               </div>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Select value={tenantId} onValueChange={setTenantId}>
-                <SelectTrigger className="min-w-[260px]">
-                  <SelectValue placeholder="Sélectionner un établissement" />
-                </SelectTrigger>
+              <div>
+                <label htmlFor="admin_tenantSelect" className="sr-only">Sélectionner un établissement</label>
+                <Select value={tenantId} onValueChange={setTenantId}>
+                  <SelectTrigger id="admin_tenantSelect" name="tenantSelect" className="min-w-[260px]">
+                    <SelectValue placeholder="Sélectionner un établissement" />
+                  </SelectTrigger>
                 <SelectContent>
                   {(tenantsQuery.data ?? []).map((tenant) => (
                     <SelectItem key={tenant.id} value={tenant.id}>{tenant.name}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
+              </div>
               <div className="flex items-center gap-2">
                 <Badge variant="outline">{summaryQuery.data?.userRole ?? profile?.role}</Badge>
                 <Button variant="outline" onClick={() => void refreshAll()}>

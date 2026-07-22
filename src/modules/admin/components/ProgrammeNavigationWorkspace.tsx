@@ -180,7 +180,7 @@ export function ProgrammeNavigationWorkspace() {
       <CardContent className="space-y-4">
         <div className="grid gap-3 lg:grid-cols-4">
           <div className="space-y-1">
-            <label className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
+            <label htmlFor="programme_niveauFilter" className="flex items-center gap-1 text-xs font-medium text-muted-foreground">
               <Filter className="h-3.5 w-3.5" /> Niveau
             </label>
             <Select
@@ -192,7 +192,7 @@ export function ProgrammeNavigationWorkspace() {
                 setPage(1);
               }}
             >
-              <SelectTrigger>
+              <SelectTrigger id="programme_niveauFilter" name="niveauFilter">
                 <SelectValue placeholder="Tous les niveaux" />
               </SelectTrigger>
               <SelectContent>
@@ -207,7 +207,7 @@ export function ProgrammeNavigationWorkspace() {
           </div>
 
           <div className="space-y-1">
-            <label className="text-xs font-medium text-muted-foreground">Domaine</label>
+            <label htmlFor="programme_domaineFilter" className="text-xs font-medium text-muted-foreground">Domaine</label>
             <Select
               value={domaineId}
               onValueChange={(value) => {
@@ -216,7 +216,7 @@ export function ProgrammeNavigationWorkspace() {
                 setPage(1);
               }}
             >
-              <SelectTrigger>
+              <SelectTrigger id="programme_domaineFilter" name="domaineFilter">
                 <SelectValue placeholder="Tous les domaines" />
               </SelectTrigger>
               <SelectContent>
@@ -231,7 +231,7 @@ export function ProgrammeNavigationWorkspace() {
           </div>
 
           <div className="space-y-1">
-            <label className="text-xs font-medium text-muted-foreground">Sous-domaine</label>
+            <label htmlFor="programme_sousDomaineFilter" className="text-xs font-medium text-muted-foreground">Sous-domaine</label>
             <Select
               value={sousDomaineId}
               onValueChange={(value) => {
@@ -239,7 +239,7 @@ export function ProgrammeNavigationWorkspace() {
                 setPage(1);
               }}
             >
-              <SelectTrigger>
+              <SelectTrigger id="programme_sousDomaineFilter" name="sousDomaineFilter">
                 <SelectValue placeholder="Tous les sous-domaines" />
               </SelectTrigger>
               <SelectContent>

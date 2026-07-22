@@ -43,9 +43,9 @@ export function NotificationsFilters({
 
       <div className="mt-4 grid gap-3 md:grid-cols-2">
         <div>
-          <label className="mb-1 block text-xs font-medium text-muted-foreground">Établissement</label>
+          <label htmlFor="notif_tenantSelect" className="mb-1 block text-xs font-medium text-muted-foreground">Établissement</label>
           <Select value={tenantId} onValueChange={onTenantChange}>
-            <SelectTrigger aria-label="Choisir un établissement">
+            <SelectTrigger id="notif_tenantSelect" name="tenantSelect" aria-label="Choisir un établissement">
               <SelectValue placeholder="Sélectionner un établissement" />
             </SelectTrigger>
             <SelectContent>
@@ -57,9 +57,9 @@ export function NotificationsFilters({
         </div>
 
         <div>
-          <label className="mb-1 block text-xs font-medium text-muted-foreground">Filtre</label>
+          <label htmlFor="notif_scopeFilter" className="mb-1 block text-xs font-medium text-muted-foreground">Filtre</label>
           <Select value={scope} onValueChange={(value) => onScopeChange(value as NotificationScopeFilter)}>
-            <SelectTrigger aria-label="Filtrer les notifications">
+            <SelectTrigger id="notif_scopeFilter" name="scopeFilter" aria-label="Filtrer les notifications">
               <SelectValue placeholder="Choisir un filtre" />
             </SelectTrigger>
             <SelectContent>

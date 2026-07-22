@@ -117,26 +117,27 @@ export function UsersWorkspace({
         <CardContent className="space-y-4">
           <div className="grid gap-3 xl:grid-cols-[1.5fr_1fr_1fr_1fr]">
             <div className="relative">
+              <label htmlFor="users_search" className="sr-only">Rechercher</label>
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
+                id="users_search"
+                name="search"
                 className="pl-9"
                 placeholder="Rechercher nom/email"
                 value={filters.search}
                 onChange={(event) => setFilters((prev) => ({ ...prev, search: event.target.value, page: 1 }))}
               />
             </div>
-            <Select value={filters.status} onValueChange={(value) => setFilters((prev) => ({ ...prev, status: value as AdminUserFilters["status"], page: 1 }))}>
-              <SelectTrigger><SelectValue placeholder="Statut" /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Tous les statuts</SelectItem>
-                <SelectItem value="active">Actif</SelectItem>
-                <SelectItem value="suspended">Suspendu</SelectItem>
-                <SelectItem value="pending_invite">Invitation en attente</SelectItem>
-                <SelectItem value="deleted">Supprimé</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select value={filters.role} onValueChange={(value) => setFilters((prev) => ({ ...prev, role: value as AdminUserFilters["role"], page: 1 }))}>
-              <SelectTrigger><SelectValue placeholder="Rôle" /></SelectTrigger>
+            <div>
+              <label htmlFor="users_statusFilter" className="sr-only">Filtrer par statut</label>
+              <Select value={filters.status} onValueChange={(value) => setFilters((prev) => ({ ...prev, status: value as AdminUserFilters["status"], page: 1 }))}>
+                <SelectTrigger id="users_statusFilter" name="statusFilter"><SelectValue placeholder="Statut" /></SelectTrigger>
+              </Select>
+            </div>
+            <div>
+              <label htmlFor="users_roleFilter" className="sr-only">Filtrer par rôle</label>
+              <Select value={filters.role} onValueChange={(value) => setFilters((prev) => ({ ...prev, role: value as AdminUserFilters["role"], page: 1 }))}>
+                <SelectTrigger id="users_roleFilter" name="roleFilter"><SelectValue placeholder="Rôle" /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">Tous les rôles</SelectItem>
                 <SelectItem value="owner">Owner</SelectItem>
@@ -146,8 +147,11 @@ export function UsersWorkspace({
                 <SelectItem value="director">Director</SelectItem>
               </SelectContent>
             </Select>
-            <Select value={filters.sortBy} onValueChange={(value) => setFilters((prev) => ({ ...prev, sortBy: value as AdminUserFilters["sortBy"], page: 1 }))}>
-              <SelectTrigger><SelectValue placeholder="Tri" /></SelectTrigger>
+            </div>
+            <div>
+              <label htmlFor="users_sortFilter" className="sr-only">Trier par</label>
+              <Select value={filters.sortBy} onValueChange={(value) => setFilters((prev) => ({ ...prev, sortBy: value as AdminUserFilters["sortBy"], page: 1 }))}>
+                <SelectTrigger id="users_sortFilter" name="sortFilter"><SelectValue placeholder="Tri" /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="created_at">Création</SelectItem>
                 <SelectItem value="last_seen_at">Dernière activité</SelectItem>
@@ -156,6 +160,7 @@ export function UsersWorkspace({
                 <SelectItem value="status">Statut</SelectItem>
               </SelectContent>
             </Select>
+            </div>
           </div>
 
           <div className="rounded-2xl border">

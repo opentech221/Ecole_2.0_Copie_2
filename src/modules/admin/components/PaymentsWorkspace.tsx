@@ -65,11 +65,13 @@ export function PaymentsWorkspace({ filters, setFilters, data, loading, statusCo
         <CardContent className="space-y-4">
           <div className="grid gap-3 xl:grid-cols-[1.6fr_1fr_1fr_1fr]">
             <div className="relative">
+              <label htmlFor="payment_search" className="sr-only">Rechercher</label>
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input className="pl-9" placeholder="Élève, parent, email" value={filters.search ?? ""} onChange={(event) => setFilters((prev) => ({ ...prev, search: event.target.value, page: 1 }))} />
+              <Input id="payment_search" name="search" className="pl-9" placeholder="Élève, parent, email" value={filters.search ?? ""} onChange={(event) => setFilters((prev) => ({ ...prev, search: event.target.value, page: 1 }))} />
             </div>
             <Select value={filters.status ?? "all"} onValueChange={(value) => setFilters((prev) => ({ ...prev, status: value as PaymentFilters["status"], page: 1 }))}>
-              <SelectTrigger>
+              <label htmlFor="payment_statusFilter" className="sr-only">Filtrer par statut</label>
+              <SelectTrigger id="payment_statusFilter" name="statusFilter">
                 <Filter className="mr-2 h-4 w-4" />
                 <SelectValue placeholder="Statut" />
               </SelectTrigger>
