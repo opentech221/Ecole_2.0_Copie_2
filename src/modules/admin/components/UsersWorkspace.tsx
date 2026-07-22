@@ -393,7 +393,7 @@ export function UsersWorkspace({
             <DialogTitle>Import CSV utilisateurs</DialogTitle>
             <DialogDescription>Colonnes attendues: email, fullName, roleCode, status, countryCode, acquisitionChannel.</DialogDescription>
           </DialogHeader>
-          <Textarea rows={10} value={csvPayload} onChange={(event) => setCsvPayload(event.target.value)} />
+          <Textarea id="users_csvPayload" name="csvPayload" rows={10} value={csvPayload} onChange={(event) => setCsvPayload(event.target.value)} />
           <DialogFooter>
             <Button variant="outline" onClick={() => startTransition(() => setImportOpen(false))}>Annuler</Button>
             <Button

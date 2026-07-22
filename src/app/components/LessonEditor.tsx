@@ -525,7 +525,7 @@ function AiCell({ value, placeholder, onChange, generating, onGenerate }: {
 }) {
   return (
     <div className="relative group">
-      <textarea value={value} onChange={e=>onChange(e.target.value)} placeholder={placeholder} rows={3}
+      <textarea id="lesson_aiCell_textarea" name="aiCell" value={value} onChange={e=>onChange(e.target.value)} placeholder={placeholder} rows={3}
         className="w-full resize-none outline-none text-[13px] leading-relaxed bg-transparent pr-8"
         style={{ color:"var(--foreground)", minHeight:"72px", fontFamily:"'Plus Jakarta Sans',sans-serif" }}/>
       <button onClick={onGenerate} disabled={generating} title="Générer avec Lilia"
@@ -1293,7 +1293,7 @@ export function LessonEditor() {
                 </div>
               ) : (
                 <div className="relative">
-                  <select value={palier} onChange={e=>setPalier(e.target.value)}
+                  <select id="lesson_palier" name="palier" value={palier} onChange={e=>setPalier(e.target.value)}
                     className="w-full appearance-none rounded-xl outline-none font-semibold"
                     style={{ minHeight:"44px", padding:"0 36px 0 12px", fontSize:"13px",
                              fontFamily:"'Plus Jakarta Sans',sans-serif",

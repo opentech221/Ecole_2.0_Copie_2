@@ -124,8 +124,8 @@ export function PaymentDetailDialog({ open, onOpenChange, payment, busy, onRefun
                     <Button variant="outline" className="w-full" disabled={busy} onClick={() => onReminder(reminderMessage)}>Envoyer une relance</Button>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-medium">Paiement hors-ligne</label>
-                    <Textarea value={offlineNote} onChange={(event) => setOfflineNote(event.target.value)} />
+                    <label htmlFor="payment_offlineNote" className="text-sm font-medium">Paiement hors-ligne</label>
+                    <Textarea id="payment_offlineNote" name="offlineNote" value={offlineNote} onChange={(event) => setOfflineNote(event.target.value)} />
                     <Button variant="outline" className="w-full" disabled={busy} onClick={() => onOffline(offlineNote)}>Marquer payé hors-ligne</Button>
                   </div>
                   <Button variant="destructive" className="w-full" disabled={busy} onClick={onCancel}>Annuler la transaction</Button>
@@ -133,8 +133,8 @@ export function PaymentDetailDialog({ open, onOpenChange, payment, busy, onRefun
               </div>
 
               <div className="rounded-2xl border p-4">
-                <p className="mb-3 font-medium">Notes internes</p>
-                <Textarea value={note} onChange={(event) => setNote(event.target.value)} className="min-h-28" />
+                <label htmlFor="payment_internalNote" className="mb-3 font-medium display-block">Notes internes</label>
+                <Textarea id="payment_internalNote" name="internalNote" value={note} onChange={(event) => setNote(event.target.value)} className="min-h-28" />
                 <div className="mt-3 flex justify-end">
                   <Button variant="outline" disabled={busy} onClick={() => onSaveNote(note)}>Enregistrer la note</Button>
                 </div>

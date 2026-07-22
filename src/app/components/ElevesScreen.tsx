@@ -1889,7 +1889,7 @@ export function ElevesScreen() {
               <div className="flex items-center gap-2 mb-4 flex-wrap">
                 <div className="flex-1 relative" style={{ minWidth:"200px" }}>
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"/>
-                  <input value={search} onChange={e=>setSearch(e.target.value)}
+                  <input id="eleves_studentSearch" name="studentSearch" value={search} onChange={e=>setSearch(e.target.value)}
                     placeholder="Rechercher un élève…"
                     className="w-full rounded-xl outline-none font-medium"
                     style={{ minHeight:"40px", padding:"0 12px 0 36px",
@@ -2183,6 +2183,8 @@ export function ElevesScreen() {
                                 </div>
                                 {/* Native select overlay — invisible but clickable */}
                                 <select
+                                  id={`eleves_status_${s.id}_${di}`}
+                                  name={`status_${s.id}`}
                                   value={a}
                                   onChange={e => setStudentStatus(s.id, di, e.target.value as AttendanceStatus)}
                                   style={{
@@ -2224,9 +2226,9 @@ export function ElevesScreen() {
             <div>
               {/* Student selector + print controls */}
               <div className="no-print flex items-center gap-3 mb-4 flex-wrap">
-                <label style={{ fontSize:"12px", fontWeight:700, color:"#475569" }}>Élève :</label>
+                <label htmlFor="eleves_studentSelector" style={{ fontSize:"12px", fontWeight:700, color:"#475569" }}>Élève :</label>
                 <div className="relative">
-                  <select value={selectedId} onChange={e=>setSelectedId(e.target.value)}
+                  <select id="eleves_studentSelector" name="studentId" value={selectedId} onChange={e=>setSelectedId(e.target.value)}
                     style={{ minHeight:"40px", padding:"0 32px 0 12px", fontSize:"13px",
                              fontWeight:600, fontFamily:"'Plus Jakarta Sans',sans-serif",
                              borderRadius:"10px", border:"1.5px solid var(--border)",

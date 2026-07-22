@@ -72,24 +72,24 @@ export function PlanEditorDialog({ open, onOpenChange, plan, onSubmit }: PlanEdi
         </DialogHeader>
 
         <div className="grid gap-3 sm:grid-cols-2">
-          <Input placeholder="Code" value={form.code} onChange={(event) => setForm((prev) => ({ ...prev, code: event.target.value }))} />
-          <Input placeholder="Nom" value={form.name} onChange={(event) => setForm((prev) => ({ ...prev, name: event.target.value }))} />
+          <Input id="plan_code" name="code" placeholder="Code" value={form.code} onChange={(event) => setForm((prev) => ({ ...prev, code: event.target.value }))} />
+          <Input id="plan_name" name="name" placeholder="Nom" value={form.name} onChange={(event) => setForm((prev) => ({ ...prev, name: event.target.value }))} />
           <Select value={form.billingInterval} onValueChange={(value) => setForm((prev) => ({ ...prev, billingInterval: value as "monthly" | "annual" }))}>
-            <SelectTrigger><SelectValue /></SelectTrigger>
+            <SelectTrigger id="plan_billingInterval" name="billingInterval"><SelectValue /></SelectTrigger>
             <SelectContent>
               <SelectItem value="monthly">Mensuel</SelectItem>
               <SelectItem value="annual">Annuel</SelectItem>
             </SelectContent>
           </Select>
-          <Input placeholder="Montant cents" value={form.amountCents} onChange={(event) => setForm((prev) => ({ ...prev, amountCents: event.target.value }))} />
-          <Input placeholder="Devise" value={form.currency} onChange={(event) => setForm((prev) => ({ ...prev, currency: event.target.value.toUpperCase() }))} />
-          <Input placeholder="Essai (jours)" value={form.trialDays} onChange={(event) => setForm((prev) => ({ ...prev, trialDays: event.target.value }))} />
-          <Input placeholder="TVA basis points" value={form.taxRateBasisPoints} onChange={(event) => setForm((prev) => ({ ...prev, taxRateBasisPoints: event.target.value }))} />
-          <Input placeholder="Limite élèves" value={form.studentLimit} onChange={(event) => setForm((prev) => ({ ...prev, studentLimit: event.target.value }))} />
+          <Input id="plan_amountCents" name="amountCents" placeholder="Montant cents" value={form.amountCents} onChange={(event) => setForm((prev) => ({ ...prev, amountCents: event.target.value }))} />
+          <Input id="plan_currency" name="currency" placeholder="Devise" value={form.currency} onChange={(event) => setForm((prev) => ({ ...prev, currency: event.target.value.toUpperCase() }))} />
+          <Input id="plan_trialDays" name="trialDays" placeholder="Essai (jours)" value={form.trialDays} onChange={(event) => setForm((prev) => ({ ...prev, trialDays: event.target.value }))} />
+          <Input id="plan_taxRateBasisPoints" name="taxRateBasisPoints" placeholder="TVA basis points" value={form.taxRateBasisPoints} onChange={(event) => setForm((prev) => ({ ...prev, taxRateBasisPoints: event.target.value }))} />
+          <Input id="plan_studentLimit" name="studentLimit" placeholder="Limite élèves" value={form.studentLimit} onChange={(event) => setForm((prev) => ({ ...prev, studentLimit: event.target.value }))} />
         </div>
 
-        <Textarea placeholder="Description" value={form.description} onChange={(event) => setForm((prev) => ({ ...prev, description: event.target.value }))} />
-        <Textarea placeholder="Fonctionnalités séparées par des virgules" value={form.features} onChange={(event) => setForm((prev) => ({ ...prev, features: event.target.value }))} />
+        <Textarea id="plan_description" name="description" placeholder="Description" value={form.description} onChange={(event) => setForm((prev) => ({ ...prev, description: event.target.value }))} />
+        <Textarea id="plan_features" name="features" placeholder="Fonctionnalités séparées par des virgules" value={form.features} onChange={(event) => setForm((prev) => ({ ...prev, features: event.target.value }))} />
 
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>Annuler</Button>

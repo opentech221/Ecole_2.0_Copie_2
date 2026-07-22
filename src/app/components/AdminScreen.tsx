@@ -765,21 +765,21 @@ export function AdminScreen() {
             )}
 
             <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
-              <label className="flex flex-col gap-1">
+              <label htmlFor="admin_tenantName" className="flex flex-col gap-1">
                 <span style={{ fontSize: "11px", fontWeight: 800, color: "var(--muted-foreground)", textTransform: "uppercase" }}>Nom du tenant</span>
-                <input value={tenantName} onChange={(e) => setTenantName(e.target.value)} disabled={!isDirector} className="rounded-xl px-3 py-2 outline-none" style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", color: "var(--foreground)", fontSize: "13px", opacity: isDirector ? 1 : 0.7 }} />
+                <input id="admin_tenantName" name="tenantName" value={tenantName} onChange={(e) => setTenantName(e.target.value)} disabled={!isDirector} className="rounded-xl px-3 py-2 outline-none" style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", color: "var(--foreground)", fontSize: "13px", opacity: isDirector ? 1 : 0.7 }} />
               </label>
-              <label className="flex flex-col gap-1">
+              <label htmlFor="admin_tenantDomain" className="flex flex-col gap-1">
                 <span style={{ fontSize: "11px", fontWeight: 800, color: "var(--muted-foreground)", textTransform: "uppercase" }}>Domaine applicatif</span>
-                <input value={tenantDomain} onChange={(e) => setTenantDomain(e.target.value)} disabled={!isDirector} className="rounded-xl px-3 py-2 outline-none" style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", color: "var(--foreground)", fontSize: "13px", opacity: isDirector ? 1 : 0.7 }} />
+                <input id="admin_tenantDomain" name="tenantDomain" value={tenantDomain} onChange={(e) => setTenantDomain(e.target.value)} disabled={!isDirector} className="rounded-xl px-3 py-2 outline-none" style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", color: "var(--foreground)", fontSize: "13px", opacity: isDirector ? 1 : 0.7 }} />
               </label>
-              <label className="flex flex-col gap-1">
+              <label htmlFor="admin_retentionDays" className="flex flex-col gap-1">
                 <span style={{ fontSize: "11px", fontWeight: 800, color: "var(--muted-foreground)", textTransform: "uppercase" }}>Retention des donnees (jours)</span>
-                <input value={retentionDays} onChange={(e) => setRetentionDays(e.target.value)} disabled={!isDirector} className="rounded-xl px-3 py-2 outline-none" style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", color: "var(--foreground)", fontSize: "13px", opacity: isDirector ? 1 : 0.7 }} />
+                <input id="admin_retentionDays" name="retentionDays" value={retentionDays} onChange={(e) => setRetentionDays(e.target.value)} disabled={!isDirector} className="rounded-xl px-3 py-2 outline-none" style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", color: "var(--foreground)", fontSize: "13px", opacity: isDirector ? 1 : 0.7 }} />
               </label>
-              <label className="flex flex-col gap-1">
+              <label htmlFor="admin_securityEmail" className="flex flex-col gap-1">
                 <span style={{ fontSize: "11px", fontWeight: 800, color: "var(--muted-foreground)", textTransform: "uppercase" }}>Contact securite</span>
-                <input value={securityEmail} onChange={(e) => setSecurityEmail(e.target.value)} disabled={!isDirector} className="rounded-xl px-3 py-2 outline-none" style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", color: "var(--foreground)", fontSize: "13px", opacity: isDirector ? 1 : 0.7 }} />
+                <input id="admin_securityEmail" name="securityEmail" value={securityEmail} onChange={(e) => setSecurityEmail(e.target.value)} disabled={!isDirector} className="rounded-xl px-3 py-2 outline-none" style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", color: "var(--foreground)", fontSize: "13px", opacity: isDirector ? 1 : 0.7 }} />
               </label>
             </div>
 

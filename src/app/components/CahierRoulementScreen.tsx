@@ -645,8 +645,8 @@ function ActivityModal({
             const tone = getActivityColor(option.id);
             const checked = selectedIds.includes(option.id);
             return (
-              <label key={option.id} className="flex items-center gap-2 rounded-lg border border-blue-500/30 bg-blue-50/40 px-2 py-2 dark:border-blue-700 dark:bg-slate-950">
-                <input type="checkbox" checked={checked} onChange={() => onToggle(option.id)} />
+              <label key={option.id} htmlFor={`journal_domainOption_${option.id}`} className="flex items-center gap-2 rounded-lg border border-blue-500/30 bg-blue-50/40 px-2 py-2 dark:border-blue-700 dark:bg-slate-950">
+                <input id={`journal_domainOption_${option.id}`} name={`domainOption_${option.id}`} type="checkbox" checked={checked} onChange={() => onToggle(option.id)} />
                 <span
                   className={`rounded-full border px-2 py-0.5 text-[11px] font-bold ${tone.badge}`}
                 >
@@ -690,8 +690,8 @@ function ContentModal({
           {filteredContents.length === 0 ? (
             <p className="text-xs text-gray-500 dark:text-gray-400">Tous les contenus disponibles sont déjà utilisés dans l'historique.</p>
           ) : filteredContents.map(content => (
-            <label key={content} className="flex items-start gap-2 rounded-lg border border-blue-500/30 bg-blue-50/40 px-2 py-2 dark:border-blue-700 dark:bg-slate-950">
-              <input type="checkbox" checked={selectedContents.includes(content)} onChange={() => onToggle(content)} className="mt-0.5" />
+            <label key={content} htmlFor={`journal_content_${content}`} className="flex items-start gap-2 rounded-lg border border-blue-500/30 bg-blue-50/40 px-2 py-2 dark:border-blue-700 dark:bg-slate-950">
+              <input id={`journal_content_${content}`} name={`content_${content}`} type="checkbox" checked={selectedContents.includes(content)} onChange={() => onToggle(content)} className="mt-0.5" />
               <span className={`text-xs ${tone.content}`}>{content}</span>
             </label>
           ))}
@@ -1467,7 +1467,7 @@ export function CahierRoulementScreen() {
                               </td>
                             ))}
                             <td className="border border-blue-300/40 bg-white p-2 align-top dark:border-slate-700 dark:bg-slate-950">
-                              <textarea aria-label={`Observations - ${dayKey}`} value={entry.observations} onChange={e => updateJournalEntry(dayKey, { observations: e.target.value })} disabled={entry.visaStatus === "approved"} rows={4} placeholder="Observations, incidents, points de vigilance…" className="min-h-[92px] w-full resize-y rounded-[10px] border border-blue-500/40 bg-white px-2.5 py-2 text-xs text-gray-900 dark:border-blue-700 dark:bg-slate-900 dark:text-gray-100" />
+                              <textarea id={`journal_observations_${dayKey}_week`} name={`observations_${dayKey}`} aria-label={`Observations - ${dayKey}`} value={entry.observations} onChange={e => updateJournalEntry(dayKey, { observations: e.target.value })} disabled={entry.visaStatus === "approved"} rows={4} placeholder="Observations, incidents, points de vigilance…" className="min-h-[92px] w-full resize-y rounded-[10px] border border-blue-500/40 bg-white px-2.5 py-2 text-xs text-gray-900 dark:border-blue-700 dark:bg-slate-900 dark:text-gray-100" />
                             </td>
                             <td className="border border-blue-300/40 bg-white p-2 align-top dark:border-slate-700 dark:bg-slate-950">
                               <button onClick={() => handleDirectorVisa(dayKey)} className="min-h-[42px] rounded-full border border-blue-500/40 px-3 font-bold text-gray-900 dark:border-blue-700 dark:text-gray-100" style={{ backgroundColor: entry.visaStatus === "approved" ? "#dcfce7" : entry.visaStatus === "pending" ? "#e5e7eb" : "transparent", cursor: "pointer" }}>
@@ -1508,7 +1508,7 @@ export function CahierRoulementScreen() {
                             ))}
                             <div>
                               <p className="m-0 mb-1.5 text-xs font-bold text-gray-900 dark:text-gray-100">Observations</p>
-                              <textarea aria-label={`Observations - ${dayKey}`} value={entry.observations} onChange={e => updateJournalEntry(dayKey, { observations: e.target.value })} disabled={entry.visaStatus === "approved"} rows={3} placeholder="Observations du jour" className="w-full resize-y rounded-[10px] border border-blue-500/40 bg-white px-2.5 py-2 text-xs text-gray-900 dark:border-blue-700 dark:bg-slate-950 dark:text-gray-100" />
+                              <textarea id={`journal_observations_${dayKey}_daily`} name={`observations_${dayKey}`} aria-label={`Observations - ${dayKey}`} value={entry.observations} onChange={e => updateJournalEntry(dayKey, { observations: e.target.value })} disabled={entry.visaStatus === "approved"} rows={3} placeholder="Observations du jour" className="w-full resize-y rounded-[10px] border border-blue-500/40 bg-white px-2.5 py-2 text-xs text-gray-900 dark:border-blue-700 dark:bg-slate-950 dark:text-gray-100" />
                             </div>
                             <button onClick={() => handleDirectorVisa(dayKey)} className="min-h-[42px] rounded-full border border-blue-500/40 px-3 font-bold text-gray-900 dark:border-blue-700 dark:text-gray-100" style={{ backgroundColor: entry.visaStatus === "approved" ? "#dcfce7" : entry.visaStatus === "pending" ? "#e5e7eb" : "transparent" }}>
                               {entry.visaStatus === "approved" ? "Visa approuvé" : entry.visaStatus === "pending" ? "Visa en attente" : "Demander un visa"}
