@@ -48,18 +48,22 @@ function Card({ title, icon, children }: {
 // ─── Field input ──────────────────────────────────────────────────────────────
 
 function Field({
-  label, value, onChange, placeholder, type = "text", required,
+  label, value, onChange, placeholder, type = "text", required, id, name,
 }: {
   label: string; value: string; onChange: (v: string) => void;
-  placeholder?: string; type?: string; required?: boolean;
+  placeholder?: string; type?: string; required?: boolean; id?: string; name?: string;
 }) {
+  const fieldId = id || label.toLowerCase().replace(/\s+/g, '_');
+  const fieldName = name || fieldId;
   return (
     <div style={{ marginBottom: "12px" }}>
-      <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
+      <label htmlFor={fieldId} style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
                       color: "var(--foreground)", marginBottom: "5px", fontFamily: FF }}>
         {label}{required && <span style={{ color: "var(--destructive)", marginLeft: "2px" }}>*</span>}
       </label>
       <input
+        id={fieldId}
+        name={fieldName}
         type={type} value={value} onChange={e => onChange(e.target.value)}
         placeholder={placeholder}
         style={{
@@ -343,13 +347,15 @@ export function ProfilScreen() {
 
             {/* Email — utilisé pour la connexion Email + mot de passe */}
             <div style={{ marginBottom: "12px", paddingBottom: "12px", borderBottom: "1px solid var(--border)" }}>
-              <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
+              <label htmlFor="profile_email" style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
                               color: "var(--foreground)", marginBottom: "5px", fontFamily: FF }}>
                 Adresse email (connexion email)
               </label>
               <div style={{ display: "flex", gap: "6px", alignItems: "flex-end" }}>
                 <div style={{ flex: 1 }}>
                   <input
+                    id="profile_email"
+                    name="email"
                     type="email" value={email} onChange={e => setEmail(e.target.value)}
                     placeholder="vous@exemple.com"
                     style={{
@@ -430,11 +436,13 @@ export function ProfilScreen() {
                      value={ief} onChange={setIef}
                      placeholder="Kolda" />
               <div style={{ marginBottom: "12px" }}>
-                <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
+                <label htmlFor="profile_classeActive" style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
                                 color: "var(--foreground)", marginBottom: "5px", fontFamily: FF }}>
                   Classe active
                 </label>
                 <select
+                  id="profile_classeActive"
+                  name="classeActive"
                   value={classeActive} onChange={e => setClasseActive(e.target.value)}
                   style={{
                     width: "100%", padding: "9px 12px", borderRadius: "8px",
@@ -447,13 +455,15 @@ export function ProfilScreen() {
               </div>
             </div>
             <div>
-              <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
+              <label htmlFor="profile_adresse" style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
                               color: "var(--foreground)", marginBottom: "5px", fontFamily: FF }}>
                 <MapPin style={{ width: 11, height: 11, display: "inline",
                                   marginRight: "4px" }} />
                 Adresse
               </label>
               <input
+                id="profile_adresse"
+                name="adresse"
                 type="text" value={adresse} onChange={e => setAdresse(e.target.value)}
                 placeholder="Quartier, Commune, Région"
                 style={{
@@ -521,11 +531,13 @@ export function ProfilScreen() {
             {/* Mot de passe actuel */}
             {hasEmailPassword && user?.email && (
               <div style={{ marginBottom: "12px" }}>
-                <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
+                <label htmlFor="profile_currentPassword" style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
                                 color: "var(--foreground)", marginBottom: "5px", fontFamily: FF }}>
                   Mot de passe actuel <span style={{ color: "var(--destructive)" }}>*</span>
                 </label>
                 <input
+                  id="profile_currentPassword"
+                  name="currentPassword"
                   type="password"
                   value={currentPw} onChange={e => setCurrentPw(e.target.value)}
                   placeholder="Votre mot de passe actuel"
@@ -545,12 +557,14 @@ export function ProfilScreen() {
             )}
             
             <div style={{ marginBottom: "12px" }}>
-              <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
+              <label htmlFor="profile_newPassword" style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
                               color: "var(--foreground)", marginBottom: "5px", fontFamily: FF }}>
                 Nouveau mot de passe <span style={{ color: "var(--destructive)" }}>*</span>
               </label>
               <div style={{ position: "relative" }}>
                 <input
+                  id="profile_newPassword"
+                  name="newPassword"
                   type={showPw ? "text" : "password"}
                   value={newPw} onChange={e => setNewPw(e.target.value)}
                   placeholder="Minimum 6 caractères"
@@ -578,11 +592,13 @@ export function ProfilScreen() {
             </div>
 
             <div style={{ marginBottom: "14px" }}>
-              <label style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
+              <label htmlFor="profile_confirmPassword" style={{ display: "block", fontSize: "11.5px", fontWeight: 700,
                               color: "var(--foreground)", marginBottom: "5px", fontFamily: FF }}>
                 Confirmer le mot de passe <span style={{ color: "var(--destructive)" }}>*</span>
               </label>
               <input
+                id="profile_confirmPassword"
+                name="confirmPassword"
                 type={showPw ? "text" : "password"}
                 value={confirmPw} onChange={e => setConfirmPw(e.target.value)}
                 placeholder="Répétez le mot de passe"

@@ -284,11 +284,13 @@ export function LoginScreen() {
         <form onSubmit={handleSendCode}>
           {/* WhatsApp phone */}
           <div style={{ marginBottom: "16px" }}>
-            <label style={{ display: "block", fontSize: "12px", fontWeight: 700,
+            <label htmlFor="login_phone" style={{ display: "block", fontSize: "12px", fontWeight: 700,
                             color: "#374151", marginBottom: "6px" }}>
               Numéro WhatsApp
             </label>
             <input
+              id="login_phone"
+              name="phone"
               type="tel" required autoComplete="tel"
               value={phoneInput} onChange={e => setPhoneInput(e.target.value)}
               placeholder="+221771234567"
@@ -329,11 +331,13 @@ export function LoginScreen() {
         ) : !codeSent && authMethod === "email" ? (
         <form onSubmit={handleEmailLogin}>
           <div style={{ marginBottom: "14px" }}>
-            <label style={{ display: "block", fontSize: "12px", fontWeight: 700,
+            <label htmlFor="login_email" style={{ display: "block", fontSize: "12px", fontWeight: 700,
                             color: "#374151", marginBottom: "6px" }}>
               Adresse email
             </label>
             <input
+              id="login_email"
+              name="email"
               type="email" required autoComplete="email"
               value={email} onChange={e => setEmail(e.target.value)}
               placeholder="vous@exemple.com"
@@ -343,11 +347,13 @@ export function LoginScreen() {
             />
           </div>
           <div style={{ marginBottom: "16px" }}>
-            <label style={{ display: "block", fontSize: "12px", fontWeight: 700,
+            <label htmlFor="login_password" style={{ display: "block", fontSize: "12px", fontWeight: 700,
                             color: "#374151", marginBottom: "6px" }}>
               Mot de passe
             </label>
             <input
+              id="login_password"
+              name="password"
               type="password" required autoComplete="current-password"
               value={password} onChange={e => setPassword(e.target.value)}
               placeholder="••••••••"
@@ -390,11 +396,13 @@ export function LoginScreen() {
           </div>
 
           <div style={{ marginBottom: "22px" }}>
-            <label style={{ display: "block", fontSize: "12px", fontWeight: 700,
+            <label htmlFor="login_otp" style={{ display: "block", fontSize: "12px", fontWeight: 700,
                             color: "#374151", marginBottom: "6px" }}>
               Code de vérification
             </label>
             <input
+              id="login_otp"
+              name="otp_code"
               type="text"
               inputMode="numeric"
               pattern="[0-9]{6}"

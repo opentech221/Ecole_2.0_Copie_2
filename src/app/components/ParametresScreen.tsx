@@ -322,6 +322,8 @@ export function ParametresScreen() {
               Nouveau mot de passe
             </p>
             <input
+              id="parametres_newPassword"
+              name="newPassword"
               type="password"
               value={newPw}
               onChange={e => setNewPw(e.target.value)}
@@ -335,6 +337,8 @@ export function ParametresScreen() {
               Confirmer le mot de passe
             </p>
             <input
+              id="parametres_confirmPassword"
+              name="confirmPassword"
               type="password"
               value={confirm}
               onChange={e => setConfirm(e.target.value)}

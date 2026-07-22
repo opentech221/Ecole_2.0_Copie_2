@@ -551,6 +551,8 @@ function ActivityCard({
       }}>
         <div className="px-3 pb-3">
           <textarea
+            id="journal_observations"
+            name="observation"
             value={state.observation}
             onChange={e => onChange({ observation: e.target.value })}
             placeholder="Observations, remarques, points à retravailler…"

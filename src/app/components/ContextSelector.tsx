@@ -478,15 +478,17 @@ function SectionLabel({ step, label, color = "var(--primary)" }: { step: string;
 
 function Dropdown({
   label, hint, value, onChange, options, placeholder,
-  disabled, disabledReason, loading,
+  disabled, disabledReason, loading, id, name,
 }: {
   label: string; hint?: string; value: string;
   onChange: (v: string) => void; options: string[];
   placeholder: string; disabled?: boolean; disabledReason?: string;
-  loading?: boolean;   // shows spinner; field is temporarily locked
+  loading?: boolean; id?: string; name?: string;
 }) {
   const isLocked = disabled || loading;
   const filled   = !!value && !isLocked;
+  const fieldId = id || label.toLowerCase().replace(/\s+/g, '_');
+  const fieldName = name || fieldId;
 
   return (
     <div className={`transition-opacity duration-200 ${isLocked && !loading ? "opacity-50" : "opacity-100"}`}>
@@ -499,6 +501,8 @@ function Dropdown({
       </div>
       <div className="relative">
         <select
+          id={fieldId}
+          name={fieldName}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           disabled={isLocked}
@@ -847,6 +851,8 @@ export function ContextSelector() {
             <div className="space-y-4">
 
               <Dropdown
+                id="context_niveau"
+                name="niveau"
                 label="Niveau"
                 value={niveau}
                 onChange={(v) => { setNiveau(v); resetFrom("domaine"); setDomaine(""); }}
@@ -855,6 +861,8 @@ export function ContextSelector() {
               />
 
               <Dropdown
+                id="context_domaine"
+                name="domaine"
                 label="Domaine"
                 value={domaine}
                 onChange={(v) => { setDomaine(v); resetFrom("domaine"); }}
@@ -868,6 +876,8 @@ export function ContextSelector() {
               />
 
               <Dropdown
+                id="context_sousDomaine"
+                name="sousDomaine"
                 label="Sous-domaine"
                 hint="si applicable"
                 value={sousDomaine}
@@ -888,6 +898,8 @@ export function ContextSelector() {
               />
 
               <Dropdown
+                id="context_discipline"
+                name="discipline"
                 label="Discipline / Activité"
                 value={discipline}
                 onChange={(v) => { setDiscipline(v); resetFrom("discipline"); }}
@@ -944,6 +956,8 @@ export function ContextSelector() {
 
             <div className="space-y-4">
               <Dropdown
+                id="context_palier"
+                name="palier"
                 label="Palier"
                 value={palier}
                 onChange={(v) => { setPalier(v); resetFrom("palier"); }}
@@ -966,6 +980,8 @@ export function ContextSelector() {
                 </div>
                 <div className="relative">
                   <select
+                    id="context_oa"
+                    name="oa"
                     value={oaIdx === "" ? "" : String(oaIdx)}
                     onChange={(e) => {
                       const v = e.target.value;
@@ -1012,6 +1028,8 @@ export function ContextSelector() {
                 </div>
                 <div className="relative">
                   <select
+                    id="context_os"
+                    name="os"
                     value={selectedOS}
                     onChange={(e) => setSelectedOS(e.target.value)}
                     disabled={oaIdx === "" || osOpts.length === 0 || loadingStep === "os"}

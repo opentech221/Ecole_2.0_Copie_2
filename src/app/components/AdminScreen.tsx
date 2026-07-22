@@ -527,11 +527,11 @@ export function AdminScreen() {
               <div className="flex gap-2">
                 <div className="relative flex-1 md:w-[280px]">
                   <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "var(--muted-foreground)" }} />
-                  <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Rechercher un utilisateur..." className="w-full rounded-xl pl-9 pr-3 py-2 outline-none" style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", color: "var(--foreground)", fontSize: "13px" }} />
+                  <input id="admin_search" name="search" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Rechercher un utilisateur..." className="w-full rounded-xl pl-9 pr-3 py-2 outline-none" style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", color: "var(--foreground)", fontSize: "13px" }} />
                 </div>
                 <div className="relative">
                   <Filter className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "var(--muted-foreground)" }} />
-                  <select value={roleFilter} onChange={(e) => setRoleFilter(e.target.value as RoleFilter)} className="rounded-xl pl-9 pr-8 py-2 outline-none appearance-none" style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", color: "var(--foreground)", fontSize: "13px", minHeight: "40px" }}>
+                  <select id="admin_roleFilter" name="roleFilter" value={roleFilter} onChange={(e) => setRoleFilter(e.target.value as RoleFilter)} className="rounded-xl pl-9 pr-8 py-2 outline-none appearance-none" style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", color: "var(--foreground)", fontSize: "13px", minHeight: "40px" }}>
                     <option value="all">Tous les roles</option>
                     <option value="teacher">Enseignant</option>
                     <option value="director">Directeur</option>
@@ -571,7 +571,7 @@ export function AdminScreen() {
                       </div>
 
                       <div className="flex items-center gap-2">
-                        <select value={classEdits[u.id] ?? "CE2"} onChange={(e) => setClassEdits((prev) => ({ ...prev, [u.id]: e.target.value }))} className="rounded-lg px-2 py-1.5" style={{ fontSize: "12px", fontWeight: 700, border: "1px solid var(--border)", backgroundColor: "var(--card)", color: "var(--foreground)" }}>
+                        <select id={`admin_classEdit_${u.id}`} name="classEdit" value={classEdits[u.id] ?? "CE2"} onChange={(e) => setClassEdits((prev) => ({ ...prev, [u.id]: e.target.value }))} className="rounded-lg px-2 py-1.5" style={{ fontSize: "12px", fontWeight: 700, border: "1px solid var(--border)", backgroundColor: "var(--card)", color: "var(--foreground)" }}>
                           {ALL_CLASSES.map((c) => (
                             <option key={c} value={c}>{c}</option>
                           ))}
@@ -609,18 +609,18 @@ export function AdminScreen() {
               ) : (
                 <>
                   <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-2">
-                    <input value={inviteEmail} onChange={(e) => setInviteEmail(e.target.value)} placeholder="Email" className="rounded-xl px-3 py-2 outline-none" style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", color: "var(--foreground)", fontSize: "13px" }} />
-                    <input value={inviteFullName} onChange={(e) => setInviteFullName(e.target.value)} placeholder="Nom complet (optionnel)" className="rounded-xl px-3 py-2 outline-none" style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", color: "var(--foreground)", fontSize: "13px" }} />
-                    <select value={inviteRole} onChange={(e) => setInviteRole(e.target.value as RowRole)} className="rounded-xl px-3 py-2 outline-none" style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", color: "var(--foreground)", fontSize: "13px" }}>
+                    <input id="admin_inviteEmail" name="email" value={inviteEmail} onChange={(e) => setInviteEmail(e.target.value)} placeholder="Email" className="rounded-xl px-3 py-2 outline-none" style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", color: "var(--foreground)", fontSize: "13px" }} />
+                    <input id="admin_inviteFullName" name="fullName" value={inviteFullName} onChange={(e) => setInviteFullName(e.target.value)} placeholder="Nom complet (optionnel)" className="rounded-xl px-3 py-2 outline-none" style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", color: "var(--foreground)", fontSize: "13px" }} />
+                    <select id="admin_inviteRole" name="role" value={inviteRole} onChange={(e) => setInviteRole(e.target.value as RowRole)} className="rounded-xl px-3 py-2 outline-none" style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", color: "var(--foreground)", fontSize: "13px" }}>
                       <option value="teacher">Enseignant</option>
                       <option value="director">Directeur</option>
                     </select>
-                    <select value={inviteClass} onChange={(e) => setInviteClass(e.target.value)} disabled={inviteRole !== "teacher"} className="rounded-xl px-3 py-2 outline-none" style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", color: "var(--foreground)", fontSize: "13px", opacity: inviteRole !== "teacher" ? 0.6 : 1 }}>
+                    <select id="admin_inviteClass" name="class" value={inviteClass} onChange={(e) => setInviteClass(e.target.value)} disabled={inviteRole !== "teacher"} className="rounded-xl px-3 py-2 outline-none" style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", color: "var(--foreground)", fontSize: "13px", opacity: inviteRole !== "teacher" ? 0.6 : 1 }}>
                       {ALL_CLASSES.map((c) => (
                         <option key={c} value={c}>{c}</option>
                       ))}
                     </select>
-                    <input value={inviteHours} onChange={(e) => setInviteHours(e.target.value)} placeholder="Expiration (heures)" className="rounded-xl px-3 py-2 outline-none" style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", color: "var(--foreground)", fontSize: "13px" }} />
+                    <input id="admin_inviteHours" name="hours" value={inviteHours} onChange={(e) => setInviteHours(e.target.value)} placeholder="Expiration (heures)" className="rounded-xl px-3 py-2 outline-none" style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", color: "var(--foreground)", fontSize: "13px" }} />
                   </div>
 
                   <button onClick={() => void handleCreateInvitation()} className="mt-3 inline-flex items-center gap-2 rounded-xl px-4 py-2" style={{ backgroundColor: "var(--primary)", color: "var(--primary-foreground)", fontWeight: 800, opacity: creatingInvite ? 0.8 : 1 }}>

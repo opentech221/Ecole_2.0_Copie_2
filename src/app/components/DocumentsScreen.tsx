@@ -571,31 +571,31 @@ function AddDocumentModal({
 
           {/* Title */}
           <div>
-            <label style={lbl}>Titre *</label>
-            <input style={inp} value={title}
+            <label htmlFor="doc_title" style={lbl}>Titre *</label>
+            <input id="doc_title" name="title" style={inp} value={title}
                    onChange={e => setTitle(e.target.value)}
                    placeholder="ex : Activités Numériques — Séance 1" required />
           </div>
 
           {/* Subtitle */}
           <div>
-            <label style={lbl}>Sous-titre</label>
-            <input style={inp} value={subtitle}
+            <label htmlFor="doc_subtitle" style={lbl}>Sous-titre</label>
+            <input id="doc_subtitle" name="subtitle" style={inp} value={subtitle}
                    onChange={e => setSubtitle(e.target.value)}
                    placeholder="ex : Mathématiques · CE2" />
           </div>
 
           {/* Meta */}
           <div>
-            <label style={lbl}>Informations complémentaires</label>
-            <input style={inp} value={meta}
+            <label htmlFor="doc_meta" style={lbl}>Informations complémentaires</label>
+            <input id="doc_meta" name="meta" style={inp} value={meta}
                    onChange={e => setMeta(e.target.value)}
                    placeholder="ex : OA1 · OS1.2 · 45 min" />
           </div>
 
           {/* File upload */}
           <div>
-            <label style={lbl}>Fichier PDF (optionnel)</label>
+            <label htmlFor="doc_file" style={lbl}>Fichier PDF (optionnel)</label>
             <div style={{
                    padding:"12px", borderRadius:"10px", cursor:"pointer",
                    border:`1.5px dashed ${file ? cfg.color : "var(--border)"}`,
@@ -609,7 +609,7 @@ function AddDocumentModal({
                 {file ? file.name : "Cliquez pour choisir un fichier PDF"}
               </p>
             </div>
-            <input ref={fileRef} type="file" accept=".pdf,.html,.docx"
+            <input ref={fileRef} id="doc_file" name="file" type="file" accept=".pdf,.html,.docx"
                    style={{ display:"none" }}
                    onChange={e => setFile(e.target.files?.[0] ?? null)} />
           </div>

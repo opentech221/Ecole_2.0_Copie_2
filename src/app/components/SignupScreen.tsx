@@ -425,11 +425,13 @@ export function SignupScreen() {
         <form onSubmit={signupMethod === "whatsapp" ? handleSendCode : handleEmailSignup}>
           {/* Full name */}
           <div style={{ marginBottom: "14px" }}>
-            <label style={{ display: "block", fontSize: "12px", fontWeight: 700,
+            <label htmlFor="signup_fullname" style={{ display: "block", fontSize: "12px", fontWeight: 700,
                             color: "#374151", marginBottom: "6px" }}>
               Nom complet
             </label>
             <input
+              id="signup_fullname"
+              name="fullname"
               type="text" required
               value={fullName} onChange={e => setFullName(e.target.value)}
               placeholder="M. Abdou DIALLO"
@@ -469,11 +471,13 @@ export function SignupScreen() {
 
           {signupMethod === "whatsapp" ? (
             <div style={{ marginBottom: "14px" }}>
-              <label style={{ display: "block", fontSize: "12px", fontWeight: 700,
+              <label htmlFor="signup_phone" style={{ display: "block", fontSize: "12px", fontWeight: 700,
                               color: "#374151", marginBottom: "6px" }}>
                 Numéro WhatsApp
               </label>
               <input
+                id="signup_phone"
+                name="phone"
                 type="tel" required autoComplete="tel"
                 value={phoneInput} onChange={e => setPhoneInput(e.target.value)}
                 placeholder="+221771234567"
@@ -488,11 +492,13 @@ export function SignupScreen() {
           ) : (
             <>
               <div style={{ marginBottom: "14px" }}>
-                <label style={{ display: "block", fontSize: "12px", fontWeight: 700,
+                <label htmlFor="signup_email" style={{ display: "block", fontSize: "12px", fontWeight: 700,
                                 color: "#374151", marginBottom: "6px" }}>
                   Adresse email
                 </label>
                 <input
+                  id="signup_email"
+                  name="email"
                   type="email" required autoComplete="email"
                   value={email} onChange={e => setEmail(e.target.value)}
                   placeholder="vous@exemple.com"
@@ -503,11 +509,13 @@ export function SignupScreen() {
               </div>
 
               <div style={{ marginBottom: "14px" }}>
-                <label style={{ display: "block", fontSize: "12px", fontWeight: 700,
+                <label htmlFor="signup_password" style={{ display: "block", fontSize: "12px", fontWeight: 700,
                                 color: "#374151", marginBottom: "6px" }}>
                   Mot de passe
                 </label>
                 <input
+                  id="signup_password"
+                  name="password"
                   type="password" required autoComplete="new-password"
                   value={password} onChange={e => setPassword(e.target.value)}
                   placeholder="Minimum 6 caractères"
@@ -518,11 +526,13 @@ export function SignupScreen() {
               </div>
 
               <div style={{ marginBottom: "14px" }}>
-                <label style={{ display: "block", fontSize: "12px", fontWeight: 700,
+                <label htmlFor="signup_confirm_password" style={{ display: "block", fontSize: "12px", fontWeight: 700,
                                 color: "#374151", marginBottom: "6px" }}>
                   Confirmer le mot de passe
                 </label>
                 <input
+                  id="signup_confirm_password"
+                  name="confirm_password"
                   type="password" required autoComplete="new-password"
                   value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}
                   placeholder="Répétez le mot de passe"
