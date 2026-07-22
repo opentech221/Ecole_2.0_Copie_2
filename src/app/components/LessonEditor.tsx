@@ -322,6 +322,7 @@ function OOCallout({ value, onChange, onGenerate, generating, genCount }: {
 
       {/* ── Body — textarea always present, hint shown when empty ── */}
       <div className="relative" style={{ backgroundColor:"color-mix(in srgb, var(--card) 84%, var(--accent) 16%)" }}>
+        <label htmlFor="lesson_oo_textarea" className="sr-only">Objectif opérationnel</label>
         {/* Version badge when re-generating */}
         {genCount > 0 && hasValue && (
           <div className="absolute top-2 right-3 flex items-center gap-1"
@@ -334,6 +335,8 @@ function OOCallout({ value, onChange, onGenerate, generating, genCount }: {
         )}
 
         <textarea
+          id="lesson_oo_textarea"
+          name="oo"
           value={value}
           onChange={e=>onChange(e.target.value)}
           onFocus={()=>setFocused(true)}

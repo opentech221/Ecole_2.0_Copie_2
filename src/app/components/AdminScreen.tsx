@@ -673,12 +673,12 @@ export function AdminScreen() {
                 ].map((row) => {
                   const enabled = securityFlags[row.key as keyof typeof securityFlags];
                   return (
-                    <label key={row.key} className="flex items-center justify-between gap-3 rounded-xl px-3 py-2" style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", cursor: isDirector ? "pointer" : "not-allowed", opacity: isDirector ? 1 : 0.7 }}>
+                    <label key={row.key} htmlFor={`admin_${row.key}`} className="flex items-center justify-between gap-3 rounded-xl px-3 py-2" style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", cursor: isDirector ? "pointer" : "not-allowed", opacity: isDirector ? 1 : 0.7 }}>
                       <span className="inline-flex items-center gap-2" style={{ color: "var(--foreground)", fontSize: "13px", fontWeight: 600 }}>
                         <row.Icon className="w-4 h-4" style={{ color: enabled ? "var(--primary)" : "var(--muted-foreground)" }} />
                         {row.label}
                       </span>
-                      <input type="checkbox" checked={enabled} disabled={!isDirector} onChange={(e) => setSecurityFlags((prev) => ({ ...prev, [row.key]: e.target.checked }))} style={{ width: "16px", height: "16px" }} />
+                      <input id={`admin_${row.key}`} name={row.key} type="checkbox" checked={enabled} disabled={!isDirector} onChange={(e) => setSecurityFlags((prev) => ({ ...prev, [row.key]: e.target.checked }))} style={{ width: "16px", height: "16px" }} />
                     </label>
                   );
                 })}
@@ -691,6 +691,8 @@ export function AdminScreen() {
 
               <div className="mt-3 grid grid-cols-1 md:grid-cols-3 gap-2">
                 <select
+                  id="admin_auditActionFilter"
+                  name="auditActionFilter"
                   value={auditActionFilter}
                   onChange={(e) => setAuditActionFilter(e.target.value)}
                   className="rounded-xl px-3 py-2 outline-none"
@@ -703,6 +705,8 @@ export function AdminScreen() {
                 </select>
 
                 <select
+                  id="admin_auditPeriodFilter"
+                  name="auditPeriodFilter"
                   value={auditPeriodFilter}
                   onChange={(e) => setAuditPeriodFilter(e.target.value as "all" | "24h" | "7d" | "30d")}
                   className="rounded-xl px-3 py-2 outline-none"

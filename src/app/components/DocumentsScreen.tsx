@@ -368,6 +368,8 @@ function DocCard({
           {isEditing ? (
             <div className="flex items-center gap-1.5 mb-0.5">
               <input
+                id="document_editTitle"
+                name="editTitle"
                 autoFocus
                 type="text"
                 value={editValue}
