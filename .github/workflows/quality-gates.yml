@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v3
         with:
           version: 10
 
@@ -29,10 +29,10 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build
-        run: pnpm build
+        run: pnpm run build
 
       - name: Test
-        run: pnpm test
+        run: pnpm run test
 
       - name: Security audit gate
         run: |
