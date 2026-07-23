@@ -1,13 +1,35 @@
+import React, { useEffect, useState } from "react";
 import { RouterProvider }      from "react-router";
 import { Toaster }             from "sonner";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { Analytics }         from "@vercel/analytics/react";
-import { SpeedInsights }     from "@vercel/speed-insights/react";
 import { router }            from "./routes";
 import { AppProvider }       from "./contexts/AppContext";
 import { AuthProvider }      from "./contexts/AuthContext";
 import { ThemeProvider }     from "./contexts/ThemeContext";
 import { queryClient }       from "../lib/queryClient";
+
+function DeferredTelemetry() {
+  const [telemetryReady, setTelemetryReady] = useState(false);
+
+  useEffect(() => {
+    const id = window.setTimeout(() => setTelemetryReady(true), 0);
+    return () => window.clearTimeout(id);
+  }, []);
+
+  if (!telemetryReady || import.meta.env.DEV) {
+    return null;
+  }
+
+  const Analytics = React.lazy(() => import("@vercel/analytics/react").then((mod) => ({ default: mod.Analytics })));
+  const SpeedInsights = React.lazy(() => import("@vercel/speed-insights/react").then((mod) => ({ default: mod.SpeedInsights })));
+
+  return (
+    <React.Suspense fallback={null}>
+      <Analytics />
+      <SpeedInsights />
+    </React.Suspense>
+  );
+}
 
 export default function App() {
   return (
@@ -24,8 +46,7 @@ export default function App() {
               closeButton
               toastOptions={{ style: { fontFamily: "'Plus Jakarta Sans', sans-serif" } }}
             />
-            <Analytics />
-            <SpeedInsights />
+            <DeferredTelemetry />
           </AppProvider>
         </ThemeProvider>
       </AuthProvider>
