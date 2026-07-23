@@ -6,6 +6,9 @@ import { ThemeProvider }     from "./contexts/ThemeContext";
 
 function DeferredTelemetry() {
   const [telemetryReady, setTelemetryReady] = useState(false);
+  const isPublicAuthRoute =
+    typeof window !== "undefined" &&
+    (window.location.pathname === "/login" || window.location.pathname === "/signup");
 
   useEffect(() => {
     let timeoutId = 0;
@@ -30,7 +33,7 @@ function DeferredTelemetry() {
     };
   }, []);
 
-  if (!telemetryReady || import.meta.env.DEV) {
+  if (isPublicAuthRoute || !telemetryReady || import.meta.env.DEV) {
     return null;
   }
 
