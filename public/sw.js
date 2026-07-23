@@ -230,6 +230,10 @@ self.addEventListener("fetch", (event) => {
   const request = event.request;
   const url = new URL(request.url);
 
+  if (url.protocol !== "http:" && url.protocol !== "https:") {
+    return;
+  }
+
   if (isNotificationWriteRequest(request, url)) {
     event.respondWith(
       (async () => {
