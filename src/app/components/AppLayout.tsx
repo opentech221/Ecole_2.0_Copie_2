@@ -724,8 +724,26 @@ export function AppLayout() {
       return;
     }
 
-    const id = window.setTimeout(() => setUnreadReady(true), 1500);
-    return () => window.clearTimeout(id);
+    let timeoutId = 0;
+    let idleId: number | null = null;
+
+    const enableUnread = () => setUnreadReady(true);
+
+    if ("requestIdleCallback" in window) {
+      idleId = (window as Window & { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => number }).requestIdleCallback(
+        enableUnread,
+        { timeout: 10000 },
+      );
+    } else {
+      timeoutId = window.setTimeout(enableUnread, 5000);
+    }
+
+    return () => {
+      if (idleId !== null && "cancelIdleCallback" in window) {
+        (window as Window & { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(idleId);
+      }
+      window.clearTimeout(timeoutId);
+    };
   }, [user]);
 
   // Auth guard

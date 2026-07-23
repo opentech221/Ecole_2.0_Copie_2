@@ -12,8 +12,26 @@ function DeferredTelemetry() {
   const [telemetryReady, setTelemetryReady] = useState(false);
 
   useEffect(() => {
-    const id = window.setTimeout(() => setTelemetryReady(true), 0);
-    return () => window.clearTimeout(id);
+    let timeoutId = 0;
+    let idleId: number | null = null;
+
+    const startTelemetry = () => setTelemetryReady(true);
+
+    if ("requestIdleCallback" in window) {
+      idleId = (window as Window & { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => number }).requestIdleCallback(
+        startTelemetry,
+        { timeout: 8000 },
+      );
+    } else {
+      timeoutId = window.setTimeout(startTelemetry, 4000);
+    }
+
+    return () => {
+      if (idleId !== null && "cancelIdleCallback" in window) {
+        (window as Window & { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(idleId);
+      }
+      window.clearTimeout(timeoutId);
+    };
   }, []);
 
   if (!telemetryReady || import.meta.env.DEV) {
