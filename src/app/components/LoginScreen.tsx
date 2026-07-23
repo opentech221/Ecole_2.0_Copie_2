@@ -73,7 +73,7 @@ const AUTH_THEME = {
     border: "#86efac",
     bg: "#f0fdf4",
     fg: "#166534",
-    solid: "#16a34a",
+    solid: "#15803d",
     solidHover: "#15803d",
     shadow: "0 6px 18px rgba(22,163,74,0.28)",
   },
@@ -487,8 +487,8 @@ export function LoginScreen() {
                 disabled={oauthLoading !== null}
                 onClick={() => handleOAuthLogin("facebook")}
                 style={{
-                  width: "100%", padding: "11px", borderRadius: "10px", border: "1px solid #1d4ed8",
-                  backgroundColor: "#1877F2", color: "#fff", fontWeight: 700, fontSize: "13px",
+                  width: "100%", padding: "11px", borderRadius: "10px", border: "1px solid #1458be",
+                  backgroundColor: "#1664d9", color: "#fff", fontWeight: 700, fontSize: "13px",
                   cursor: oauthLoading !== null ? "not-allowed" : "pointer", fontFamily: "'Plus Jakarta Sans', sans-serif",
                   display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
                 }}
