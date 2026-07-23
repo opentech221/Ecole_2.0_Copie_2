@@ -21,6 +21,7 @@ const ProfilScreen = lazy(() => import("./components/ProfilScreen").then((mod) =
 const AbonnementScreen = lazy(() => import("./components/AbonnementScreen").then((mod) => ({ default: mod.AbonnementScreen })));
 const ParametresScreen = lazy(() => import("./components/ParametresScreen").then((mod) => ({ default: mod.ParametresScreen })));
 const AdminScreen = lazy(() => import("./components/AdminScreen").then((mod) => ({ default: mod.AdminScreen })));
+const AdminModuleLayout = lazy(() => import("../modules/admin/pages/AdminModuleLayout").then((mod) => ({ default: mod.AdminModuleLayout })));
 const AdminConsolePage = lazy(() => import("../modules/admin/pages/AdminConsolePage").then((mod) => ({ default: mod.AdminConsolePage })));
 const AdminSaasPage = lazy(() => import("../modules/admin/pages/AdminSaasPage").then((mod) => ({ default: mod.AdminSaasPage })));
 const NotificationsPage = lazy(() => import("../modules/notifications/pages/NotificationsPage").then((mod) => ({ default: mod.NotificationsPage })));
@@ -56,9 +57,16 @@ export const router = createBrowserRouter([
       { path:    "abonnement",    element: lazyRoute(<AbonnementScreen />),      errorElement: <ErrorBoundary /> },
       { path:    "parametres",    element: lazyRoute(<ParametresScreen />),      errorElement: <ErrorBoundary /> },
       { path:    "notifications", element: lazyRoute(<NotificationsPage />),      errorElement: <ErrorBoundary /> },
-      { path:    "admin",         element: lazyRoute(<AdminConsolePage />),      errorElement: <ErrorBoundary /> },
-      { path:    "admin/saas",    element: lazyRoute(<AdminSaasPage />),         errorElement: <ErrorBoundary /> },
-      { path:    "admin/legacy",  element: lazyRoute(<AdminScreen />),           errorElement: <ErrorBoundary /> },
+      {
+        path: "admin",
+        element: lazyRoute(<AdminModuleLayout />),
+        errorElement: <ErrorBoundary />,
+        children: [
+          { index: true, element: lazyRoute(<AdminConsolePage />), errorElement: <ErrorBoundary /> },
+          { path: "saas", element: lazyRoute(<AdminSaasPage />), errorElement: <ErrorBoundary /> },
+          { path: "legacy", element: lazyRoute(<AdminScreen />), errorElement: <ErrorBoundary /> },
+        ],
+      },
       { path:    "programme",     element: lazyRoute(<ProgrammePage />),         errorElement: <ErrorBoundary /> },
     ],
   },

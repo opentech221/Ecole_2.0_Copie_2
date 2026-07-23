@@ -1874,7 +1874,7 @@ export function ElevesScreen() {
                        style={{ boxShadow:"0 1px 6px rgba(0,0,0,0.06)" }}>
                     <div className="flex items-center gap-2 mb-1">
                       <span style={{ fontSize:"18px" }}>{m.icon}</span>
-                      <span className="text-gray-400 font-medium" style={{ fontSize:"10px" }}>
+                      <span className="text-slate-600 dark:text-slate-300 font-medium" style={{ fontSize:"10px" }}>
                         {m.label}
                       </span>
                     </div>
@@ -1888,7 +1888,7 @@ export function ElevesScreen() {
               {/* Toolbar */}
               <div className="flex items-center gap-2 mb-4 flex-wrap">
                 <div className="flex-1 relative" style={{ minWidth:"200px" }}>
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"/>
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 dark:text-slate-300"/>
                   <input id="eleves_studentSearch" name="studentSearch" value={search} onChange={e=>setSearch(e.target.value)}
                     placeholder="Rechercher un élève…"
                     className="w-full rounded-xl outline-none font-medium"
@@ -1953,7 +1953,7 @@ export function ElevesScreen() {
                           }}
                           onMouseEnter={e=>{ if (!isEditing) (e.currentTarget as HTMLElement).style.backgroundColor="var(--muted)"; }}
                           onMouseLeave={e=>{ if (!isEditing) (e.currentTarget as HTMLElement).style.backgroundColor=selectedId===s.id?"var(--accent)":i%2===0?"var(--card)":"var(--muted)"; }}>
-                          <td style={{ padding:"10px 8px", fontSize:"11px", color:"#94a3b8", fontWeight:600 }}>{i+1}</td>
+                          <td style={{ padding:"10px 8px", fontSize:"11px", color:"var(--muted-foreground)", fontWeight:600 }}>{i+1}</td>
                           <td style={{ padding:"10px 8px", fontSize:"11px", color:"var(--muted-foreground)", fontWeight:700, fontFamily:"monospace", whiteSpace:"nowrap" }}>{s.matricule}</td>
                           {/* ── Name cell — switches to input when editing ── */}
                           <td style={{ padding:"6px 8px" }}>
@@ -2003,7 +2003,7 @@ export function ElevesScreen() {
                             }}>{s.genre}</span>
                           </td>
                           <td style={{ padding:"10px 8px", fontSize:"11px", color:"var(--muted-foreground)", whiteSpace:"nowrap" }}>
-                            {s.dateNaissance} · <span style={{ color:"#94a3b8" }}>{s.lieuNaissance}</span>
+                            {s.dateNaissance} · <span style={{ color:"var(--muted-foreground)" }}>{s.lieuNaissance}</span>
                           </td>
                           <td style={{ padding:"10px 8px", fontSize:"11px", color:"var(--muted-foreground)", whiteSpace:"nowrap" }}>{s.tuteurNom}</td>
                           <td style={{ padding:"10px 8px", fontSize:"11px", color:"var(--muted-foreground)", fontFamily:"monospace", whiteSpace:"nowrap" }}>{s.tuteurPhone}</td>
@@ -2054,7 +2054,7 @@ export function ElevesScreen() {
                   </table>
                 </div>
                 <div style={{ padding:"10px 16px", borderTop:"1px solid var(--border)",
-                              fontSize:"10px", color:"#94a3b8" }}>
+                              fontSize:"10px", color:"var(--muted-foreground)" }}>
                   {filtered.length} élève{filtered.length>1?"s":""} affiché{filtered.length>1?"s":""}
                   {search ? ` sur ${STUDENTS.length} total` : ""}
                 </div>
@@ -2102,7 +2102,7 @@ export function ElevesScreen() {
                     <span style={{ fontSize:"10px", color:"var(--muted-foreground)" }}>{s.title}</span>
                   </div>
                 ))}
-                <span style={{ fontSize:"10px", color:"#94a3b8", marginLeft:"auto" }}>
+                <span style={{ fontSize:"10px", color:"var(--muted-foreground)", marginLeft:"auto" }}>
                   {DAYS_LABELS.length} jours — {currentMonthData.label} 2025–2026
                 </span>
               </div>

@@ -380,7 +380,7 @@ export function Dashboard() {
               title="Admin SaaS"
               description="Centre d'administration pour le pilotage global : utilisateurs actifs, population pédagogique, sécurité et gouvernance de la plateforme."
               ctaLabel="Ouvrir le centre"
-              onClick={() => navigate("/admin/saas")}
+              onClick={() => navigate("/admin")}
             />
 
             {/* Module 6: Programme Officiel */}

@@ -299,7 +299,7 @@ export function AbonnementScreen() {
               <Zap style={{ width: 18, height: 18, color: "var(--primary-foreground)" }} />
             </div>
             <div>
-              <p style={{ fontSize: "11px", color: "var(--secondary)", fontWeight: 600, margin: 0 }}>
+              <p style={{ fontSize: "11px", color: "var(--foreground)", fontWeight: 700, margin: 0 }}>
                 Offre actuelle
               </p>
               <p style={{ fontSize: "15px", fontWeight: 800, color: "var(--foreground)", margin: 0 }}>
@@ -308,7 +308,7 @@ export function AbonnementScreen() {
             </div>
           </div>
           <div style={{ textAlign: "right" }}>
-            <p style={{ fontSize: "11px", color: "var(--muted-foreground)", margin: "0 0 2px" }}>
+            <p style={{ fontSize: "11px", color: "var(--foreground)", margin: "0 0 2px", opacity: 0.82 }}>
               Renouvellement
             </p>
             <p style={{ fontSize: "13px", fontWeight: 700, color: "var(--foreground)", margin: 0 }}>

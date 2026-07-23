@@ -634,18 +634,18 @@ function ActivityModal({
     <div className="fixed inset-0 z-[90] flex items-center justify-center bg-black/55 p-4">
       <div className="w-full max-w-[560px] rounded-2xl border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-900">
         <div className="mb-3 flex items-center justify-between">
-          <p className="m-0 text-sm font-extrabold text-gray-900 dark:text-gray-100">Sélection des activités · {domain.label}</p>
-          <button className="text-xs font-bold text-gray-600 dark:text-gray-300" onClick={onClose}>Fermer</button>
+          <p className="m-0 text-sm font-extrabold text-slate-900 dark:text-slate-100">Sélection des activités · {domain.label}</p>
+          <button className="text-xs font-bold text-slate-700 dark:text-slate-200" onClick={onClose}>Fermer</button>
         </div>
         <div className="max-h-[340px] space-y-2 overflow-y-auto">
           {options.length === 0 && (
-            <p className="text-xs text-gray-500 dark:text-gray-400">Aucune activité disponible pour ce domaine.</p>
+            <p className="text-xs text-slate-600 dark:text-slate-300">Aucune activité disponible pour ce domaine.</p>
           )}
           {options.map(option => {
             const tone = getActivityColor(option.id);
             const checked = selectedIds.includes(option.id);
             return (
-              <label key={option.id} htmlFor={`journal_domainOption_${option.id}`} className="flex items-center gap-2 rounded-lg border border-blue-500/30 bg-blue-50/40 px-2 py-2 dark:border-blue-700 dark:bg-slate-950">
+              <label key={option.id} htmlFor={`journal_domainOption_${option.id}`} className="flex items-center gap-2 rounded-lg border border-blue-600/40 bg-blue-50/70 px-2 py-2 dark:border-blue-700 dark:bg-slate-900">
                 <input id={`journal_domainOption_${option.id}`} name={`domainOption_${option.id}`} type="checkbox" checked={checked} onChange={() => onToggle(option.id)} />
                 <span
                   className={`rounded-full border px-2 py-0.5 text-[11px] font-bold ${tone.badge}`}
@@ -683,14 +683,14 @@ function ContentModal({
     <div className="fixed inset-0 z-[95] flex items-center justify-center bg-black/55 p-4">
       <div className="w-full max-w-[620px] rounded-2xl border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-900">
         <div className="mb-3 flex items-center justify-between">
-          <p className="m-0 text-sm font-extrabold text-gray-900 dark:text-gray-100">Contenus pédagogiques · {activity.label}</p>
-          <button className="text-xs font-bold text-gray-600 dark:text-gray-300" onClick={onClose}>Fermer</button>
+          <p className="m-0 text-sm font-extrabold text-slate-900 dark:text-slate-100">Contenus pédagogiques · {activity.label}</p>
+          <button className="text-xs font-bold text-slate-700 dark:text-slate-200" onClick={onClose}>Fermer</button>
         </div>
         <div className="max-h-[360px] space-y-2 overflow-y-auto">
           {filteredContents.length === 0 ? (
-            <p className="text-xs text-gray-500 dark:text-gray-400">Tous les contenus disponibles sont déjà utilisés dans l'historique.</p>
+            <p className="text-xs text-slate-600 dark:text-slate-300">Tous les contenus disponibles sont déjà utilisés dans l'historique.</p>
           ) : filteredContents.map(content => (
-            <label key={content} htmlFor={`journal_content_${content}`} className="flex items-start gap-2 rounded-lg border border-blue-500/30 bg-blue-50/40 px-2 py-2 dark:border-blue-700 dark:bg-slate-950">
+            <label key={content} htmlFor={`journal_content_${content}`} className="flex items-start gap-2 rounded-lg border border-blue-600/40 bg-blue-50/70 px-2 py-2 dark:border-blue-700 dark:bg-slate-900">
               <input id={`journal_content_${content}`} name={`content_${content}`} type="checkbox" checked={selectedContents.includes(content)} onChange={() => onToggle(content)} className="mt-0.5" />
               <span className={`text-xs ${tone.content}`}>{content}</span>
             </label>
@@ -725,7 +725,7 @@ function JournalCell({
   const selectedActivities = activityOptions.filter(option => value.activityIds.includes(option.id));
 
   return (
-    <div className="group flex min-h-[140px] flex-col gap-2 rounded-xl border border-blue-500/40 bg-white p-2.5 transition-all duration-200 hover:border-indigo-500 hover:bg-blue-50/30 dark:border-blue-700 dark:bg-slate-950 dark:hover:border-emerald-700 dark:hover:bg-slate-900">
+    <div className="group flex min-h-[140px] flex-col gap-2 rounded-xl border border-blue-600/45 bg-white p-2.5 transition-all duration-200 hover:border-indigo-600 hover:bg-blue-50/40 dark:border-blue-700 dark:bg-slate-950 dark:hover:border-emerald-600 dark:hover:bg-slate-900">
       <button
         onClick={onOpenActivityModal}
         disabled={disabled}
@@ -787,7 +787,7 @@ function JournalCell({
         disabled={disabled}
         rows={2}
         placeholder="Observation rapide"
-        className="w-full resize-y rounded-[10px] border border-blue-500/40 bg-white px-2.5 py-2 text-xs text-gray-900 dark:border-blue-700 dark:bg-slate-900 dark:text-gray-100"
+        className="w-full resize-y rounded-[10px] border border-blue-600/45 bg-white px-2.5 py-2 text-xs text-slate-900 dark:border-blue-700 dark:bg-slate-900 dark:text-slate-100"
       />
     </div>
   );

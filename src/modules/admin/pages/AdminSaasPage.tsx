@@ -11,13 +11,13 @@ export function AdminSaasPage() {
 
   const trendPoints = [36, 44, 41, 58, 62, 70];
   const healthItems = [
-    { label: "Supabase API", state: "Opérationnel", detail: "Latence moyenne < 180ms", tone: "text-emerald-600" },
-    { label: "Authentification", state: "Stable", detail: "Sessions valides et rafraichies", tone: "text-emerald-600" },
-    { label: "Stockage documents", state: "Attention", detail: "Capacité disponible à 82%", tone: "text-amber-600" },
+    { label: "Supabase API", state: "Opérationnel", detail: "Latence moyenne < 180ms", tone: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-200" },
+    { label: "Authentification", state: "Stable", detail: "Sessions valides et rafraichies", tone: "bg-sky-100 text-sky-800 dark:bg-sky-900/40 dark:text-sky-200" },
+    { label: "Stockage documents", state: "Attention", detail: "Capacité disponible à 82%", tone: "bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-200" },
   ];
   const alerts = [
-    { title: "Activation requise", text: "2 comptes enseignants n’ont pas encore complété leur profil de sécurité.", badge: "À traiter", tone: "bg-amber-100 text-amber-700" },
-    { title: "Sécurité", text: "La politique MFA reste recommandée pour les profils direction.", badge: "Recommandé", tone: "bg-sky-100 text-sky-700" },
+    { title: "Activation requise", text: "2 comptes enseignants n’ont pas encore complété leur profil de sécurité.", badge: "À traiter", tone: "bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-200" },
+    { title: "Sécurité", text: "La politique MFA reste recommandée pour les profils direction.", badge: "Recommandé", tone: "bg-sky-100 text-sky-800 dark:bg-sky-900/40 dark:text-sky-200" },
   ];
 
   const cards = [
@@ -136,7 +136,7 @@ export function AdminSaasPage() {
                     <div key={item.label} className="rounded-xl border border-slate-200/70 bg-white/70 p-3 dark:border-slate-800 dark:bg-slate-950/70">
                       <div className="flex items-center justify-between gap-2">
                         <span className="text-sm font-medium">{item.label}</span>
-                        <span className={`rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold ${item.tone}`}>{item.state}</span>
+                        <span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${item.tone}`}>{item.state}</span>
                       </div>
                       <p className="mt-1 text-xs text-muted-foreground">{item.detail}</p>
                     </div>
@@ -151,7 +151,7 @@ export function AdminSaasPage() {
                   <BellRing className="h-4 w-4 text-amber-600" />
                   <p className="text-sm font-semibold text-slate-700 dark:text-slate-200">Alertes sécurité & activation</p>
                 </div>
-                <Badge className="bg-amber-100 text-amber-700 hover:bg-amber-200">Live</Badge>
+                <Badge className="bg-amber-100 text-amber-800 hover:bg-amber-200 dark:bg-amber-900/40 dark:text-amber-200 dark:hover:bg-amber-900/55">Live</Badge>
               </div>
               <div className="space-y-3">
                 {alerts.map((alert) => (
@@ -183,7 +183,7 @@ export function AdminSaasPage() {
               <p className="text-sm text-muted-foreground">Politique actuelle de la plateforme : accès restreint aux profils direction et administration.</p>
             </div>
             <div className="flex flex-col gap-2 sm:flex-row">
-              <Link to="/admin" className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800">
+              <Link to="/admin" className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-800 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-100 dark:hover:bg-slate-800">
                 Ouvrir Admin Console
                 <ArrowRight className="h-4 w-4" />
               </Link>
