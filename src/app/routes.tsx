@@ -1,58 +1,64 @@
-import { createBrowserRouter }    from "react-router";
-import { AppLayout }              from "./components/AppLayout";
-import { Dashboard }              from "./components/Dashboard";
-import { ContextSelector }        from "./components/ContextSelector";
-import { LessonEditor }           from "./components/LessonEditor";
-import { PreviewScreen }          from "./components/PreviewScreen";
-import { SuccessScreen }          from "./components/SuccessScreen";
-import { PlanningScreen }         from "./components/PlanningScreen";
-import { CahierRoulementScreen }  from "./components/CahierRoulementScreen";
-import { ElevesScreen }           from "./components/ElevesScreen";
-import { DocumentsScreen }        from "./components/DocumentsScreen";
-import { LoginScreen }            from "./components/LoginScreen";
-import { SignupScreen }           from "./components/SignupScreen";
-import { PrivacyPolicyPage }      from "./components/PrivacyPolicyPage";
-import { DataDeletionPage }       from "./components/DataDeletionPage";
-import { ProfilScreen }           from "./components/ProfilScreen";
-import { AbonnementScreen }       from "./components/AbonnementScreen";
-import { ParametresScreen }       from "./components/ParametresScreen";
-import { AdminScreen }            from "./components/AdminScreen";
-import { AdminConsolePage }       from "../modules/admin/pages/AdminConsolePage";
-import { AdminSaasPage }          from "../modules/admin/pages/AdminSaasPage";
-import { NotificationsPage }      from "../modules/notifications/pages/NotificationsPage";
-import { ProgrammePage }          from "../modules/programme/pages/ProgrammePage";
-import ErrorBoundary              from "./components/ErrorBoundary";
+import { createBrowserRouter } from "react-router";
+import React, { Suspense, lazy } from "react";
+import ErrorBoundary from "./components/ErrorBoundary";
+
+const AppLayout = lazy(() => import("./components/AppLayout").then((mod) => ({ default: mod.AppLayout })));
+const Dashboard = lazy(() => import("./components/Dashboard").then((mod) => ({ default: mod.Dashboard })));
+const ContextSelector = lazy(() => import("./components/ContextSelector").then((mod) => ({ default: mod.ContextSelector })));
+const LessonEditor = lazy(() => import("./components/LessonEditor").then((mod) => ({ default: mod.LessonEditor })));
+const PreviewScreen = lazy(() => import("./components/PreviewScreen").then((mod) => ({ default: mod.PreviewScreen })));
+const SuccessScreen = lazy(() => import("./components/SuccessScreen").then((mod) => ({ default: mod.SuccessScreen })));
+const PlanningScreen = lazy(() => import("./components/PlanningScreen").then((mod) => ({ default: mod.PlanningScreen })));
+const CahierRoulementScreen = lazy(() => import("./components/CahierRoulementScreen").then((mod) => ({ default: mod.CahierRoulementScreen })));
+const ElevesScreen = lazy(() => import("./components/ElevesScreen").then((mod) => ({ default: mod.ElevesScreen })));
+const DocumentsScreen = lazy(() => import("./components/DocumentsScreen").then((mod) => ({ default: mod.DocumentsScreen })));
+const LoginScreen = lazy(() => import("./components/LoginScreen").then((mod) => ({ default: mod.LoginScreen })));
+const SignupScreen = lazy(() => import("./components/SignupScreen").then((mod) => ({ default: mod.SignupScreen })));
+const PrivacyPolicyPage = lazy(() => import("./components/PrivacyPolicyPage").then((mod) => ({ default: mod.PrivacyPolicyPage })));
+const DataDeletionPage = lazy(() => import("./components/DataDeletionPage").then((mod) => ({ default: mod.DataDeletionPage })));
+const ProfilScreen = lazy(() => import("./components/ProfilScreen").then((mod) => ({ default: mod.ProfilScreen })));
+const AbonnementScreen = lazy(() => import("./components/AbonnementScreen").then((mod) => ({ default: mod.AbonnementScreen })));
+const ParametresScreen = lazy(() => import("./components/ParametresScreen").then((mod) => ({ default: mod.ParametresScreen })));
+const AdminScreen = lazy(() => import("./components/AdminScreen").then((mod) => ({ default: mod.AdminScreen })));
+const AdminConsolePage = lazy(() => import("../modules/admin/pages/AdminConsolePage").then((mod) => ({ default: mod.AdminConsolePage })));
+const AdminSaasPage = lazy(() => import("../modules/admin/pages/AdminSaasPage").then((mod) => ({ default: mod.AdminSaasPage })));
+const NotificationsPage = lazy(() => import("../modules/notifications/pages/NotificationsPage").then((mod) => ({ default: mod.NotificationsPage })));
+const ProgrammePage = lazy(() => import("../modules/programme/pages/ProgrammePage").then((mod) => ({ default: mod.ProgrammePage })));
+
+function lazyRoute(element: React.ReactElement) {
+  return <Suspense fallback={null}>{element}</Suspense>;
+}
 
 export const router = createBrowserRouter([
   // ── Public auth routes ────────────────────────────────────────────────────
-  { path: "/login",  element: <LoginScreen  />, errorElement: <ErrorBoundary /> },
-  { path: "/signup", element: <SignupScreen />, errorElement: <ErrorBoundary /> },
-  { path: "/privacy-policy", element: <PrivacyPolicyPage />, errorElement: <ErrorBoundary /> },
-  { path: "/data-deletion", element: <DataDeletionPage />, errorElement: <ErrorBoundary /> },
+  { path: "/login",  element: lazyRoute(<LoginScreen  />), errorElement: <ErrorBoundary /> },
+  { path: "/signup", element: lazyRoute(<SignupScreen />), errorElement: <ErrorBoundary /> },
+  { path: "/privacy-policy", element: lazyRoute(<PrivacyPolicyPage />), errorElement: <ErrorBoundary /> },
+  { path: "/data-deletion", element: lazyRoute(<DataDeletionPage />), errorElement: <ErrorBoundary /> },
 
   // ── Protected app routes (AppLayout contains auth + profile guards) ────────
   {
     path:         "/",
-    element:      <AppLayout />,
+    element:      lazyRoute(<AppLayout />),
     errorElement: <ErrorBoundary />,
     children: [
-      { index:   true,            element: <Dashboard />,            errorElement: <ErrorBoundary /> },
-      { path:    "planning",      element: <PlanningScreen />,        errorElement: <ErrorBoundary /> },
-      { path:    "cahier",        element: <CahierRoulementScreen />, errorElement: <ErrorBoundary /> },
-      { path:    "eleves",        element: <ElevesScreen />,          errorElement: <ErrorBoundary /> },
-      { path:    "documents",     element: <DocumentsScreen />,       errorElement: <ErrorBoundary /> },
-      { path:    "new-fiche",     element: <ContextSelector />,       errorElement: <ErrorBoundary /> },
-      { path:    "select-lesson", element: <LessonEditor />,          errorElement: <ErrorBoundary /> },
-      { path:    "preview",       element: <PreviewScreen />,         errorElement: <ErrorBoundary /> },
-      { path:    "success",       element: <SuccessScreen />,         errorElement: <ErrorBoundary /> },
-      { path:    "profil",        element: <ProfilScreen />,          errorElement: <ErrorBoundary /> },
-      { path:    "abonnement",    element: <AbonnementScreen />,      errorElement: <ErrorBoundary /> },
-      { path:    "parametres",    element: <ParametresScreen />,      errorElement: <ErrorBoundary /> },
-      { path:    "notifications", element: <NotificationsPage />,      errorElement: <ErrorBoundary /> },
-      { path:    "admin",         element: <AdminConsolePage />,      errorElement: <ErrorBoundary /> },
-      { path:    "admin/saas",    element: <AdminSaasPage />,         errorElement: <ErrorBoundary /> },
-      { path:    "admin/legacy",  element: <AdminScreen />,           errorElement: <ErrorBoundary /> },
-      { path:    "programme",     element: <ProgrammePage />,         errorElement: <ErrorBoundary /> },
+      { index:   true,            element: lazyRoute(<Dashboard />),            errorElement: <ErrorBoundary /> },
+      { path:    "planning",      element: lazyRoute(<PlanningScreen />),        errorElement: <ErrorBoundary /> },
+      { path:    "cahier",        element: lazyRoute(<CahierRoulementScreen />), errorElement: <ErrorBoundary /> },
+      { path:    "eleves",        element: lazyRoute(<ElevesScreen />),          errorElement: <ErrorBoundary /> },
+      { path:    "documents",     element: lazyRoute(<DocumentsScreen />),       errorElement: <ErrorBoundary /> },
+      { path:    "new-fiche",     element: lazyRoute(<ContextSelector />),       errorElement: <ErrorBoundary /> },
+      { path:    "select-lesson", element: lazyRoute(<LessonEditor />),          errorElement: <ErrorBoundary /> },
+      { path:    "preview",       element: lazyRoute(<PreviewScreen />),         errorElement: <ErrorBoundary /> },
+      { path:    "success",       element: lazyRoute(<SuccessScreen />),         errorElement: <ErrorBoundary /> },
+      { path:    "profil",        element: lazyRoute(<ProfilScreen />),          errorElement: <ErrorBoundary /> },
+      { path:    "abonnement",    element: lazyRoute(<AbonnementScreen />),      errorElement: <ErrorBoundary /> },
+      { path:    "parametres",    element: lazyRoute(<ParametresScreen />),      errorElement: <ErrorBoundary /> },
+      { path:    "notifications", element: lazyRoute(<NotificationsPage />),      errorElement: <ErrorBoundary /> },
+      { path:    "admin",         element: lazyRoute(<AdminConsolePage />),      errorElement: <ErrorBoundary /> },
+      { path:    "admin/saas",    element: lazyRoute(<AdminSaasPage />),         errorElement: <ErrorBoundary /> },
+      { path:    "admin/legacy",  element: lazyRoute(<AdminScreen />),           errorElement: <ErrorBoundary /> },
+      { path:    "programme",     element: lazyRoute(<ProgrammePage />),         errorElement: <ErrorBoundary /> },
     ],
   },
 ]);
