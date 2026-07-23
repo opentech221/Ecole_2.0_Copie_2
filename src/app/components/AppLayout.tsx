@@ -260,6 +260,7 @@ function DesktopSidebar({ profile, onLogout, unreadCount }: {
       <div style={{ padding: "8px 12px 4px" }} ref={classRef}>
         <button
           onClick={() => setClassOpen(o => !o)}
+          aria-label="Choisir la classe active"
           style={{
             display: "flex", alignItems: "center", justifyContent: "space-between",
             width: "100%", padding: "7px 11px", borderRadius: "8px",
@@ -271,8 +272,8 @@ function DesktopSidebar({ profile, onLogout, unreadCount }: {
             Classe active :
           </span>
           <span style={{
-            fontSize: "12px", fontWeight: 800, color: "var(--primary)",
-            backgroundColor: "var(--accent)", border: "1px solid var(--border)",
+            fontSize: "12px", fontWeight: 800, color: "var(--primary-foreground)",
+            backgroundColor: "var(--primary)", border: "1px solid var(--primary)",
             borderRadius: "5px", padding: "1px 8px",
           }}>
             {activeClass}
@@ -393,8 +394,8 @@ function MobileTopBar({ activeClass, onMenuOpen }: {
         </span>
       </div>
       <span style={{
-        fontSize: "11px", fontWeight: 700, color: "var(--primary)",
-        backgroundColor: "var(--accent)", border: "1px solid var(--border)",
+        fontSize: "11px", fontWeight: 700, color: "var(--primary-foreground)",
+        backgroundColor: "var(--primary)", border: "1px solid var(--primary)",
         borderRadius: "6px", padding: "2px 10px",
       }}>
         {activeClass}
@@ -541,6 +542,7 @@ function MobileDrawer({ open, onClose, profile, onLogout, unreadCount }: {
             </div>
           </div>
           <button onClick={onClose}
+            aria-label="Fermer le menu de navigation"
             style={{ width: 32, height: 32, borderRadius: "8px",
                      backgroundColor: "var(--muted)", border: "1px solid var(--border)",
                      display: "flex", alignItems: "center", justifyContent: "center",
@@ -710,10 +712,21 @@ function MobileDrawer({ open, onClose, profile, onLogout, unreadCount }: {
 export function AppLayout() {
   const { user, profile, loading: authLoading } = useAuthContext();
   const { activeClass }                         = useAppContext();
-  const { unreadCount }                         = useNotificationsUnreadCount(Boolean(user));
   const navigate                                = useNavigate();
   const { pathname }                            = useLocation();
   const [drawerOpen, setDrawerOpen]             = useState(false);
+  const [unreadReady, setUnreadReady]           = useState(false);
+  const { unreadCount }                         = useNotificationsUnreadCount(Boolean(user) && unreadReady);
+
+  useEffect(() => {
+    if (!user) {
+      setUnreadReady(false);
+      return;
+    }
+
+    const id = window.setTimeout(() => setUnreadReady(true), 1500);
+    return () => window.clearTimeout(id);
+  }, [user]);
 
   // Auth guard
   if (authLoading) {
@@ -767,7 +780,7 @@ export function AppLayout() {
         </div>
 
         {/* Main content */}
-        <div className="flex-1 min-w-0" style={{ minWidth: 0 }}>
+        <main className="flex-1 min-w-0" style={{ minWidth: 0 }}>
           <div className="md:hidden"
                style={{ paddingTop: "48px", paddingBottom: "max(64px, calc(64px + env(safe-area-inset-bottom)))" }}>
             <Outlet />
@@ -775,7 +788,7 @@ export function AppLayout() {
           <div className="hidden md:block">
             <Outlet />
           </div>
-        </div>
+        </main>
       </div>
 
       {/* Mobile bottom nav */}

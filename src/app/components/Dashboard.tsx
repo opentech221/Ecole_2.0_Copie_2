@@ -324,7 +324,7 @@ export function Dashboard() {
               badgeIcon={<Calendar className="w-3.5 h-3.5 text-white/80"/>}
               gradient="linear-gradient(135deg, #0b3a67 0%, #125a93 52%, #1b79b8 100%)"
               shadowColor="rgba(11,58,103,0.34)"
-              accent="#2ea3e6"
+              accent="#0369a1"
               title="Planification"
               description="Planifiez vos semaines, suivez le taux de couverture du programme et accédez au référentiel officiel du CEB."
               ctaLabel="Préparer ma semaine"
@@ -337,7 +337,7 @@ export function Dashboard() {
               badgeIcon={<Users className="w-3.5 h-3.5 text-white/80"/>}
               gradient="linear-gradient(135deg, #0f766e 0%, #0d9488 50%, #14b8a6 100%)"
               shadowColor="rgba(15,118,110,0.30)"
-              accent="#0891b2"
+              accent="#0f766e"
               title="Gestion administrative et suivi des performances"
               description="Gérez la liste des élèves, suivez les présences au quotidien et générez les bulletins de notes trimestriels."
               ctaLabel="Piloter ma classe"
@@ -363,7 +363,7 @@ export function Dashboard() {
               badgeIcon={<Eye className="w-3.5 h-3.5 text-white/80"/>}
               gradient="linear-gradient(135deg, #7c2d12 0%, #9a3412 50%, #c2410c 100%)"
               shadowColor="rgba(124,45,18,0.30)"
-              accent="#ea580c"
+              accent="#9a3412"
               title="Documents générés"
               description="Consultez, imprimez et partagez vos fiches de préparation, bulletins et rapports trimestriels générés."
               ctaLabel="Consulter mes archives"
@@ -389,7 +389,7 @@ export function Dashboard() {
               badgeIcon={<BookMarked className="w-3.5 h-3.5 text-white/80"/>}
               gradient="linear-gradient(135deg, #065f46 0%, #047857 50%, #0f766e 100%)"
               shadowColor="rgba(6,95,70,0.30)"
-              accent="#0d9488"
+              accent="#0f766e"
               title="Programme officiel"
               description="Naviguez le référentiel réel DEMSG (niveau, domaine, sous-domaine, activité) et connectez la préparation pédagogique aux données officielles." 
               ctaLabel="Ouvrir le module"

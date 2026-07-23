@@ -1,4 +1,4 @@
-const CACHE_VERSION = "ecole2-pwa-v3";
+const CACHE_VERSION = "ecole2-pwa-v4";
 const APP_SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const API_CACHE = `${CACHE_VERSION}-api`;
@@ -226,6 +226,18 @@ async function networkFirst(request, fallbackResponse) {
   }
 }
 
+async function safeCachePut(cache, request, response) {
+  try {
+    const target = typeof request === "string" ? request : request.url;
+    if (typeof target === "string" && !target.startsWith("http") && !target.startsWith("/")) {
+      return;
+    }
+    await cache.put(request, response);
+  } catch {
+    // Ignore unsupported or transient cache write failures.
+  }
+}
+
 self.addEventListener("fetch", (event) => {
   const request = event.request;
   const url = new URL(request.url);
@@ -259,7 +271,7 @@ self.addEventListener("fetch", (event) => {
         try {
           const fresh = await fetch(request);
           const shell = await caches.open(APP_SHELL_CACHE);
-          shell.put("/index.html", fresh.clone());
+          await safeCachePut(shell, "/index.html", fresh.clone());
           return fresh;
         } catch {
           const shell = await caches.match("/index.html");
@@ -296,7 +308,7 @@ self.addEventListener("fetch", (event) => {
         const networkPromise = fetch(request)
           .then((response) => {
             if (response.ok) {
-              cache.put(request, response.clone());
+              void safeCachePut(cache, request, response.clone());
             }
             return response;
           })
@@ -323,7 +335,7 @@ self.addEventListener("fetch", (event) => {
         try {
           const fresh = await fetch(request);
           if (fresh.ok) {
-            cache.put(request, fresh.clone());
+            await safeCachePut(cache, request, fresh.clone());
           }
           return fresh;
         } catch {

@@ -42,6 +42,26 @@ export default defineConfig({
     },
   },
 
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (!id.includes('node_modules')) return undefined
+
+          if (id.includes('@supabase/')) return 'supabase'
+          if (id.includes('@tanstack/')) return 'react-query'
+          if (id.includes('react-router')) return 'router'
+          if (id.includes('lucide-react')) return 'icons'
+          if (id.includes('@radix-ui/') || id.includes('vaul') || id.includes('cmdk')) return 'ui-vendor'
+          if (id.includes('@mui/') || id.includes('@emotion/')) return 'mui'
+          if (id.includes('recharts') || id.includes('react-day-picker') || id.includes('date-fns')) return 'data-viz'
+
+          return 'vendor'
+        },
+      },
+    },
+  },
+
   // File types to support raw imports. Never add .css, .tsx, or .ts files to this.
   assetsInclude: ['**/*.svg', '**/*.csv'],
 })
