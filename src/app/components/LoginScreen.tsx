@@ -1,8 +1,7 @@
 import { useState }               from "react";
 import { useNavigate, Navigate, Link }  from "react-router";
 import { GraduationCap, LogIn, Mail, MessageCircle, ShieldCheck } from "lucide-react";
-import GoogleIcon from "@mui/icons-material/Google";
-import FacebookIcon from "@mui/icons-material/Facebook";
+import { GoogleIcon, FacebookIcon } from "./AuthProviderIcons";
 import { supabase }               from "../../lib/supabase";
 import { useAuthContext }         from "../contexts/AuthContext";
 
@@ -480,7 +479,7 @@ export function LoginScreen() {
                   display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
                 }}
               >
-                <GoogleIcon sx={{ fontSize: 18 }} />
+                <GoogleIcon style={{ width: 18, height: 18 }} />
                 {oauthLoading === "google" ? "Redirection…" : "Continuer avec Google"}
               </button>
               <button
@@ -494,7 +493,7 @@ export function LoginScreen() {
                   display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
                 }}
               >
-                <FacebookIcon sx={{ fontSize: 18, color: "#fff" }} />
+                <FacebookIcon style={{ width: 18, height: 18, color: "#fff" }} />
                 {oauthLoading === "facebook" ? "Redirection…" : "Continuer avec Facebook"}
               </button>
             </div>

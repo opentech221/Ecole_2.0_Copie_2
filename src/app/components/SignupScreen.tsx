@@ -1,8 +1,7 @@
 import { useState }               from "react";
 import { useNavigate, Navigate, Link }  from "react-router";
 import { GraduationCap, CheckCircle, Mail, MessageCircle, ShieldCheck, UserPlus } from "lucide-react";
-import GoogleIcon from "@mui/icons-material/Google";
-import FacebookIcon from "@mui/icons-material/Facebook";
+import { GoogleIcon, FacebookIcon } from "./AuthProviderIcons";
 import { supabase }               from "../../lib/supabase";
 import { useAuthContext }         from "../contexts/AuthContext";
 import type { UserRole }          from "../../hooks/useAuth";
@@ -603,7 +602,7 @@ export function SignupScreen() {
               display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
             }}
           >
-            <GoogleIcon sx={{ fontSize: 18 }} />
+            <GoogleIcon style={{ width: 18, height: 18 }} />
             {oauthLoading === "google" ? "Redirection…" : "S'inscrire avec Google"}
           </button>
           <button
@@ -617,7 +616,7 @@ export function SignupScreen() {
               display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
             }}
           >
-            <FacebookIcon sx={{ fontSize: 18, color: "#fff" }} />
+            <FacebookIcon style={{ width: 18, height: 18, color: "#fff" }} />
             {oauthLoading === "facebook" ? "Redirection…" : "S'inscrire avec Facebook"}
           </button>
         </div>
