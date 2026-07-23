@@ -118,7 +118,7 @@ export function UsersWorkspace({
           <div className="grid gap-3 xl:grid-cols-[1.5fr_1fr_1fr_1fr]">
             <div className="relative">
               <label htmlFor="users_search" className="sr-only">Rechercher</label>
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500 dark:text-slate-300" />
               <Input
                 id="users_search"
                 name="search"
@@ -201,7 +201,7 @@ export function UsersWorkspace({
             </Table>
           </div>
 
-          <div className="flex items-center justify-between text-sm text-muted-foreground">
+          <div className="flex items-center justify-between text-sm text-slate-700 dark:text-slate-300">
             <span>{userCountLabel}</span>
             <div className="flex items-center gap-2">
               <Button
@@ -232,25 +232,25 @@ export function UsersWorkspace({
           <CardDescription>Actions administratives et traçabilité.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          {!selectedUserId && <p className="text-sm text-muted-foreground">Sélectionnez un utilisateur pour afficher sa fiche.</p>}
-          {selectedUserId && detailLoading && <p className="text-sm text-muted-foreground">Chargement de la fiche utilisateur...</p>}
+          {!selectedUserId && <p className="text-sm text-slate-700 dark:text-slate-300">Sélectionnez un utilisateur pour afficher sa fiche.</p>}
+          {selectedUserId && detailLoading && <p className="text-sm text-slate-700 dark:text-slate-300">Chargement de la fiche utilisateur...</p>}
           {selectedUser && (
             <>
               <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
                 <div className="rounded-xl border p-3">
-                  <p className="text-xs text-muted-foreground">Nom</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-300">Nom</p>
                   <p className="font-medium">{selectedUser.fullName}</p>
                 </div>
                 <div className="rounded-xl border p-3">
-                  <p className="text-xs text-muted-foreground">Email</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-300">Email</p>
                   <p className="font-medium">{selectedUser.email}</p>
                 </div>
                 <div className="rounded-xl border p-3">
-                  <p className="text-xs text-muted-foreground">Rôle</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-300">Rôle</p>
                   <p className="font-medium">{selectedUser.roleCode}</p>
                 </div>
                 <div className="rounded-xl border p-3">
-                  <p className="text-xs text-muted-foreground">Statut</p>
+                  <p className="text-xs text-slate-700 dark:text-slate-300">Statut</p>
                   <p className="font-medium">{selectedUser.status}</p>
                 </div>
               </div>
@@ -292,7 +292,7 @@ export function UsersWorkspace({
               <div className="space-y-2">
                 <h3 className="text-sm font-semibold">Journal d’audit utilisateur</h3>
                 <div className="max-h-52 space-y-2 overflow-auto rounded-xl border p-3">
-                  {selectedUser.auditTrail.length === 0 && <p className="text-sm text-muted-foreground">Aucun événement pour cet utilisateur.</p>}
+                  {selectedUser.auditTrail.length === 0 && <p className="text-sm text-slate-700 dark:text-slate-300">Aucun événement pour cet utilisateur.</p>}
                   {selectedUser.auditTrail.map((entry) => (
                     <div key={entry.id} className="rounded-lg border p-2 text-sm">
                       <div className="flex items-center justify-between gap-2">

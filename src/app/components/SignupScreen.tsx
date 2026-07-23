@@ -305,7 +305,7 @@ export function SignupScreen() {
             style={{
               marginTop: "10px", width: "100%", padding: "11px 16px",
               borderRadius: "10px", backgroundColor: "var(--card)", color: "#334155", fontWeight: 700,
-              fontSize: "13px", border: "1px solid #cbd5e1", cursor: "pointer",
+              fontSize: "13px", border: "1px solid #b6c2d4", cursor: "pointer",
               fontFamily: "'Plus Jakarta Sans', sans-serif",
             }}
           >
@@ -391,7 +391,7 @@ export function SignupScreen() {
             }}
             style={{
               padding: "10px", borderRadius: "10px",
-              border: signupMethod === "whatsapp" ? `2px solid ${AUTH_THEME.whatsapp.border}` : "1px solid #cbd5e1",
+              border: signupMethod === "whatsapp" ? `2px solid ${AUTH_THEME.whatsapp.border}` : "1px solid #b6c2d4",
               backgroundColor: signupMethod === "whatsapp" ? AUTH_THEME.whatsapp.bg : "#fff",
               color: signupMethod === "whatsapp" ? AUTH_THEME.whatsapp.fg : "#1e293b", fontWeight: 700,
               cursor: "pointer", fontSize: "13px", fontFamily: "'Plus Jakarta Sans', sans-serif",
@@ -409,7 +409,7 @@ export function SignupScreen() {
             }}
             style={{
               padding: "10px", borderRadius: "10px",
-              border: signupMethod === "email" ? `2px solid ${AUTH_THEME.email.border}` : "1px solid #cbd5e1",
+              border: signupMethod === "email" ? `2px solid ${AUTH_THEME.email.border}` : "1px solid #b6c2d4",
               backgroundColor: signupMethod === "email" ? AUTH_THEME.email.bg : "#fff",
               color: signupMethod === "email" ? AUTH_THEME.email.fg : "#1e293b", fontWeight: 700,
               cursor: "pointer", fontSize: "13px", fontFamily: "'Plus Jakarta Sans', sans-serif",
@@ -456,7 +456,7 @@ export function SignupScreen() {
                       flex: 1, padding: "10px 8px", borderRadius: "10px",
                       backgroundColor: active ? "#1a365d" : "#f8fafc",
                       border: `2px solid ${active ? "#1a365d" : "#e2e8f0"}`,
-                      color: active ? "#fff" : "#64748b",
+                      color: active ? "#fff" : "#475569",
                       fontWeight: 700, fontSize: "13px", cursor: "pointer",
                       fontFamily: "'Plus Jakarta Sans', sans-serif",
                     }}
@@ -561,7 +561,7 @@ export function SignupScreen() {
             style={{
               width: "100%", padding: "13px", borderRadius: "12px",
               backgroundColor: (signupMethod === "whatsapp" ? sendingCode : emailLoading)
-                ? "#94a3b8"
+                ? "#7186a0"
                 : (signupMethod === "whatsapp" ? AUTH_THEME.whatsapp.solid : AUTH_THEME.email.solid),
               color: "#fff", fontWeight: 700, fontSize: "14px",
               border: "none", cursor: (signupMethod === "whatsapp" ? sendingCode : emailLoading) ? "not-allowed" : "pointer",
@@ -596,7 +596,7 @@ export function SignupScreen() {
             disabled={oauthLoading !== null}
             onClick={() => handleOAuthSignup("google")}
             style={{
-              width: "100%", padding: "11px", borderRadius: "10px", border: "1px solid #cbd5e1",
+              width: "100%", padding: "11px", borderRadius: "10px", border: "1px solid #b6c2d4",
               backgroundColor: "var(--card)", color: "var(--foreground)", fontWeight: 700, fontSize: "13px",
               cursor: oauthLoading !== null ? "not-allowed" : "pointer", fontFamily: "'Plus Jakarta Sans', sans-serif",
               display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",

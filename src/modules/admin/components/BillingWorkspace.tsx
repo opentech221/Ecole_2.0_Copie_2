@@ -30,21 +30,21 @@ export function BillingWorkspace({ data, onCreatePlan, onEditPlan }: BillingWork
           </CardHeader>
           <CardContent className="grid gap-3 md:grid-cols-2">
             {plans.map((plan) => (
-              <button key={plan.id} onClick={() => onEditPlan(plan)} className="rounded-2xl border p-4 text-left transition hover:border-slate-400 dark:hover:border-slate-600">
+              <button key={plan.id} onClick={() => onEditPlan(plan)} className="rounded-2xl border p-4 text-left transition hover:border-slate-500 dark:hover:border-slate-600">
                 <div className="mb-2 flex items-center justify-between gap-2">
                   <div>
-                    <p className="font-semibold">{plan.name}</p>
-                    <p className="text-xs uppercase tracking-wide text-muted-foreground">{plan.code}</p>
+                    <p className="font-semibold text-slate-900 dark:text-slate-100">{plan.name}</p>
+                    <p className="text-xs uppercase tracking-wide text-slate-700 dark:text-slate-300">{plan.code}</p>
                   </div>
                   <Badge variant={plan.active ? "default" : "outline"}>{plan.active ? "Actif" : "Inactif"}</Badge>
                 </div>
-                <p className="mb-3 text-sm text-muted-foreground">{plan.description ?? "Aucune description"}</p>
+                <p className="mb-3 text-sm text-slate-700 dark:text-slate-300">{plan.description ?? "Aucune description"}</p>
                 <div className="flex items-end justify-between">
                   <div>
                     <p className="text-xl font-semibold">{formatMoney(plan.amountCents, plan.currency)}</p>
-                    <p className="text-xs text-muted-foreground">{plan.billingInterval} • essai {plan.trialDays} j</p>
+                    <p className="text-xs text-slate-700 dark:text-slate-300">{plan.billingInterval} • essai {plan.trialDays} j</p>
                   </div>
-                  <div className="text-right text-xs text-muted-foreground">
+                  <div className="text-right text-xs text-slate-700 dark:text-slate-300">
                     <div>TVA {plan.taxRateBasisPoints / 100}%</div>
                     <div>{plan.studentLimit ?? "∞"} élèves</div>
                   </div>
@@ -65,11 +65,11 @@ export function BillingWorkspace({ data, onCreatePlan, onEditPlan }: BillingWork
                 <div className="mb-2 flex items-center justify-between gap-2">
                   <div>
                     <p className="font-medium">{subscription.subscriberName}</p>
-                    <p className="text-xs text-muted-foreground">{subscription.planName ?? "Sans plan"}</p>
+                    <p className="text-xs text-slate-700 dark:text-slate-300">{subscription.planName ?? "Sans plan"}</p>
                   </div>
                   <Badge variant={subscription.status === "active" ? "default" : subscription.status === "past_due" ? "destructive" : "outline"}>{subscription.status}</Badge>
                 </div>
-                <div className="flex items-center justify-between text-sm text-muted-foreground">
+                <div className="flex items-center justify-between text-sm text-slate-700 dark:text-slate-300">
                   <span>{formatMoney(subscription.amountCents, subscription.currency)}</span>
                   <span>{formatDateTime(subscription.currentPeriodEnd)}</span>
                 </div>

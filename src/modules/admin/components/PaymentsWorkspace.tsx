@@ -66,7 +66,7 @@ export function PaymentsWorkspace({ filters, setFilters, data, loading, statusCo
           <div className="grid gap-3 xl:grid-cols-[1.6fr_1fr_1fr_1fr]">
             <div className="relative">
               <label htmlFor="payment_search" className="sr-only">Rechercher</label>
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500 dark:text-slate-300" />
               <Input id="payment_search" name="search" className="pl-9" placeholder="Élève, parent, email" value={filters.search ?? ""} onChange={(event) => setFilters((prev) => ({ ...prev, search: event.target.value, page: 1 }))} />
             </div>
             <Select value={filters.status ?? "all"} onValueChange={(value) => setFilters((prev) => ({ ...prev, status: value as PaymentFilters["status"], page: 1 }))}>
@@ -110,7 +110,7 @@ export function PaymentsWorkspace({ filters, setFilters, data, loading, statusCo
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Élève</TableHead>
+                    <TableHead>Élève</TableHead>
                   <TableHead>Parent</TableHead>
                   <TableHead>Montant</TableHead>
                   <TableHead>Canal</TableHead>
@@ -132,11 +132,11 @@ export function PaymentsWorkspace({ filters, setFilters, data, loading, statusCo
                   <TableRow key={row.id}>
                     <TableCell>
                       <div className="font-medium">{row.studentName}</div>
-                      <div className="text-xs text-muted-foreground">{row.invoiceNumber ?? "Sans facture"}</div>
+                      <div className="text-xs text-slate-700 dark:text-slate-300">{row.invoiceNumber ?? "Sans facture"}</div>
                     </TableCell>
                     <TableCell>
                       <div>{row.parentName ?? "-"}</div>
-                      <div className="text-xs text-muted-foreground">{row.parentEmail ?? "-"}</div>
+                      <div className="text-xs text-slate-700 dark:text-slate-300">{row.parentEmail ?? "-"}</div>
                     </TableCell>
                     <TableCell>{formatMoney(row.amountCents, row.currency)}</TableCell>
                     <TableCell className="capitalize">{row.paymentMethod.replaceAll("_", " ")}</TableCell>
@@ -154,7 +154,7 @@ export function PaymentsWorkspace({ filters, setFilters, data, loading, statusCo
             </Table>
           </div>
 
-          <div className="flex items-center justify-between text-sm text-muted-foreground">
+          <div className="flex items-center justify-between text-sm text-slate-700 dark:text-slate-300">
             <span>{data?.total ?? 0} transaction(s)</span>
             <div className="flex items-center gap-2">
               <Button variant="outline" size="sm" disabled={(filters.page ?? 1) <= 1} onClick={() => setFilters((prev) => ({ ...prev, page: Math.max(1, (prev.page ?? 1) - 1) }))}>Précédent</Button>

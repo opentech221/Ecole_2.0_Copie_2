@@ -248,7 +248,7 @@ export function LoginScreen() {
               }}
               style={{
                 padding: "10px", borderRadius: "10px",
-                border: authMethod === "whatsapp" ? `2px solid ${AUTH_THEME.whatsapp.border}` : "1px solid #cbd5e1",
+                border: authMethod === "whatsapp" ? `2px solid ${AUTH_THEME.whatsapp.border}` : "1px solid #b6c2d4",
                 backgroundColor: authMethod === "whatsapp" ? AUTH_THEME.whatsapp.bg : "#fff",
                 color: authMethod === "whatsapp" ? AUTH_THEME.whatsapp.fg : "#1e293b", fontWeight: 700,
                 cursor: "pointer", fontSize: "13px", fontFamily: "'Plus Jakarta Sans', sans-serif",
@@ -266,7 +266,7 @@ export function LoginScreen() {
               }}
               style={{
                 padding: "10px", borderRadius: "10px",
-                border: authMethod === "email" ? `2px solid ${AUTH_THEME.email.border}` : "1px solid #cbd5e1",
+                border: authMethod === "email" ? `2px solid ${AUTH_THEME.email.border}` : "1px solid #b6c2d4",
                 backgroundColor: authMethod === "email" ? AUTH_THEME.email.bg : "#fff",
                 color: authMethod === "email" ? AUTH_THEME.email.fg : "#1e293b", fontWeight: 700,
                 cursor: "pointer", fontSize: "13px", fontFamily: "'Plus Jakarta Sans', sans-serif",
@@ -315,7 +315,7 @@ export function LoginScreen() {
             type="submit" disabled={sendingCode}
             style={{
               width: "100%", padding: "13px", borderRadius: "12px",
-              backgroundColor: sendingCode ? "#94a3b8" : AUTH_THEME.whatsapp.solid,
+              backgroundColor: sendingCode ? "#7186a0" : AUTH_THEME.whatsapp.solid,
               color: "#fff", fontWeight: 700, fontSize: "14px",
               border: "none", cursor: sendingCode ? "not-allowed" : "pointer",
               display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
@@ -374,7 +374,7 @@ export function LoginScreen() {
             disabled={passwordLoading}
             style={{
               width: "100%", padding: "13px", borderRadius: "12px",
-              backgroundColor: passwordLoading ? "#94a3b8" : AUTH_THEME.email.solid,
+              backgroundColor: passwordLoading ? "#7186a0" : AUTH_THEME.email.solid,
               color: "#fff", fontWeight: 700, fontSize: "14px",
               border: "none", cursor: passwordLoading ? "not-allowed" : "pointer",
               display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
@@ -428,7 +428,7 @@ export function LoginScreen() {
             disabled={verifyingCode}
             style={{
               width: "100%", padding: "13px", borderRadius: "12px",
-              backgroundColor: verifyingCode ? "#94a3b8" : "#1a365d",
+              backgroundColor: verifyingCode ? "#7186a0" : "#1a365d",
               color: "#fff", fontWeight: 700, fontSize: "14px",
               border: "none", cursor: verifyingCode ? "not-allowed" : "pointer",
               display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
@@ -449,7 +449,7 @@ export function LoginScreen() {
             }}
             style={{
               width: "100%", marginTop: "10px", padding: "10px",
-              borderRadius: "10px", border: "1px solid #cbd5e1", backgroundColor: "var(--card)",
+              borderRadius: "10px", border: "1px solid #b6c2d4", backgroundColor: "var(--card)",
               color: "#334155", fontWeight: 600, fontSize: "13px", cursor: "pointer",
               fontFamily: "'Plus Jakarta Sans', sans-serif",
             }}

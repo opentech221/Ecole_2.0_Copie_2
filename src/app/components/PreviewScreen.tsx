@@ -280,12 +280,12 @@ function A4Document({
                     <td style={{ verticalAlign:"top", padding:"7px 9px", fontSize:"9pt",
                                  color:"#111827", lineHeight:1.55,
                                  backgroundColor:rb, border:"1px solid #e5e7eb" }}>
-                      {m || <span style={{ color:"#9ca3af", fontStyle:"italic" }}>—</span>}
+                      {m || <span style={{ color:"#64748b", fontStyle:"italic" }}>—</span>}
                     </td>
                     <td style={{ verticalAlign:"top", padding:"7px 9px", fontSize:"9pt",
                                  color:"#111827", lineHeight:1.55,
                                  backgroundColor:rb, border:"1px solid #e5e7eb" }}>
-                      {e || <span style={{ color:"#9ca3af", fontStyle:"italic" }}>—</span>}
+                      {e || <span style={{ color:"#64748b", fontStyle:"italic" }}>—</span>}
                     </td>
                   </tr>
                 );
@@ -298,10 +298,10 @@ function A4Document({
       {/* ── DOCUMENT FOOTER ─────────────────────────────────────── */}
       <div style={{ marginTop:"24px", borderTop:"1px solid #e5e7eb", paddingTop:"10px",
                     display:"flex", justifyContent:"space-between" }}>
-        <p style={{ fontSize:"7.5pt", color:"#9ca3af", margin:0 }}>
+        <p style={{ fontSize:"7.5pt", color:"#64748b", margin:0 }}>
           Généré avec École 2.0 · Programme officiel DEMSG Sénégal
         </p>
-        <p style={{ fontSize:"7.5pt", color:"#9ca3af", margin:0 }}>
+        <p style={{ fontSize:"7.5pt", color:"#64748b", margin:0 }}>
           {ficheLabel ?? "Page 1/1"}
         </p>
       </div>
@@ -597,7 +597,7 @@ export function PreviewScreen() {
                   title={!hasEcoleNom ? "Renseignez le nom de l'école dans votre profil" : undefined}
                   className="inline-flex items-center gap-2 rounded-xl text-[13px] font-bold text-white shrink-0 transition-all active:scale-95"
                   style={{ minHeight:"44px", padding:"0 18px",
-                           backgroundColor: !hasEcoleNom ? "#cbd5e1" : downloaded?"#059669":"#1a365d",
+                           backgroundColor: !hasEcoleNom ? "#b6c2d4" : downloaded?"#059669":"#1a365d",
                            boxShadow: !hasEcoleNom ? "none" : "0 3px 12px rgba(26,54,93,0.25)",
                            cursor: !hasEcoleNom ? "not-allowed" : "pointer",
                            transition:"background-color 200ms" }}>
@@ -617,7 +617,7 @@ export function PreviewScreen() {
                     className="inline-flex items-center gap-2 rounded-xl text-[13px] font-semibold shrink-0 transition-all active:scale-95"
                     style={{ minHeight:"44px", padding:"0 16px",
                              cursor: !hasEcoleNom ? "not-allowed" : "pointer",
-                             color: !hasEcoleNom ? "#94a3b8" : batchDone?"#059669":"#1a365d",
+                             color: !hasEcoleNom ? "#64748b" : batchDone?"#059669":"#1a365d",
                              backgroundColor: !hasEcoleNom ? "#f1f5f9" : batchDone?"#f0fdf4":"#eef4ff",
                              border:`1.5px solid ${!hasEcoleNom ? "#e2e8f0" : batchDone?"#86efac":"#bfdbfe"}` }}>
                     {batchDone?<Check className="w-4 h-4 shrink-0"/>:<FileDown className="w-4 h-4 shrink-0"/>}
@@ -630,7 +630,7 @@ export function PreviewScreen() {
                     className="inline-flex items-center gap-2 rounded-xl text-[13px] font-semibold shrink-0 transition-all active:scale-95"
                     style={{ minHeight:"44px", padding:"0 16px",
                              cursor: !hasEcoleNom ? "not-allowed" : "pointer",
-                             color: !hasEcoleNom ? "#94a3b8" : "#1a365d",
+                             color: !hasEcoleNom ? "#64748b" : "#1a365d",
                              backgroundColor:"#f1f5f9", border:"1.5px solid #e2e8f0" }}>
                     <Printer className="w-4 h-4 shrink-0"/>Imprimer
                   </button>
@@ -711,7 +711,7 @@ export function PreviewScreen() {
                         borderRight: i < contenus.length-1 ? "1px solid #f1f5f9" : "none",
                       }}>
                       <span className="text-[10px] font-bold uppercase tracking-wider"
-                            style={{ color: isActive ? color : "#94a3b8" }}>
+                            style={{ color: isActive ? color : "#64748b" }}>
                         Fiche {i+1}
                       </span>
                       <span className="text-[12px] font-semibold truncate max-w-full px-1 mt-0.5"
@@ -747,7 +747,7 @@ export function PreviewScreen() {
                   <ChevronDown className="w-4 h-4 shrink-0 pointer-events-none"
                                style={{ color: chipColor }}/>
                 </div>
-                <label htmlFor="preview_ficheSelect" className="text-[10px] text-gray-400 mt-1.5 ml-1 block cursor-pointer">
+                <label htmlFor="preview_ficheSelect" className="text-[10px] text-slate-600 mt-1.5 ml-1 block cursor-pointer dark:text-slate-300">
                   Sélectionner la fiche à prévisualiser
                 </label>
               </div>
@@ -756,7 +756,7 @@ export function PreviewScreen() {
 
           {/* ── Hint + zoom toggle ── */}
           <div className="flex items-center gap-2 mb-4 w-full max-w-[794px]">
-            <p className="text-[11px] text-gray-500 flex-1">
+            <p className="text-[11px] text-slate-700 flex-1 dark:text-slate-300">
               {isMulti
                 ? `Fiche ${activeFicheIdx+1}/${contenus.length} · Aperçu à ${Math.round(scale*100)}%`
                 : `Aperçu à ${Math.round(scale*100)}%${zoomMode?"":" · Plein écran pour zoomer"}`}
@@ -792,7 +792,7 @@ export function PreviewScreen() {
             </div>
           </div>
 
-          <p className="no-print text-[10px] text-gray-400 mt-4 text-center">
+          <p className="no-print text-[10px] text-slate-600 mt-4 text-center dark:text-slate-300">
             Format A4 · 210 × 297 mm · Impression optimisée · Programme officiel DEMSG
           </p>
         </div>

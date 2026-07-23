@@ -174,8 +174,8 @@ function DocPrintPortal({ doc }: { doc: Document }) {
       </p>
       <div style={{ marginTop: "24mm", borderTop: "1px solid #e5e7eb", paddingTop: "6px",
                     display: "flex", justifyContent: "space-between" }}>
-        <span style={{ fontSize: "8pt", color: "#9ca3af" }}>École 2.0 — plateforme de gestion scolaire</span>
-        <span style={{ fontSize: "8pt", color: "#9ca3af" }}>{doc.date}</span>
+        <span style={{ fontSize: "8pt", color: "#64748b" }}>École 2.0 — plateforme de gestion scolaire</span>
+      <span style={{ fontSize: "8pt", color: "#64748b" }}>{doc.date}</span>
       </div>
     </div>
   );
@@ -314,10 +314,10 @@ function PreviewModal({
           {/* Footer */}
           <div style={{ borderTop: "1px solid #e5e7eb", paddingTop: "8px",
                         display: "flex", justifyContent: "space-between" }}>
-            <p style={{ fontSize: "8pt", color: "#9ca3af", margin: 0 }}>
+            <p style={{ fontSize: "8pt", color: "#64748b", margin: 0 }}>
               Généré avec École 2.0 · Programme officiel DEMSG Sénégal
             </p>
-            <p style={{ fontSize: "8pt", color: "#9ca3af", margin: 0 }}>
+            <p style={{ fontSize: "8pt", color: "#64748b", margin: 0 }}>
               Aperçu — {new Date().toLocaleDateString("fr-FR")}
             </p>
           </div>
@@ -361,7 +361,7 @@ function DocCard({
               {TYPE_ICON[doc.type]}
               {doc.badge}
             </span>
-            <span className="text-[10px] text-gray-400 shrink-0">{doc.date}</span>
+            <span className="text-[10px] text-slate-600 shrink-0 dark:text-slate-300">{doc.date}</span>
           </div>
 
           {/* Title — switches to input when editing */}
@@ -605,9 +605,9 @@ function AddDocumentModal({
                    display:"flex", alignItems:"center", gap:"10px",
                  }}
                  onClick={() => fileRef.current?.click()}>
-              <Upload style={{ width:16, height:16, color: file ? cfg.color : "#94a3b8", flexShrink:0 }}/>
+              <Upload style={{ width:16, height:16, color: file ? cfg.color : "#64748b", flexShrink:0 }}/>
               <p style={{ margin:0, fontSize:"12px",
-                          color: file ? cfg.color : "#94a3b8", fontWeight:600 }}>
+                          color: file ? cfg.color : "#64748b", fontWeight:600 }}>
                 {file ? file.name : "Cliquez pour choisir un fichier PDF"}
               </p>
             </div>
@@ -622,7 +622,7 @@ function AddDocumentModal({
                     minHeight:"48px", borderRadius:"14px", fontWeight:800,
                     fontSize:"14px", border:"none",
                     cursor: saving || !title ? "not-allowed" : "pointer",
-                    backgroundColor: title.trim() ? cfg.color : "#94a3b8",
+                    backgroundColor: title.trim() ? cfg.color : "#64748b",
                     color:"#fff",
                     display:"flex", alignItems:"center", justifyContent:"center", gap:"8px",
                     boxShadow: title.trim() ? `0 4px 14px ${cfg.color}44` : "none",
@@ -798,7 +798,7 @@ export function DocumentsScreen() {
                 <h1 className="font-bold truncate" style={{ fontSize: "15px", color: "var(--foreground)" }}>
                   Documents générés — Archive
                 </h1>
-                <p className="text-gray-400 mt-0.5 hidden sm:block" style={{ fontSize: "10px" }}>
+                <p className="text-slate-600 mt-0.5 hidden sm:block dark:text-slate-300" style={{ fontSize: "10px" }}>
                   École Ilyaou Mamadou SEYDI · CE2 · 2025–2026
                 </p>
               </div>
@@ -817,7 +817,7 @@ export function DocumentsScreen() {
               {/* Total count */}
               <div className="hidden sm:flex items-center gap-1 shrink-0 rounded-full px-3 py-1"
                    style={{ backgroundColor: "var(--muted)" }}>
-                <FileText className="w-3.5 h-3.5 text-[#64748b]" />
+                <FileText className="w-3.5 h-3.5 text-slate-600 dark:text-slate-300" />
                 <span style={{ fontSize: "12px", fontWeight: 700, color: "var(--muted-foreground)" }}>
                   {allDocs.length} docs
                 </span>
@@ -880,7 +880,7 @@ export function DocumentsScreen() {
               >
                 Rechercher un document
               </label>
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 dark:text-slate-300"
                       aria-hidden="true" />
               <input
                 id="docs-search"
@@ -911,7 +911,7 @@ export function DocumentsScreen() {
                       <h2 className="font-bold text-[#1a365d]" style={{ fontSize: "13px" }}>
                         {section.label}
                       </h2>
-                      <span className="ml-auto text-[10px] text-gray-400">
+                      <span className="ml-auto text-[10px] text-slate-600 dark:text-slate-300">
                         {section.count} document{section.count > 1 ? "s" : ""}{section.suffix ?? ""}
                       </span>
                     </div>
@@ -942,7 +942,7 @@ export function DocumentsScreen() {
               <div>
                 {filtered.length === 0 ? (
                   <div className="text-center py-16">
-                    <p className="text-gray-400 font-semibold" style={{ fontSize: "14px" }}>
+                    <p className="text-slate-600 font-semibold dark:text-slate-300" style={{ fontSize: "14px" }}>
                       Aucun document trouvé
                     </p>
                     <p className="text-gray-300 mt-1" style={{ fontSize: "12px" }}>
@@ -952,7 +952,7 @@ export function DocumentsScreen() {
                 ) : (
                   <>
                     <div className="flex items-center justify-between mb-3">
-                      <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-wide">
+                      <p className="text-[10px] text-slate-600 font-semibold uppercase tracking-wide dark:text-slate-300">
                         {filtered.length} document{filtered.length > 1 ? "s" : ""}
                         {filter !== "all" ? ` · ${TYPE_LABEL[filter as DocType]}` : " · Résultats"}
                       </p>

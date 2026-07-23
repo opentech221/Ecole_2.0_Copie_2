@@ -119,7 +119,7 @@ export function ProfileGuardLoader({ loading, blocked, onSkip }: Props) {
               margin: "14px 0",
             }}>
               <div style={{ flex: 1, height: 1, backgroundColor: "#f1f5f9" }} />
-              <span style={{ fontSize: "11px", color: "#cbd5e1", fontWeight: 600 }}>ou</span>
+              <span style={{ fontSize: "11px", color: "#b6c2d4", fontWeight: 600 }}>ou</span>
               <div style={{ flex: 1, height: 1, backgroundColor: "#f1f5f9" }} />
             </div>
 
@@ -129,7 +129,7 @@ export function ProfileGuardLoader({ loading, blocked, onSkip }: Props) {
               style={{
                 width: "100%", padding: "10px 16px", borderRadius: "10px",
                 backgroundColor: "transparent",
-                color: "#94a3b8", fontWeight: 600, fontSize: "12px",
+                color: "#64748b", fontWeight: 600, fontSize: "12px",
                 border: "1.5px dashed #e2e8f0", cursor: "pointer",
                 display: "flex", alignItems: "center", justifyContent: "center", gap: "6px",
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
@@ -139,7 +139,7 @@ export function ProfileGuardLoader({ loading, blocked, onSkip }: Props) {
               Passer cette étape (mode test)
             </button>
             <p style={{
-              fontSize: "11px", color: "#cbd5e1", textAlign: "center",
+                fontSize: "11px", color: "#b6c2d4", textAlign: "center",
               margin: "8px 0 0", lineHeight: 1.5,
             }}>
               Les documents générés en mode test n'auront pas de nom d'école.

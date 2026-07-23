@@ -34,7 +34,7 @@ export function SuccessScreen() {
           <h2 className="text-2xl text-foreground mb-2 text-center">
             Votre fiche est prête !
           </h2>
-          <p className="text-gray-600 text-center mb-8 max-w-xs">
+          <p className="text-slate-700 dark:text-slate-300 text-center mb-8 max-w-xs">
             La fiche pédagogique a été générée avec succès et est prête à être
             utilisée.
           </p>
@@ -50,10 +50,10 @@ export function SuccessScreen() {
                   <h3 className="text-foreground font-medium mb-1 truncate">
                     {lesson.title}
                   </h3>
-                  <p className="text-sm text-gray-500 mb-2">
+                  <p className="text-sm text-slate-700 dark:text-slate-300 mb-2">
                     {niveau.toUpperCase()} • {lesson.category}
                   </p>
-                  <div className="flex items-center gap-2 text-xs text-gray-400">
+                  <div className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-300">
                     <span>Format PDF</span>
                     <span>•</span>
                     <span>Prêt à l'emploi</span>

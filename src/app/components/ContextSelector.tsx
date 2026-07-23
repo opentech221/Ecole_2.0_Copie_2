@@ -496,7 +496,7 @@ function Dropdown({
         <label className="text-[11px] font-bold text-foreground uppercase tracking-wider">{label}</label>
         <div className="flex items-center gap-1.5">
           {loading && <Loader2 className="w-3.5 h-3.5 text-primary animate-spin"/>}
-          {hint && !loading && <span className="text-[10px] text-gray-400">{hint}</span>}
+          {hint && !loading && <span className="text-[10px] text-slate-600 dark:text-slate-300">{hint}</span>}
         </div>
       </div>
       <div className="relative">
@@ -508,7 +508,7 @@ function Dropdown({
           disabled={isLocked}
           className={`w-full appearance-none rounded-xl px-4 py-3 pr-10 text-[13px] font-medium border-2 outline-none transition-all
             ${isLocked
-              ? "bg-gray-50 border-gray-200 text-gray-400 cursor-not-allowed"
+              ? "bg-gray-50 border-gray-200 text-slate-500 cursor-not-allowed dark:bg-slate-900 dark:border-slate-700 dark:text-slate-400"
               : filled
                 ? "bg-accent border-primary text-primary"
                   : "bg-card border-border text-muted-foreground hover:border-primary focus:border-primary cursor-pointer"
@@ -946,7 +946,7 @@ export function ContextSelector() {
                 <Info className={`w-4 h-4 shrink-0 mt-0.5 ${competence ? "text-primary" : "text-gray-300"}`} />
                 <p
                   className={`text-[12px] leading-relaxed ${
-                    competence ? "text-foreground font-medium" : "text-gray-400 italic"
+                    competence ? "text-foreground font-medium" : "text-slate-500 italic dark:text-slate-400"
                   }`}
                 >
                   {competence || "Sélectionnez une discipline (Section A) pour afficher la compétence de base officielle."}
@@ -991,10 +991,10 @@ export function ContextSelector() {
                     disabled={!palier || oaList.length === 0 || loadingStep === "oa"}
                     className={`w-full appearance-none rounded-xl px-4 py-3 pr-10 text-[13px] font-medium border-2 outline-none transition-all
                       ${!palier || oaList.length === 0 || loadingStep === "oa"
-                        ? "bg-gray-50 border-gray-200 text-gray-400 cursor-not-allowed"
+                        ? "bg-gray-50 border-gray-200 text-slate-500 cursor-not-allowed dark:bg-slate-900 dark:border-slate-700 dark:text-slate-400"
                         : oaIdx !== ""
                           ? "bg-accent border-primary text-foreground"
-                          : "bg-card border-gray-200 text-gray-400 hover:border-gray-300 focus:border-primary cursor-pointer"
+                          : "bg-card border-slate-200 text-slate-600 hover:border-slate-300 focus:border-primary cursor-pointer dark:border-slate-700 dark:text-slate-300 dark:hover:border-slate-600"
                       }`}
                     style={oaIdx !== "" ? { boxShadow: "0 0 0 3px color-mix(in srgb, var(--primary) 10%, transparent)" } : {}}
                   >
@@ -1035,10 +1035,10 @@ export function ContextSelector() {
                     disabled={oaIdx === "" || osOpts.length === 0 || loadingStep === "os"}
                     className={`w-full appearance-none rounded-xl px-4 py-3 pr-10 text-[13px] font-medium border-2 outline-none transition-all
                       ${oaIdx === "" || osOpts.length === 0 || loadingStep === "os"
-                        ? "bg-gray-50 border-gray-200 text-gray-400 cursor-not-allowed"
+                        ? "bg-gray-50 border-gray-200 text-slate-500 cursor-not-allowed dark:bg-slate-900 dark:border-slate-700 dark:text-slate-400"
                         : selectedOS
                           ? "bg-accent border-primary text-foreground"
-                          : "bg-card border-gray-200 text-gray-400 hover:border-gray-300 focus:border-primary cursor-pointer"
+                          : "bg-card border-slate-200 text-slate-600 hover:border-slate-300 focus:border-primary cursor-pointer dark:border-slate-700 dark:text-slate-300 dark:hover:border-slate-600"
                       }`}
                     style={selectedOS ? { boxShadow: "0 0 0 3px color-mix(in srgb, var(--primary) 10%, transparent)" } : {}}
                   >
@@ -1077,7 +1077,7 @@ export function ContextSelector() {
 
             {/* Subtitle + live counter row */}
             <div className="mb-3">
-              <p className="text-[11px] text-gray-400 leading-relaxed mb-2.5">
+              <p className="text-[11px] text-slate-600 leading-relaxed mb-2.5 dark:text-slate-300">
                 Sélectionnez un ou plusieurs contenus du jour. Combinez plusieurs fragments selon le niveau de votre classe.
               </p>
 
@@ -1095,18 +1095,18 @@ export function ContextSelector() {
                     className="w-1.5 h-1.5 rounded-full shrink-0"
                     style={{
                       transition: "background-color 250ms ease",
-                      backgroundColor: checked.size > 0 ? "var(--secondary)" : "#cbd5e1",
+                      backgroundColor: checked.size > 0 ? "var(--secondary)" : "#b6c2d4",
                     }}
                   />
                   <span
                     className="text-[11px] font-semibold"
                     style={{
                       transition: "color 250ms ease",
-                      color: checked.size > 0 ? "var(--secondary)" : "#94a3b8",
+                      color: checked.size > 0 ? "var(--secondary)" : "#64748b",
                     }}
                   >
                     Sélection&nbsp;:&nbsp;
-                    <span style={{ fontWeight: 700, color: checked.size > 0 ? "var(--secondary)" : "#94a3b8" }}>
+                    <span style={{ fontWeight: 700, color: checked.size > 0 ? "var(--secondary)" : "#64748b" }}>
                       {checked.size} contenu{checked.size > 1 ? "s" : ""} choisi{checked.size > 1 ? "s" : ""}
                     </span>
                   </span>
@@ -1114,7 +1114,7 @@ export function ContextSelector() {
                 {checked.size > 0 && (
                   <button
                     onClick={() => setChecked(new Set())}
-                    className="shrink-0 text-[10px] font-bold text-gray-400 hover:text-red-400 transition-colors px-2 py-1 rounded-lg"
+                    className="shrink-0 text-[10px] font-bold text-slate-600 hover:text-red-500 transition-colors px-2 py-1 rounded-lg dark:text-slate-300"
                   >
                     Effacer
                   </button>

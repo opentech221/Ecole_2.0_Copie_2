@@ -33,7 +33,7 @@ export function AuditWorkspace({ data }: AuditWorkspaceProps) {
               <TableRow key={row.id}>
                 <TableCell>
                   <div className="font-medium">{row.action}</div>
-                  <div className="text-xs text-muted-foreground">{JSON.stringify(row.metadata)}</div>
+                    <div className="text-xs text-slate-700 dark:text-slate-300">{JSON.stringify(row.metadata)}</div>
                 </TableCell>
                 <TableCell>{row.entityType}</TableCell>
                 <TableCell>{row.actorRole ?? "-"}</TableCell>

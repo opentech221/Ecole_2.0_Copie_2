@@ -413,7 +413,7 @@ function CascadeSelect({
     <div>
       {/* Structural label — normal 8.5px bold caps so eye finds OA/OS/Contenu fast */}
       <label htmlFor={id || `planning_${level}`} className="text-[8.5px] font-bold uppercase tracking-widest mb-1"
-         style={{ color: disabled ? "#d1d5db" : filled ? color : "#94a3b8", cursor: "pointer", display: "block" }}>
+         style={{ color: disabled ? "#cbd5e1" : filled ? color : "#64748b", cursor: "pointer", display: "block" }}>
         {LABELS[level]}
       </label>
 
@@ -459,7 +459,7 @@ function CascadeSelect({
           {normalizedOptions.map((o, idx) => <option key={`${o}-${idx}`} value={o}>{o}</option>)}
         </select>
         <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none w-3.5 h-3.5"
-                     style={{ color: disabled ? "#e2e8f0" : "#9ca3af" }} />
+                     style={{ color: disabled ? "#cbd5e1" : "#64748b" }} />
       </div>
     </div>
   );
@@ -592,7 +592,7 @@ function SessionBlock({
             minHeight: "48px", fontSize: "13px",
             fontFamily: "'Plus Jakarta Sans', sans-serif",
             backgroundColor: canGo ? actColor : "#e5e7eb",
-            color:           canGo ? "#fff"    : "#9ca3af",
+            color:           canGo ? "#fff"    : "#64748b",
             boxShadow:       canGo ? `0 4px 14px ${actColor}44` : "none",
             cursor: canGo ? "pointer" : "not-allowed",
           }}>
@@ -600,7 +600,7 @@ function SessionBlock({
           {canGo ? "Préparer la fiche →" : "Préparer la fiche"}
         </button>
         {!canGo && (
-          <p style={{ fontSize:"9px", color:"#94a3b8", textAlign:"center",
+          <p style={{ fontSize:"9px", color:"#64748b", textAlign:"center",
                       marginTop:"5px", lineHeight:1.4 }}>
             Sélectionnez OA · OS · Contenu pour activer
           </p>
@@ -1051,7 +1051,7 @@ export function PlanningScreen() {
                   style={{
                     minHeight: "28px", fontSize: "10px",
                     backgroundColor: term === i ? "#1a365d" : "transparent",
-                    color:           term === i ? "#fff" : "#64748b",
+                    color:           term === i ? "#fff" : "#475569",
                     boxShadow:       term === i ? "0 1px 6px rgba(26,54,93,0.20)" : "none",
                   }}>
                   {t}
@@ -1075,7 +1075,7 @@ export function PlanningScreen() {
                    style={{ fontSize: "11.5px" }}>
                   {month.label}
                 </p>
-                <p className="text-gray-400" style={{ fontSize: "8px" }}>
+                <p className="text-slate-600 dark:text-slate-300" style={{ fontSize: "8px" }}>
                   {["Trim. 1", "Trim. 2", "Trim. 3"][term]}
                 </p>
               </div>
@@ -1090,7 +1090,7 @@ export function PlanningScreen() {
             <div className="w-px h-5 bg-gray-200 shrink-0" />
             <div className="shrink-0" style={{ minWidth: "70px" }}>
               <div className="flex items-center justify-between mb-0.5">
-                <span className="font-semibold text-gray-400 uppercase tracking-wide"
+                <span className="font-semibold text-slate-600 uppercase tracking-wide dark:text-slate-300"
                       style={{ fontSize: "7px" }}>Couverture</span>
                 <span className="font-bold" style={{ fontSize: "10.5px", color: coverageColor }}>
                   {coverage}%
@@ -1212,7 +1212,7 @@ export function PlanningScreen() {
                 position: "relative", zIndex: 1,
                 minHeight: "40px", fontSize: "12px",
                 borderRadius: "999px",
-                color: allExpanded ? "#fff" : "#64748b",
+                color: allExpanded ? "#fff" : "#475569",
                 background: "transparent", border: "none", cursor: "pointer",
               }}
             >
@@ -1232,7 +1232,7 @@ export function PlanningScreen() {
                 position: "relative", zIndex: 1,
                 minHeight: "40px", fontSize: "12px",
                 borderRadius: "999px",
-                color: !allExpanded ? "#fff" : "#64748b",
+                color: !allExpanded ? "#fff" : "#475569",
                 background: "transparent", border: "none", cursor: "pointer",
               }}
             >
@@ -1329,7 +1329,7 @@ export function PlanningScreen() {
                     style={{ width: "26px", height: "26px",
                              border: "1.5px solid var(--border)", backgroundColor: "var(--card)" }}
                     title="Réduire">
-                    <ChevronLeft className="w-3.5 h-3.5 text-gray-400" />
+                    <ChevronLeft className="w-3.5 h-3.5 text-slate-500 dark:text-slate-300" />
                   </button>
                 </div>
               )}
