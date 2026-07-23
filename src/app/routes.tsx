@@ -16,6 +16,7 @@ const LoginScreen = lazy(() => import("./components/LoginScreen").then((mod) => 
 const SignupScreen = lazy(() => import("./components/SignupScreen").then((mod) => ({ default: mod.SignupScreen })));
 const PrivacyPolicyPage = lazy(() => import("./components/PrivacyPolicyPage").then((mod) => ({ default: mod.PrivacyPolicyPage })));
 const DataDeletionPage = lazy(() => import("./components/DataDeletionPage").then((mod) => ({ default: mod.DataDeletionPage })));
+const ProtectedAppShell = lazy(() => import("./components/ProtectedAppShell").then((mod) => ({ default: mod.ProtectedAppShell })));
 const ProfilScreen = lazy(() => import("./components/ProfilScreen").then((mod) => ({ default: mod.ProfilScreen })));
 const AbonnementScreen = lazy(() => import("./components/AbonnementScreen").then((mod) => ({ default: mod.AbonnementScreen })));
 const ParametresScreen = lazy(() => import("./components/ParametresScreen").then((mod) => ({ default: mod.ParametresScreen })));
@@ -39,7 +40,7 @@ export const router = createBrowserRouter([
   // ── Protected app routes (AppLayout contains auth + profile guards) ────────
   {
     path:         "/",
-    element:      lazyRoute(<AppLayout />),
+    element:      lazyRoute(<ProtectedAppShell />),
     errorElement: <ErrorBoundary />,
     children: [
       { index:   true,            element: lazyRoute(<Dashboard />),            errorElement: <ErrorBoundary /> },
