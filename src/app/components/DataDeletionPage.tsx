@@ -38,52 +38,52 @@ export function DataDeletionPage() {
     <div style={shell}>
       <article style={card}>
         <h1 style={{ margin: 0, color: "#0f172a", fontSize: "28px", fontWeight: 900 }}>
-          Suppression des donnees utilisateur
+          Suppression des données utilisateur
         </h1>
         <p style={{ ...p, marginTop: "10px", color: "#64748b" }}>
-          Derniere mise a jour: 05 juillet 2026
+          Dernière mise à jour : 05 juillet 2026
         </p>
 
         <p style={p}>
-          Cette page explique comment demander la suppression de votre compte et des donnees
+          Cette page explique comment demander la suppression de votre compte et des données
           associees dans Ecole 2.0.
         </p>
 
         <h2 style={h2}>1) Qui peut faire la demande</h2>
         <p style={p}>
-          Le titulaire du compte (ou un representant autorise de l'etablissement) peut demander
+          Le titulaire du compte (ou un représentant autorisé de l'établissement) peut demander
           la suppression complete du compte utilisateur.
         </p>
 
-        <h2 style={h2}>2) Informations a fournir</h2>
+        <h2 style={h2}>2) Informations à fournir</h2>
         <p style={p}>
-          Pour traiter la demande, fournissez au minimum l'identifiant utilise pour la connexion
-          (email ou numero de telephone) ainsi que le nom de l'etablissement associe.
+          Pour traiter la demande, fournissez au minimum l'identifiant utilisé pour la connexion
+          (email ou numéro de téléphone) ainsi que le nom de l'établissement associé.
         </p>
 
-        <h2 style={h2}>3) Delai de traitement</h2>
+        <h2 style={h2}>3) Délai de traitement</h2>
         <p style={p}>
-          Les demandes sont traitees dans un delai raisonnable, generalement sous 30 jours,
+          Les demandes sont traitées dans un délai raisonnable, généralement sous 30 jours,
           sous reserve de verification d'identite.
         </p>
 
-        <h2 style={h2}>4) Donnees supprimees</h2>
+        <h2 style={h2}>4) Données supprimées</h2>
         <p style={p}>
-          La suppression peut inclure les informations de profil, les donnees de sessions,
-          les documents associes au compte et les donnees pedagogiques rattachees, sauf obligations
+          La suppression peut inclure les informations de profil, les données de session,
+          les documents associés au compte et les données pédagogiques rattachées, sauf obligations
           legales de conservation.
         </p>
 
-        <h2 style={h2}>5) Donnees conservees</h2>
+        <h2 style={h2}>5) Données conservées</h2>
         <p style={p}>
-          Certaines donnees minimales peuvent etre conservees temporairement pour la securite,
-          la prevention des abus ou le respect d'obligations legales et reglementaires.
+          Certaines données minimales peuvent être conservées temporairement pour la sécurité,
+          la prévention des abus ou le respect d'obligations légales et réglementaires.
         </p>
 
         <h2 style={h2}>6) Comment envoyer la demande</h2>
         <p style={p}>
           Envoyez votre demande de suppression via le canal de support officiel du projet.
-          Indiquez "Demande de suppression de donnees" dans l'objet du message.
+          Indiquez "Demande de suppression de données" dans l'objet du message.
         </p>
 
         <div style={{ marginTop: "24px", display: "flex", gap: "10px", flexWrap: "wrap" }}>
@@ -100,7 +100,7 @@ export function DataDeletionPage() {
               fontWeight: 700,
             }}
           >
-            Voir la politique de confidentialite
+            Voir la politique de confidentialité
           </Link>
           <Link
             to="/login"
@@ -115,7 +115,7 @@ export function DataDeletionPage() {
               fontWeight: 700,
             }}
           >
-            Retour a la connexion
+            Retour à la connexion
           </Link>
         </div>
       </article>

@@ -80,7 +80,7 @@ export function PwaInstallPrompt() {
       <p style={{ margin: "0 0 8px", fontSize: "12px", color: "var(--muted-foreground)" }}>
         {shouldShowInstallButton
           ? "Installez Ecole 2.0 pour un accès rapide et une meilleure expérience hors ligne."
-          : "Sur iOS Safari: Partager > Sur l'écran d'accueil pour installer l'app."}
+          : "Sur Safari iOS : Partager > Sur l'écran d'accueil pour installer l'application."}
       </p>
 
       {shouldShowInstallButton && (
@@ -99,7 +99,7 @@ export function PwaInstallPrompt() {
             cursor: installing ? "wait" : "pointer",
           }}
         >
-          {installing ? "Installation..." : "Installer l'app"}
+          {installing ? "Installation..." : "Installer l'application"}
         </button>
       )}
 

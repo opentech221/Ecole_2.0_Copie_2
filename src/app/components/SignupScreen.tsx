@@ -399,7 +399,7 @@ export function SignupScreen() {
             }}
           >
             <MessageCircle style={{ width: 14, height: 14 }} />
-            WhatsApp OTP
+            Code WhatsApp
           </button>
           <button
             type="button"
@@ -638,7 +638,7 @@ export function SignupScreen() {
               whiteSpace: "nowrap",
             }}
           >
-            Politique de confidentialite
+            Politique de confidentialité
           </Link>
           <Link
             to="/data-deletion"
@@ -656,7 +656,7 @@ export function SignupScreen() {
               whiteSpace: "nowrap",
             }}
           >
-            Suppression des donnees
+            Suppression des données
           </Link>
         </div>
 

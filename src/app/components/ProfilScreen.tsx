@@ -124,7 +124,7 @@ function ImageTile({ label, hint, currentUrl, onUpload, uploading }: {
         }}
       >
         <Upload style={{ width: 11, height: 11 }} />
-        {uploading ? "Upload…" : currentUrl ? "Changer" : "Téléverser"}
+        {uploading ? "Téléversement…" : currentUrl ? "Changer" : "Téléverser"}
       </button>
       <input ref={ref} type="file" accept="image/*"
              style={{ display: "none" }} onChange={handleChange} />
@@ -389,7 +389,7 @@ export function ProfilScreen() {
 
             {/* Téléphone WhatsApp — utilisé pour l'OTP WhatsApp */}
             <Field
-              label="Numéro WhatsApp (connexion WhatsApp OTP)"
+              label="Numéro WhatsApp (connexion par code WhatsApp)"
               value={telephone} onChange={setTelephone}
               placeholder="+221771234567" type="tel"
             />

@@ -1898,7 +1898,7 @@ export function ElevesScreen() {
                 </div>
                 {[
                   { icon:<Plus className="w-4 h-4"/>,   label:"Ajouter",   bg:"#1a365d", fg:"#fff" },
-                  { icon:<Upload className="w-4 h-4"/>, label:"Import CSV", bg:"var(--muted)", fg:"var(--muted-foreground)" },
+                  { icon:<Upload className="w-4 h-4"/>, label:"Importer un CSV", bg:"var(--muted)", fg:"var(--muted-foreground)" },
                   { icon:<Printer className="w-4 h-4"/>,label:"Export PDF", bg:"var(--muted)", fg:"var(--muted-foreground)" },
                 ].map(a => (
                   <button key={a.label}

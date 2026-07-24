@@ -131,7 +131,7 @@ export function AdminConsolePage() {
               <h1 className="text-2xl font-semibold">Accès restreint</h1>
               <p className="text-muted-foreground">Le cockpit business est réservé aux profils direction/finance.</p>
             </div>
-            <Link to="/admin/legacy" className="text-primary underline-offset-4 hover:underline">Ouvrir l’interface admin legacy</Link>
+            <Link to="/admin/legacy" className="text-primary underline-offset-4 hover:underline">Ouvrir l’interface d’administration héritée</Link>
           </CardContent>
         </Card>
       </div>
@@ -148,7 +148,7 @@ export function AdminConsolePage() {
                 <PanelLeft className="h-4 w-4" /> Pilotage global du business
               </div>
               <div>
-                <h1 className="text-3xl font-semibold tracking-tight">Admin Console 2026</h1>
+                <h1 className="text-3xl font-semibold tracking-tight">Console d'administration 2026</h1>
                 <p className="text-muted-foreground">Paiements, facturation, abonnements, audit et alertes centralisés.</p>
               </div>
             </div>
@@ -191,18 +191,18 @@ export function AdminConsolePage() {
                   <SelectItem value="12m">12 mois</SelectItem>
                 </SelectContent>
               </Select>
-              <Input
-                placeholder="Pays (ex: SN)"
+                <Input
+                placeholder="Pays (ex. SN)"
                 value={summaryFilters.country ?? ""}
                 onChange={(event) => setSummaryFilters((prev) => ({ ...prev, country: event.target.value || undefined }))}
               />
-              <Input
-                placeholder="Canal acquisition"
+                <Input
+                placeholder="Canal d'acquisition"
                 value={summaryFilters.channel ?? ""}
                 onChange={(event) => setSummaryFilters((prev) => ({ ...prev, channel: event.target.value || undefined }))}
               />
-              <Input
-                placeholder="Plan UUID (optionnel)"
+                <Input
+                placeholder="UUID du plan (facultatif)"
                 value={summaryFilters.planId ?? ""}
                 onChange={(event) => setSummaryFilters((prev) => ({ ...prev, planId: event.target.value || undefined }))}
               />
@@ -327,7 +327,7 @@ export function AdminConsolePage() {
             <TabsTrigger value="payments">Paiements</TabsTrigger>
             <TabsTrigger value="billing">Facturation & abonnements</TabsTrigger>
             <TabsTrigger value="audit">Audit & conformité</TabsTrigger>
-            <TabsTrigger value="legacy">Legacy admin</TabsTrigger>
+            <TabsTrigger value="legacy">Administration héritée</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview">
@@ -393,9 +393,9 @@ export function AdminConsolePage() {
           <TabsContent value="legacy">
             <Card className="border-slate-200/70 bg-white/90 shadow-sm dark:border-slate-800 dark:bg-slate-950/80">
               <CardContent className="flex flex-col items-start gap-3 p-6">
-                <h2 className="text-xl font-semibold">Compatibilité legacy</h2>
+                <h2 className="text-xl font-semibold">Compatibilité héritée</h2>
                 <p className="text-muted-foreground">L’ancien écran d’administration reste disponible pour les workflows historiques.</p>
-                <Link to="/admin/legacy" className="text-primary underline-offset-4 hover:underline">Ouvrir AdminScreen legacy</Link>
+                <Link to="/admin/legacy" className="text-primary underline-offset-4 hover:underline">Ouvrir l’écran d’administration hérité</Link>
               </CardContent>
             </Card>
           </TabsContent>

@@ -107,7 +107,7 @@ export function UsersWorkspace({
               <Download className="h-4 w-4" /> Export CSV
             </Button>
             <Button variant="outline" onClick={() => startTransition(() => setImportOpen(true))}>
-              <Upload className="h-4 w-4" /> Import CSV
+              <Upload className="h-4 w-4" /> Importer un CSV
             </Button>
             <Button onClick={() => startTransition(() => setCreateOpen(true))}>
               <Plus className="h-4 w-4" /> Nouvel utilisateur
@@ -390,7 +390,7 @@ export function UsersWorkspace({
       <Dialog open={importOpen} onOpenChange={setImportOpen}>
         <DialogContent className="sm:max-w-2xl">
           <DialogHeader>
-            <DialogTitle>Import CSV utilisateurs</DialogTitle>
+            <DialogTitle>Importer des utilisateurs depuis un CSV</DialogTitle>
             <DialogDescription>Colonnes attendues: email, fullName, roleCode, status, countryCode, acquisitionChannel.</DialogDescription>
           </DialogHeader>
           <Textarea id="users_csvPayload" name="csvPayload" rows={10} value={csvPayload} onChange={(event) => setCsvPayload(event.target.value)} />

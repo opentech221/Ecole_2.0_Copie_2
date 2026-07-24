@@ -81,10 +81,10 @@ export function PlanEditorDialog({ open, onOpenChange, plan, onSubmit }: PlanEdi
               <SelectItem value="annual">Annuel</SelectItem>
             </SelectContent>
           </Select>
-          <Input id="plan_amountCents" name="amountCents" placeholder="Montant cents" value={form.amountCents} onChange={(event) => setForm((prev) => ({ ...prev, amountCents: event.target.value }))} />
+          <Input id="plan_amountCents" name="amountCents" placeholder="Montant en centimes" value={form.amountCents} onChange={(event) => setForm((prev) => ({ ...prev, amountCents: event.target.value }))} />
           <Input id="plan_currency" name="currency" placeholder="Devise" value={form.currency} onChange={(event) => setForm((prev) => ({ ...prev, currency: event.target.value.toUpperCase() }))} />
           <Input id="plan_trialDays" name="trialDays" placeholder="Essai (jours)" value={form.trialDays} onChange={(event) => setForm((prev) => ({ ...prev, trialDays: event.target.value }))} />
-          <Input id="plan_taxRateBasisPoints" name="taxRateBasisPoints" placeholder="TVA basis points" value={form.taxRateBasisPoints} onChange={(event) => setForm((prev) => ({ ...prev, taxRateBasisPoints: event.target.value }))} />
+          <Input id="plan_taxRateBasisPoints" name="taxRateBasisPoints" placeholder="Points de base TVA" value={form.taxRateBasisPoints} onChange={(event) => setForm((prev) => ({ ...prev, taxRateBasisPoints: event.target.value }))} />
           <Input id="plan_studentLimit" name="studentLimit" placeholder="Limite élèves" value={form.studentLimit} onChange={(event) => setForm((prev) => ({ ...prev, studentLimit: event.target.value }))} />
         </div>
 

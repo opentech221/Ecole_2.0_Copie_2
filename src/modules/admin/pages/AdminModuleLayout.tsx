@@ -2,9 +2,9 @@ import { Building2, LayoutDashboard, ShieldCheck, Sparkles } from "lucide-react"
 import { NavLink, Outlet } from "react-router";
 
 const ADMIN_NAV = [
-  { to: "/admin", label: "Console", icon: LayoutDashboard, end: true },
+  { to: "/admin", label: "Accueil", icon: LayoutDashboard, end: true },
   { to: "/admin/saas", label: "SaaS", icon: Sparkles },
-  { to: "/admin/legacy", label: "Legacy", icon: ShieldCheck },
+  { to: "/admin/legacy", label: "Ancien", icon: ShieldCheck },
 ] as const;
 
 export function AdminModuleLayout() {
@@ -15,7 +15,7 @@ export function AdminModuleLayout() {
           <div className="mb-4 flex items-center gap-2 rounded-2xl border border-slate-300/80 bg-slate-100/90 px-3 py-2 dark:border-slate-700/80 dark:bg-slate-900/90">
             <Building2 className="h-5 w-5 text-slate-800 dark:text-slate-100" />
             <div>
-              <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">Module Administration</p>
+              <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">Module d'administration</p>
               <p className="text-xs text-slate-700 dark:text-slate-300">Pilotage, sécurité, conformité</p>
             </div>
           </div>

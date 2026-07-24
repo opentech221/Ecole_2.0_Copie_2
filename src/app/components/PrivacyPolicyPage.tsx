@@ -38,60 +38,60 @@ export function PrivacyPolicyPage() {
     <div style={shell}>
       <article style={card}>
         <h1 style={{ margin: 0, color: "#0f172a", fontSize: "28px", fontWeight: 900 }}>
-          Politique de confidentialite
+          Politique de confidentialité
         </h1>
         <p style={{ ...p, marginTop: "10px", color: "#64748b" }}>
-          Derniere mise a jour: 05 juillet 2026
+          Dernière mise à jour : 05 juillet 2026
         </p>
 
         <p style={p}>
-          Cette politique explique quelles donnees sont collecteess dans Ecole 2.0,
+          Cette politique explique quelles données sont collectées dans Ecole 2.0,
           pourquoi elles sont utilisees et comment vous pouvez exercer vos droits.
         </p>
 
-        <h2 style={h2}>1) Donnees collecteess</h2>
+        <h2 style={h2}>1) Données collectées</h2>
         <p style={p}>
-          Nous pouvons traiter les informations de compte (nom, email, numero de telephone),
-          des donnees pedagogiques (classes, eleves, notes, documents) et des journaux techniques
-          necessaires a la securite et au bon fonctionnement du service.
+          Nous pouvons traiter les informations de compte (nom, email, numéro de téléphone),
+          des données pédagogiques (classes, élèves, notes, documents) et des journaux techniques
+          nécessaires à la sécurité et au bon fonctionnement du service.
         </p>
 
         <h2 style={h2}>2) Finalites du traitement</h2>
         <p style={p}>
-          Les donnees sont utilisees pour authentifier les utilisateurs, fournir les fonctionnalites
-          de gestion scolaire, securiser l'acces aux ressources et ameliorer la qualite du service.
+          Les données sont utilisées pour authentifier les utilisateurs, fournir les fonctionnalités
+          de gestion scolaire, sécuriser l'accès aux ressources et améliorer la qualité du service.
         </p>
 
         <h2 style={h2}>3) Base technique et sous-traitants</h2>
         <p style={p}>
-          L'application s'appuie sur Supabase pour l'authentification et la base de donnees.
-          Les donnees peuvent etre hebergees et traitees par des prestataires techniques associes
+          L'application s'appuie sur Supabase pour l'authentification et la base de données.
+          Les données peuvent être hébergées et traitées par des prestataires techniques associés
           a cette infrastructure.
         </p>
 
         <h2 style={h2}>4) Conservation</h2>
         <p style={p}>
-          Les donnees sont conservees pendant la duree necessaire a la fourniture du service,
+          Les données sont conservées pendant la durée nécessaire à la fourniture du service,
           puis supprimees ou anonymisees selon les obligations legales applicables.
         </p>
 
         <h2 style={h2}>5) Vos droits</h2>
         <p style={p}>
-          Vous pouvez demander l'acces, la rectification ou la suppression de vos donnees.
-          Pour exercer vos droits, utilisez la page de suppression de donnees et les canaux
+          Vous pouvez demander l'accès, la rectification ou la suppression de vos données.
+          Pour exercer vos droits, utilisez la page de suppression de données et les canaux
           de support officiels de l'application.
         </p>
 
-        <h2 style={h2}>6) Securite</h2>
+        <h2 style={h2}>6) Sécurité</h2>
         <p style={p}>
-          Des mesures de securite techniques et organisationnelles sont appliquees,
-          notamment des controles d'acces, des politiques de securite basees sur les roles
-          et des restrictions d'acces aux donnees.
+          Des mesures de sécurité techniques et organisationnelles sont appliquées,
+          notamment des contrôles d'accès, des politiques de sécurité basées sur les rôles
+          et des restrictions d'accès aux données.
         </p>
 
         <h2 style={h2}>7) Contact</h2>
         <p style={p}>
-          Pour toute question relative a la confidentialite, contactez l'equipe via les canaux
+          Pour toute question relative à la confidentialité, contactez l'équipe via les canaux
           de contact du projet Ecole 2.0.
         </p>
 
@@ -109,7 +109,7 @@ export function PrivacyPolicyPage() {
               fontWeight: 700,
             }}
           >
-            Voir la suppression des donnees
+            Voir la suppression des données
           </Link>
           <Link
             to="/login"
@@ -124,7 +124,7 @@ export function PrivacyPolicyPage() {
               fontWeight: 700,
             }}
           >
-            Retour a la connexion
+            Retour à la connexion
           </Link>
         </div>
       </article>

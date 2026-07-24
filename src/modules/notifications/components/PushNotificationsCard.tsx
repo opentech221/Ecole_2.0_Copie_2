@@ -51,7 +51,7 @@ export function PushNotificationsCard({
 
         <div className="grid gap-3 md:grid-cols-3">
           <div className="rounded-xl border border-slate-200/70 p-3 dark:border-slate-800">
-            <p className="mb-1 text-xs font-medium text-muted-foreground">Push Web</p>
+            <p className="mb-1 text-xs font-medium text-muted-foreground">Notifications Web</p>
             <p className="text-sm font-semibold">{status.pushConfigured ? "Configuré" : "À configurer"}</p>
           </div>
           <div className="rounded-xl border border-slate-200/70 p-3 dark:border-slate-800">
@@ -61,8 +61,8 @@ export function PushNotificationsCard({
             </p>
           </div>
           <div className="rounded-xl border border-slate-200/70 p-3 dark:border-slate-800">
-            <p className="mb-1 text-xs font-medium text-muted-foreground">Background sync</p>
-            <p className="text-sm font-semibold">{status.syncSupported ? "Pris en charge" : "Fallback manuel"}</p>
+            <p className="mb-1 text-xs font-medium text-muted-foreground">Synchronisation en arrière-plan</p>
+            <p className="text-sm font-semibold">{status.syncSupported ? "Pris en charge" : "Repli manuel"}</p>
           </div>
         </div>
 
@@ -74,8 +74,8 @@ export function PushNotificationsCard({
 
         {!supportsPushApi && !loading && hasTenant && (
           <div className="rounded-xl border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-900/50 dark:bg-amber-950/40 dark:text-amber-100">
-            Ce navigateur mobile ne prend pas en charge les Push Web pour cette application.
-            Utilisez Chrome/Edge Android ou Safari iOS 16.4+ avec l'app ajoutée à l'écran d'accueil.
+            Ce navigateur mobile ne prend pas en charge les notifications Web pour cette application.
+            Utilisez Chrome/Edge Android ou Safari iOS 16.4+ avec l'application ajoutée à l'écran d'accueil.
           </div>
         )}
 

@@ -256,7 +256,7 @@ export function LoginScreen() {
               }}
             >
               <MessageCircle style={{ width: 14, height: 14 }} />
-              WhatsApp OTP
+              Code WhatsApp
             </button>
             <button
               type="button"
@@ -517,7 +517,7 @@ export function LoginScreen() {
               whiteSpace: "nowrap",
             }}
           >
-            Politique de confidentialite
+            Politique de confidentialité
           </Link>
           <Link
             to="/data-deletion"
@@ -535,7 +535,7 @@ export function LoginScreen() {
               whiteSpace: "nowrap",
             }}
           >
-            Suppression des donnees
+            Suppression des données
           </Link>
         </div>
 

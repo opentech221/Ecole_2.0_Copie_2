@@ -75,8 +75,8 @@ const TABS: Array<{ id: AdminTab; label: string; Icon: Kpi["Icon"] }> = [
   { id: "overview", label: "Vue globale", Icon: Activity },
   { id: "users", label: "Utilisateurs", Icon: Users },
   { id: "invitations", label: "Invitations", Icon: MailPlus },
-  { id: "security", label: "Securite", Icon: ShieldCheck },
-  { id: "settings", label: "Parametres SaaS", Icon: SlidersHorizontal },
+  { id: "security", label: "Sécurité", Icon: ShieldCheck },
+  { id: "settings", label: "Paramètres SaaS", Icon: SlidersHorizontal },
 ];
 
 const EDGE_BASE = `https://${projectId}.supabase.co/functions/v1/admin-server`;
@@ -151,7 +151,7 @@ export function AdminScreen() {
 
   async function edgeRequest<T>(path: string, init?: RequestInit): Promise<T> {
     const token = await getAccessToken();
-    if (!token) throw new Error("Session expiree, reconnectez-vous.");
+    if (!token) throw new Error("Session expirée, reconnectez-vous.");
 
     const headers = new Headers(init?.headers ?? {});
     headers.set("Authorization", `Bearer ${token}`);
@@ -275,7 +275,7 @@ export function AdminScreen() {
     { label: "Eleves (suivi)", value: counts.students, hint: "Depuis le module eleves", tone: "neutral", Icon: Activity },
     { label: "Documents", value: counts.documents, hint: "Base documentaire de l'etablissement", tone: "neutral", Icon: Database },
     {
-      label: "Niveau de securite",
+      label: "Niveau de sécurité",
       value: securityFlags.forceStrongPasswords && securityFlags.enforceSessionTimeout ? "Eleve" : "Moyen",
       hint: "Politique actuelle de la plateforme",
       tone: securityFlags.forceStrongPasswords && securityFlags.enforceSessionTimeout ? "good" : "warn",
@@ -465,7 +465,7 @@ export function AdminScreen() {
                 Centre d'administration
               </h1>
               <p className="mt-1" style={{ color: "var(--muted-foreground)", fontSize: "14px" }}>
-                Gouvernance, securite et pilotage global de la plateforme.
+                Gouvernance, sécurité et pilotage global de la plateforme.
               </p>
               {isTeacherReadOnly && (
                 <p className="mt-2 inline-flex items-center gap-2 px-3 py-1 rounded-full" style={{ backgroundColor: "color-mix(in srgb, #f59e0b 16%, var(--card))", color: "#b45309", fontSize: "12px", fontWeight: 700 }}>
@@ -662,7 +662,7 @@ export function AdminScreen() {
         {tab === "security" && (
           <section className="mt-4 md:mt-6 grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-4">
             <article className="rounded-2xl p-4" style={{ backgroundColor: "var(--card)", border: "1px solid var(--border)" }}>
-              <h3 style={{ fontSize: "16px", fontWeight: 800, color: "var(--foreground)" }}>Posture securite</h3>
+              <h3 style={{ fontSize: "16px", fontWeight: 800, color: "var(--foreground)" }}>Posture de sécurité</h3>
               <p className="mt-1" style={{ fontSize: "13px", color: "var(--muted-foreground)" }}>Controles defense-in-depth adaptes a votre contexte scolaire.</p>
               <div className="mt-4 space-y-2">
                 {[
@@ -774,11 +774,11 @@ export function AdminScreen() {
                 <input id="admin_tenantDomain" name="tenantDomain" value={tenantDomain} onChange={(e) => setTenantDomain(e.target.value)} disabled={!isDirector} className="rounded-xl px-3 py-2 outline-none" style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", color: "var(--foreground)", fontSize: "13px", opacity: isDirector ? 1 : 0.7 }} />
               </label>
               <label htmlFor="admin_retentionDays" className="flex flex-col gap-1">
-                <span style={{ fontSize: "11px", fontWeight: 800, color: "var(--muted-foreground)", textTransform: "uppercase" }}>Retention des donnees (jours)</span>
+                <span style={{ fontSize: "11px", fontWeight: 800, color: "var(--muted-foreground)", textTransform: "uppercase" }}>Rétention des données (jours)</span>
                 <input id="admin_retentionDays" name="retentionDays" value={retentionDays} onChange={(e) => setRetentionDays(e.target.value)} disabled={!isDirector} className="rounded-xl px-3 py-2 outline-none" style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", color: "var(--foreground)", fontSize: "13px", opacity: isDirector ? 1 : 0.7 }} />
               </label>
               <label htmlFor="admin_securityEmail" className="flex flex-col gap-1">
-                <span style={{ fontSize: "11px", fontWeight: 800, color: "var(--muted-foreground)", textTransform: "uppercase" }}>Contact securite</span>
+                <span style={{ fontSize: "11px", fontWeight: 800, color: "var(--muted-foreground)", textTransform: "uppercase" }}>Contact sécurité</span>
                 <input id="admin_securityEmail" name="securityEmail" value={securityEmail} onChange={(e) => setSecurityEmail(e.target.value)} disabled={!isDirector} className="rounded-xl px-3 py-2 outline-none" style={{ backgroundColor: "var(--muted)", border: "1px solid var(--border)", color: "var(--foreground)", fontSize: "13px", opacity: isDirector ? 1 : 0.7 }} />
               </label>
             </div>

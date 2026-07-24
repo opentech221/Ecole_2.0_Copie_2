@@ -11,7 +11,7 @@ export function AdminSaasPage() {
 
   const trendPoints = [36, 44, 41, 58, 62, 70];
   const healthItems = [
-    { label: "Supabase API", state: "Opérationnel", detail: "Latence moyenne < 180ms", tone: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-200" },
+    { label: "API Supabase", state: "Opérationnel", detail: "Latence moyenne < 180 ms", tone: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-200" },
     { label: "Authentification", state: "Stable", detail: "Sessions valides et rafraichies", tone: "bg-sky-100 text-sky-800 dark:bg-sky-900/40 dark:text-sky-200" },
     { label: "Stockage documents", state: "Attention", detail: "Capacité disponible à 82%", tone: "bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-200" },
   ];
@@ -76,7 +76,7 @@ export function AdminSaasPage() {
                 </div>
               </div>
               <div className="flex flex-wrap items-center gap-2">
-                <Badge className="bg-emerald-600 text-white hover:bg-emerald-700">Pilotage global</Badge>
+                  <Badge className="bg-emerald-600 text-white hover:bg-emerald-700">Pilotage global</Badge>
                 <Badge className="bg-sky-600 text-white hover:bg-sky-700">Sécurité</Badge>
                 <Badge className="bg-violet-600 text-white hover:bg-violet-700">Gouvernance</Badge>
               </div>
@@ -151,7 +151,7 @@ export function AdminSaasPage() {
                   <BellRing className="h-4 w-4 text-amber-600" />
                   <p className="text-sm font-semibold text-slate-700 dark:text-slate-200">Alertes sécurité & activation</p>
                 </div>
-                <Badge className="bg-amber-100 text-amber-800 hover:bg-amber-200 dark:bg-amber-900/40 dark:text-amber-200 dark:hover:bg-amber-900/55">Live</Badge>
+                <Badge className="bg-amber-100 text-amber-800 hover:bg-amber-200 dark:bg-amber-900/40 dark:text-amber-200 dark:hover:bg-amber-900/55">En direct</Badge>
               </div>
               <div className="space-y-3">
                 {alerts.map((alert) => (
@@ -183,12 +183,12 @@ export function AdminSaasPage() {
               <p className="text-sm text-muted-foreground">Politique actuelle de la plateforme : accès restreint aux profils direction et administration.</p>
             </div>
             <div className="flex flex-col gap-2 sm:flex-row">
-              <Link to="/admin" className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-800 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-100 dark:hover:bg-slate-800">
-                Ouvrir Admin Console
+                <Link to="/admin" className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-800 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-100 dark:hover:bg-slate-800">
+                Ouvrir la console d'administration
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link to="/admin/legacy" className="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-emerald-700">
-                Interface legacy
+                Interface héritée
               </Link>
             </div>
           </CardContent>
