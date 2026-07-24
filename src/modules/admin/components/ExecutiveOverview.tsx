@@ -36,7 +36,7 @@ export function ExecutiveOverview({ summary }: ExecutiveOverviewProps) {
   return (
     <div className="space-y-6">
       <Tabs value={section} onValueChange={setSection} className="space-y-4">
-        <TabsList className="w-full justify-start overflow-auto rounded-2xl border border-slate-200/70 bg-white/90 p-1 dark:border-slate-800 dark:bg-slate-950/80">
+        <TabsList className="w-full justify-start overflow-auto rounded-3xl border border-slate-300/80 bg-white/95 p-1.5 shadow-sm shadow-slate-950/5 backdrop-blur dark:border-slate-700/80 dark:bg-slate-950/90 dark:shadow-black/20">
           <TabsTrigger value="kpis">KPI</TabsTrigger>
           <TabsTrigger value="analytics">Analytique</TabsTrigger>
           <TabsTrigger value="alerts">Alertes</TabsTrigger>

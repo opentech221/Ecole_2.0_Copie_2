@@ -286,7 +286,7 @@ export function ProgrammeNavigationWorkspace() {
         )}
 
         <Tabs value={tab} onValueChange={(v) => setTab(v === "flat" ? "flat" : "tree")} className="space-y-3">
-          <TabsList className="grid w-full grid-cols-2">
+          <TabsList className="grid w-full grid-cols-2 rounded-3xl border border-slate-300/80 bg-white/95 p-1.5 shadow-sm shadow-slate-950/5 backdrop-blur dark:border-slate-700/80 dark:bg-slate-950/90 dark:shadow-black/20">
             <TabsTrigger value="tree" className="gap-1">
               <ListTree className="h-4 w-4" /> Arbre
             </TabsTrigger>
