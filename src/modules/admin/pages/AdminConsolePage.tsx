@@ -217,53 +217,10 @@ export function AdminConsolePage() {
         <Card className="border-slate-200/70 bg-white/90 shadow-sm dark:border-slate-800 dark:bg-slate-950/80">
           <CardContent className="space-y-6 p-5">
             <div className="flex flex-wrap items-center gap-2 text-sm font-medium text-muted-foreground">
-              <Workflow className="h-4 w-4 text-sky-600" /> Actions rapides
+              <Workflow className="h-4 w-4 text-sky-600" /> Tableau de bord opérationnel
             </div>
 
-            <div className="grid gap-3 xl:grid-cols-[1.1fr_0.9fr]">
-              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-                <button
-                  type="button"
-                  onClick={() => goToTab("users")}
-                  className="flex min-h-24 flex-col justify-between rounded-2xl border border-slate-200/70 bg-slate-50/80 p-4 text-left transition hover:-translate-y-0.5 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900/70 dark:hover:bg-slate-900"
-                >
-                  <div className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
-                    <Users className="h-4 w-4 text-emerald-600" /> Gérer les utilisateurs
-                  </div>
-                  <p className="text-xs text-muted-foreground">Accès à la liste, à la fiche et aux imports.</p>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => goToTab("payments")}
-                  className="flex min-h-24 flex-col justify-between rounded-2xl border border-slate-200/70 bg-slate-50/80 p-4 text-left transition hover:-translate-y-0.5 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900/70 dark:hover:bg-slate-900"
-                >
-                  <div className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
-                    <CreditCard className="h-4 w-4 text-violet-600" /> Voir paiements
-                  </div>
-                  <p className="text-xs text-muted-foreground">Ouvre la synthèse, les filtres et les transactions.</p>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => goToTab("audit")}
-                  className="flex min-h-24 flex-col justify-between rounded-2xl border border-slate-200/70 bg-slate-50/80 p-4 text-left transition hover:-translate-y-0.5 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900/70 dark:hover:bg-slate-900"
-                >
-                  <div className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
-                    <FileCheck2 className="h-4 w-4 text-amber-600" /> Vérifier conformité
-                  </div>
-                  <p className="text-xs text-muted-foreground">Envoie vers le journal d’audit centralisé.</p>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => void refreshAll()}
-                  className="flex min-h-24 flex-col justify-between rounded-2xl border border-slate-200/70 bg-slate-50/80 p-4 text-left transition hover:-translate-y-0.5 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900/70 dark:hover:bg-slate-900"
-                >
-                  <div className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
-                    <RefreshCw className="h-4 w-4 text-sky-600" /> Rafraîchir données
-                  </div>
-                  <p className="text-xs text-muted-foreground">Relance les requêtes et met à jour les indicateurs.</p>
-                </button>
-              </div>
-
+            <div className="grid gap-3 xl:grid-cols-[1.2fr_0.8fr]">
               <div className="grid gap-3">
                 <div className="rounded-2xl border border-slate-200/70 bg-slate-50/80 p-4 dark:border-slate-800 dark:bg-slate-900/70">
                   <div className="flex flex-wrap items-center justify-between gap-3">
@@ -302,25 +259,19 @@ export function AdminConsolePage() {
                     <p className="text-xs text-muted-foreground">Capacité restante</p>
                   </div>
                 </div>
+              </div>
 
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <div className="rounded-2xl border border-slate-200/70 bg-slate-50/80 p-4 dark:border-slate-800 dark:bg-slate-900/70">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">Utilisateurs actifs</span>
-                      <span className="text-sm font-semibold text-emerald-600">{summaryQuery.data?.business?.kpis.activeUsers ?? "—"}</span>
-                    </div>
-                    <div className="mt-2 h-2 rounded-full bg-slate-200 dark:bg-slate-800">
-                      <div className="h-2 w-3/4 rounded-full bg-emerald-500" />
-                    </div>
+              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
+                <div className="rounded-2xl border border-slate-200/70 bg-slate-50/80 p-4 dark:border-slate-800 dark:bg-slate-900/70">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium">Utilisateurs actifs</span>
+                    <span className="text-sm font-semibold text-emerald-600">{summaryQuery.data?.business?.kpis.activeUsers ?? "—"}</span>
                   </div>
-                  <div className="rounded-2xl border border-slate-200/70 bg-slate-50/80 p-4 dark:border-slate-800 dark:bg-slate-900/70">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">Paiements réussis</span>
-                      <span className="text-sm font-semibold text-sky-600">{summaryQuery.data?.kpis?.successPayments?.value ?? "—"}</span>
-                    </div>
-                    <div className="mt-2 h-2 rounded-full bg-slate-200 dark:bg-slate-800">
-                      <div className="h-2 w-5/6 rounded-full bg-sky-500" />
-                    </div>
+                </div>
+                <div className="rounded-2xl border border-slate-200/70 bg-slate-50/80 p-4 dark:border-slate-800 dark:bg-slate-900/70">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium">Paiements réussis</span>
+                    <span className="text-sm font-semibold text-sky-600">{summaryQuery.data?.kpis.successPayments.value ?? "—"}</span>
                   </div>
                 </div>
               </div>
