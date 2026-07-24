@@ -24,6 +24,7 @@ const FILTER_STORAGE_KEY = "ecole2.admin-console.filters";
 export function AdminConsolePage() {
   const { profile, loading } = useAuthContext();
   const [tab, setTab] = useState("overview");
+  const [dashboardPanel, setDashboardPanel] = useState("contexte");
   const {
     tenantId,
     setTenantId,
