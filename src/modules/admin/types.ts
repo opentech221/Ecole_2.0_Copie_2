@@ -244,6 +244,19 @@ export interface AdminUsersPageResult {
   total: number;
 }
 
+export interface AdminAuthUserListItem {
+  userId: string;
+  email: string;
+  fullName: string;
+  createdAt: string;
+  lastSignInAt: string | null;
+}
+
+export interface AdminAuthUsersResult {
+  rows: AdminAuthUserListItem[];
+  total: number;
+}
+
 export interface AdminUserDetail extends AdminUserListItem {
   metadata: Record<string, unknown>;
   auditTrail: Array<{

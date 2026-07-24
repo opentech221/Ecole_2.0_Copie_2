@@ -1293,6 +1293,30 @@ registerGet("/users", async (c) => {
   });
 });
 
+registerGet("/users/unlinked-auth", async (c) => {
+  const guard = await requireConsoleAccess(c.req.raw);
+  if (!guard.ok) return c.json({ error: guard.message }, guard.status);
+
+  const [{ data: linkedAccounts }, authUsersRes] = await Promise.all([
+    guard.service.from("tenant_user_accounts").select("user_id").is("deleted_at", null),
+    guard.service.auth.admin.listUsers({ page: 1, perPage: 1000 }),
+  ]);
+
+  const linkedUserIds = new Set((linkedAccounts ?? []).map((row) => row.user_id));
+  const rows = (authUsersRes.data?.users ?? [])
+    .filter((user) => !linkedUserIds.has(user.id))
+    .map((user) => ({
+      userId: user.id,
+      email: canSeeRawPii(guard.role) ? (user.email ?? "") : (maskEmail(user.email ?? "") ?? ""),
+      fullName: user.user_metadata?.full_name ?? user.user_metadata?.name ?? "Sans nom",
+      createdAt: user.created_at,
+      lastSignInAt: user.last_sign_in_at ?? null,
+    }))
+    .sort((left, right) => right.createdAt.localeCompare(left.createdAt));
+
+  return c.json({ rows, total: rows.length });
+});
+
 registerGet("/users/export", async (c) => {
   const guard = await requireConsoleAccess(c.req.raw);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);

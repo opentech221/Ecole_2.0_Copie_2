@@ -9,7 +9,7 @@ import { Label } from "@/app/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/app/components/ui/table";
 import { Textarea } from "@/app/components/ui/textarea";
-import type { AdminUserDetail, AdminUserFilters, AdminUsersPageResult } from "../types";
+import type { AdminAuthUsersResult, AdminUserDetail, AdminUserFilters, AdminUsersPageResult } from "../types";
 import { formatDateTime } from "../utils";
 
 interface UsersWorkspaceProps {
@@ -17,6 +17,8 @@ interface UsersWorkspaceProps {
   setFilters: (updater: AdminUserFilters | ((prev: AdminUserFilters) => AdminUserFilters)) => void;
   data?: AdminUsersPageResult;
   loading: boolean;
+  unlinkedAuthUsers?: AdminAuthUsersResult;
+  unlinkedAuthUsersLoading: boolean;
   selectedUserId: string | null;
   onSelectUser: (userId: string | null) => void;
   selectedUser?: AdminUserDetail;
@@ -60,6 +62,8 @@ export function UsersWorkspace({
   setFilters,
   data,
   loading,
+  unlinkedAuthUsers,
+  unlinkedAuthUsersLoading,
   selectedUserId,
   onSelectUser,
   selectedUser,
@@ -339,6 +343,46 @@ export function UsersWorkspace({
             <h3 className="font-semibold">Import massif</h3>
             <p className="mt-1 text-sm text-muted-foreground">Ouvre la boîte d’import avec le gabarit CSV attendu pour les ajouts en lot.</p>
           </div>
+        </CardContent>
+      </Card>
+
+      <Card className="border-slate-200/70 bg-white/90 shadow-sm dark:border-slate-800 dark:bg-slate-950/80">
+        <CardHeader className="gap-3 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <CardTitle>Comptes Auth non rattachés</CardTitle>
+            <CardDescription>Comptes Supabase Auth présents mais absents de tenant_user_accounts.</CardDescription>
+          </div>
+          <Badge variant="outline">{unlinkedAuthUsers?.total ?? 0} compte(s)</Badge>
+        </CardHeader>
+        <CardContent>
+          {unlinkedAuthUsersLoading ? (
+            <p className="text-sm text-slate-700 dark:text-slate-300">Chargement des comptes Auth...</p>
+          ) : (unlinkedAuthUsers?.rows.length ?? 0) === 0 ? (
+            <p className="text-sm text-slate-700 dark:text-slate-300">Aucun compte Auth non rattaché trouvé.</p>
+          ) : (
+            <div className="rounded-2xl border">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Email</TableHead>
+                    <TableHead>Nom</TableHead>
+                    <TableHead>Créé le</TableHead>
+                    <TableHead>Dernière connexion</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {unlinkedAuthUsers?.rows.map((row) => (
+                    <TableRow key={row.userId}>
+                      <TableCell className="font-medium">{row.email}</TableCell>
+                      <TableCell>{row.fullName}</TableCell>
+                      <TableCell>{formatDateTime(row.createdAt)}</TableCell>
+                      <TableCell>{row.lastSignInAt ? formatDateTime(row.lastSignInAt) : "Jamais"}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          )}
         </CardContent>
       </Card>
 

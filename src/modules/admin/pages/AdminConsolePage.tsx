@@ -39,6 +39,7 @@ export function AdminConsolePage() {
     billingQuery,
     auditQuery,
     usersQuery,
+    unlinkedAuthUsersQuery,
     selectedUserId,
     setSelectedUserId,
     userDetailQuery,
@@ -252,6 +253,8 @@ export function AdminConsolePage() {
               setFilters={setUserFilters}
               data={usersQuery.data}
               loading={usersQuery.isLoading}
+              unlinkedAuthUsers={unlinkedAuthUsersQuery.data}
+              unlinkedAuthUsersLoading={unlinkedAuthUsersQuery.isLoading}
               selectedUserId={selectedUserId}
               onSelectUser={setSelectedUserId}
               selectedUser={userDetailQuery.data}

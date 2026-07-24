@@ -34,6 +34,7 @@ import {
 } from "../schemas";
 import type {
   AdminDashboardSummary,
+  AdminAuthUsersResult,
   AdminTenantSummary,
   AdminUserDetail,
   AdminUsersPageResult,
@@ -190,6 +191,10 @@ export const adminConsoleClient = {
       }
     });
     return edgeRequest<AdminUsersPageResult>(url);
+  },
+
+  async getUnlinkedAuthUsers(tenantId: string) {
+    return edgeRequest<AdminAuthUsersResult>(withTenant("/users/unlinked-auth", tenantId));
   },
 
   async getUserDetail(tenantId: string, userId: string) {

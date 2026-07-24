@@ -88,6 +88,12 @@ export function useAdminConsole(activeTab: string) {
     queryFn: () => adminConsoleClient.getUsers(resolvedTenantId, userFilters),
   });
 
+  const unlinkedAuthUsersQuery = useQuery({
+    queryKey: ["admin-console", resolvedTenantId, "unlinked-auth-users"] as const,
+    enabled: Boolean(resolvedTenantId && isUsersTab),
+    queryFn: () => adminConsoleClient.getUnlinkedAuthUsers(resolvedTenantId),
+  });
+
   const userDetailQuery = useQuery({
     queryKey: adminKeys.userDetail(resolvedTenantId, selectedUserId),
     enabled: Boolean(resolvedTenantId && isUsersTab && selectedUserId),
@@ -234,6 +240,7 @@ export function useAdminConsole(activeTab: string) {
     billingQuery,
     auditQuery,
     usersQuery,
+    unlinkedAuthUsersQuery,
     selectedUserId,
     setSelectedUserId,
     userDetailQuery,
