@@ -146,9 +146,8 @@ export function AdminConsolePage() {
     <div className="min-h-full bg-[radial-gradient(circle_at_top_left,_rgba(15,118,110,0.12),_transparent_30%),radial-gradient(circle_at_top_right,_rgba(8,145,178,0.10),_transparent_28%),linear-gradient(180deg,rgba(248,250,252,0.98),rgba(255,255,255,1))] p-4 md:p-6 dark:bg-[radial-gradient(circle_at_top_left,_rgba(15,118,110,0.16),_transparent_30%),radial-gradient(circle_at_top_right,_rgba(8,145,178,0.14),_transparent_30%),linear-gradient(180deg,rgba(2,6,23,0.98),rgba(2,6,23,1))]">
       <div className="mx-auto max-w-7xl space-y-6">
         <Tabs value={tab} onValueChange={(value) => startTransition(() => setTab(value))} className="space-y-4">
-          <TabsList className="w-full justify-start overflow-auto rounded-2xl border border-slate-200/70 bg-white/90 p-1 dark:border-slate-800 dark:bg-slate-950/80">
+          <TabsList className="w-full justify-start overflow-auto rounded-3xl border border-slate-300/80 bg-white/95 p-1.5 shadow-sm shadow-slate-950/5 backdrop-blur dark:border-slate-700/80 dark:bg-slate-950/90 dark:shadow-black/20">
             <TabsTrigger value="overview"><BarChart3 className="h-4 w-4" /> Vue exécutive</TabsTrigger>
-            <TabsTrigger value="context">Pilotage global du business</TabsTrigger>
             <TabsTrigger value="indicators">Tableau de bord opérationnel</TabsTrigger>
             <TabsTrigger value="users">Utilisateurs</TabsTrigger>
             <TabsTrigger value="payments">Paiements</TabsTrigger>
@@ -159,63 +158,6 @@ export function AdminConsolePage() {
 
           <TabsContent value="overview">
             {summaryQuery.isLoading || !summaryQuery.data ? <Skeleton className="h-[620px] w-full" /> : <ExecutiveOverview summary={summaryQuery.data} />}
-          </TabsContent>
-
-          <TabsContent value="context">
-            <Card className="border-slate-200/70 bg-white/90 shadow-sm dark:border-slate-800 dark:bg-slate-950/80">
-              <CardContent className="space-y-4 p-5">
-                <div className="flex flex-wrap items-center gap-2 text-sm font-medium text-muted-foreground">
-                  <Workflow className="h-4 w-4 text-sky-600" /> Pilotage global du business
-                </div>
-                <div>
-                  <h1 className="text-3xl font-semibold tracking-tight">Console d'administration 2026</h1>
-                  <p className="text-muted-foreground">Paiements, facturation, abonnements, audit et alertes centralisés.</p>
-                </div>
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                  <div>
-                    <label htmlFor="admin_tenantSelect" className="sr-only">Sélectionner un établissement</label>
-                    <Select value={tenantId} onValueChange={setTenantId}>
-                      <SelectTrigger id="admin_tenantSelect" name="tenantSelect" className="min-w-[260px]">
-                        <SelectValue placeholder="Sélectionner un établissement" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {(tenantsQuery.data ?? []).map((tenant) => (
-                          <SelectItem key={tenant.id} value={tenant.id}>{tenant.name}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Badge variant="outline">{summaryQuery.data?.userRole ?? profile?.role}</Badge>
-                    <Button variant="outline" onClick={() => void refreshAll()}>
-                      <RefreshCw className="h-4 w-4" /> Rafraîchir
-                    </Button>
-                  </div>
-                </div>
-                <div className="rounded-2xl border border-slate-200/70 bg-slate-50/80 p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
-                  <div className="mb-3 flex items-center gap-2">
-                    <ShieldCheck className="h-4 w-4 text-emerald-600" />
-                    <p className="text-sm font-semibold text-slate-700 dark:text-slate-200">Filtres de pilotage</p>
-                  </div>
-                  <div className="grid gap-3 md:grid-cols-3 xl:grid-cols-4">
-                    <Select value={summaryFilters.period} onValueChange={(value) => setSummaryFilters((prev) => ({ ...prev, period: value as "7d" | "30d" | "90d" | "12m" }))}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Période" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="7d">7 jours</SelectItem>
-                        <SelectItem value="30d">30 jours</SelectItem>
-                        <SelectItem value="90d">90 jours</SelectItem>
-                        <SelectItem value="12m">12 mois</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <Input placeholder="Pays (ex. SN)" value={summaryFilters.country ?? ""} onChange={(event) => setSummaryFilters((prev) => ({ ...prev, country: event.target.value || undefined }))} />
-                    <Input placeholder="Canal d'acquisition" value={summaryFilters.channel ?? ""} onChange={(event) => setSummaryFilters((prev) => ({ ...prev, channel: event.target.value || undefined }))} />
-                    <Input placeholder="UUID du plan (facultatif)" value={summaryFilters.planId ?? ""} onChange={(event) => setSummaryFilters((prev) => ({ ...prev, planId: event.target.value || undefined }))} />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
           </TabsContent>
 
           <TabsContent value="indicators">
