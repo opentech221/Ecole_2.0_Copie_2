@@ -24,7 +24,6 @@ const FILTER_STORAGE_KEY = "ecole2.admin-console.filters";
 export function AdminConsolePage() {
   const { profile, loading } = useAuthContext();
   const [tab, setTab] = useState("overview");
-  const [dashboardPanel, setDashboardPanel] = useState("contexte");
   const {
     tenantId,
     setTenantId,
@@ -215,14 +214,28 @@ export function AdminConsolePage() {
           </div>
         </div>
 
-        <Card className="border-slate-200/70 bg-white/90 shadow-sm dark:border-slate-800 dark:bg-slate-950/80">
-          <CardContent className="space-y-6 p-5">
-            <div className="flex flex-wrap items-center gap-2 text-sm font-medium text-muted-foreground">
-              <Workflow className="h-4 w-4 text-sky-600" /> Tableau de bord opérationnel
-            </div>
+        <Tabs value={tab} onValueChange={(value) => startTransition(() => setTab(value))} className="space-y-4">
+          <TabsList className="w-full justify-start overflow-auto rounded-2xl border border-slate-200/70 bg-white/90 p-1 dark:border-slate-800 dark:bg-slate-950/80">
+            <TabsTrigger value="overview"><BarChart3 className="h-4 w-4" /> Vue exécutive</TabsTrigger>
+            <TabsTrigger value="context">Contexte de pilotage</TabsTrigger>
+            <TabsTrigger value="indicators">Indicateurs opérationnels</TabsTrigger>
+            <TabsTrigger value="users">Utilisateurs</TabsTrigger>
+            <TabsTrigger value="payments">Paiements</TabsTrigger>
+            <TabsTrigger value="billing">Facturation & abonnements</TabsTrigger>
+            <TabsTrigger value="audit">Audit & conformité</TabsTrigger>
+            <TabsTrigger value="legacy">Administration héritée</TabsTrigger>
+          </TabsList>
 
-            <div className="grid gap-3 xl:grid-cols-[1.2fr_0.8fr]">
-              <div className="grid gap-3">
+          <TabsContent value="overview">
+            {summaryQuery.isLoading || !summaryQuery.data ? <Skeleton className="h-[620px] w-full" /> : <ExecutiveOverview summary={summaryQuery.data} />}
+          </TabsContent>
+
+          <TabsContent value="context">
+            <Card className="border-slate-200/70 bg-white/90 shadow-sm dark:border-slate-800 dark:bg-slate-950/80">
+              <CardContent className="space-y-4 p-5">
+                <div className="flex flex-wrap items-center gap-2 text-sm font-medium text-muted-foreground">
+                  <Workflow className="h-4 w-4 text-sky-600" /> Contexte de pilotage
+                </div>
                 <div className="rounded-2xl border border-slate-200/70 bg-slate-50/80 p-4 dark:border-slate-800 dark:bg-slate-900/70">
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <div>
@@ -233,7 +246,32 @@ export function AdminConsolePage() {
                   </div>
                   <p className="mt-3 text-sm text-muted-foreground">Période actuelle: {summaryFilters.period}</p>
                 </div>
+                <div className="grid gap-3 md:grid-cols-3 xl:grid-cols-4">
+                  <Select value={summaryFilters.period} onValueChange={(value) => setSummaryFilters((prev) => ({ ...prev, period: value as "7d" | "30d" | "90d" | "12m" }))}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Période" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="7d">7 jours</SelectItem>
+                      <SelectItem value="30d">30 jours</SelectItem>
+                      <SelectItem value="90d">90 jours</SelectItem>
+                      <SelectItem value="12m">12 mois</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Input placeholder="Pays (ex. SN)" value={summaryFilters.country ?? ""} onChange={(event) => setSummaryFilters((prev) => ({ ...prev, country: event.target.value || undefined }))} />
+                  <Input placeholder="Canal d'acquisition" value={summaryFilters.channel ?? ""} onChange={(event) => setSummaryFilters((prev) => ({ ...prev, channel: event.target.value || undefined }))} />
+                  <Input placeholder="UUID du plan (facultatif)" value={summaryFilters.planId ?? ""} onChange={(event) => setSummaryFilters((prev) => ({ ...prev, planId: event.target.value || undefined }))} />
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
 
+          <TabsContent value="indicators">
+            <Card className="border-slate-200/70 bg-white/90 shadow-sm dark:border-slate-800 dark:bg-slate-950/80">
+              <CardContent className="space-y-5 p-5">
+                <div className="flex flex-wrap items-center gap-2 text-sm font-medium text-muted-foreground">
+                  <Workflow className="h-4 w-4 text-sky-600" /> Indicateurs opérationnels
+                </div>
                 <div className="grid gap-3 sm:grid-cols-3">
                   <div className="rounded-2xl border border-emerald-200/70 bg-emerald-50/80 p-3 dark:border-emerald-800/70 dark:bg-emerald-950/40">
                     <div className="flex items-center gap-2">
@@ -260,38 +298,22 @@ export function AdminConsolePage() {
                     <p className="text-xs text-muted-foreground">Capacité restante</p>
                   </div>
                 </div>
-              </div>
-
-              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
-                <div className="rounded-2xl border border-slate-200/70 bg-slate-50/80 p-4 dark:border-slate-800 dark:bg-slate-900/70">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium">Utilisateurs actifs</span>
-                    <span className="text-sm font-semibold text-emerald-600">{summaryQuery.data?.business?.kpis.activeUsers ?? "—"}</span>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="rounded-2xl border border-slate-200/70 bg-slate-50/80 p-4 dark:border-slate-800 dark:bg-slate-900/70">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">Utilisateurs actifs</span>
+                      <span className="text-sm font-semibold text-emerald-600">{summaryQuery.data?.business?.kpis.activeUsers ?? "—"}</span>
+                    </div>
+                  </div>
+                  <div className="rounded-2xl border border-slate-200/70 bg-slate-50/80 p-4 dark:border-slate-800 dark:bg-slate-900/70">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">Paiements réussis</span>
+                      <span className="text-sm font-semibold text-sky-600">{summaryQuery.data?.kpis.successPayments.value ?? "—"}</span>
+                    </div>
                   </div>
                 </div>
-                <div className="rounded-2xl border border-slate-200/70 bg-slate-50/80 p-4 dark:border-slate-800 dark:bg-slate-900/70">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium">Paiements réussis</span>
-                    <span className="text-sm font-semibold text-sky-600">{summaryQuery.data?.kpis.successPayments.value ?? "—"}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Tabs value={tab} onValueChange={(value) => startTransition(() => setTab(value))} className="space-y-4">
-          <TabsList className="w-full justify-start overflow-auto rounded-2xl border border-slate-200/70 bg-white/90 p-1 dark:border-slate-800 dark:bg-slate-950/80">
-            <TabsTrigger value="overview"><BarChart3 className="h-4 w-4" /> Vue exécutive</TabsTrigger>
-            <TabsTrigger value="users">Utilisateurs</TabsTrigger>
-            <TabsTrigger value="payments">Paiements</TabsTrigger>
-            <TabsTrigger value="billing">Facturation & abonnements</TabsTrigger>
-            <TabsTrigger value="audit">Audit & conformité</TabsTrigger>
-            <TabsTrigger value="legacy">Administration héritée</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="overview">
-            {summaryQuery.isLoading || !summaryQuery.data ? <Skeleton className="h-[620px] w-full" /> : <ExecutiveOverview summary={summaryQuery.data} />}
+              </CardContent>
+            </Card>
           </TabsContent>
 
           <TabsContent value="users">
