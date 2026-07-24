@@ -64,6 +64,10 @@ export function AdminConsolePage() {
   const [planDialogOpen, setPlanDialogOpen] = useState(false);
   const [editingPlanId, setEditingPlanId] = useState<string | null>(null);
 
+  function goToTab(nextTab: string) {
+    startTransition(() => setTab(nextTab));
+  }
+
   useEffect(() => {
     const raw = localStorage.getItem(FILTER_STORAGE_KEY);
     if (!raw) return;
@@ -210,115 +214,119 @@ export function AdminConsolePage() {
           </div>
         </div>
 
-        <div className="grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
-          <Card className="border-slate-200/70 bg-white/90 shadow-sm dark:border-slate-800 dark:bg-slate-950/80">
-            <CardContent className="space-y-4 p-5">
-              <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-                <Sparkles className="h-4 w-4 text-emerald-600" /> Résumé exécutif
-              </div>
-              <div className="grid gap-3 sm:grid-cols-3">
-                <div className="rounded-2xl border border-slate-200/70 bg-slate-50/80 p-3 dark:border-slate-800 dark:bg-slate-900/70">
-                  <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Tenant</p>
-                  <p className="mt-1 text-lg font-semibold">{tenantsQuery.data?.[0]?.name ?? "—"}</p>
-                </div>
-                <div className="rounded-2xl border border-slate-200/70 bg-slate-50/80 p-3 dark:border-slate-800 dark:bg-slate-900/70">
-                  <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Rôle</p>
-                  <p className="mt-1 text-lg font-semibold">{summaryQuery.data?.userRole ?? profile?.role ?? "—"}</p>
-                </div>
-                <div className="rounded-2xl border border-slate-200/70 bg-slate-50/80 p-3 dark:border-slate-800 dark:bg-slate-900/70">
-                  <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Période</p>
-                  <p className="mt-1 text-lg font-semibold">{summaryFilters.period}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+        <Card className="border-slate-200/70 bg-white/90 shadow-sm dark:border-slate-800 dark:bg-slate-950/80">
+          <CardContent className="space-y-6 p-5">
+            <div className="flex flex-wrap items-center gap-2 text-sm font-medium text-muted-foreground">
+              <Workflow className="h-4 w-4 text-sky-600" /> Actions rapides
+            </div>
 
-          <Card className="border-slate-200/70 bg-white/90 shadow-sm dark:border-slate-800 dark:bg-slate-950/80">
-            <CardContent className="space-y-3 p-5">
-              <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-                <Workflow className="h-4 w-4 text-sky-600" /> Actions rapides
+            <div className="grid gap-3 xl:grid-cols-[1.1fr_0.9fr]">
+              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                <button
+                  type="button"
+                  onClick={() => goToTab("users")}
+                  className="flex min-h-24 flex-col justify-between rounded-2xl border border-slate-200/70 bg-slate-50/80 p-4 text-left transition hover:-translate-y-0.5 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900/70 dark:hover:bg-slate-900"
+                >
+                  <div className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
+                    <Users className="h-4 w-4 text-emerald-600" /> Gérer les utilisateurs
+                  </div>
+                  <p className="text-xs text-muted-foreground">Accès à la liste, à la fiche et aux imports.</p>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => goToTab("payments")}
+                  className="flex min-h-24 flex-col justify-between rounded-2xl border border-slate-200/70 bg-slate-50/80 p-4 text-left transition hover:-translate-y-0.5 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900/70 dark:hover:bg-slate-900"
+                >
+                  <div className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
+                    <CreditCard className="h-4 w-4 text-violet-600" /> Voir paiements
+                  </div>
+                  <p className="text-xs text-muted-foreground">Ouvre la synthèse, les filtres et les transactions.</p>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => goToTab("audit")}
+                  className="flex min-h-24 flex-col justify-between rounded-2xl border border-slate-200/70 bg-slate-50/80 p-4 text-left transition hover:-translate-y-0.5 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900/70 dark:hover:bg-slate-900"
+                >
+                  <div className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
+                    <FileCheck2 className="h-4 w-4 text-amber-600" /> Vérifier conformité
+                  </div>
+                  <p className="text-xs text-muted-foreground">Envoie vers le journal d’audit centralisé.</p>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => void refreshAll()}
+                  className="flex min-h-24 flex-col justify-between rounded-2xl border border-slate-200/70 bg-slate-50/80 p-4 text-left transition hover:-translate-y-0.5 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900/70 dark:hover:bg-slate-900"
+                >
+                  <div className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
+                    <RefreshCw className="h-4 w-4 text-sky-600" /> Rafraîchir données
+                  </div>
+                  <p className="text-xs text-muted-foreground">Relance les requêtes et met à jour les indicateurs.</p>
+                </button>
               </div>
-              <div className="grid gap-2 sm:grid-cols-2">
-                <button className="flex items-center gap-2 rounded-xl border border-slate-200/70 bg-slate-50/80 px-3 py-2 text-left text-sm font-medium text-slate-700 transition hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-200">
-                  <Users className="h-4 w-4 text-emerald-600" /> Gérer les utilisateurs
-                </button>
-                <button className="flex items-center gap-2 rounded-xl border border-slate-200/70 bg-slate-50/80 px-3 py-2 text-left text-sm font-medium text-slate-700 transition hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-200">
-                  <CreditCard className="h-4 w-4 text-violet-600" /> Voir paiements
-                </button>
-                <button className="flex items-center gap-2 rounded-xl border border-slate-200/70 bg-slate-50/80 px-3 py-2 text-left text-sm font-medium text-slate-700 transition hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-200">
-                  <FileCheck2 className="h-4 w-4 text-amber-600" /> Vérifier conformité
-                </button>
-                <button className="flex items-center gap-2 rounded-xl border border-slate-200/70 bg-slate-50/80 px-3 py-2 text-left text-sm font-medium text-slate-700 transition hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-200">
-                  <RefreshCw className="h-4 w-4 text-sky-600" /> Rafraîchir données
-                </button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
 
-        <div className="grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
-          <Card className="border-slate-200/70 bg-white/90 shadow-sm dark:border-slate-800 dark:bg-slate-950/80">
-            <CardContent className="space-y-4 p-5">
-              <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-                <Activity className="h-4 w-4 text-emerald-600" /> Santé plateforme
-              </div>
-              <div className="grid gap-3 sm:grid-cols-3">
-                <div className="rounded-2xl border border-emerald-200/70 bg-emerald-50/80 p-3 dark:border-emerald-800/70 dark:bg-emerald-950/40">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">API</p>
+              <div className="grid gap-3">
+                <div className="rounded-2xl border border-slate-200/70 bg-slate-50/80 p-4 dark:border-slate-800 dark:bg-slate-900/70">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Sélection active</p>
+                      <p className="mt-1 text-lg font-semibold">{summaryQuery.data?.tenant.name ?? tenantsQuery.data?.find((tenant) => tenant.id === tenantId)?.name ?? "—"}</p>
+                    </div>
+                    <Badge variant="outline">{summaryQuery.data?.userRole ?? profile?.role ?? "—"}</Badge>
                   </div>
-                  <p className="mt-2 text-lg font-semibold">98%</p>
-                  <p className="text-xs text-muted-foreground">Disponibilité</p>
+                  <p className="mt-3 text-sm text-muted-foreground">Période actuelle: {summaryFilters.period}</p>
                 </div>
-                <div className="rounded-2xl border border-sky-200/70 bg-sky-50/80 p-3 dark:border-sky-800/70 dark:bg-sky-950/40">
-                  <div className="flex items-center gap-2">
-                    <ShieldCheck className="h-4 w-4 text-sky-600" />
-                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-700">Sécurité</p>
-                  </div>
-                  <p className="mt-2 text-lg font-semibold">Stable</p>
-                  <p className="text-xs text-muted-foreground">MFA & accès</p>
-                </div>
-                <div className="rounded-2xl border border-amber-200/70 bg-amber-50/80 p-3 dark:border-amber-800/70 dark:bg-amber-950/40">
-                  <div className="flex items-center gap-2">
-                    <AlertTriangle className="h-4 w-4 text-amber-600" />
-                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-700">Stockage</p>
-                  </div>
-                  <p className="mt-2 text-lg font-semibold">82%</p>
-                  <p className="text-xs text-muted-foreground">Capacité restante</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
 
-          <Card className="border-slate-200/70 bg-white/90 shadow-sm dark:border-slate-800 dark:bg-slate-950/80">
-            <CardContent className="space-y-4 p-5">
-              <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-                <BarChart3 className="h-4 w-4 text-violet-600" /> KPI rapides
-              </div>
-              <div className="space-y-3">
-                <div className="rounded-2xl border border-slate-200/70 bg-slate-50/80 p-3 dark:border-slate-800 dark:bg-slate-900/70">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium">Utilisateurs actifs</span>
-                    <span className="text-sm font-semibold text-emerald-600">{summaryQuery.data?.kpis?.successPayments?.value ?? "—"}</span>
+                <div className="grid gap-3 sm:grid-cols-3">
+                  <div className="rounded-2xl border border-emerald-200/70 bg-emerald-50/80 p-3 dark:border-emerald-800/70 dark:bg-emerald-950/40">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">API</p>
+                    </div>
+                    <p className="mt-2 text-lg font-semibold">98%</p>
+                    <p className="text-xs text-muted-foreground">Disponibilité</p>
                   </div>
-                  <div className="mt-2 h-2 rounded-full bg-slate-200 dark:bg-slate-800">
-                    <div className="h-2 w-3/4 rounded-full bg-emerald-500" />
+                  <div className="rounded-2xl border border-sky-200/70 bg-sky-50/80 p-3 dark:border-sky-800/70 dark:bg-sky-950/40">
+                    <div className="flex items-center gap-2">
+                      <ShieldCheck className="h-4 w-4 text-sky-600" />
+                      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-700">Sécurité</p>
+                    </div>
+                    <p className="mt-2 text-lg font-semibold">Stable</p>
+                    <p className="text-xs text-muted-foreground">MFA & accès</p>
+                  </div>
+                  <div className="rounded-2xl border border-amber-200/70 bg-amber-50/80 p-3 dark:border-amber-800/70 dark:bg-amber-950/40">
+                    <div className="flex items-center gap-2">
+                      <AlertTriangle className="h-4 w-4 text-amber-600" />
+                      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-700">Stockage</p>
+                    </div>
+                    <p className="mt-2 text-lg font-semibold">82%</p>
+                    <p className="text-xs text-muted-foreground">Capacité restante</p>
                   </div>
                 </div>
-                <div className="rounded-2xl border border-slate-200/70 bg-slate-50/80 p-3 dark:border-slate-800 dark:bg-slate-900/70">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium">Paiements réussis</span>
-                    <span className="text-sm font-semibold text-sky-600">{summaryQuery.data?.kpis?.successPayments?.value ?? "—"}</span>
+
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="rounded-2xl border border-slate-200/70 bg-slate-50/80 p-4 dark:border-slate-800 dark:bg-slate-900/70">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">Utilisateurs actifs</span>
+                      <span className="text-sm font-semibold text-emerald-600">{summaryQuery.data?.business?.kpis.activeUsers ?? "—"}</span>
+                    </div>
+                    <div className="mt-2 h-2 rounded-full bg-slate-200 dark:bg-slate-800">
+                      <div className="h-2 w-3/4 rounded-full bg-emerald-500" />
+                    </div>
                   </div>
-                  <div className="mt-2 h-2 rounded-full bg-slate-200 dark:bg-slate-800">
-                    <div className="h-2 w-5/6 rounded-full bg-sky-500" />
+                  <div className="rounded-2xl border border-slate-200/70 bg-slate-50/80 p-4 dark:border-slate-800 dark:bg-slate-900/70">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">Paiements réussis</span>
+                      <span className="text-sm font-semibold text-sky-600">{summaryQuery.data?.kpis?.successPayments?.value ?? "—"}</span>
+                    </div>
+                    <div className="mt-2 h-2 rounded-full bg-slate-200 dark:bg-slate-800">
+                      <div className="h-2 w-5/6 rounded-full bg-sky-500" />
+                    </div>
                   </div>
                 </div>
               </div>
-            </CardContent>
-          </Card>
-        </div>
+            </div>
+          </CardContent>
+        </Card>
 
         <Tabs value={tab} onValueChange={(value) => startTransition(() => setTab(value))} className="space-y-4">
           <TabsList className="w-full justify-start overflow-auto rounded-2xl border border-slate-200/70 bg-white/90 p-1 dark:border-slate-800 dark:bg-slate-950/80">
