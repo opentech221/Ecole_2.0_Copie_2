@@ -349,8 +349,8 @@ export function UsersWorkspace({
       <Card className="border-slate-200/70 bg-white/90 shadow-sm dark:border-slate-800 dark:bg-slate-950/80">
         <CardHeader className="gap-3 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <CardTitle>Comptes Auth non rattachés</CardTitle>
-            <CardDescription>Comptes Supabase Auth présents mais absents de tenant_user_accounts.</CardDescription>
+            <CardTitle>Profils Supabase non rattachés</CardTitle>
+            <CardDescription>Profils présents dans Supabase mais absents de tenant_user_accounts pour ce tenant.</CardDescription>
           </div>
           <Badge variant="outline">{unlinkedAuthUsers?.total ?? 0} compte(s)</Badge>
         </CardHeader>

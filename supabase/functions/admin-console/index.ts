@@ -1297,20 +1297,22 @@ registerGet("/users/unlinked-auth", async (c) => {
   const guard = await requireConsoleAccess(c.req.raw);
   if (!guard.ok) return c.json({ error: guard.message }, guard.status);
 
-  const [{ data: linkedAccounts }, authUsersRes] = await Promise.all([
-    guard.service.from("tenant_user_accounts").select("user_id").is("deleted_at", null),
+  const [{ data: linkedAccounts }, { data: profiles }, authUsersRes] = await Promise.all([
+    guard.service.from("tenant_user_accounts").select("user_id").eq("tenant_id", guard.tenantId).is("deleted_at", null),
+    guard.service.from("profiles").select("id, full_name, role, created_at").order("created_at", { ascending: false }),
     guard.service.auth.admin.listUsers({ page: 1, perPage: 1000 }),
   ]);
 
   const linkedUserIds = new Set((linkedAccounts ?? []).map((row) => row.user_id));
-  const rows = (authUsersRes.data?.users ?? [])
-    .filter((user) => !linkedUserIds.has(user.id))
+  const authUsers = new Map((authUsersRes.data?.users ?? []).map((user) => [user.id, user]));
+  const rows = (profiles ?? [])
+    .filter((profile) => !linkedUserIds.has(profile.id))
     .map((user) => ({
       userId: user.id,
-      email: canSeeRawPii(guard.role) ? (user.email ?? "") : (maskEmail(user.email ?? "") ?? ""),
-      fullName: user.user_metadata?.full_name ?? user.user_metadata?.name ?? "Sans nom",
+      email: canSeeRawPii(guard.role) ? (authUsers.get(user.id)?.email ?? "") : (maskEmail(authUsers.get(user.id)?.email ?? "") ?? ""),
+      fullName: user.full_name ?? authUsers.get(user.id)?.user_metadata?.full_name ?? authUsers.get(user.id)?.user_metadata?.name ?? "Sans nom",
       createdAt: user.created_at,
-      lastSignInAt: user.last_sign_in_at ?? null,
+      lastSignInAt: authUsers.get(user.id)?.last_sign_in_at ?? null,
     }))
     .sort((left, right) => right.createdAt.localeCompare(left.createdAt));
 
