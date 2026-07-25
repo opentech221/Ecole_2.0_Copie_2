@@ -39,7 +39,7 @@ export function AdminConsolePage() {
     billingQuery,
     auditQuery,
     usersQuery,
-    unlinkedAuthUsersQuery,
+    platformProfilesQuery,
     selectedUserId,
     setSelectedUserId,
     userDetailQuery,
@@ -253,8 +253,8 @@ export function AdminConsolePage() {
               setFilters={setUserFilters}
               data={usersQuery.data}
               loading={usersQuery.isLoading}
-              unlinkedAuthUsers={unlinkedAuthUsersQuery.data}
-              unlinkedAuthUsersLoading={unlinkedAuthUsersQuery.isLoading}
+              platformProfiles={platformProfilesQuery.data}
+              platformProfilesLoading={platformProfilesQuery.isLoading}
               selectedUserId={selectedUserId}
               onSelectUser={setSelectedUserId}
               selectedUser={userDetailQuery.data}

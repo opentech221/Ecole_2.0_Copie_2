@@ -257,6 +257,19 @@ export interface AdminAuthUsersResult {
   total: number;
 }
 
+export interface AdminPlatformProfileListItem {
+  userId: string;
+  email: string;
+  fullName: string;
+  role: string;
+  createdAt: string;
+}
+
+export interface AdminPlatformProfilesResult {
+  rows: AdminPlatformProfileListItem[];
+  total: number;
+}
+
 export interface AdminUserDetail extends AdminUserListItem {
   metadata: Record<string, unknown>;
   auditTrail: Array<{

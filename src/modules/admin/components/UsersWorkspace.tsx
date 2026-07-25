@@ -9,7 +9,7 @@ import { Label } from "@/app/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/app/components/ui/table";
 import { Textarea } from "@/app/components/ui/textarea";
-import type { AdminAuthUsersResult, AdminUserDetail, AdminUserFilters, AdminUsersPageResult } from "../types";
+import type { AdminPlatformProfilesResult, AdminUserDetail, AdminUserFilters, AdminUsersPageResult } from "../types";
 import { formatDateTime } from "../utils";
 
 interface UsersWorkspaceProps {
@@ -17,8 +17,8 @@ interface UsersWorkspaceProps {
   setFilters: (updater: AdminUserFilters | ((prev: AdminUserFilters) => AdminUserFilters)) => void;
   data?: AdminUsersPageResult;
   loading: boolean;
-  unlinkedAuthUsers?: AdminAuthUsersResult;
-  unlinkedAuthUsersLoading: boolean;
+  platformProfiles?: AdminPlatformProfilesResult;
+  platformProfilesLoading: boolean;
   selectedUserId: string | null;
   onSelectUser: (userId: string | null) => void;
   selectedUser?: AdminUserDetail;
@@ -62,8 +62,8 @@ export function UsersWorkspace({
   setFilters,
   data,
   loading,
-  unlinkedAuthUsers,
-  unlinkedAuthUsersLoading,
+  platformProfiles,
+  platformProfilesLoading,
   selectedUserId,
   onSelectUser,
   selectedUser,
@@ -102,7 +102,7 @@ export function UsersWorkspace({
       <Card className="border-slate-200/70 bg-white/90 shadow-sm dark:border-slate-800 dark:bg-slate-950/80">
         <CardHeader className="gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <CardTitle>Gestion des utilisateurs SaaS</CardTitle>
+            <CardTitle>Utilisateurs rattachés au tenant</CardTitle>
             <CardDescription>Recherche, filtres, table, détail, création et import dans le même espace.</CardDescription>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -352,13 +352,13 @@ export function UsersWorkspace({
             <CardTitle>Profils Supabase non rattachés</CardTitle>
             <CardDescription>Profils présents dans Supabase mais absents de tenant_user_accounts pour ce tenant.</CardDescription>
           </div>
-          <Badge variant="outline">{unlinkedAuthUsers?.total ?? 0} compte(s)</Badge>
+          <Badge variant="outline">{platformProfiles?.total ?? 0} compte(s)</Badge>
         </CardHeader>
         <CardContent>
-          {unlinkedAuthUsersLoading ? (
-            <p className="text-sm text-slate-700 dark:text-slate-300">Chargement des comptes Auth...</p>
-          ) : (unlinkedAuthUsers?.rows.length ?? 0) === 0 ? (
-            <p className="text-sm text-slate-700 dark:text-slate-300">Aucun compte Auth non rattaché trouvé.</p>
+          {platformProfilesLoading ? (
+            <p className="text-sm text-slate-700 dark:text-slate-300">Chargement des profils Supabase...</p>
+          ) : (platformProfiles?.rows.length ?? 0) === 0 ? (
+            <p className="text-sm text-slate-700 dark:text-slate-300">Aucun profil Supabase trouvé.</p>
           ) : (
             <div className="rounded-2xl border">
               <Table>
@@ -366,17 +366,17 @@ export function UsersWorkspace({
                   <TableRow>
                     <TableHead>Email</TableHead>
                     <TableHead>Nom</TableHead>
+                    <TableHead>Rôle</TableHead>
                     <TableHead>Créé le</TableHead>
-                    <TableHead>Dernière connexion</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {unlinkedAuthUsers?.rows.map((row) => (
+                  {platformProfiles?.rows.map((row) => (
                     <TableRow key={row.userId}>
                       <TableCell className="font-medium">{row.email}</TableCell>
                       <TableCell>{row.fullName}</TableCell>
+                      <TableCell>{row.role}</TableCell>
                       <TableCell>{formatDateTime(row.createdAt)}</TableCell>
-                      <TableCell>{row.lastSignInAt ? formatDateTime(row.lastSignInAt) : "Jamais"}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
