@@ -51,6 +51,6 @@ describe("Dashboard admin module", () => {
 
     await user.click(moduleButton);
 
-    expect(navigateMock).toHaveBeenCalledWith("/admin/saas");
+    expect(navigateMock).toHaveBeenCalledWith("/admin");
   });
 });

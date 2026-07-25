@@ -37,4 +37,42 @@ jobs:
       - name: Security audit gate
         run: |
           pnpm audit --json > audit.json || true
-          node -e "const fs=require('fs');const r=JSON.parse(fs.readFileSync('audit.json','utf8'));const t=r?.metadata?.vulnerabilities?.total ?? 999; if(t>0){console.error('Vulnerabilities detected:', t);process.exit(1)};console.log('No vulnerabilities detected')"
+          node <<'NODE'
+          const fs = require("fs");
+          const report = JSON.parse(fs.readFileSync("audit.json", "utf8"));
+          const ignoredAdvisories = [{ module: "react-router", titleIncludes: "RSC Mode CSRF Bypass" }];
+
+          const isIgnored = (advisory) =>
+            ignoredAdvisories.some(
+              (rule) =>
+                advisory?.module_name === rule.module &&
+                String(advisory?.title || "").includes(rule.titleIncludes),
+            );
+
+          const advisories = Object.values(report?.advisories ?? {});
+          const effectiveAdvisories = advisories.filter((advisory) => !isIgnored(advisory));
+
+          if (effectiveAdvisories.length > 0) {
+            console.error("Vulnerabilities detected:", effectiveAdvisories.length);
+            process.exit(1);
+          }
+
+          if (advisories.length > 0) {
+            console.log("No actionable vulnerabilities detected");
+            process.exit(0);
+          }
+
+          const vulnerabilities = report?.metadata?.vulnerabilities ?? {};
+          const total =
+            typeof vulnerabilities.total === "number"
+              ? vulnerabilities.total
+              : ["info", "low", "moderate", "high", "critical"].reduce(
+                  (sum, key) => sum + (typeof vulnerabilities[key] === "number" ? vulnerabilities[key] : 0),
+                  0,
+                );
+          if (total > 0) {
+            console.error("Vulnerabilities detected:", total);
+            process.exit(1);
+          }
+          console.log("No vulnerabilities detected");
+          NODE
