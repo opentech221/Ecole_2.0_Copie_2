@@ -27,6 +27,100 @@ Dans les écoles primaires d'Afrique francophone, les enseignants gèrent des cl
 
 ---
 
+## 🧭 Vision du Projet & Idéation (Contexte Métier)
+
+**École 2.0** est une plateforme **EdTech SaaS multi-tenant** conçue pour l'enseignement élémentaire sénégalais, du **CI au CM2**.  
+La solution part d'un besoin terrain concret : offrir aux directions d'école et aux enseignants un socle numérique fiable, adapté aux réalités locales, pour accélérer la modernisation pédagogique et administrative.
+
+Objectif produit :
+- réduire la charge administrative manuelle ;
+- structurer le suivi pédagogique et les évaluations ;
+- fiabiliser la gouvernance d'établissement ;
+- contribuer à réduire la fracture digitale dans les écoles primaires.
+
+---
+
+## 🛡️ Architecture SaaS & Sécurité (Socle Administratif)
+
+Le backend Supabase implémente une base SaaS robuste avec isolation des données :
+- **Tenants (écoles)** : table `tenants` + rôles (`user_roles`, `roles`) ;
+- **Profils** : table `profiles` (enseignant/directeur) ;
+- **Élèves** : table `students` liée au périmètre tenant/classe ;
+- **Finance** : tables `subscriptions`, `invoices`, `payments`, `refunds`, `plans`, `coupons` ;
+- **Traçabilité** : `audit_logs` et `admin_audit_logs` ;
+- **Sécurité** : politiques **RLS** étendues, helper `has_tenant_role`, contrôle d'accès par rôle métier.
+
+Ce socle permet une gestion étanche par établissement tout en gardant des vues de pilotage consolidées pour les profils autorisés.
+
+---
+
+## 📚 Cœur Pédagogique : Référentiel Officiel Sénégalais
+
+Le programme officiel est modélisé dans une base relationnelle dédiée (`niveaux`, `domaines`, `sous_domaines`, `activites`, `competences_base`, `paliers`, `objectifs_apprentissage`, `objectifs_specifiques`, `contenus`) avec exposition API via `programme_navigation_v` + endpoints `programme-nav`.
+
+Hiérarchie implémentée (9 niveaux) :
+
+```text
+Niveau
+└── Domaine
+    └── Sous-domaine (nullable)
+        └── Activité
+            └── Compétence de base
+                └── Palier
+                    └── Objectif d'Apprentissage (OA)
+                        └── Objectif Spécifique (OS)
+                            └── Contenus
+```
+
+Statistiques consolidées du lot de seed validé :
+- **24 fichiers** traités (`programme_officiel/*.JSON`)
+- **6 niveaux**
+- **24 domaines**
+- **42 sous-domaines**
+- **92 activités**
+- **215 paliers**
+- **929 objectifs spécifiques**
+- **2036 contenus**
+
+Les clés de traçabilité pédagogique (`page_source`, `document_ref`) sont stockées au niveau activité et exposées dans la couche navigation pour relier les contenus au guide officiel source.
+
+---
+
+## 📓 Module Cahier de Journal (React + Tailwind)
+
+### Gestion temporelle
+- Calendrier aligné sur l'année scolaire (**Octobre → Juin**).
+- Semaine pédagogique **Lundi → Vendredi** avec bascule dynamique pour inclure **Samedi**.
+
+### Intégrité de saisie
+- Gestion structurée par cellule (activité(s), contenus, observation).
+- Confirmation explicite avant retrait/suppression d'activité et purge des contenus liés.
+- Filtrage des contenus déjà exploités pour limiter les incohérences de journalisation.
+
+### Traçabilité RAG & navigation pédagogique
+- Le référentiel transporte `page_source` et `document_ref` de bout en bout (JSON → SQL → API).
+- Le socle est prêt pour les liens de navigation documentaire de type `#page=X` vers les PDF officiels.
+
+### Charte graphique Tailwind & mode sombre
+- Colorisation dynamique des activités par hachage (`getActivityColor`).
+- Palette orientée slate (`slate-900/800/950`) et contraste renforcé pour une UX moderne desktop/mobile.
+
+---
+
+## 🛣️ Roadmap immédiate
+
+### ✅ Fait
+- Schéma relationnel du programme officiel validé (UUID avec `gen_random_uuid()`).
+- Import curriculaire industrialisé sur `programme_officiel/` via le pipeline Node.js (`scripts/seed_programme.js`) avec 24 fichiers traités.
+- Vue SQL de navigation aplatie (`programme_navigation_v`) et endpoints d'accès exposés.
+
+### 🔜 À finaliser court terme
+- Finaliser le câblage des sélecteurs en cascade dans toutes les modales React concernées.
+- Ajouter le bouton de redirection directe vers les PDF du programme (Storage + ancre `#page=X`).
+- Compléter la couche de liaison UI pour exploiter visiblement `page_source`/`document_ref` dans le parcours enseignant.
+
+---
+
 ## 🎯 Fonctionnalités Principales
 
 ### 📋 Gestion des Classes
