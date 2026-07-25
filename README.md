@@ -230,7 +230,12 @@ pnpm run db:local:stop
 npx supabase login
 
 # 2) Lier le repo au projet distant
-export SUPABASE_PROJECT_REF="votre_project_ref"
+# PowerShell (Windows)
+$env:SUPABASE_PROJECT_REF="votre_project_ref"
+
+# Bash/Zsh (Linux/macOS)
+# export SUPABASE_PROJECT_REF="votre_project_ref"
+
 pnpm run db:remote:link
 
 # 3) Pousser les migrations vers la base distante
@@ -279,7 +284,7 @@ Avant merge sur `main`, verifier:
 1. `pnpm run db:preflight` passe localement
 2. `pnpm run test` passe (integration + unit)
 3. `pnpm run build` passe sans erreur bloquante
-4. `pnpm audit --json` retourne `total = 0`
+4. `pnpm audit --json` ne remonte aucune vulnerabilite actionnable (la CI applique une liste d'exceptions documentee dans `.github/workflows/quality-gates.yml`)
 5. scenarii d'acces critiques valides:
 	- un enseignant ne peut pas agir hors de sa classe
 	- un directeur conserve l'acces global

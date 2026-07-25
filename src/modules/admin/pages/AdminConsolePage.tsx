@@ -253,8 +253,10 @@ export function AdminConsolePage() {
               setFilters={setUserFilters}
               data={usersQuery.data}
               loading={usersQuery.isLoading}
+              usersErrorMessage={usersQuery.error instanceof Error ? usersQuery.error.message : null}
               platformProfiles={platformProfilesQuery.data}
               platformProfilesLoading={platformProfilesQuery.isLoading}
+              platformProfilesErrorMessage={platformProfilesQuery.error instanceof Error ? platformProfilesQuery.error.message : null}
               selectedUserId={selectedUserId}
               onSelectUser={setSelectedUserId}
               selectedUser={userDetailQuery.data}

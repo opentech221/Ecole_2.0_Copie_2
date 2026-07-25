@@ -1,5 +1,5 @@
 import { startTransition, useMemo, useState } from "react";
-import { Download, KeyRound, PauseCircle, Plus, Search, Trash2, Upload, UserCheck } from "lucide-react";
+import { AlertCircle, Download, KeyRound, PauseCircle, Plus, Search, Trash2, Upload, UserCheck } from "lucide-react";
 import { Badge } from "@/app/components/ui/badge";
 import { Button } from "@/app/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card";
@@ -17,8 +17,10 @@ interface UsersWorkspaceProps {
   setFilters: (updater: AdminUserFilters | ((prev: AdminUserFilters) => AdminUserFilters)) => void;
   data?: AdminUsersPageResult;
   loading: boolean;
+  usersErrorMessage?: string | null;
   platformProfiles?: AdminPlatformProfilesResult;
   platformProfilesLoading: boolean;
+  platformProfilesErrorMessage?: string | null;
   selectedUserId: string | null;
   onSelectUser: (userId: string | null) => void;
   selectedUser?: AdminUserDetail;
@@ -62,8 +64,10 @@ export function UsersWorkspace({
   setFilters,
   data,
   loading,
+  usersErrorMessage,
   platformProfiles,
   platformProfilesLoading,
+  platformProfilesErrorMessage,
   selectedUserId,
   onSelectUser,
   selectedUser,
@@ -118,6 +122,13 @@ export function UsersWorkspace({
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
+          {usersErrorMessage && (
+            <div className="flex items-start gap-2 rounded-xl border border-rose-200 bg-rose-50 p-3 text-sm text-rose-800 dark:border-rose-900/60 dark:bg-rose-950/40 dark:text-rose-200">
+              <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+              <span>Impossible de charger les utilisateurs du tenant: {usersErrorMessage}</span>
+            </div>
+          )}
+
           <div className="grid gap-3 xl:grid-cols-[1.5fr_1fr_1fr_1fr]">
             <div className="relative">
               <label htmlFor="users_search" className="sr-only">Rechercher</label>
@@ -355,7 +366,12 @@ export function UsersWorkspace({
           <Badge variant="outline">{platformProfiles?.total ?? 0} compte(s)</Badge>
         </CardHeader>
         <CardContent>
-          {platformProfilesLoading ? (
+          {platformProfilesErrorMessage ? (
+            <div className="flex items-start gap-2 rounded-xl border border-rose-200 bg-rose-50 p-3 text-sm text-rose-800 dark:border-rose-900/60 dark:bg-rose-950/40 dark:text-rose-200">
+              <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+              <span>Impossible de charger les profils Supabase: {platformProfilesErrorMessage}</span>
+            </div>
+          ) : platformProfilesLoading ? (
             <p className="text-sm text-slate-700 dark:text-slate-300">Chargement des profils Supabase...</p>
           ) : (platformProfiles?.rows.length ?? 0) === 0 ? (
             <p className="text-sm text-slate-700 dark:text-slate-300">Aucun profil Supabase trouvé.</p>
