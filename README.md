@@ -279,7 +279,7 @@ Avant merge sur `main`, verifier:
 1. `pnpm run db:preflight` passe localement
 2. `pnpm run test` passe (integration + unit)
 3. `pnpm run build` passe sans erreur bloquante
-4. `npm audit --json` retourne `total = 0`
+4. `pnpm audit --json` retourne `total = 0`
 5. scenarii d'acces critiques valides:
 	- un enseignant ne peut pas agir hors de sa classe
 	- un directeur conserve l'acces global
