@@ -27,6 +27,102 @@ Dans les écoles primaires d'Afrique francophone, les enseignants gèrent des cl
 
 ---
 
+## 🧭 Vision du Projet & Idéation (Contexte Métier)
+
+**École 2.0** est une plateforme **EdTech SaaS multi-tenant** conçue sur mesure pour l'écosystème de l'enseignement élémentaire au Sénégal, du **CI au CM2**.  
+Sa genèse repose sur une réalité terrain : classes chargées, faible numérisation des processus scolaires, et besoin d'outils simples pour les enseignants et directions.
+
+Notre ligne directrice produit est d'allier **la pratique pédagogique locale** et **un socle numérique moderne** pour :
+- réduire la charge administrative manuelle ;
+- structurer le pilotage pédagogique quotidien ;
+- renforcer la fiabilité de la gouvernance d'établissement ;
+- contribuer concrètement à la réduction de la fracture digitale régionale.
+
+---
+
+## 🛡️ Architecture SaaS & Sécurité (Socle Administratif)
+
+Le backend Supabase expose un socle SaaS robuste et cloisonné :
+- **Isolation multi-tenant des écoles** : `tenants`, `roles`, `user_roles` ;
+- **Gestion des profils métiers** : `profiles` (enseignants/directeurs) ;
+- **Gestion élèves et vie de classe** : `students` avec rattachement au tenant ;
+- **Système financier complet** : `subscriptions`, `invoices`, `payments`, `refunds`, `plans`, `coupons`, `webhook_events` ;
+- **Traçabilité & conformité** : `audit_logs` + `admin_audit_logs` ;
+- **Sécurité applicative** : politiques **RLS**, fonctions de contrôle d'accès (`has_tenant_role`, helpers admin), durcissement des opérations sensibles.
+
+Cette architecture garantit l'étanchéité des données entre établissements tout en permettant un pilotage centralisé pour les rôles autorisés.
+
+---
+
+## 📚 Cœur Pédagogique : Référentiel Officiel Sénégalais
+
+Le programme officiel est numérisé dans une base relationnelle dédiée et sécurisée (`niveaux`, `domaines`, `sous_domaines`, `activites`, `competences_base`, `paliers`, `objectifs_apprentissage`, `objectifs_specifiques`, `contenus`), exposée par la vue `programme_navigation_v` et les endpoints `programme-nav`.
+
+Hiérarchie implémentée (9 niveaux) :
+
+```text
+Niveau
+└── Domaine
+    └── Sous-domaine (nullable)
+        └── Activité
+            └── Compétence de base
+                └── Palier
+                    └── Objectif d'Apprentissage (OA)
+                        └── Objectif Spécifique (OS)
+                            └── Contenus
+```
+
+Statistiques consolidées du lot de seed validé :
+- **24 fichiers** traités (`programme_officiel/*.JSON`)
+- **6 niveaux**
+- **24 domaines**
+- **42 sous-domaines**
+- **92 activités**
+- **215 paliers**
+- **929 objectifs spécifiques**
+- **2036 contenus finaux**
+
+Le pipeline de chargement applique une logique de déduplication/normalisation afin de garantir un référentiel exploitable sans collisions fonctionnelles.  
+Les clés de traçabilité (`page_source`, `document_ref`) sont stockées au niveau activité et propagées dans la navigation.
+
+---
+
+## 📓 Module Cahier de Journal (React + Tailwind)
+
+### Gestion temporelle
+- Calendrier aligné sur l'année scolaire sénégalaise (**Octobre → Juin**).
+- Semaine pédagogique **Lundi → Vendredi** avec bascule dynamique pour inclure **Samedi**.
+
+### Intégrité de saisie
+- Gestion structurée par cellule (activité(s), contenus, observation).
+- Validation de complétude dans les parcours de saisie (activité/OS/contenus) avec garde-fous UI.
+- Confirmation explicite avant retrait/suppression d'activité et purge des contenus liés.
+- Filtrage des contenus déjà exploités pour limiter les incohérences de journalisation.
+
+### Traçabilité RAG & navigation pédagogique
+- Le référentiel transporte `page_source` et `document_ref` de bout en bout (JSON → SQL → API).
+- Ces métadonnées permettent la navigation documentaire ciblée (ancres de type `#page=X`) vers les guides PDF officiels.
+
+### Charte graphique Tailwind & mode sombre
+- Colorisation dynamique des activités par hachage (`getActivityColor`).
+- Palette dark moderne orientée slate (`slate-900/800/950`) avec contrastes renforcés pour desktop/mobile.
+
+---
+
+## 🛣️ Roadmap immédiate
+
+### ✅ Fait
+- Schéma relationnel du programme officiel validé (UUID via `gen_random_uuid()`).
+- Lot de seeding asynchrone Node.js exécuté à 100% sur les 24 fichiers du référentiel officiel.
+- Endpoints de navigation curriculaire opérationnels côté fonction Supabase (`programme-nav`).
+
+### 🔜 À finaliser court terme
+- Consolider la vue SQL de navigation aplatie côté backend pour les besoins de navigation/filtrage avancés.
+- Finaliser le câblage des sélecteurs en cascade dans les modales React restantes.
+- Intégrer le bouton de redirection vers le Storage PDF (avec ancre `#page=X`).
+
+---
+
 ## 🎯 Fonctionnalités Principales
 
 ### 📋 Gestion des Classes
@@ -81,7 +177,7 @@ Dans les écoles primaires d'Afrique francophone, les enseignants gèrent des cl
 
 ### Prérequis
 - Node.js 18+
-- npm (ou pnpm)
+- pnpm
 - Compte Supabase (gratuit)
 
 ### Étapes
@@ -92,10 +188,10 @@ git clone https://github.com/opentech221/Ecole_2.0_Copie_2.git
 cd Ecole_2.0_Copie_2
 
 # 2. Installer les dépendances
-npm install
+pnpm install
 
 # 3. Lancer le serveur de développement
-npm run dev
+pnpm run dev
 ```
 
 Note: le client Supabase utilise actuellement `utils/supabase/info.tsx`.
@@ -115,16 +211,16 @@ npx supabase init
 
 ```bash
 # Demarrer Postgres local Supabase
-npm run db:local:start
+pnpm run db:local:start
 
 # Rejouer toutes les migrations locales (000, 001, 002, ...)
-npm run db:local:reset
+pnpm run db:local:reset
 
 # Executer une requete SQL locale
-npm run db:local:query -- "select * from supabase_migrations.schema_migrations order by version;"
+pnpm run db:local:query -- "select * from supabase_migrations.schema_migrations order by version;"
 
 # Arreter les services locaux
-npm run db:local:stop
+pnpm run db:local:stop
 ```
 
 ### Distant: pousser les migrations depuis le terminal
@@ -135,23 +231,23 @@ npx supabase login
 
 # 2) Lier le repo au projet distant
 export SUPABASE_PROJECT_REF="votre_project_ref"
-npm run db:remote:link
+pnpm run db:remote:link
 
 # 3) Pousser les migrations vers la base distante
-npm run db:remote:push
+pnpm run db:remote:push
 ```
 
 ### Astuce equipe
 
 Avant chaque PR backend:
-1. `npm run db:local:reset`
+1. `pnpm run db:local:reset`
 2. verifier que les migrations passent de zero sans erreur
-3. seulement ensuite faire `npm run db:remote:push`
+3. seulement ensuite faire `pnpm run db:remote:push`
 
 Option automatisée en une commande:
 
 ```bash
-npm run db:preflight
+pnpm run db:preflight
 ```
 
 Astuce debug preflight (sans execution des commandes):
@@ -164,10 +260,10 @@ Checklist integrite/RLS (cross-platform):
 
 ```bash
 # base locale
-npm run db:integrity:local
+pnpm run db:integrity:local
 
 # base distante liee
-npm run db:integrity:linked
+pnpm run db:integrity:linked
 ```
 
 Ce preflight exécute:
@@ -180,9 +276,9 @@ Ce preflight exécute:
 ### Gate PR / Release (go-no-go)
 
 Avant merge sur `main`, verifier:
-1. `npm run db:preflight` passe localement
-2. `npm run test` passe (integration + unit)
-3. `npm run build` passe sans erreur bloquante
+1. `pnpm run db:preflight` passe localement
+2. `pnpm run test` passe (integration + unit)
+3. `pnpm run build` passe sans erreur bloquante
 4. `npm audit --json` retourne `total = 0`
 5. scenarii d'acces critiques valides:
 	- un enseignant ne peut pas agir hors de sa classe
@@ -206,21 +302,21 @@ L'application est configurée en Progressive Web App avec:
 ### Lancer en local
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 ```
 
 Pour tester le service worker localement, préférer un build preview:
 
 ```bash
-npm run build
+pnpm run build
 npx vite preview
 ```
 
 ### Build production
 
 ```bash
-npm run build
+pnpm run build
 ```
 
 ### Variables d'environnement PWA avancée
