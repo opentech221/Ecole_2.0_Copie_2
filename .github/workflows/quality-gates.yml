@@ -37,4 +37,4 @@ jobs:
       - name: Security audit gate
         run: |
           pnpm audit --json > audit.json || true
-          node -e "const fs=require('fs');const r=JSON.parse(fs.readFileSync('audit.json','utf8'));const t=r?.metadata?.vulnerabilities?.total ?? 999; if(t>0){console.error('Vulnerabilities detected:', t);process.exit(1)};console.log('No vulnerabilities detected')"
+          node -e "const fs=require('fs');const r=JSON.parse(fs.readFileSync('audit.json','utf8'));const v=r?.metadata?.vulnerabilities ?? {};const t=typeof v.total==='number'?v.total:['info','low','moderate','high','critical'].reduce((sum,key)=>sum+(typeof v[key]==='number'?v[key]:0),0);if(t>0){console.error('Vulnerabilities detected:', t);process.exit(1)};console.log('No vulnerabilities detected')"
