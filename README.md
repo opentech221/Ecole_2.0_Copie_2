@@ -2,6 +2,7 @@
 
 ## Une Boîte à Outils Numériques pour préparer vos séances, évaluer sans stress et gagner plusieurs heures chaque semaine. 
 Finies les Tâches Manuelles Quotidiennes et Répétitives de l'Enseignant Hors des Heures de Cours.
+
 À l'intention des Enseignants d'Afrique Francophone🌍♥️
 
 [![License](https://img.shields.io/badge/License-%C3%A0%20d%C3%A9finir-lightgrey.svg)](ATTRIBUTIONS.md)
@@ -20,7 +21,7 @@ Finies les Tâches Manuelles Quotidiennes et Répétitives de l'Enseignant Hors 
 
 ## 💡 Notre mission :
 
-> **"Aider les enseignants à Optimisez leur Temps de Travail Hors Classe pour le réinvestir enfin là où il compte vraiment pour eux et leurs élèves."**
+> **"Optimisez votre Temps de Travail Hors Classe pour le réinvestir enfin là où il compte vraiment pour vous et vos élèves."**
 
 Dans l'enseignement élémentaire en Afrique francophone, les enseignants consacrent une part considérable de leur quotidien au **travail invisible hors classe**, souvent sans outils numériques adaptés pour les soutenir.
 
