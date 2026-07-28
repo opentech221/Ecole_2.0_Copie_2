@@ -1,6 +1,8 @@
 # 🏫 Ecole 2.0
 
-## Plateforme de Gestion Scolaire pour les Enseignants d'Afrique Francophone
+## Une Boîte à Outils Numériques pour préparer vos séances, évaluer sans stress et gagner plusieurs heures chaque semaine. 
+Finies les Tâches Manuelles Quotidiennes et Répétitives de l'Enseignant Hors des Heures de Cours.
+À l'intention des Enseignants d'Afrique Francophone🌍♥️
 
 [![License](https://img.shields.io/badge/License-%C3%A0%20d%C3%A9finir-lightgrey.svg)](ATTRIBUTIONS.md)
 [![React](https://img.shields.io/badge/React-18.x-blue.svg)](https://reactjs.org/)
@@ -10,33 +12,39 @@
 
 ---
 
-## 💡 La Vision
+## 💡 Notre vision :
 
-> **"Donner aux enseignants les outils qu'ils méritent."**
+> **"Offrir aux enseignants les outils qu'ils méritent, pour retrouver enfin du temps pour eux."**
 
-Dans les écoles primaires d'Afrique francophone, les enseignants gèrent des classes entières avec peu ou pas d'outils numériques.
+---
 
-- **Cahiers de roulement** tenus à la main, difficiles à archiver
-- **Planification des cours** chronophage et dispersée
-- **Suivi des élèves** peu structuré faute d'outils adaptés
-- **Communication avec la direction** souvent informelle
+## 💡 Notre mission :
+
+> **"Aider les enseignants à Optimisez leur Temps de Travail Hors Classe pour le réinvestir enfin là où il compte vraiment pour eux et leurs élèves."**
+
+Dans l'enseignement élémentaire en Afrique francophone, les enseignants consacrent une part considérable de leur quotidien au **travail invisible hors classe**, souvent sans outils numériques adaptés pour les soutenir.
+
+- **Planification des séances** chronophage, répétitive et dispersée
+- **Cahiers de roulement et outils de gestion** tenus à la main, difficiles à archiver
+- **Évaluations et suivi des élèves** lourds et peu structurés, générateurs de stress
+- **Communication avec la direction** informelle et fragmentée
 
 ### Notre Solution
 
-**Ecole 2.0** est une plateforme numérique pensée pour les **directeurs et enseignants du primaire**, qui centralise la gestion de classe, la planification pédagogique et le suivi des élèves — dans une interface simple, accessible et pensée pour le terrain africain.
+**École 2.0** est une plateforme numérique conçue pour **aider les enseignants à retrouver du temps pour eux en leur offrant les outils qu'ils méritent**. Elle centralise la gestion de classe, la préparation des séances et le suivi des élèves dans une interface simple, intuitive et pensée pour les réalités du terrain.
 
 ---
 
 ## 🧭 Vision du Projet & Idéation (Contexte Métier)
 
-**École 2.0** est une plateforme **EdTech SaaS multi-tenant** conçue sur mesure pour l'écosystème de l'enseignement élémentaire au Sénégal, du **CI au CM2**.  
-Sa genèse repose sur une réalité terrain : classes chargées, faible numérisation des processus scolaires, et besoin d'outils simples pour les enseignants et directions.
+**École 2.0** est une plateforme **EdTech SaaS multi-tenant** conçue sur mesure pour l'écosystème de l'enseignement élémentaire (du **CI au CM2**).  
+Sa genèse repose sur une conviction forte : **optimiser le temps de travail hors classe des enseignants afin qu'ils puissent réinvestir leur énergie là où elle compte vraiment — pour eux-mêmes et pour leurs élèves.**
 
 Notre ligne directrice produit est d'allier **la pratique pédagogique locale** et **un socle numérique moderne** pour :
-- réduire la charge administrative manuelle ;
-- structurer le pilotage pédagogique quotidien ;
-- renforcer la fiabilité de la gouvernance d'établissement ;
-- contribuer concrètement à la réduction de la fracture digitale régionale.
+- **Réduire la charge mentale** et la gestion administrative manuelle au quotidien ;
+- **Simplifier la préparation des séances et les évaluations** pour travailler sans stress ;
+- **Structurer le pilotage pédagogique** et renforcer la fiabilité de la gouvernance d'établissement ;
+- **Contribuer concrètement à la réduction de la fracture numérique** en apportant aux équipes éducatives des outils à la hauteur de leur mission.
 
 ---
 
