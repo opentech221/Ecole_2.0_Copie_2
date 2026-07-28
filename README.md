@@ -21,7 +21,7 @@ Finies les Tâches Manuelles Quotidiennes et Répétitives Hors des Heures de Co
 
 ## 💡 Notre mission :
 
-> **"Optimiser votre Temps de Travail Hors Classe pour vous permettre de le réinvestir enfin là où il compte vraiment pour vous et vos élèves."**
+> **"Optimiser votre Temps de Travail Hors Classe pour vous permettre enfin de le réinvestir là où il compte vraiment pour vous et vos élèves."**
 
 Dans l'enseignement élémentaire en Afrique francophone, les enseignants consacrent une part considérable de leur quotidien au **travail invisible hors classe**, souvent sans outils numériques adaptés pour les soutenir.
 
