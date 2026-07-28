@@ -1,7 +1,7 @@
 # 🏫 Ecole 2.0
 
 ## Une Boîte à Outils Numériques pour préparer vos séances, évaluer sans stress et gagner plusieurs heures chaque semaine. 
-Finies les Tâches Manuelles Quotidiennes et Répétitives de l'Enseignant Hors des Heures de Cours.
+Finies les Tâches Manuelles Quotidiennes et Répétitives Hors des Heures de Cours.
 
 À l'intention des Enseignants d'Afrique Francophone🌍♥️
 
