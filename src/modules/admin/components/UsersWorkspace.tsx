@@ -268,36 +268,46 @@ export function UsersWorkspace({
                 </div>
                 <div className="rounded-xl border p-3">
                   <p className="text-xs text-slate-700 dark:text-slate-300">Rôle</p>
-                  <p className="font-medium">{selectedUser.roleCode}</p>
+                  <p className="font-medium">{selectedUser.scope === "platform" ? selectedUser.profileRole ?? "—" : selectedUser.roleCode}</p>
                 </div>
                 <div className="rounded-xl border p-3">
                   <p className="text-xs text-slate-700 dark:text-slate-300">Statut</p>
                   <p className="font-medium">{selectedUser.status}</p>
                 </div>
+                  <div className="rounded-xl border p-3">
+                    <p className="text-xs text-slate-700 dark:text-slate-300">Portée</p>
+                    <p className="font-medium">{selectedUser.scope === "tenant" ? "Rattaché au tenant" : "Compte plateforme"}</p>
+                  </div>
               </div>
 
               <div className="grid gap-2 md:grid-cols-2 xl:grid-cols-3">
                 <Button
                   variant="outline"
-                  disabled={busy || selectedUser.status === "suspended"}
-                  onClick={() => onSuspendUser({ userId: selectedUser.userId, reason: suspendReason })}
+                    disabled={busy || selectedUser.scope !== "tenant" || selectedUser.status === "suspended"}
+                    onClick={() => onSuspendUser({ userId: selectedUser.userId, reason: suspendReason })}
                 >
                   <PauseCircle className="h-4 w-4" /> Suspendre
                 </Button>
                 <Button
                   variant="outline"
-                  disabled={busy || selectedUser.status === "active"}
-                  onClick={() => onReactivateUser({ userId: selectedUser.userId, reason: "Réactivation admin" })}
+                    disabled={busy || selectedUser.scope !== "tenant" || selectedUser.status === "active"}
+                    onClick={() => onReactivateUser({ userId: selectedUser.userId, reason: "Réactivation admin" })}
                 >
                   <UserCheck className="h-4 w-4" /> Réactiver
                 </Button>
-                <Button variant="outline" disabled={busy} onClick={() => onResetPassword({ userId: selectedUser.userId })}>
+                  <Button variant="outline" disabled={busy || selectedUser.scope !== "tenant"} onClick={() => onResetPassword({ userId: selectedUser.userId })}>
                   <KeyRound className="h-4 w-4" /> Reset mot de passe
                 </Button>
-                <Button variant="destructive" disabled={busy} onClick={() => onDeleteUser({ userId: selectedUser.userId, reason: deleteReason })}>
+                  <Button variant="destructive" disabled={busy || selectedUser.scope !== "tenant"} onClick={() => onDeleteUser({ userId: selectedUser.userId, reason: deleteReason })}>
                   <Trash2 className="h-4 w-4" /> Supprimer
                 </Button>
               </div>
+
+                {selectedUser.scope !== "tenant" && (
+                  <p className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-200">
+                    Ce compte existe sur la plateforme, mais il n’est pas encore rattaché à un tenant. Les actions tenant sont désactivées.
+                  </p>
+                )}
 
               <div className="grid gap-3 md:grid-cols-2">
                 <div>
@@ -388,7 +398,11 @@ export function UsersWorkspace({
                 </TableHeader>
                 <TableBody>
                   {platformProfiles?.rows.map((row) => (
-                    <TableRow key={row.userId}>
+                    <TableRow
+                      key={row.userId}
+                      className={selectedUserId === row.userId ? "bg-slate-100/80 dark:bg-slate-900/70" : "cursor-pointer"}
+                      onClick={() => onSelectUser(row.userId)}
+                    >
                       <TableCell className="font-medium">{row.email}</TableCell>
                       <TableCell>{row.fullName}</TableCell>
                       <TableCell>{row.role}</TableCell>

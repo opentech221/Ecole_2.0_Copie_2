@@ -271,6 +271,19 @@ export interface AdminPlatformProfilesResult {
 }
 
 export interface AdminUserDetail extends AdminUserListItem {
+  scope: "tenant" | "platform";
+  profileRole: string | null;
+  tenantAccount: {
+    tenantId: string;
+    status: AdminUserStatus;
+    countryCode: string;
+    acquisitionChannel: string;
+    suspendedReason: string | null;
+    suspendedAt: string | null;
+    reactivatedAt: string | null;
+    lastSeenAt: string | null;
+    createdAt: string;
+  } | null;
   metadata: Record<string, unknown>;
   auditTrail: Array<{
     id: string;

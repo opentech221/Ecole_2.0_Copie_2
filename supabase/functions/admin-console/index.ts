@@ -1379,7 +1379,7 @@ registerGet("/users/:userId", async (c) => {
       .eq("user_id", userId)
       .is("deleted_at", null)
       .maybeSingle(),
-    guard.service.from("profiles").select("id, full_name, telephone, role").eq("id", userId).maybeSingle(),
+    guard.service.from("profiles").select("id, full_name, telephone, role, created_at").eq("id", userId).maybeSingle(),
     guard.service.from("user_roles").select("role_code").eq("tenant_id", guard.tenantId).eq("user_id", userId),
     guard.service.auth.admin.getUserById(userId),
     guard.service
@@ -1391,25 +1391,41 @@ registerGet("/users/:userId", async (c) => {
       .limit(25),
   ]);
 
-  if (!account) return c.json({ error: "Utilisateur introuvable" }, 404);
+  if (!profile && !authUsersRes.data.user && !account) return c.json({ error: "Utilisateur introuvable" }, 404);
 
   const userEmail = authUsersRes.data.user?.email ?? "";
   const primaryRole = roles?.[0]?.role_code ?? "support";
+  const scope = account ? "tenant" : "platform";
   return c.json({
     userId,
-    fullName: profile?.full_name ?? "Utilisateur",
+    scope,
+    fullName: profile?.full_name ?? authUsersRes.data.user?.user_metadata?.full_name ?? authUsersRes.data.user?.user_metadata?.name ?? "Utilisateur",
     email: canSeeRawPii(guard.role) ? userEmail : maskEmail(userEmail),
     phone: canSeeRawPii(guard.role) ? profile?.telephone ?? null : null,
     roleCode: primaryRole,
-    status: account.status,
-    countryCode: account.country_code,
-    acquisitionChannel: account.acquisition_channel,
-    suspendedReason: account.suspended_reason,
-    suspendedAt: account.suspended_at,
-    reactivatedAt: account.reactivated_at,
-    lastSeenAt: account.last_seen_at,
-    createdAt: account.created_at,
-    metadata: account.metadata ?? {},
+    profileRole: profile?.role ?? null,
+    status: account?.status ?? "active",
+    countryCode: account?.country_code ?? "",
+    acquisitionChannel: account?.acquisition_channel ?? "",
+    suspendedReason: account?.suspended_reason ?? null,
+    suspendedAt: account?.suspended_at ?? null,
+    reactivatedAt: account?.reactivated_at ?? null,
+    lastSeenAt: account?.last_seen_at ?? authUsersRes.data.user?.last_sign_in_at ?? null,
+    createdAt: account?.created_at ?? profile?.created_at ?? authUsersRes.data.user?.created_at ?? new Date().toISOString(),
+    tenantAccount: account
+      ? {
+          tenantId: guard.tenantId,
+          status: account.status,
+          countryCode: account.country_code,
+          acquisitionChannel: account.acquisition_channel,
+          suspendedReason: account.suspended_reason,
+          suspendedAt: account.suspended_at,
+          reactivatedAt: account.reactivated_at,
+          lastSeenAt: account.last_seen_at,
+          createdAt: account.created_at,
+        }
+      : null,
+    metadata: account?.metadata ?? {},
     auditTrail: (audits ?? []).map((row) => ({
       id: row.id,
       action: row.action,
