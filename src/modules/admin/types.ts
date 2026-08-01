@@ -262,6 +262,7 @@ export interface AdminPlatformProfileListItem {
   email: string;
   fullName: string;
   role: string;
+  status: string;
   createdAt: string;
 }
 

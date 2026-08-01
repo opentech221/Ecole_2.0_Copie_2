@@ -114,6 +114,7 @@ export function useAdminConsole(activeTab: string) {
       queryClient.invalidateQueries({ queryKey: adminKeys.billing(resolvedTenantId) }),
       queryClient.invalidateQueries({ queryKey: adminKeys.audit(resolvedTenantId) }),
       queryClient.invalidateQueries({ queryKey: adminKeys.users(resolvedTenantId, userFilters) }),
+      queryClient.invalidateQueries({ queryKey: ["admin-console", resolvedTenantId, "platform-profiles"] }),
       queryClient.invalidateQueries({ queryKey: adminKeys.userDetail(resolvedTenantId, selectedUserId) }),
     ]);
   };

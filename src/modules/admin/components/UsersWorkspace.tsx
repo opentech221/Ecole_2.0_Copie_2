@@ -274,40 +274,40 @@ export function UsersWorkspace({
                   <p className="text-xs text-slate-700 dark:text-slate-300">Statut</p>
                   <p className="font-medium">{selectedUser.status}</p>
                 </div>
-                  <div className="rounded-xl border p-3">
-                    <p className="text-xs text-slate-700 dark:text-slate-300">Portée</p>
-                    <p className="font-medium">{selectedUser.scope === "tenant" ? "Rattaché au tenant" : "Compte plateforme"}</p>
-                  </div>
+                <div className="rounded-xl border p-3">
+                  <p className="text-xs text-slate-700 dark:text-slate-300">Portée</p>
+                  <p className="font-medium">{selectedUser.scope === "tenant" ? "Rattaché au tenant" : "Compte plateforme"}</p>
+                </div>
               </div>
 
               <div className="grid gap-2 md:grid-cols-2 xl:grid-cols-3">
                 <Button
                   variant="outline"
-                    disabled={busy || selectedUser.scope !== "tenant" || selectedUser.status === "suspended"}
-                    onClick={() => onSuspendUser({ userId: selectedUser.userId, reason: suspendReason })}
+                  disabled={busy || selectedUser.status === "suspended"}
+                  onClick={() => onSuspendUser({ userId: selectedUser.userId, reason: suspendReason })}
                 >
                   <PauseCircle className="h-4 w-4" /> Suspendre
                 </Button>
                 <Button
                   variant="outline"
-                    disabled={busy || selectedUser.scope !== "tenant" || selectedUser.status === "active"}
-                    onClick={() => onReactivateUser({ userId: selectedUser.userId, reason: "Réactivation admin" })}
+                  disabled={busy || selectedUser.status === "active"}
+                  onClick={() => onReactivateUser({ userId: selectedUser.userId, reason: "Réactivation admin" })}
                 >
                   <UserCheck className="h-4 w-4" /> Réactiver
                 </Button>
-                  <Button variant="outline" disabled={busy || selectedUser.scope !== "tenant"} onClick={() => onResetPassword({ userId: selectedUser.userId })}>
+                <Button variant="outline" disabled={busy} onClick={() => onResetPassword({ userId: selectedUser.userId })}>
                   <KeyRound className="h-4 w-4" /> Reset mot de passe
                 </Button>
-                  <Button variant="destructive" disabled={busy || selectedUser.scope !== "tenant"} onClick={() => onDeleteUser({ userId: selectedUser.userId, reason: deleteReason })}>
+                <Button variant="destructive" disabled={busy} onClick={() => onDeleteUser({ userId: selectedUser.userId, reason: deleteReason })}>
                   <Trash2 className="h-4 w-4" /> Supprimer
                 </Button>
               </div>
 
-                {selectedUser.scope !== "tenant" && (
-                  <p className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-200">
-                    Ce compte existe sur la plateforme, mais il n’est pas encore rattaché à un tenant. Les actions tenant sont désactivées.
-                  </p>
-                )}
+              {selectedUser.scope !== "tenant" && (
+                <p className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-200">
+                  Ce compte existe sur la plateforme sans rattachement de tenant. Les actions ci-dessus agissent sur le compte global tant qu’aucune école n’est liée.
+                </p>
+              )}
 
               <div className="grid gap-3 md:grid-cols-2">
                 <div>
@@ -393,6 +393,7 @@ export function UsersWorkspace({
                     <TableHead>Email</TableHead>
                     <TableHead>Nom</TableHead>
                     <TableHead>Rôle</TableHead>
+                    <TableHead>Statut</TableHead>
                     <TableHead>Créé le</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -406,6 +407,7 @@ export function UsersWorkspace({
                       <TableCell className="font-medium">{row.email}</TableCell>
                       <TableCell>{row.fullName}</TableCell>
                       <TableCell>{row.role}</TableCell>
+                      <TableCell><Badge variant={statusTone(row.status)}>{row.status}</Badge></TableCell>
                       <TableCell>{formatDateTime(row.createdAt)}</TableCell>
                     </TableRow>
                   ))}

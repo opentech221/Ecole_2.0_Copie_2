@@ -225,6 +225,29 @@ function maskEmail(value: string | null | undefined) {
   return `${local[0]}***${local[local.length - 1]}@${domain}`;
 }
 
+function getPlatformAccountState(user: { user_metadata?: Record<string, unknown> | null; last_sign_in_at?: string | null; created_at?: string | null }) {
+  const metadata = user.user_metadata ?? {};
+  return {
+    status: (metadata.account_status as string | undefined) ?? "active",
+    suspendedReason: (metadata.suspended_reason as string | null | undefined) ?? null,
+    suspendedAt: (metadata.suspended_at as string | null | undefined) ?? null,
+    reactivatedAt: (metadata.reactivated_at as string | null | undefined) ?? null,
+    deletedAt: (metadata.deleted_at as string | null | undefined) ?? null,
+    lastSeenAt: user.last_sign_in_at ?? null,
+    createdAt: user.created_at ?? null,
+  };
+}
+
+function buildPlatformAccountMetadata(
+  current: Record<string, unknown> | null | undefined,
+  patch: Record<string, unknown>,
+) {
+  return {
+    ...(current ?? {}),
+    ...patch,
+  };
+}
+
 function daysFromPeriod(period: "7d" | "30d" | "90d" | "12m") {
   switch (period) {
     case "7d":
@@ -1396,6 +1419,7 @@ registerGet("/users/:userId", async (c) => {
   const userEmail = authUsersRes.data.user?.email ?? "";
   const primaryRole = roles?.[0]?.role_code ?? "support";
   const scope = account ? "tenant" : "platform";
+  const platformState = getPlatformAccountState(authUsersRes.data.user ?? null);
   return c.json({
     userId,
     scope,
@@ -1404,14 +1428,14 @@ registerGet("/users/:userId", async (c) => {
     phone: canSeeRawPii(guard.role) ? profile?.telephone ?? null : null,
     roleCode: primaryRole,
     profileRole: profile?.role ?? null,
-    status: account?.status ?? "active",
+    status: account?.status ?? (platformState.status as any),
     countryCode: account?.country_code ?? "",
     acquisitionChannel: account?.acquisition_channel ?? "",
-    suspendedReason: account?.suspended_reason ?? null,
-    suspendedAt: account?.suspended_at ?? null,
-    reactivatedAt: account?.reactivated_at ?? null,
-    lastSeenAt: account?.last_seen_at ?? authUsersRes.data.user?.last_sign_in_at ?? null,
-    createdAt: account?.created_at ?? profile?.created_at ?? authUsersRes.data.user?.created_at ?? new Date().toISOString(),
+    suspendedReason: account?.suspended_reason ?? platformState.suspendedReason,
+    suspendedAt: account?.suspended_at ?? platformState.suspendedAt,
+    reactivatedAt: account?.reactivated_at ?? platformState.reactivatedAt,
+    lastSeenAt: account?.last_seen_at ?? platformState.lastSeenAt,
+    createdAt: account?.created_at ?? profile?.created_at ?? platformState.createdAt ?? new Date().toISOString(),
     tenantAccount: account
       ? {
           tenantId: guard.tenantId,
@@ -1509,6 +1533,11 @@ registerPatch("/users/:userId", async (c) => {
 
   const userId = c.req.param("userId");
   const body = userUpdateSchema.parse(await c.req.json().catch(() => ({})));
+  const [{ data: tenantAccount }, { data: authUser }] = await Promise.all([
+    guard.service.from("tenant_user_accounts").select("id").eq("tenant_id", guard.tenantId).eq("user_id", userId).maybeSingle(),
+    guard.service.auth.admin.getUserById(userId),
+  ]);
+  const platformState = getPlatformAccountState(authUser.user ?? null);
 
   if (body.fullName) {
     const { error } = await guard.service.from("profiles").update({ full_name: body.fullName }).eq("id", userId);
@@ -1534,8 +1563,24 @@ registerPatch("/users/:userId", async (c) => {
   if (body.status === "active") patch.reactivated_at = new Date().toISOString();
 
   if (Object.keys(patch).length > 0) {
-    const { error } = await guard.service.from("tenant_user_accounts").update(patch).eq("tenant_id", guard.tenantId).eq("user_id", userId);
-    if (error) return c.json({ error: error.message }, 400);
+    if (tenantAccount) {
+      const { error } = await guard.service.from("tenant_user_accounts").update(patch).eq("tenant_id", guard.tenantId).eq("user_id", userId);
+      if (error) return c.json({ error: error.message }, 400);
+    } else {
+      const update = buildPlatformAccountMetadata(platformState, {
+        account_status: body.status ?? platformState.status,
+        country_code: body.countryCode ? body.countryCode.toUpperCase() : undefined,
+        acquisition_channel: body.acquisitionChannel ?? undefined,
+        suspended_reason: body.suspendedReason ?? null,
+        suspended_at: body.status === "suspended" ? new Date().toISOString() : null,
+        reactivated_at: body.status === "active" ? new Date().toISOString() : null,
+        deleted_at: body.status === "deleted" ? new Date().toISOString() : null,
+      });
+      const { error } = await guard.service.auth.admin.updateUserById(userId, {
+        user_metadata: update,
+      });
+      if (error) return c.json({ error: error.message }, 400);
+    }
   }
 
   await appendAuditLog(guard.service, {
@@ -1558,12 +1603,29 @@ registerPost("/users/:userId/suspend", async (c) => {
 
   const userId = c.req.param("userId");
   const body = suspendUserSchema.parse(await c.req.json().catch(() => ({})));
+  const [{ data: tenantAccount }, { data: authUser }] = await Promise.all([
+    guard.service.from("tenant_user_accounts").select("id").eq("tenant_id", guard.tenantId).eq("user_id", userId).maybeSingle(),
+    guard.service.auth.admin.getUserById(userId),
+  ]);
+  const platformState = getPlatformAccountState(authUser.user ?? null);
 
-  await guard.service.from("tenant_user_accounts").update({
-    status: "suspended",
-    suspended_reason: body.reason,
-    suspended_at: new Date().toISOString(),
-  }).eq("tenant_id", guard.tenantId).eq("user_id", userId);
+  if (tenantAccount) {
+    await guard.service.from("tenant_user_accounts").update({
+      status: "suspended",
+      suspended_reason: body.reason,
+      suspended_at: new Date().toISOString(),
+    }).eq("tenant_id", guard.tenantId).eq("user_id", userId);
+  } else {
+    const update = buildPlatformAccountMetadata(platformState, {
+      account_status: "suspended",
+      suspended_reason: body.reason,
+      suspended_at: new Date().toISOString(),
+      reactivated_at: null,
+      deleted_at: null,
+    });
+    const { error } = await guard.service.auth.admin.updateUserById(userId, { user_metadata: update });
+    if (error) return c.json({ error: error.message }, 400);
+  }
 
   await appendAuditLog(guard.service, {
     tenantId: guard.tenantId,
@@ -1586,12 +1648,29 @@ registerPost("/users/:userId/reactivate", async (c) => {
 
   const userId = c.req.param("userId");
   const body = reactivateUserSchema.parse(await c.req.json().catch(() => ({})));
+  const [{ data: tenantAccount }, { data: authUser }] = await Promise.all([
+    guard.service.from("tenant_user_accounts").select("id").eq("tenant_id", guard.tenantId).eq("user_id", userId).maybeSingle(),
+    guard.service.auth.admin.getUserById(userId),
+  ]);
+  const platformState = getPlatformAccountState(authUser.user ?? null);
 
-  await guard.service.from("tenant_user_accounts").update({
-    status: "active",
-    reactivated_at: new Date().toISOString(),
-    suspended_reason: body.reason ?? null,
-  }).eq("tenant_id", guard.tenantId).eq("user_id", userId);
+  if (tenantAccount) {
+    await guard.service.from("tenant_user_accounts").update({
+      status: "active",
+      reactivated_at: new Date().toISOString(),
+      suspended_reason: body.reason ?? null,
+    }).eq("tenant_id", guard.tenantId).eq("user_id", userId);
+  } else {
+    const update = buildPlatformAccountMetadata(platformState, {
+      account_status: "active",
+      reactivated_at: new Date().toISOString(),
+      suspended_reason: body.reason ?? null,
+      suspended_at: null,
+      deleted_at: null,
+    });
+    const { error } = await guard.service.auth.admin.updateUserById(userId, { user_metadata: update });
+    if (error) return c.json({ error: error.message }, 400);
+  }
 
   await appendAuditLog(guard.service, {
     tenantId: guard.tenantId,
@@ -1645,16 +1724,32 @@ registerDelete("/users/:userId", async (c) => {
 
   const userId = c.req.param("userId");
   const body = deleteUserSchema.parse(await c.req.json().catch(() => ({})));
+  const [{ data: tenantAccount }, { data: authUser }] = await Promise.all([
+    guard.service.from("tenant_user_accounts").select("id").eq("tenant_id", guard.tenantId).eq("user_id", userId).maybeSingle(),
+    guard.service.auth.admin.getUserById(userId),
+  ]);
+  const platformState = getPlatformAccountState(authUser.user ?? null);
 
-  await guard.service.from("tenant_user_accounts").update({
-    status: "deleted",
-    deleted_at: new Date().toISOString(),
-  }).eq("tenant_id", guard.tenantId).eq("user_id", userId);
+  if (tenantAccount) {
+    await guard.service.from("tenant_user_accounts").update({
+      status: "deleted",
+      deleted_at: new Date().toISOString(),
+    }).eq("tenant_id", guard.tenantId).eq("user_id", userId);
 
-  await guard.service.from("user_roles").delete().eq("tenant_id", guard.tenantId).eq("user_id", userId);
-
-  if (body.hardDelete) {
-    await guard.service.auth.admin.deleteUser(userId, true);
+    await guard.service.from("user_roles").delete().eq("tenant_id", guard.tenantId).eq("user_id", userId);
+  } else {
+    if (body.hardDelete) {
+      await guard.service.auth.admin.deleteUser(userId, true);
+    } else {
+      const update = buildPlatformAccountMetadata(platformState, {
+        account_status: "deleted",
+        deleted_at: new Date().toISOString(),
+        suspended_at: null,
+        reactivated_at: null,
+      });
+      const { error } = await guard.service.auth.admin.updateUserById(userId, { user_metadata: update });
+      if (error) return c.json({ error: error.message }, 400);
+    }
   }
 
   await appendAuditLog(guard.service, {
