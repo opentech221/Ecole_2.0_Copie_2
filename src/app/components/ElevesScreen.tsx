@@ -158,6 +158,112 @@ function useBulletinValidation(
   }, [grades, disciplineConfig, trimestre]);
 }
 
+function Module2EmptyState({
+  activeClass,
+  onOpenAddStudent,
+  onGoJournal,
+  onGoDocuments,
+}: {
+  activeClass: string;
+  onOpenAddStudent: () => void;
+  onGoJournal: () => void;
+  onGoDocuments: () => void;
+}) {
+  const stats = [
+    { label: "Élèves", value: "0", tone: "#1a365d" },
+    { label: "Présences", value: "0%", tone: "#059669" },
+    { label: "Bulletins", value: "0", tone: "#2563eb" },
+  ];
+
+  const quickActions = [
+    {
+      title: "Créer le premier élève",
+      description: "Ajoutez un élève pour faire apparaître la liste nominative, le registre et les bulletins.",
+      action: onOpenAddStudent,
+      label: "Ajouter un élève",
+    },
+    {
+      title: "Aller au journal",
+      description: "Passez au cahier pour saisir activités, contenus et observations de la semaine.",
+      action: onGoJournal,
+      label: "Ouvrir le cahier",
+    },
+    {
+      title: "Consulter les archives",
+      description: "Retrouvez les documents et productions déjà générés pour la classe active.",
+      action: onGoDocuments,
+      label: "Voir les documents",
+    },
+  ];
+
+  return (
+    <div className="bg-background flex flex-col overflow-hidden" style={{ height: "calc(100vh - 36px)", fontFamily: "'Plus Jakarta Sans',sans-serif" }}>
+      <div className="max-w-6xl mx-auto px-4 py-4 flex-1 overflow-auto">
+        <div className="rounded-[28px] overflow-hidden border border-slate-200/80 bg-white shadow-[0_18px_60px_rgba(15,23,42,0.10)]">
+          <div className="bg-gradient-to-r from-teal-600 via-emerald-600 to-cyan-500 px-5 py-5 text-white">
+            <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+              <div className="max-w-3xl">
+                <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-white/70">Module 2 · Administration & Suivi</p>
+                <h2 className="mt-2 text-[22px] font-black leading-tight lg:text-[30px]">Gestion administrative et suivi des performances</h2>
+                <p className="mt-3 max-w-2xl text-[13px] leading-6 text-white/80 lg:text-[14px]">
+                  La classe {activeClass} n’a pas encore d’élève. Ajoutez la première fiche pour activer la liste nominative,
+                  le cahier de registre et les bulletins sans perdre la structure du module.
+                </p>
+              </div>
+              <div className="grid grid-cols-3 gap-2 lg:min-w-[320px]">
+                {stats.map(stat => (
+                  <div key={stat.label} className="rounded-2xl bg-white/10 p-3 backdrop-blur-sm">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-white/60">{stat.label}</p>
+                    <p className="mt-2 text-[24px] font-black leading-none" style={{ color: stat.tone }}>{stat.value}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="grid gap-4 p-4 lg:grid-cols-[1.2fr_0.8fr] lg:p-6">
+            <div className="grid gap-3 sm:grid-cols-3">
+              {quickActions.map(card => (
+                <div key={card.title} className="rounded-2xl border border-slate-200 bg-slate-50 p-4 shadow-sm">
+                  <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-500">Étape</p>
+                  <h3 className="mt-2 text-[15px] font-extrabold text-slate-900">{card.title}</h3>
+                  <p className="mt-2 text-[12px] leading-6 text-slate-600">{card.description}</p>
+                  <button
+                    onClick={card.action}
+                    className="mt-4 inline-flex min-h-[40px] items-center justify-center rounded-xl px-4 text-[12px] font-bold text-white transition-all active:scale-95"
+                    style={{ background: "linear-gradient(135deg, #0f766e 0%, #0d9488 100%)", boxShadow: "0 8px 22px rgba(13,148,136,0.28)" }}
+                  >
+                    {card.label}
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            <div className="rounded-2xl border border-dashed border-teal-300 bg-teal-50 p-4 lg:p-5">
+              <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-teal-700">Vue du module</p>
+              <div className="mt-3 space-y-3">
+                {[
+                  "Liste nominative",
+                  "Cahier de registre",
+                  "Bulletins trimestriels",
+                ].map(item => (
+                  <div key={item} className="flex items-center gap-3 rounded-2xl bg-white px-3 py-3 shadow-sm">
+                    <span className="h-2.5 w-2.5 rounded-full bg-teal-500" />
+                    <span className="text-[13px] font-semibold text-slate-800">{item}</span>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-4 text-[12px] leading-6 text-slate-600">
+                Dès qu’un élève existe, la page remplit automatiquement les cartes, les onglets et les tableaux du module 2.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const DOMAINS = [
   {
     label: "FRANÇAIS / LANGUE & COMMUNICATION",
@@ -853,6 +959,20 @@ export function ElevesScreen() {
   // ── Validation engine ─────────────────────────────────────────────────────
   const validation = useBulletinValidation(grades, disciplineConfig, trimestre);
 
+  const handleAddStudent = async (form: NewStudentForm) => {
+    await createStudent({
+      class_id:       activeClass,
+      matricule:      form.matricule,
+      nom:            form.nom,
+      prenom:         form.prenom,
+      genre:          form.genre as "F" | "M",
+      date_naissance: form.dateNaissance,
+      lieu_naissance: form.lieuNaissance,
+      tuteur_nom:     form.tuteurNom,
+      tuteur_phone:   form.tuteurPhone,
+    });
+  };
+
   if (studentsLoading) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center px-6 text-center text-sm text-slate-600 dark:text-slate-300">
@@ -871,9 +991,19 @@ export function ElevesScreen() {
 
   if (!student) {
     return (
-      <div className="flex min-h-[60vh] items-center justify-center px-6 text-center text-sm text-slate-600 dark:text-slate-300">
-        Aucun élève disponible pour cette classe.
-      </div>
+      <>
+        <AddStudentModal
+          open={showAddStudent}
+          onClose={() => setShowAddStudent(false)}
+          onSave={handleAddStudent}
+        />
+        <Module2EmptyState
+          activeClass={activeClass}
+          onOpenAddStudent={() => setShowAddStudent(true)}
+          onGoJournal={() => navigate("/cahier")}
+          onGoDocuments={() => navigate("/documents")}
+        />
+      </>
     );
   }
 
@@ -899,20 +1029,6 @@ export function ElevesScreen() {
     { key:"registre", label:"Cahier de Registre", icon:<UserCheck className="w-4 h-4"/> },
     { key:"bulletin", label:"Bulletins de Notes", icon:<FileText className="w-4 h-4"/>  },
   ];
-
-  const handleAddStudent = async (form: NewStudentForm) => {
-    await createStudent({
-      class_id:       activeClass,
-      matricule:      form.matricule,
-      nom:            form.nom,
-      prenom:         form.prenom,
-      genre:          form.genre as "F" | "M",
-      date_naissance: form.dateNaissance,
-      lieu_naissance: form.lieuNaissance,
-      tuteur_nom:     form.tuteurNom,
-      tuteur_phone:   form.tuteurPhone,
-    });
-  };
 
   return (
     <>
