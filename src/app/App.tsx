@@ -15,12 +15,12 @@ function DeferredTelemetry() {
     let idleId: number | null = null;
 
     const startTelemetry = () => setTelemetryReady(true);
+    const requestIdleCallback = (window as Window & {
+      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+    }).requestIdleCallback;
 
-    if ("requestIdleCallback" in window) {
-      idleId = (window as Window & { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => number }).requestIdleCallback(
-        startTelemetry,
-        { timeout: 8000 },
-      );
+    if (typeof requestIdleCallback === "function") {
+      idleId = requestIdleCallback(startTelemetry, { timeout: 8000 });
     } else {
       timeoutId = window.setTimeout(startTelemetry, 4000);
     }

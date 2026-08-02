@@ -5,6 +5,7 @@ export default defineConfig({
   timeout: 30_000,
   use: {
     baseURL: process.env.PLAYWRIGHT_BASE_URL ?? "http://127.0.0.1:4173",
+    channel: process.env.PLAYWRIGHT_CHANNEL ?? "chrome",
     trace: "on-first-retry",
   },
   webServer: process.env.PLAYWRIGHT_BASE_URL

@@ -912,7 +912,7 @@ export function DocumentsScreen() {
                         {section.label}
                       </h2>
                       <span className="ml-auto text-[10px] text-slate-600 dark:text-slate-300">
-                        {section.count} document{section.count > 1 ? "s" : ""}{section.suffix ?? ""}
+                        {section.count} document{section.count > 1 ? "s" : ""}
                       </span>
                     </div>
                     {/* Desktop: 2-column grid; Mobile: single column */}

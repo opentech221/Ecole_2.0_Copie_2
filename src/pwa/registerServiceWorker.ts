@@ -1,7 +1,15 @@
 export function registerServiceWorker() {
   if (!("serviceWorker" in navigator)) return;
 
-  if (import.meta.env.DEV) {
+  const isE2eAuthOverride = (() => {
+    try {
+      return window.localStorage.getItem("ecole2-e2e-auth") === "1";
+    } catch {
+      return false;
+    }
+  })();
+
+  if (import.meta.env.DEV && !isE2eAuthOverride) {
     void navigator.serviceWorker.getRegistrations().then((registrations) => {
       registrations.forEach((registration) => {
         void registration.unregister();
@@ -46,6 +54,7 @@ export function registerServiceWorker() {
 
   window.addEventListener("online", async () => {
     const registration = await navigator.serviceWorker.ready.catch(() => null);
+    registration?.active?.postMessage({ type: "REPLAY_WRITE_QUEUE" });
     registration?.active?.postMessage({ type: "REPLAY_NOTIFICATION_QUEUE" });
   });
 }

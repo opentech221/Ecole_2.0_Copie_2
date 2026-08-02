@@ -4,7 +4,7 @@ const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const API_CACHE = `${CACHE_VERSION}-api`;
 const SYNC_DB_NAME = "ecole2-sync-db";
 const SYNC_STORE_NAME = "request-queue";
-const NOTIFICATION_SYNC_TAG = "notifications-write-sync";
+const WRITE_SYNC_TAG = "ecole2-write-sync";
 
 const APP_SHELL_URLS = [
   "/",
@@ -82,7 +82,7 @@ async function queueRequest(request) {
 
   if (self.registration.sync) {
     try {
-      await self.registration.sync.register(NOTIFICATION_SYNC_TAG);
+      await self.registration.sync.register(WRITE_SYNC_TAG);
     } catch {
       // Ignore unsupported sync registration errors.
     }
@@ -169,8 +169,16 @@ function isNotificationWriteRequest(request, url) {
   );
 }
 
+function isOfflineQueueableWriteRequest(request, url) {
+  if (!["POST", "PATCH", "PUT", "DELETE"].includes(request.method)) return false;
+  return (
+    url.pathname.includes("/rest/v1/student_grades") ||
+    url.pathname.includes("/rest/v1/documents")
+  );
+}
+
 self.addEventListener("sync", (event) => {
-  if (event.tag === NOTIFICATION_SYNC_TAG) {
+  if (event.tag === WRITE_SYNC_TAG) {
     event.waitUntil(replayQueuedRequests());
   }
 });
@@ -178,6 +186,11 @@ self.addEventListener("sync", (event) => {
 self.addEventListener("message", (event) => {
   if (event.data?.type === "SKIP_WAITING") {
     self.skipWaiting();
+    return;
+  }
+
+  if (event.data?.type === "REPLAY_WRITE_QUEUE") {
+    event.waitUntil(replayQueuedRequests());
     return;
   }
 
@@ -252,6 +265,23 @@ self.addEventListener("fetch", (event) => {
   }
 
   if (isNotificationWriteRequest(request, url)) {
+    event.respondWith(
+      (async () => {
+        try {
+          return await fetch(request.clone());
+        } catch {
+          await queueRequest(request.clone());
+          return new Response(JSON.stringify({ ok: true, queued: true, offline: true }), {
+            status: 202,
+            headers: { "Content-Type": "application/json" },
+          });
+        }
+      })(),
+    );
+    return;
+  }
+
+  if (isOfflineQueueableWriteRequest(request, url)) {
     event.respondWith(
       (async () => {
         try {

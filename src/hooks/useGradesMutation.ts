@@ -29,6 +29,20 @@ import { QK } from "../lib/queryClient";
 
 type GradeSet = { t1: number; t2: number; t3: number };
 type GradesMap = Record<string, Record<string, GradeSet>>;
+const E2E_GRADES_STORAGE_KEY = "ecole2-e2e-grades";
+const E2E_BULLETIN_OVERRIDE_KEY = "ecole2-e2e-bulletin-override";
+
+function persistE2eGrades(classId: string, map: GradesMap) {
+  if (typeof window === "undefined") return;
+  try {
+    const raw = window.localStorage.getItem(E2E_GRADES_STORAGE_KEY);
+    const store = raw ? JSON.parse(raw) as Record<string, GradesMap> : {};
+    store[classId] = map;
+    window.localStorage.setItem(E2E_GRADES_STORAGE_KEY, JSON.stringify(store));
+  } catch {
+    /* Ignore E2E storage failures. */
+  }
+}
 
 interface UseGradesMutationOptions {
   gradesMap:      GradesMap;
@@ -67,13 +81,27 @@ export function useGradesMutation({
       setGradesMap(prev => {
         const sGrades  = prev[studentId] ?? {};
         const prevDisc = sGrades[discipline] ?? { t1: 0, t2: 0, t3: 0 };
-        return {
+        const next = {
           ...prev,
           [studentId]: {
             ...sGrades,
             [discipline]: { ...prevDisc, [tKey]: newValue },
           },
         };
+
+        if (typeof window !== "undefined" && window.localStorage.getItem("ecole2-e2e-auth") === "1") {
+          persistE2eGrades(activeClass, next);
+          try {
+            window.localStorage.setItem(
+              E2E_BULLETIN_OVERRIDE_KEY,
+              JSON.stringify({ classId: activeClass, studentId, discipline, trimester: t, value: newValue })
+            );
+          } catch {
+            /* Ignore E2E storage failures. */
+          }
+        }
+
+        return next;
       });
 
       // ── 2. Cancel any pending save from a previous change ────────────────

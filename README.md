@@ -1,25 +1,26 @@
 # 🏫 Ecole 2.0
 
-## Une Boîte à Outils Numériques pour préparer vos séances, évaluer sans stress et gagner plusieurs heures chaque semaine. 
+## Une Boîte à Outils Numériques pour préparer vos séances, évaluer sans stress et gagner plusieurs heures chaque semaine
+
 Finies les Tâches Manuelles Quotidiennes et Répétitives Hors des Heures de Cours.
 
 À l'intention des Enseignants d'Afrique Francophone🌍♥️
 
-[![License](https://img.shields.io/badge/License-%C3%A0%20d%C3%A9finir-lightgrey.svg)](ATTRIBUTIONS.md)
-[![React](https://img.shields.io/badge/React-18.x-blue.svg)](https://reactjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)](https://www.typescriptlang.org/)
-[![Supabase](https://img.shields.io/badge/Supabase-Backend-green.svg)](https://supabase.com/)
-[![Made in Africa](https://img.shields.io/badge/Made%20for-Africa%20🌍-orange.svg)](https://github.com/opentech221)
+[![License](https://img.shields.io/badge/License-Propriétaire%20%2B%20CC%20BY%204.0-lightgrey.svg)](LICENSE)
+[![React](https://shields.io/badge/React-18.x-blue.svg)](https://react.dev/)
+![TypeScript](https://shields.io/badge/TypeScript-5.x-blue.svg)
+[![Supabase](https://shields.io/badge/Supabase-Backend-green.svg)](https://www.supabase.com/)
+![Made in Africa](https://shields.io/badge/Made%20for-Africa-orange.svg)
 
 ---
 
-## 💡 Notre vision :
+## 💡 Notre vision
 
 > **"Offrir aux enseignants les outils qu'ils méritent, pour retrouver enfin du temps pour eux."**
 
 ---
 
-## 💡 Notre mission :
+## 💡 Notre mission
 
 > **"Optimiser votre Temps de Travail Hors Classe pour vous permettre enfin de le réinvestir là où il compte vraiment pour vous et vos élèves."**
 
@@ -42,6 +43,7 @@ Dans l'enseignement élémentaire en Afrique francophone, les enseignants consac
 Sa genèse repose sur une conviction forte : **optimiser le temps de travail hors classe des enseignants afin qu'ils puissent réinvestir leur énergie là où elle compte vraiment — pour eux-mêmes et pour leurs élèves.**
 
 Notre ligne directrice produit est d'allier **la pratique pédagogique locale** et **un socle numérique moderne** pour :
+
 - **Réduire la charge mentale** et la gestion administrative manuelle au quotidien ;
 - **Simplifier la préparation des séances et les évaluations** pour travailler sans stress ;
 - **Structurer le pilotage pédagogique** et renforcer la fiabilité de la gouvernance d'établissement ;
@@ -52,6 +54,7 @@ Notre ligne directrice produit est d'allier **la pratique pédagogique locale** 
 ## 🛡️ Architecture SaaS & Sécurité (Socle Administratif)
 
 Le backend Supabase expose un socle SaaS robuste et cloisonné :
+
 - **Isolation multi-tenant des écoles** : `tenants`, `roles`, `user_roles` ;
 - **Gestion des profils métiers** : `profiles` (enseignants/directeurs) ;
 - **Gestion élèves et vie de classe** : `students` avec rattachement au tenant ;
@@ -82,6 +85,7 @@ Niveau
 ```
 
 Statistiques consolidées du lot de seed validé :
+
 - **24 fichiers** traités (`programme_officiel/*.JSON`)
 - **6 niveaux**
 - **24 domaines**
@@ -99,20 +103,24 @@ Les clés de traçabilité (`page_source`, `document_ref`) sont stockées au niv
 ## 📓 Module Cahier de Journal (React + Tailwind)
 
 ### Gestion temporelle
+
 - Calendrier aligné sur l'année scolaire sénégalaise (**Octobre → Juin**).
 - Semaine pédagogique **Lundi → Vendredi** avec bascule dynamique pour inclure **Samedi**.
 
 ### Intégrité de saisie
+
 - Gestion structurée par cellule (activité(s), contenus, observation).
 - Validation de complétude dans les parcours de saisie (activité/OS/contenus) avec garde-fous UI.
 - Confirmation explicite avant retrait/suppression d'activité et purge des contenus liés.
 - Filtrage des contenus déjà exploités pour limiter les incohérences de journalisation.
 
 ### Traçabilité RAG & navigation pédagogique
+
 - Le référentiel transporte `page_source` et `document_ref` de bout en bout (JSON → SQL → API).
 - Ces métadonnées permettent la navigation documentaire ciblée (ancres de type `#page=X`) vers les guides PDF officiels.
 
 ### Charte graphique Tailwind & mode sombre
+
 - Colorisation dynamique des activités par hachage (`getActivityColor`).
 - Palette dark moderne orientée slate (`slate-900/800/950`) avec contrastes renforcés pour desktop/mobile.
 
@@ -121,11 +129,13 @@ Les clés de traçabilité (`page_source`, `document_ref`) sont stockées au niv
 ## 🛣️ Roadmap immédiate
 
 ### ✅ Fait
+
 - Schéma relationnel du programme officiel validé (UUID via `gen_random_uuid()`).
 - Lot de seeding asynchrone Node.js exécuté à 100% sur les 24 fichiers du référentiel officiel.
 - Endpoints de navigation curriculaire opérationnels côté fonction Supabase (`programme-nav`).
 
 ### 🔜 À finaliser court terme
+
 - Consolider la vue SQL de navigation aplatie côté backend pour les besoins de navigation/filtrage avancés.
 - Finaliser le câblage des sélecteurs en cascade dans les modales React restantes.
 - Intégrer le bouton de redirection vers le Storage PDF (avec ancre `#page=X`).
@@ -135,30 +145,35 @@ Les clés de traçabilité (`page_source`, `document_ref`) sont stockées au niv
 ## 🎯 Fonctionnalités Principales
 
 ### 📋 Gestion des Classes
+
 - Suivi des niveaux CI, CP, CE1, CE2, CM1, CM2
 - Inscription et gestion des élèves par classe
 - Vue d'ensemble par directeur et par enseignant
 - Tableau de bord centralisé multi-rôles
 
 ### 📝 Éditeur de Leçons
+
 - Création et structuration de leçons par matière
 - Workflow guidé via sélection de contexte + éditeur
 - Planification hebdomadaire et mensuelle
 - Historique et archivage des séquences pédagogiques
 
 ### 📒 Cahier de Roulement Numérique
+
 - Saisie des notes et appréciations par élève
 - Suivi des performances dans le temps
 - Génération de documents imprimables
 - Aperçu et export des bulletins
 
 ### 📁 Gestion Documentaire
+
 - Stockage et organisation des documents scolaires
 - Prévisualisation intégrée
 - Partage entre enseignants et direction
 - Archivage structuré par année scolaire
 
 ### 🗓️ Planning et Emploi du Temps
+
 - Planification des cours par classe et par niveau
 - Vue calendaire hebdomadaire
 - Gestion des événements et activités scolaires
@@ -168,6 +183,7 @@ Les clés de traçabilité (`page_source`, `document_ref`) sont stockées au niv
 ## 🚀 Technologies Utilisées
 
 ### Frontend
+
 - **React 18** + **TypeScript** avec Vite pour des performances optimales
 - **Tailwind CSS 4** avec design system personnalisé
 - **Thématisation avancée** (light, dark, emerald, ocean)
@@ -175,6 +191,7 @@ Les clés de traçabilité (`page_source`, `document_ref`) sont stockées au niv
 - **Radix UI** pour les composants accessibles
 
 ### Backend
+
 - **Supabase** (PostgreSQL + RLS)
 - **Row Level Security** pour isoler les données par établissement
 - **Policies Storage durcies** par classe/propriétaire
@@ -185,6 +202,7 @@ Les clés de traçabilité (`page_source`, `document_ref`) sont stockées au niv
 ## 📦 Installation
 
 ### Prérequis
+
 - Node.js 18+
 - pnpm
 - Compte Supabase (gratuit)
@@ -200,6 +218,26 @@ cd Ecole_2.0_Copie_2
 pnpm install
 
 # 3. Lancer le serveur de développement
+pnpm run dev
+```
+
+> Si `git clone` échoue à cause d'un problème DNS/réseau, vous pouvez télécharger l'archive ZIP du dépôt depuis GitHub et extraire le contenu localement.
+
+### Dépannage (erreur `getaddrinfo ENOTFOUND github.com`)
+
+Si `git clone` échoue avec cette erreur, le problème est généralement DNS/réseau (et non le dépôt lui-même).
+
+- Vérifier la connexion Internet.
+- Tester `https://github.com` dans le navigateur.
+- Changer de DNS (ex. `8.8.8.8` ou `1.1.1.1`).
+- Désactiver temporairement VPN/Proxy/pare-feu d'entreprise si applicable.
+- Si le réseau ne permet pas d'accéder à GitHub, télécharger l'archive ZIP du dépôt : `https://github.com/opentech221/Ecole_2.0_Copie_2/archive/refs/heads/main.zip` et extraire le contenu localement. Sinon, utiliser le lien direct : `https://github.com/opentech221/Ecole_2.0_Copie_2.git`
+
+Puis poursuivre depuis le dossier extrait :
+
+```bash
+cd Ecole_2.0_Copie_2
+pnpm install
 pnpm run dev
 ```
 
@@ -254,6 +292,7 @@ pnpm run db:remote:push
 ### Astuce equipe
 
 Avant chaque PR backend:
+
 1. `pnpm run db:local:reset`
 2. verifier que les migrations passent de zero sans erreur
 3. seulement ensuite faire `pnpm run db:remote:push`
@@ -281,6 +320,7 @@ pnpm run db:integrity:linked
 ```
 
 Ce preflight exécute:
+
 1. start DB locale
 2. reset complet des migrations
 3. verification des versions appliquees
@@ -290,14 +330,16 @@ Ce preflight exécute:
 ### Gate PR / Release (go-no-go)
 
 Avant merge sur `main`, verifier:
+
 1. `pnpm run db:preflight` passe localement
 2. `pnpm run test` passe (integration + unit)
 3. `pnpm run build` passe sans erreur bloquante
 4. `pnpm audit --json` ne remonte aucune vulnerabilite actionnable (la CI applique une liste d'exceptions documentee dans `.github/workflows/quality-gates.yml`)
 5. scenarii d'acces critiques valides:
-	- un enseignant ne peut pas agir hors de sa classe
-	- un directeur conserve l'acces global
-	- les zones reservees directeur restent bloquees pour enseignant
+
+- un enseignant ne peut pas agir hors de sa classe
+- un directeur conserve l'acces global
+- les zones reservees directeur restent bloquees pour enseignant
 
 ## Documentation Interne
 
@@ -306,6 +348,7 @@ Avant merge sur `main`, verifier:
 ## PWA (Installable Android/iOS)
 
 L'application est configurée en Progressive Web App avec:
+
 - manifest: `public/manifest.webmanifest`
 - service worker: `public/sw.js`
 - fallback offline: `public/offline.html`
@@ -345,11 +388,13 @@ Sans ces variables, la PWA reste installable/offline, mais le push web reste dé
 ### Tester l'installation mobile
 
 Android (Chrome):
+
 1. Ouvrir l'app en HTTPS.
 2. Attendre le bouton `Installer l'app`.
 3. Installer puis relancer depuis l'ecran d'accueil.
 
 iOS (Safari):
+
 1. Ouvrir l'app en HTTPS.
 2. Partager.
 3. Choisir `Sur l'ecran d'accueil`.
@@ -375,7 +420,6 @@ Vercel/Supabase couvrent ce prerequis par defaut.
 6. Verifier qu'aucune requete API sensible authentifiee n'est servie stale sans reseau.
 7. Verifier `PushManager` et les permissions navigateur avant de tester les notifications push.
 8. Sur Vercel, verifier que l'URL finale publique n'est pas protegee par SSO si vous voulez tester l'installabilite sur mobile externe.
-
 
 ---
 
@@ -411,6 +455,7 @@ Ce projet est ouvert aux contributions !
 ## 🚀 Feuille de Route
 
 ### ✅ Phase 1 — MVP (Complété)
+
 - [x] Interface enseignant et directeur
 - [x] Authentification et gestion des rôles
 - [x] Gestion des classes et des élèves
@@ -420,6 +465,7 @@ Ce projet est ouvert aux contributions !
 - [x] Planning et emploi du temps
 
 ### 🔄 Phase 2 — Optimisation (En cours)
+
 - [x] Design system unifié
 - [x] Dark mode
 - [x] Workflow migrations local/distant (Supabase CLI)
@@ -428,12 +474,14 @@ Ce projet est ouvert aux contributions !
 - [ ] Optimisations performances mobiles
 
 ### 🔮 Phase 3 — Expansion (Futur)
+
 - [ ] Application mobile native
 - [ ] Support multilingue (Wolof, Bambara, etc.)
 - [ ] Messagerie interne entre enseignants et direction
 - [ ] Tableau de bord analytique pour les inspecteurs
 
 ### 🌍 Phase 4 — Impact (Long terme)
+
 - [ ] Déploiement dans plusieurs pays d'Afrique francophone
 - [ ] Intégration avec les systèmes ministériels
 - [ ] Certification et partenariats institutionnels
@@ -447,6 +495,7 @@ Ce projet est ouvert aux contributions !
 **Pays :** Sénégal 🇸🇳
 
 Pour toute question ou collaboration :
+
 - Ouvrir une [Issue](https://github.com/opentech221/Ecole_2.0_Copie_2/issues)
 - Ou une [Discussion](https://github.com/opentech221/Ecole_2.0_Copie_2/discussions)
 
@@ -454,16 +503,24 @@ Pour toute question ou collaboration :
 
 ## 🎖️ Licence
 
-La licence du projet applicatif n'est pas encore formalisée dans un fichier `LICENSE` dédié.
-Les attributions et licences tierces utilisées sont documentées dans [ATTRIBUTIONS.md](ATTRIBUTIONS.md).
+Ce dépôt applique **deux licences distinctes** selon le contenu :
 
-Vous êtes libre de :
-- ✅ Utiliser le code pour vos projets
-- ✅ Modifier et adapter selon vos besoins
-- ✅ Distribuer avec ou sans modifications
-- ✅ Utiliser commercialement
+| Contenu | Licence | Détail |
+| --- | --- | --- |
+| Application (code source, schémas de base de données, actifs) | Propriétaire — tous droits réservés | [`LICENSE`](LICENSE) |
+| Référentiel pédagogique (`programme_officiel/`) | CC BY 4.0 | [`programme_officiel/LICENSE`](programme_officiel/LICENSE) |
 
-**Condition :** Clarifier et ajouter une licence projet explicite avant diffusion publique large.
+Le code applicatif **n'est pas libre de réutilisation** : toute reproduction,
+modification ou exploitation commerciale nécessite une autorisation écrite
+préalable — voir [`LICENSE`](LICENSE) pour les conditions complètes.
+
+Le contenu du dossier `programme_officiel/` (structuration des niveaux,
+domaines, activités et objectifs pédagogiques) est en revanche **librement
+réutilisable, y compris commercialement, sous réserve d'attribution** —
+voir [`programme_officiel/LICENSE`](programme_officiel/LICENSE).
+
+Les attributions et licences tierces utilisées dans l'application sont
+documentées dans [ATTRIBUTIONS.md](ATTRIBUTIONS.md).
 
 ---
 

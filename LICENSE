@@ -1,0 +1,32 @@
+# Licence
+
+Copyright (c) 2026 OpenTech221
+
+Tous droits réservés.
+
+Ce dépôt et l'ensemble de son contenu — code source, architecture, schémas de
+base de données, actifs visuels et documentation — sont la propriété exclusive
+de OpenTech221, à l'exception du contenu du dossier
+`programme_officiel/`, distribué séparément sous licence Creative Commons
+Attribution 4.0 International (voir `programme_officiel/LICENSE`).
+
+Sauf autorisation écrite préalable du titulaire des droits (OpenTech221), toute reproduction,
+distribution, modification, décompilation, ingénierie inverse ou exploitation
+commerciale de tout ou partie de ce code est strictement interdite.
+
+Aucune licence, expresse ou implicite, n'est accordée sur les brevets, marques,
+droits d'auteur ou tout autre droit de propriété intellectuelle du titulaire,
+sauf mention contraire explicite dans le présent document.
+
+CE LOGICIEL EST FOURNI "EN L'ÉTAT", SANS GARANTIE D'AUCUNE SORTE, EXPRESSE OU
+IMPLICITE, Y COMPRIS, MAIS SANS S'Y LIMITER, LES GARANTIES DE QUALITÉ MARCHANDE,
+D'ADÉQUATION À UN USAGE PARTICULIER ET D'ABSENCE DE CONTREFAÇON.
+
+Pour toute demande de licence, partenariat ou autorisation d'usage, contacter :
+<cheikhtidianesamba.ba@ucad.edu.sn>
+
+---
+
+Les composants tiers utilisés dans ce projet (bibliothèques open source,
+polices, icônes) restent soumis à leurs licences respectives, documentées dans
+ATTRIBUTIONS.md.

@@ -1,0 +1,37 @@
+# Licence — Référentiel pédagogique (programme_officiel/)
+
+Le contenu de ce dossier — structuration des niveaux, domaines, sous-domaines,
+activités, paliers, objectifs spécifiques et contenus pédagogiques issus du
+programme officiel — est mis à disposition sous licence :
+
+## Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+Vous êtes libre de :
+
+- **Partager** — copier, distribuer et communiquer ce contenu par tout moyen
+- **Adapter** — remixer, transformer et créer à partir de ce contenu
+- à des fins commerciales ou non commerciales.
+
+Sous réserve de :
+
+- **Attribution** — vous devez créditer École 2.0 comme source, indiquer si des
+  modifications ont été apportées, sans suggérer que École 2.0 vous approuve ou
+  approuve votre usage.
+
+Aucune condition supplémentaire ne peut être ajoutée qui restreindrait ce que
+cette licence permet.
+
+Texte complet de la licence :
+<https://creativecommons.org/licenses/by/4.0/deed.fr>
+
+---
+
+**Note d'attribution** : la structuration et la mise en forme numérique
+(JSON) de ce référentiel sont l'œuvre d'École 2.0. Le contenu pédagogique
+sous-jacent peut, selon son origine, provenir de programmes scolaires publiés
+par les autorités éducatives compétentes — se référer à la documentation
+source de chaque fichier pour les crédits d'origine si applicable.
+
+Cette licence s'applique uniquement au contenu de ce dossier. Le reste du
+dépôt (application, code source, schémas de base de données) reste couvert par
+la licence propriétaire définie dans `/LICENSE`.

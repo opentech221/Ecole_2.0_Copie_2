@@ -51,6 +51,50 @@ type ProfileRow = {
   classe_active: string | null;
 };
 
+const E2E_AUTH_STORAGE_KEY = "ecole2-e2e-auth";
+
+function readE2eAuthOverride() {
+  if (typeof window === "undefined") return null;
+
+  try {
+    return window.localStorage.getItem(E2E_AUTH_STORAGE_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function createE2eSession(): Session {
+  const user = {
+    id: "00000000-0000-4000-8000-000000000001",
+    email: "e2e-admin@ecole.local",
+    role: "authenticated",
+    aud: "authenticated",
+    app_metadata: {},
+    user_metadata: {},
+    identities: [],
+    created_at: new Date().toISOString(),
+  } as unknown as User;
+
+  return {
+    access_token: "e2e-access-token",
+    refresh_token: "e2e-refresh-token",
+    expires_in: 3600,
+    expires_at: Math.floor(Date.now() / 1000) + 3600,
+    token_type: "bearer",
+    user,
+  } as Session;
+}
+
+function createE2eProfile(): UserProfile {
+  return {
+    id: "00000000-0000-4000-8000-000000000001",
+    role: "director",
+    fullName: "E2E Director",
+    ecoleName: "Ecole 2.0 E2E",
+    classeActive: "CM2",
+  };
+}
+
 export function useAuth(): AuthState {
   const [session,  setSession]  = useState<Session | null>(null);
   const [profile,  setProfile]  = useState<UserProfile | null>(null);
@@ -92,6 +136,14 @@ export function useAuth(): AuthState {
   }
 
   useEffect(() => {
+    if (readE2eAuthOverride()) {
+      const e2eSession = createE2eSession();
+      setSession(e2eSession);
+      setProfile(createE2eProfile());
+      setLoading(false);
+      return;
+    }
+
     supabase.auth.getSession().then(({ data: { session: s } }) => {
       setSession(s);
       if (s?.user) {

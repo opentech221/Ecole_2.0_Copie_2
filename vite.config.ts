@@ -53,7 +53,6 @@ export default defineConfig({
           if (id.includes('react-router')) return 'router'
           if (id.includes('lucide-react')) return 'icons'
           if (id.includes('@radix-ui/') || id.includes('vaul') || id.includes('cmdk')) return 'ui-vendor'
-          if (id.includes('@mui/') || id.includes('@emotion/')) return 'mui'
           if (id.includes('recharts') || id.includes('react-day-picker') || id.includes('date-fns')) return 'data-viz'
 
           return 'vendor'

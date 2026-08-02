@@ -1,11 +1,18 @@
 import { Building2, LayoutDashboard, ShieldCheck, Sparkles } from "lucide-react";
 import { NavLink, Outlet } from "react-router";
 
-const ADMIN_NAV = [
+type AdminNavItem = {
+  to: string;
+  label: string;
+  icon: typeof LayoutDashboard | typeof Sparkles | typeof ShieldCheck;
+  end?: boolean;
+};
+
+const ADMIN_NAV: AdminNavItem[] = [
   { to: "/admin", label: "Vue d'ensemble", icon: LayoutDashboard, end: true },
   { to: "/admin/saas", label: "Administration SaaS", icon: Sparkles },
   { to: "/admin/legacy", label: "Interface héritée", icon: ShieldCheck },
-] as const;
+];
 
 export function AdminModuleLayout() {
   return (
@@ -28,7 +35,7 @@ export function AdminModuleLayout() {
                   <NavLink
                     key={item.to}
                     to={item.to}
-                    end={item.end}
+                    end={Boolean(item.end)}
                     className={({ isActive }) =>
                       [
                         "inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold whitespace-nowrap transition-colors",

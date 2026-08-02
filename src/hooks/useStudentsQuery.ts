@@ -14,6 +14,41 @@ import { studentsApi, type StudentRow } from "../services/apiService";
 import { QK } from "../lib/queryClient";
 import { useAppContext } from "../app/contexts/AppContext";
 
+const E2E_AUTH_STORAGE_KEY = "ecole2-e2e-auth";
+
+function isE2eAuthOverride() {
+  return typeof window !== "undefined" && window.localStorage.getItem(E2E_AUTH_STORAGE_KEY) === "1";
+}
+
+function createE2eStudents(classId: string): StudentRow[] {
+  return [
+    {
+      id: "00000000-0000-4000-8000-000000000011",
+      class_id: classId,
+      matricule: "E2E-001",
+      nom: "DIALLO",
+      prenom: "Aminata",
+      genre: "F",
+      date_naissance: "2016-05-12",
+      lieu_naissance: "Dakar",
+      tuteur_nom: "Ibrahima Diallo",
+      tuteur_phone: "+221770000001",
+    },
+    {
+      id: "00000000-0000-4000-8000-000000000012",
+      class_id: classId,
+      matricule: "E2E-002",
+      nom: "SOW",
+      prenom: "Moussa",
+      genre: "M",
+      date_naissance: "2016-09-21",
+      lieu_naissance: "Thiès",
+      tuteur_nom: "Mariama Sow",
+      tuteur_phone: "+221770000002",
+    },
+  ];
+}
+
 export function useStudentsQuery() {
   const { activeClass } = useAppContext();
   const queryClient     = useQueryClient();
@@ -22,7 +57,7 @@ export function useStudentsQuery() {
   // ── Read ──────────────────────────────────────────────────────────────────
   const query = useQuery({
     queryKey: QK.students(activeClass),
-    queryFn:  () => studentsApi.list(activeClass),
+    queryFn:  () => (isE2eAuthOverride() ? createE2eStudents(activeClass) : studentsApi.list(activeClass)),
   });
 
   // ── Create ────────────────────────────────────────────────────────────────

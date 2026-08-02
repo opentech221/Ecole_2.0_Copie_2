@@ -727,12 +727,12 @@ export function AppLayout() {
     let idleId: number | null = null;
 
     const enableUnread = () => setUnreadReady(true);
+    const requestIdleCallback = (window as Window & {
+      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+    }).requestIdleCallback;
 
-    if ("requestIdleCallback" in window) {
-      idleId = (window as Window & { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => number }).requestIdleCallback(
-        enableUnread,
-        { timeout: 10000 },
-      );
+    if (typeof requestIdleCallback === "function") {
+      idleId = requestIdleCallback(enableUnread, { timeout: 10000 });
     } else {
       timeoutId = window.setTimeout(enableUnread, 5000);
     }
