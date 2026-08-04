@@ -1362,15 +1362,12 @@ export function ElevesScreen() {
                         const isEmpty = "isEmpty" in s && s.isEmpty;
                         return (
                         <tr key={s.id}
-                          onClick={() => { if (!isEditing && !isEmpty) { setSelectedId(s.id); setView("bulletin"); } }}
                           style={{
                             backgroundColor: selectedId===s.id ? "var(--accent)" : i%2===0 ? "var(--card)" : "var(--muted)",
-                            cursor: isEditing || isEmpty ? "default" : "pointer",
+                            cursor: "default",
                             transition:"background 150ms",
                             opacity: isEmpty ? 0.6 : 1,
-                          }}
-                          onMouseEnter={e=>{ if (!isEditing && !isEmpty) (e.currentTarget as HTMLElement).style.backgroundColor="var(--muted)"; }}
-                          onMouseLeave={e=>{ if (!isEditing && !isEmpty) (e.currentTarget as HTMLElement).style.backgroundColor=selectedId===s.id?"var(--accent)":i%2===0?"var(--card)":"var(--muted)"; }}>
+                          }}>
                           <td style={{ padding:"10px 8px", fontSize:"11px", color:"var(--muted-foreground)", fontWeight:600 }}>{i+1}</td>
                           <td style={{ padding:"10px 8px", fontSize:"11px", color:isEmpty?"#cbd5e1":"var(--muted-foreground)", fontWeight:700, fontFamily:"monospace", whiteSpace:"nowrap" }}>
                             {isEmpty ? <span style={{fontSize:"9px", color:"#94a3b8"}}>{s.matricule}</span> : s.matricule}
