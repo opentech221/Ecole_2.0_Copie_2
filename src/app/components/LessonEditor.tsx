@@ -4,13 +4,14 @@ import { useLocation, useNavigate }              from "react-router";
 import { useQuery }                              from "@tanstack/react-query";
 import { useProfileGuard }                       from "../../hooks/useProfileGuard";
 import { programmeNavFunctionApi, type ProgrammeCurriculumDetail } from "../../services/programmeNavFunctionApi";
+import { guideDocUrl } from "../../lib/guideDocUrl";
 import { canonicalizeActivityLabel }             from "../../lib/programmeActivityLabel";
 import { ProfileGuardLoader }                    from "./ProfileGuardLoader";
 import {
   ArrowLeft, Save, FileDown, Check, Sparkles, Loader2,
   ChevronDown, ChevronUp, BookOpen, Clock, Target,
   School, CalendarDays, X, Plus, GraduationCap, RefreshCw,
-  Layers, RotateCcw, Eye, AlertCircle,
+  Layers, RotateCcw, Eye, AlertCircle, ExternalLink,
 } from "lucide-react";
 
 const LILIA = {
@@ -1227,6 +1228,21 @@ export function LessonEditor() {
             <ReadField label="Domaine" value={domaine}/>
             <ReadField label="Sous-domaine · Discipline"
                        value={[sousDomaine,discipline].filter(Boolean).join(" · ")}/>
+            {/* PDF guide link — shown when curriculum API returns page_source */}
+            {(() => {
+              const detail = officialTriangulationQuery.data;
+              const url = guideDocUrl(detail?.document_ref, detail?.page_source);
+              if (!url) return null;
+              return (
+                <a href={url} target="_blank" rel="noopener noreferrer"
+                   className="inline-flex items-center gap-1.5"
+                   style={{ fontSize:"11px", fontWeight:700, color:"#059669",
+                            textDecoration:"none", width:"fit-content" }}>
+                  <ExternalLink style={{ width:12, height:12 }} />
+                  Voir dans le guide officiel — p.{detail?.page_source}
+                </a>
+              );
+            })()}
             {/* CB — editable so teacher can correct/complete if not pre-filled */}
             <div className="flex flex-col gap-1">
               <div className="flex items-center gap-1.5">

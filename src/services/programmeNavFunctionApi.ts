@@ -45,6 +45,8 @@ export type ProgrammeFilters = {
 
 export type ProgrammeCurriculumDetail = {
   activite: string;
+  page_source: number | null;
+  document_ref: string | null;
   competence: string;
   paliers: Array<{
     id: string;

@@ -387,7 +387,7 @@ registerGet("/curriculum", async (c) => {
   const navRes = await applyFilters(
     client
       .from("programme_navigation_v")
-      .select("activite_id, activite_nom")
+      .select("activite_id, activite_nom, page_source, document_ref")
       .order("activite_nom", { ascending: true }),
     { niveauId, domaineId, sousDomaineId },
   ).limit(5000);
@@ -542,6 +542,8 @@ registerGet("/curriculum", async (c) => {
       disciplines,
       detail: {
         activite: activiteNom,
+        page_source: (navRows.find((r) => r.activite_id === activiteIds[0]) as { page_source?: number } | undefined)?.page_source ?? null,
+        document_ref: (navRows.find((r) => r.activite_id === activiteIds[0]) as { document_ref?: string } | undefined)?.document_ref ?? null,
         competence: competences[0]?.description ?? "",
         paliers: detailPaliers,
       },

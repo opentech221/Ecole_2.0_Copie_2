@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { BookOpenText, Copy, Filter, ListTree, Search } from "lucide-react";
+import { BookOpenText, Copy, ExternalLink, Filter, ListTree, Search } from "lucide-react";
 import { useSearchParams } from "react-router";
+import { guideDocUrl } from "@/lib/guideDocUrl";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/app/components/ui/accordion";
 import { Badge } from "@/app/components/ui/badge";
 import { Button } from "@/app/components/ui/button";
@@ -361,8 +362,7 @@ export function ProgrammeNavigationWorkspace() {
                           <button type="button" className="font-semibold" onClick={() => toggleSort("compteurs")}>
                             Compteurs {sortBy === "compteurs" ? (sortDir === "asc" ? "↑" : "↓") : ""}
                           </button>
-                        </th>
-                      </tr>
+                        </th>                        <th className="px-3 py-2 text-left">Guide</th>                      </tr>
                     </thead>
                     <tbody>
                       {sortedRows.map((row) => (
@@ -382,8 +382,20 @@ export function ProgrammeNavigationWorkspace() {
                           <td className="px-3 py-2">{row.sous_domaine_nom ?? "Sans nom"}</td>
                           <td className="px-3 py-2 text-xs text-muted-foreground">
                             CB {row.competences_count} · P {row.paliers_count} · OA {row.oa_count} · OS {row.os_count} · C {row.contenus_count}
-                          </td>
-                        </tr>
+                          </td>                          <td className="px-3 py-2">
+                            {(() => {
+                              const url = guideDocUrl(row.document_ref, row.page_source);
+                              return url ? (
+                                <a href={url} target="_blank" rel="noopener noreferrer"
+                                   className="inline-flex items-center gap-1 rounded-md border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[11px] font-semibold text-emerald-700 hover:bg-emerald-100 dark:border-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-400">
+                                  <ExternalLink className="h-3 w-3" />
+                                  p.{row.page_source}
+                                </a>
+                              ) : (
+                                <span className="text-[11px] text-muted-foreground">—</span>
+                              );
+                            })()}
+                          </td>                        </tr>
                       ))}
                     </tbody>
                   </table>
