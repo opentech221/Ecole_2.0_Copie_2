@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Loader2, Users, X } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Loader2, Users, Pencil, X } from "lucide-react";
 
 export interface NewStudentForm {
   matricule: string;
@@ -27,11 +27,18 @@ interface AddStudentModalProps {
   open: boolean;
   onClose: () => void;
   onSave: (form: NewStudentForm) => Promise<void>;
+  initialValues?: Partial<NewStudentForm>;
+  mode?: "add" | "edit";
 }
 
-export function AddStudentModal({ open, onClose, onSave }: AddStudentModalProps) {
-  const [form, setForm] = useState<NewStudentForm>(EMPTY_FORM);
+export function AddStudentModal({ open, onClose, onSave, initialValues, mode = "add" }: AddStudentModalProps) {
+  const [form, setForm] = useState<NewStudentForm>(initialValues ? { ...EMPTY_FORM, ...initialValues } : EMPTY_FORM);
   const [saving, setSaving] = useState(false);
+
+  // Reset form when modal opens with new initial values
+  useEffect(() => {
+    if (open) setForm(initialValues ? { ...EMPTY_FORM, ...initialValues } : EMPTY_FORM);
+  }, [open, initialValues]);
 
   const field = (k: keyof NewStudentForm, v: string) =>
     setForm(p => ({ ...p, [k]: v }));
@@ -102,7 +109,7 @@ export function AddStudentModal({ open, onClose, onSave }: AddStudentModalProps)
         >
           <div>
             <p style={{ fontSize: "17px", fontWeight: 800, color: "var(--foreground)", margin: 0 }}>
-              Ajouter un élève
+              {mode === "edit" ? "Modifier l'élève" : "Ajouter un élève"}
             </p>
             <p style={{ fontSize: "11px", color: "var(--muted-foreground)", margin: 0 }}>
               Les champs Nom et Prénom sont obligatoires.
@@ -292,6 +299,11 @@ export function AddStudentModal({ open, onClose, onSave }: AddStudentModalProps)
               <>
                 <Loader2 style={{ width: 16, height: 16 }} className="animate-spin" />
                 Enregistrement…
+              </>
+            ) : mode === "edit" ? (
+              <>
+                <Pencil style={{ width: 16, height: 16 }} />
+                Enregistrer les modifications
               </>
             ) : (
               <>

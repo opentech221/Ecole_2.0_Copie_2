@@ -571,21 +571,22 @@ export function ElevesScreen() {
   const [selectedId,     setSelectedId]    = useState("");
   const [showAddStudent, setShowAddStudent] = useState(false);
 
-  // ── Inline name editing ────────────────────────────────────────────────────
-  const [editingId,  setEditingId]  = useState<string | null>(null);
-  const [editingNom, setEditingNom] = useState("");
+  // ── Full-form student editing ───────────────────────────────────────────────
+  const [editingStudent, setEditingStudent] = useState<StudentRow | null>(null);
 
-  const startEdit = useCallback((id: string, currentNom: string) => {
-    setEditingId(id);
-    setEditingNom(currentNom);
-  }, []);
-
-  const saveEdit = useCallback(async (id: string) => {
-    if (editingNom.trim()) {
-      await updateStudent(id, { nom: editingNom.trim() });
-    }
-    setEditingId(null);
-  }, [editingNom, updateStudent]);
+  const handleEditStudent = async (form: NewStudentForm) => {
+    if (!editingStudent) return;
+    await updateStudent(editingStudent.id, {
+      matricule:      form.matricule,
+      nom:            form.nom,
+      prenom:         form.prenom,
+      genre:          form.genre as "F" | "M",
+      date_naissance: form.dateNaissance,
+      lieu_naissance: form.lieuNaissance,
+      tuteur_nom:     form.tuteurNom,
+      tuteur_phone:   form.tuteurPhone,
+    });
+  };
 
   // ── Delete-with-Undo pattern (5-second window) ─────────────────────────────
   // Pending set keeps the row visually present until the timer fires or is cancelled.
@@ -938,6 +939,24 @@ export function ElevesScreen() {
       open={showAddStudent}
       onClose={() => setShowAddStudent(false)}
       onSave={handleAddStudent}
+    />
+
+    {/* ── Edit Student Modal ── */}
+    <AddStudentModal
+      open={!!editingStudent}
+      onClose={() => setEditingStudent(null)}
+      onSave={handleEditStudent}
+      mode="edit"
+      initialValues={editingStudent ? {
+        matricule:      editingStudent.matricule ?? "",
+        nom:            editingStudent.nom,
+        prenom:         editingStudent.prenom,
+        genre:          editingStudent.genre as "F" | "M",
+        dateNaissance:  editingStudent.date_naissance ?? "",
+        lieuNaissance:  editingStudent.lieu_naissance ?? "",
+        tuteurNom:      editingStudent.tuteur_nom ?? "",
+        tuteurPhone:    editingStudent.tuteur_phone ?? "",
+      } : undefined}
     />
 
     {/* ── Batch Print Modal — visual preview + print controls ── */}
@@ -1339,7 +1358,7 @@ export function ElevesScreen() {
                         .filter(s => !pendingDeleteIds.has(s.id))
                         .slice(0, 120)
                         .map((s, i) => {
-                        const isEditing = editingId === s.id;
+                        const isEditing = false; // edit handled by modal
                         const isEmpty = "isEmpty" in s && s.isEmpty;
                         return (
                         <tr key={s.id}
@@ -1356,7 +1375,7 @@ export function ElevesScreen() {
                           <td style={{ padding:"10px 8px", fontSize:"11px", color:isEmpty?"#cbd5e1":"var(--muted-foreground)", fontWeight:700, fontFamily:"monospace", whiteSpace:"nowrap" }}>
                             {isEmpty ? <span style={{fontSize:"9px", color:"#94a3b8"}}>{s.matricule}</span> : s.matricule}
                           </td>
-                          {/* ── Name cell — switches to input when editing ── */}
+                          {/* ── Name cell ── */}
                           <td style={{ padding:"6px 8px" }}>
                             {isEmpty ? (
                               <div className="flex items-center gap-2">
@@ -1364,34 +1383,6 @@ export function ElevesScreen() {
                                   --
                                 </div>
                                 <p style={{ fontSize:"12px", fontWeight:700, color:"#cbd5e1", whiteSpace:"nowrap" }}>{s.nom} {s.prenom}</p>
-                              </div>
-                            ) : isEditing ? (
-                              <div className="flex items-center gap-1.5" onClick={e => e.stopPropagation()}>
-                                <input
-                                  autoFocus
-                                  type="text"
-                                  value={editingNom}
-                                  onChange={e => setEditingNom(e.target.value)}
-                                  onBlur={() => saveEdit(s.id)}
-                                  onKeyDown={e => {
-                                    if (e.key === "Enter") saveEdit(s.id);
-                                    if (e.key === "Escape") setEditingId(null);
-                                  }}
-                                  style={{
-                                    padding:"4px 8px", borderRadius:"8px", fontSize:"12px",
-                                    fontWeight:700, color:"var(--foreground)", border:"1.5px solid var(--secondary)",
-                                    outline:"none", width:"140px",
-                                    fontFamily:"'Plus Jakarta Sans',sans-serif",
-                                  }}
-                                />
-                                {/* Green check to confirm */}
-                                <button
-                                  onClick={e => { e.stopPropagation(); saveEdit(s.id); }}
-                                  title="Valider"
-                                  style={{ border:"none", background:"none", cursor:"pointer",
-                                           color:"#059669", padding:"2px" }}>
-                                  <Check style={{ width:16, height:16 }} />
-                                </button>
                               </div>
                             ) : (
                               <div className="flex items-center gap-2">
@@ -1435,10 +1426,10 @@ export function ElevesScreen() {
                                   Others see the "Lecture seule" badge instead.
                                 */}
                                 <PermissionGuard ownerClassId={activeClass} fallback={<ReadOnlyBadge />}>
-                                  {/* Edit icon — blue pencil */}
+                                  {/* Edit icon */}
                                   <button
-                                    onClick={e=>{ e.stopPropagation(); startEdit(s.id, s.nom); }}
-                                    title="Modifier le nom"
+                                    onClick={e=>{ e.stopPropagation(); setEditingStudent(s as StudentRow); }}
+                                    title="Modifier l'élève"
                                     style={{ border:"none", background:"none", cursor:"pointer",
                                              padding:"5px", borderRadius:"6px", color:"#3182ce",
                                              transition:"background 150ms" }}
