@@ -147,8 +147,8 @@ Les clés de traçabilité (`page_source`, `document_ref`) sont stockées au niv
 - Consolider la vue SQL de navigation aplatie côté backend pour les besoins de navigation/filtrage avancés.
 - Finaliser le câblage des sélecteurs en cascade dans les modales React restantes.
 - Intégrer le bouton de redirection vers le Storage PDF (avec ancre `#page=X`).
-- **Import CSV d'élèves** — bouton présent dans l'UI, logique de parsing et d'insertion à implémenter.
-- **Export PDF liste nominative** — génération côté client de la liste de classe imprimable.
+- **Import CSV d'élèves** — modal de parsing avec aperçu, validation et insertion par lot. ✅
+- **Export PDF liste nominative** — impression navigateur via `window.print()` avec layout dédié A4. ✅
 - **Tests utilisateurs en conditions réelles** — validation terrain avec des enseignants sur compte Supabase de production.
 
 ---
@@ -483,8 +483,8 @@ Ce projet est ouvert aux contributions !
 - [x] Module Élèves complet (CRUD, bulletins, cahier de registre, 120 élèves max)
 - [x] Sidebar desktop collapsible
 - [x] Page Assistance & Partenaires
-- [ ] Import CSV élèves
-- [ ] Export PDF liste nominative
+- [x] Import CSV d'élèves (modal + validation + insertion par lot)
+- [x] Export PDF liste nominative (print layout A4)
 - [ ] Tests utilisateurs en conditions réelles
 - [ ] Mode offline pour zones à faible connexion
 - [ ] Optimisations performances mobiles

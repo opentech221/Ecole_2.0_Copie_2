@@ -9,6 +9,7 @@ import { supabase } from "../../lib/supabase";
 import { avg, computeWeightedAvg, totalAbsencesNJ, type GradeSet } from "./eleves/utils/grades";
 import { AddStudentModal, type NewStudentForm } from "./eleves/components/AddStudentModal";
 import { BatchPreviewModal, type SortKey } from "./eleves/components/BatchPreviewModal";
+import { CsvImportModal } from "./eleves/components/CsvImportModal";
 import { useAppContext } from "../contexts/AppContext";
 import {
   ArrowLeft, Users, UserCheck, UserX,
@@ -570,6 +571,7 @@ export function ElevesScreen() {
   const [view,           setView]          = useState<View>("liste");
   const [selectedId,     setSelectedId]    = useState("");
   const [showAddStudent, setShowAddStudent] = useState(false);
+  const [showCsvImport,  setShowCsvImport]  = useState(false);
 
   // ── Full-form student editing ───────────────────────────────────────────────
   const [editingStudent, setEditingStudent] = useState<StudentRow | null>(null);
@@ -586,6 +588,33 @@ export function ElevesScreen() {
       tuteur_nom:     form.tuteurNom,
       tuteur_phone:   form.tuteurPhone,
     });
+  };
+
+  // ── CSV bulk import ────────────────────────────────────────────────────────
+  const handleCsvImport = async (rows: NewStudentForm[]) => {
+    for (const row of rows) {
+      await createStudent({
+        class_id:       activeClass,
+        matricule:      row.matricule,
+        nom:            row.nom,
+        prenom:         row.prenom,
+        genre:          row.genre as "F" | "M",
+        date_naissance: row.dateNaissance,
+        lieu_naissance: row.lieuNaissance,
+        tuteur_nom:     row.tuteurNom,
+        tuteur_phone:   row.tuteurPhone,
+      });
+    }
+  };
+
+  // ── Export PDF liste nominative ────────────────────────────────────────────
+  const handleExportPdf = () => {
+    const prev = document.title;
+    document.title = `Liste élèves — ${activeClass} — École 2.0`;
+    document.body.classList.add("print-liste-mode");
+    window.print();
+    document.body.classList.remove("print-liste-mode");
+    document.title = prev;
   };
 
   // ── Delete-with-Undo pattern (5-second window) ─────────────────────────────
@@ -934,6 +963,15 @@ export function ElevesScreen() {
 
   return (
     <>
+    {/* ── CSV Import Modal ── */}
+    <CsvImportModal
+      open={showCsvImport}
+      onClose={() => setShowCsvImport(false)}
+      onImport={handleCsvImport}
+      currentCount={students.length}
+      maxStudents={MAX_STUDENTS}
+    />
+
     {/* ── Add Student Modal ── */}
     <AddStudentModal
       open={showAddStudent}
@@ -977,6 +1015,42 @@ export function ElevesScreen() {
       BulletinBody={BulletinBody}
     />
 
+    {/* ── Hidden print root for liste nominative ── */}
+    <div id="liste-print-root" style={{ display:"none" }}>
+      <p style={{ fontSize:18, fontWeight:800, marginBottom:4 }}>
+        Liste Nominative — Classe : {activeClass}
+      </p>
+      <p style={{ fontSize:11, color:"#64748b", marginBottom:12 }}>
+        École Ilyaou Mamadou SEYDI · IEF Kolda · Année scolaire 2025–2026 · {students.length} élève{students.length > 1 ? "s" : ""}
+      </p>
+      <table style={{ borderCollapse:"collapse", width:"100%", fontSize:11 }}>
+        <thead>
+          <tr style={{ backgroundColor:"#1a365d", color:"#fff" }}>
+            {["#","Matricule","Nom & Prénom","Genre","Date naissance","Lieu","Tuteur","Téléphone"].map(h => (
+              <th key={h} style={{ padding:"5px 7px", textAlign:"left", fontWeight:700 }}>{h}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {students.map((s, i) => (
+            <tr key={s.id} style={{ backgroundColor: i%2===0?"#fff":"#f8fafc", borderBottom:"1px solid #e2e8f0" }}>
+              <td style={{ padding:"4px 7px", color:"#64748b" }}>{i+1}</td>
+              <td style={{ padding:"4px 7px", fontFamily:"monospace" }}>{s.matricule}</td>
+              <td style={{ padding:"4px 7px", fontWeight:700 }}>{s.nom} {s.prenom}</td>
+              <td style={{ padding:"4px 7px" }}>{s.genre}</td>
+              <td style={{ padding:"4px 7px" }}>{s.date_naissance}</td>
+              <td style={{ padding:"4px 7px" }}>{s.lieu_naissance}</td>
+              <td style={{ padding:"4px 7px" }}>{s.tuteur_nom}</td>
+              <td style={{ padding:"4px 7px", fontFamily:"monospace" }}>{s.tuteur_phone}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p style={{ fontSize:9, color:"#94a3b8", marginTop:16, textAlign:"right" }}>
+        Imprimé le {new Date().toLocaleDateString("fr-FR")} · École 2.0 par Tech-Loxo
+      </p>
+    </div>
+
     <div className="bg-background flex flex-col overflow-hidden"
          style={{ height:"calc(100vh - 36px)", fontFamily:"'Plus Jakarta Sans',sans-serif" }}>
 
@@ -990,6 +1064,16 @@ export function ElevesScreen() {
         @page { size: A4 portrait; margin: 0; }
 
         @media print {
+          /* ── LISTE MODE: body class added dynamically by handleExportPdf ── */
+          body.print-liste-mode * { visibility: hidden !important; }
+          body.print-liste-mode #liste-print-root,
+          body.print-liste-mode #liste-print-root * { visibility: visible !important; }
+          body.print-liste-mode #liste-print-root {
+            position: fixed !important; inset: 0 !important;
+            width: 100% !important; background: #fff !important;
+            padding: 12mm !important;
+          }
+
           /* ── UNIFIED PRINT ISOLATION ─────────────────────────────────────────
              Only one of #bulletin-print-root / #print-batch-root is in the DOM
              at any time (controlled by React state), so both can be listed here
@@ -1311,8 +1395,10 @@ export function ElevesScreen() {
                 {[
                   { icon:<Plus className="w-4 h-4"/>,   label:"Ajouter",   bg: atCapacity ? "var(--muted)" : "#1a365d", fg: atCapacity ? "var(--muted-foreground)" : "#fff",
                     onClick: () => atCapacity ? toast.warning(`Capacité maximale atteinte (${MAX_STUDENTS} élèves).`) : setShowAddStudent(true) },
-                  { icon:<Upload className="w-4 h-4"/>, label:"Importer un CSV", bg:"var(--muted)", fg:"var(--muted-foreground)", onClick: undefined },
-                  { icon:<Printer className="w-4 h-4"/>,label:"Export PDF", bg:"var(--muted)", fg:"var(--muted-foreground)", onClick: undefined },
+                  { icon:<Upload className="w-4 h-4"/>, label:"Importer un CSV", bg:"var(--muted)", fg:"var(--muted-foreground)",
+                    onClick: () => atCapacity ? toast.warning(`Capacité maximale atteinte (${MAX_STUDENTS} élèves).`) : setShowCsvImport(true) },
+                  { icon:<Printer className="w-4 h-4"/>,label:"Export PDF", bg:"var(--muted)", fg: students.length === 0 ? "var(--muted-foreground)" : "var(--foreground)",
+                    onClick: students.length > 0 ? handleExportPdf : undefined },
                 ].map(a => (
                   <button key={a.label}
                     onClick={a.onClick}
