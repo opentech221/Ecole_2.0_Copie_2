@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect, useCallback, useRef } from "react";
 import { useNavigate } from "react-router";
+import { toast } from "sonner";
 import { useGradesMutation } from "../../hooks/useGradesMutation";
 import { useStudentsQuery } from "../../hooks/useStudentsQuery";
 import { PermissionGuard, ReadOnlyBadge } from "../../components/PermissionGuard";
@@ -158,112 +159,6 @@ function useBulletinValidation(
   }, [grades, disciplineConfig, trimestre]);
 }
 
-function Module2EmptyState({
-  activeClass,
-  onOpenAddStudent,
-  onGoJournal,
-  onGoDocuments,
-}: {
-  activeClass: string;
-  onOpenAddStudent: () => void;
-  onGoJournal: () => void;
-  onGoDocuments: () => void;
-}) {
-  const stats = [
-    { label: "Élèves", value: "0", tone: "#1a365d" },
-    { label: "Présences", value: "0%", tone: "#059669" },
-    { label: "Bulletins", value: "0", tone: "#2563eb" },
-  ];
-
-  const quickActions = [
-    {
-      title: "Créer le premier élève",
-      description: "Ajoutez un élève pour faire apparaître la liste nominative, le registre et les bulletins.",
-      action: onOpenAddStudent,
-      label: "Ajouter un élève",
-    },
-    {
-      title: "Aller au journal",
-      description: "Passez au cahier pour saisir activités, contenus et observations de la semaine.",
-      action: onGoJournal,
-      label: "Ouvrir le cahier",
-    },
-    {
-      title: "Consulter les archives",
-      description: "Retrouvez les documents et productions déjà générés pour la classe active.",
-      action: onGoDocuments,
-      label: "Voir les documents",
-    },
-  ];
-
-  return (
-    <div className="bg-background flex flex-col overflow-hidden" style={{ height: "calc(100vh - 36px)", fontFamily: "'Plus Jakarta Sans',sans-serif" }}>
-      <div className="max-w-6xl mx-auto px-4 py-4 flex-1 overflow-auto">
-        <div className="rounded-[28px] overflow-hidden border border-slate-200/80 bg-white shadow-[0_18px_60px_rgba(15,23,42,0.10)]">
-          <div className="bg-gradient-to-r from-teal-600 via-emerald-600 to-cyan-500 px-5 py-5 text-white">
-            <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-              <div className="max-w-3xl">
-                <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-white/70">Module 2 · Administration & Suivi</p>
-                <h2 className="mt-2 text-[22px] font-black leading-tight lg:text-[30px]">Gestion administrative et suivi des performances</h2>
-                <p className="mt-3 max-w-2xl text-[13px] leading-6 text-white/80 lg:text-[14px]">
-                  La classe {activeClass} n’a pas encore d’élève. Ajoutez la première fiche pour activer la liste nominative,
-                  le cahier de registre et les bulletins sans perdre la structure du module.
-                </p>
-              </div>
-              <div className="grid grid-cols-3 gap-2 lg:min-w-[320px]">
-                {stats.map(stat => (
-                  <div key={stat.label} className="rounded-2xl bg-white/10 p-3 backdrop-blur-sm">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-white/60">{stat.label}</p>
-                    <p className="mt-2 text-[24px] font-black leading-none" style={{ color: stat.tone }}>{stat.value}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="grid gap-4 p-4 lg:grid-cols-[1.2fr_0.8fr] lg:p-6">
-            <div className="grid gap-3 sm:grid-cols-3">
-              {quickActions.map(card => (
-                <div key={card.title} className="rounded-2xl border border-slate-200 bg-slate-50 p-4 shadow-sm">
-                  <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-500">Étape</p>
-                  <h3 className="mt-2 text-[15px] font-extrabold text-slate-900">{card.title}</h3>
-                  <p className="mt-2 text-[12px] leading-6 text-slate-600">{card.description}</p>
-                  <button
-                    onClick={card.action}
-                    className="mt-4 inline-flex min-h-[40px] items-center justify-center rounded-xl px-4 text-[12px] font-bold text-white transition-all active:scale-95"
-                    style={{ background: "linear-gradient(135deg, #0f766e 0%, #0d9488 100%)", boxShadow: "0 8px 22px rgba(13,148,136,0.28)" }}
-                  >
-                    {card.label}
-                  </button>
-                </div>
-              ))}
-            </div>
-
-            <div className="rounded-2xl border border-dashed border-teal-300 bg-teal-50 p-4 lg:p-5">
-              <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-teal-700">Vue du module</p>
-              <div className="mt-3 space-y-3">
-                {[
-                  "Liste nominative",
-                  "Cahier de registre",
-                  "Bulletins trimestriels",
-                ].map(item => (
-                  <div key={item} className="flex items-center gap-3 rounded-2xl bg-white px-3 py-3 shadow-sm">
-                    <span className="h-2.5 w-2.5 rounded-full bg-teal-500" />
-                    <span className="text-[13px] font-semibold text-slate-800">{item}</span>
-                  </div>
-                ))}
-              </div>
-              <p className="mt-4 text-[12px] leading-6 text-slate-600">
-                Dès qu’un élève existe, la page remplit automatiquement les cartes, les onglets et les tableaux du module 2.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 const DOMAINS = [
   {
     label: "FRANÇAIS / LANGUE & COMMUNICATION",
@@ -325,6 +220,11 @@ function BulletinBody({
   onGradeChange, gradeSchema, rank: rankProp,
   disciplineConfig, onToggle,
 }: BulletinBodyProps) {
+  // ── Safety guard: never render without a valid student ──
+  if (!student || !student.id) {
+    return null;
+  }
+
   const moyTrim = moyT3;
 
   // ── Quarterly column logic ──────────────────────────────────────────────────
@@ -959,20 +859,6 @@ export function ElevesScreen() {
   // ── Validation engine ─────────────────────────────────────────────────────
   const validation = useBulletinValidation(grades, disciplineConfig, trimestre);
 
-  const handleAddStudent = async (form: NewStudentForm) => {
-    await createStudent({
-      class_id:       activeClass,
-      matricule:      form.matricule,
-      nom:            form.nom,
-      prenom:         form.prenom,
-      genre:          form.genre as "F" | "M",
-      date_naissance: form.dateNaissance,
-      lieu_naissance: form.lieuNaissance,
-      tuteur_nom:     form.tuteurNom,
-      tuteur_phone:   form.tuteurPhone,
-    });
-  };
-
   if (studentsLoading) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center px-6 text-center text-sm text-slate-600 dark:text-slate-300">
@@ -989,24 +875,6 @@ export function ElevesScreen() {
     );
   }
 
-  if (!student) {
-    return (
-      <>
-        <AddStudentModal
-          open={showAddStudent}
-          onClose={() => setShowAddStudent(false)}
-          onSave={handleAddStudent}
-        />
-        <Module2EmptyState
-          activeClass={activeClass}
-          onOpenAddStudent={() => setShowAddStudent(true)}
-          onGoJournal={() => navigate("/cahier")}
-          onGoDocuments={() => navigate("/documents")}
-        />
-      </>
-    );
-  }
-
   const filles = students.filter(s => s.genre === "F").length;
   const garcons= students.filter(s => s.genre === "M").length;
   const tauxParite = students.length === 0 ? 0 : +((filles / students.length) * 100).toFixed(1);
@@ -1016,6 +884,25 @@ export function ElevesScreen() {
     s.prenom.toLowerCase().includes(search.toLowerCase()) ||
     s.matricule.toLowerCase().includes(search.toLowerCase())
   );
+
+  const MAX_STUDENTS = 120;
+  const atCapacity = students.length >= MAX_STUDENTS;
+
+  // Generate empty rows with placeholders when no students
+  const displayRows = students.length === 0 
+    ? Array.from({ length: 120 }, (_, i) => ({
+        id: `empty-${i}`,
+        matricule: `[Numéro matricule]`,
+        nom: `[Nom]`,
+        prenom: `[Prénom]`,
+        genre: "M" as const,
+        dateNaissance: `[JJ/MM/AAAA]`,
+        lieuNaissance: `[Lieu]`,
+        tuteurNom: `[Tuteur]`,
+        tuteurPhone: `[Téléphone]`,
+        isEmpty: true,
+      }))
+    : filtered;
 
   // Decision badge
   const decision = moyT3 >= 5
@@ -1029,6 +916,20 @@ export function ElevesScreen() {
     { key:"registre", label:"Cahier de Registre", icon:<UserCheck className="w-4 h-4"/> },
     { key:"bulletin", label:"Bulletins de Notes", icon:<FileText className="w-4 h-4"/>  },
   ];
+
+  const handleAddStudent = async (form: NewStudentForm) => {
+    await createStudent({
+      class_id:       activeClass,
+      matricule:      form.matricule,
+      nom:            form.nom,
+      prenom:         form.prenom,
+      genre:          form.genre as "F" | "M",
+      date_naissance: form.dateNaissance,
+      lieu_naissance: form.lieuNaissance,
+      tuteur_nom:     form.tuteurNom,
+      tuteur_phone:   form.tuteurPhone,
+    });
+  };
 
   return (
     <>
@@ -1302,12 +1203,14 @@ export function ElevesScreen() {
 
             {/* ── FAB "Ajouter un élève" ── */}
             <button
-              onClick={() => setShowAddStudent(true)}
+              onClick={() => atCapacity ? toast.warning(`Capacité maximale atteinte (${MAX_STUDENTS} élèves).`) : setShowAddStudent(true)}
               className="inline-flex items-center gap-1.5 rounded-xl font-bold transition-all active:scale-95 shrink-0"
-              title="Ajouter un élève"
+              title={atCapacity ? `Capacité maximale atteinte (${MAX_STUDENTS})` : "Ajouter un élève"}
               style={{ minHeight:"36px", padding:"0 12px", fontSize:"12px",
-                       backgroundColor:"var(--secondary)", color:"#fff",
-                       boxShadow:"0 2px 8px rgba(49,130,206,0.30)" }}>
+                       backgroundColor: atCapacity ? "var(--muted)" : "var(--secondary)",
+                       color: atCapacity ? "var(--muted-foreground)" : "#fff",
+                       boxShadow: atCapacity ? "none" : "0 2px 8px rgba(49,130,206,0.30)",
+                       cursor: atCapacity ? "not-allowed" : "pointer" }}>
               <Plus className="w-4 h-4 shrink-0"/>
               <span className="hidden sm:inline">Ajouter</span>
             </button>
@@ -1387,14 +1290,17 @@ export function ElevesScreen() {
                              backgroundColor:"var(--card)", color:"var(--foreground)", fontFamily:"'Plus Jakarta Sans',sans-serif" }}/>
                 </div>
                 {[
-                  { icon:<Plus className="w-4 h-4"/>,   label:"Ajouter",   bg:"#1a365d", fg:"#fff" },
-                  { icon:<Upload className="w-4 h-4"/>, label:"Importer un CSV", bg:"var(--muted)", fg:"var(--muted-foreground)" },
-                  { icon:<Printer className="w-4 h-4"/>,label:"Export PDF", bg:"var(--muted)", fg:"var(--muted-foreground)" },
+                  { icon:<Plus className="w-4 h-4"/>,   label:"Ajouter",   bg: atCapacity ? "var(--muted)" : "#1a365d", fg: atCapacity ? "var(--muted-foreground)" : "#fff",
+                    onClick: () => atCapacity ? toast.warning(`Capacité maximale atteinte (${MAX_STUDENTS} élèves).`) : setShowAddStudent(true) },
+                  { icon:<Upload className="w-4 h-4"/>, label:"Importer un CSV", bg:"var(--muted)", fg:"var(--muted-foreground)", onClick: undefined },
+                  { icon:<Printer className="w-4 h-4"/>,label:"Export PDF", bg:"var(--muted)", fg:"var(--muted-foreground)", onClick: undefined },
                 ].map(a => (
                   <button key={a.label}
+                    onClick={a.onClick}
                     className="inline-flex items-center gap-1.5 rounded-xl font-semibold transition-all active:scale-95"
                     style={{ minHeight:"40px", padding:"0 14px", fontSize:"12px",
-                             backgroundColor:a.bg, color:a.fg }}>
+                             backgroundColor:a.bg, color:a.fg,
+                             cursor: a.onClick ? (atCapacity && a.label === "Ajouter" ? "not-allowed" : "pointer") : undefined }}>
                     {a.icon}{a.label}
                   </button>
                 ))}
@@ -1429,25 +1335,37 @@ export function ElevesScreen() {
                       </tr>
                     </thead>
                     <tbody>
-                      {filtered
-                        .filter(s => !pendingDeleteIds.has(s.id))   /* hide rows pending deletion */
+                      {displayRows
+                        .filter(s => !pendingDeleteIds.has(s.id))
+                        .slice(0, 120)
                         .map((s, i) => {
                         const isEditing = editingId === s.id;
+                        const isEmpty = "isEmpty" in s && s.isEmpty;
                         return (
                         <tr key={s.id}
-                          onClick={() => { if (!isEditing) { setSelectedId(s.id); setView("bulletin"); } }}
+                          onClick={() => { if (!isEditing && !isEmpty) { setSelectedId(s.id); setView("bulletin"); } }}
                           style={{
                             backgroundColor: selectedId===s.id ? "var(--accent)" : i%2===0 ? "var(--card)" : "var(--muted)",
-                            cursor: isEditing ? "default" : "pointer",
+                            cursor: isEditing || isEmpty ? "default" : "pointer",
                             transition:"background 150ms",
+                            opacity: isEmpty ? 0.6 : 1,
                           }}
-                          onMouseEnter={e=>{ if (!isEditing) (e.currentTarget as HTMLElement).style.backgroundColor="var(--muted)"; }}
-                          onMouseLeave={e=>{ if (!isEditing) (e.currentTarget as HTMLElement).style.backgroundColor=selectedId===s.id?"var(--accent)":i%2===0?"var(--card)":"var(--muted)"; }}>
+                          onMouseEnter={e=>{ if (!isEditing && !isEmpty) (e.currentTarget as HTMLElement).style.backgroundColor="var(--muted)"; }}
+                          onMouseLeave={e=>{ if (!isEditing && !isEmpty) (e.currentTarget as HTMLElement).style.backgroundColor=selectedId===s.id?"var(--accent)":i%2===0?"var(--card)":"var(--muted)"; }}>
                           <td style={{ padding:"10px 8px", fontSize:"11px", color:"var(--muted-foreground)", fontWeight:600 }}>{i+1}</td>
-                          <td style={{ padding:"10px 8px", fontSize:"11px", color:"var(--muted-foreground)", fontWeight:700, fontFamily:"monospace", whiteSpace:"nowrap" }}>{s.matricule}</td>
+                          <td style={{ padding:"10px 8px", fontSize:"11px", color:isEmpty?"#cbd5e1":"var(--muted-foreground)", fontWeight:700, fontFamily:"monospace", whiteSpace:"nowrap" }}>
+                            {isEmpty ? <span style={{fontSize:"9px", color:"#94a3b8"}}>{s.matricule}</span> : s.matricule}
+                          </td>
                           {/* ── Name cell — switches to input when editing ── */}
                           <td style={{ padding:"6px 8px" }}>
-                            {isEditing ? (
+                            {isEmpty ? (
+                              <div className="flex items-center gap-2">
+                                <div className="w-7 h-7 rounded-full flex items-center justify-center bg-gray-200 shrink-0" style={{ fontSize:"10px", color:"#94a3b8" }}>
+                                  --
+                                </div>
+                                <p style={{ fontSize:"12px", fontWeight:700, color:"#cbd5e1", whiteSpace:"nowrap" }}>{s.nom} {s.prenom}</p>
+                              </div>
+                            ) : isEditing ? (
                               <div className="flex items-center gap-1.5" onClick={e => e.stopPropagation()}>
                                 <input
                                   autoFocus
@@ -1488,54 +1406,60 @@ export function ElevesScreen() {
                           <td style={{ padding:"10px 8px" }}>
                             <span style={{
                               fontSize:"10px", fontWeight:800, padding:"2px 7px", borderRadius:"999px",
-                              backgroundColor:s.genre==="F"?"#fce7f3":"#dbeafe",
-                              color:s.genre==="F"?"#be185d":"#1d4ed8",
-                            }}>{s.genre}</span>
+                              backgroundColor:isEmpty?"#f1f5f9":s.genre==="F"?"#fce7f3":"#dbeafe",
+                              color:isEmpty?"#94a3b8":s.genre==="F"?"#be185d":"#1d4ed8",
+                            }}>{isEmpty?"-":s.genre}</span>
                           </td>
-                          <td style={{ padding:"10px 8px", fontSize:"11px", color:"var(--muted-foreground)", whiteSpace:"nowrap" }}>
-                            {s.dateNaissance} · <span style={{ color:"var(--muted-foreground)" }}>{s.lieuNaissance}</span>
+                          <td style={{ padding:"10px 8px", fontSize:"11px", color:isEmpty?"#cbd5e1":"var(--muted-foreground)", whiteSpace:"nowrap" }}>
+                            {isEmpty ? <span style={{fontSize:"9px"}}>{s.dateNaissance} · {s.lieuNaissance}</span> : `${s.dateNaissance} · ${s.lieuNaissance}`}
                           </td>
-                          <td style={{ padding:"10px 8px", fontSize:"11px", color:"var(--muted-foreground)", whiteSpace:"nowrap" }}>{s.tuteurNom}</td>
-                          <td style={{ padding:"10px 8px", fontSize:"11px", color:"var(--muted-foreground)", fontFamily:"monospace", whiteSpace:"nowrap" }}>{s.tuteurPhone}</td>
+                          <td style={{ padding:"10px 8px", fontSize:"11px", color:isEmpty?"#cbd5e1":"var(--muted-foreground)", whiteSpace:"nowrap" }}>
+                            {isEmpty ? <span style={{fontSize:"9px"}}>{s.tuteurNom}</span> : s.tuteurNom}
+                          </td>
+                          <td style={{ padding:"10px 8px", fontSize:"11px", color:isEmpty?"#cbd5e1":"var(--muted-foreground)", fontFamily:"monospace", whiteSpace:"nowrap" }}>
+                            {isEmpty ? <span style={{fontSize:"9px"}}>{s.tuteurPhone}</span> : s.tuteurPhone}
+                          </td>
                           <td style={{ padding:"6px 8px" }}>
-                            <div className="flex items-center gap-1.5">
-                              {/* Bulletin button */}
-                              <button onClick={e=>{e.stopPropagation();setSelectedId(s.id);setView("bulletin");}}
-                                style={{ fontSize:"10px", padding:"5px 10px", borderRadius:"8px",
-                                         backgroundColor:"#1a365d", color:"#fff", fontWeight:700,
-                                         border:"none", cursor:"pointer", whiteSpace:"nowrap" }}>
-                                Bulletin
-                              </button>
-                              {/*
-                                PermissionGuard: Edit + Delete are only rendered
-                                for the teacher who owns this class (or a director).
-                                Others see the "Lecture seule" badge instead.
-                              */}
-                              <PermissionGuard ownerClassId={activeClass} fallback={<ReadOnlyBadge />}>
-                                {/* Edit icon — blue pencil */}
-                                <button
-                                  onClick={e=>{ e.stopPropagation(); startEdit(s.id, s.nom); }}
-                                  title="Modifier le nom"
-                                  style={{ border:"none", background:"none", cursor:"pointer",
-                                           padding:"5px", borderRadius:"6px", color:"#3182ce",
-                                           transition:"background 150ms" }}
-                                  onMouseEnter={e=>(e.currentTarget as HTMLElement).style.backgroundColor="#dbeafe"}
-                                  onMouseLeave={e=>(e.currentTarget as HTMLElement).style.backgroundColor="transparent"}>
-                                  <Pencil style={{ width:14, height:14 }} />
+                            {!isEmpty && (
+                              <div className="flex items-center gap-1.5">
+                                {/* Bulletin button */}
+                                <button onClick={e=>{e.stopPropagation();setSelectedId(s.id);setView("bulletin");}}
+                                  style={{ fontSize:"10px", padding:"5px 10px", borderRadius:"8px",
+                                           backgroundColor:"#1a365d", color:"#fff", fontWeight:700,
+                                           border:"none", cursor:"pointer", whiteSpace:"nowrap" }}>
+                                  Bulletin
                                 </button>
-                                {/* Delete icon — red trash */}
-                                <button
-                                  onClick={e=>{ e.stopPropagation(); handleDeleteWithUndo(s); }}
-                                  title="Supprimer l'élève"
-                                  style={{ border:"none", background:"none", cursor:"pointer",
-                                           padding:"5px", borderRadius:"6px", color:"#dc2626",
-                                           transition:"background 150ms" }}
-                                  onMouseEnter={e=>(e.currentTarget as HTMLElement).style.backgroundColor="#fee2e2"}
-                                  onMouseLeave={e=>(e.currentTarget as HTMLElement).style.backgroundColor="transparent"}>
-                                  <Trash2 style={{ width:14, height:14 }} />
-                                </button>
-                              </PermissionGuard>
-                            </div>
+                                {/*
+                                  PermissionGuard: Edit + Delete are only rendered
+                                  for the teacher who owns this class (or a director).
+                                  Others see the "Lecture seule" badge instead.
+                                */}
+                                <PermissionGuard ownerClassId={activeClass} fallback={<ReadOnlyBadge />}>
+                                  {/* Edit icon — blue pencil */}
+                                  <button
+                                    onClick={e=>{ e.stopPropagation(); startEdit(s.id, s.nom); }}
+                                    title="Modifier le nom"
+                                    style={{ border:"none", background:"none", cursor:"pointer",
+                                             padding:"5px", borderRadius:"6px", color:"#3182ce",
+                                             transition:"background 150ms" }}
+                                    onMouseEnter={e=>(e.currentTarget as HTMLElement).style.backgroundColor="#dbeafe"}
+                                    onMouseLeave={e=>(e.currentTarget as HTMLElement).style.backgroundColor="transparent"}>
+                                    <Pencil style={{ width:14, height:14 }} />
+                                  </button>
+                                  {/* Delete icon — red trash */}
+                                  <button
+                                    onClick={e=>{ e.stopPropagation(); handleDeleteWithUndo(s as any); }}
+                                    title="Supprimer l'élève"
+                                    style={{ border:"none", background:"none", cursor:"pointer",
+                                             padding:"5px", borderRadius:"6px", color:"#dc2626",
+                                             transition:"background 150ms" }}
+                                    onMouseEnter={e=>(e.currentTarget as HTMLElement).style.backgroundColor="#fee2e2"}
+                                    onMouseLeave={e=>(e.currentTarget as HTMLElement).style.backgroundColor="transparent"}>
+                                    <Trash2 style={{ width:14, height:14 }} />
+                                  </button>
+                                </PermissionGuard>
+                              </div>
+                            )}
                           </td>
                         </tr>
                         );
@@ -1545,8 +1469,9 @@ export function ElevesScreen() {
                 </div>
                 <div style={{ padding:"10px 16px", borderTop:"1px solid var(--border)",
                               fontSize:"10px", color:"var(--muted-foreground)" }}>
-                  {filtered.length} élève{filtered.length>1?"s":""} affiché{filtered.length>1?"s":""}
-                  {search ? ` sur ${students.length} total` : ""}
+                  {students.length === 0 
+                    ? "120 lignes vides prêtes pour la saisie"
+                    : `${filtered.length} élève${filtered.length>1?"s":""} affiché${filtered.length>1?"s":""}${search ? ` sur ${students.length} total` : ""}`}
                 </div>
               </div>
             </div>
@@ -1633,20 +1558,21 @@ export function ElevesScreen() {
                     </tr>
                   </thead>
                   <tbody>
-                    {students.map((s, ri) => {
+                    {displayRows.slice(0, 120).map((s, ri) => {
                       const att = getStudentAtt(s.id);
                       const nj  = att.filter(a=>a==="ANJ").length;
                       const rowBg = ri%2===0 ? "var(--card)" : "var(--muted)";
+                      const isEmpty = "isEmpty" in s && s.isEmpty;
                       return (
-                        <tr key={s.id} style={{ backgroundColor:rowBg }}>
+                        <tr key={s.id} style={{ backgroundColor:rowBg, opacity: isEmpty ? 0.6 : 1 }}>
                           <td style={{
-                            padding:"6px 8px", fontSize:"10.5px", fontWeight:700, color:"var(--foreground)",
+                            padding:"6px 8px", fontSize:"10.5px", fontWeight:700, color:isEmpty?"#cbd5e1":"var(--foreground)",
                             position:"sticky", left:0, backgroundColor:rowBg,
                             borderBottom:"1.5px solid #cbd5e1",
                             borderRight:"2px solid #cbd5e1", zIndex:5,
                             whiteSpace:"nowrap", minWidth:"130px", width:"130px",
                           }}>
-                            {s.nom} {s.prenom}
+                            {isEmpty ? <span style={{fontSize:"9px"}}>{s.nom} {s.prenom}</span> : `${s.nom} ${s.prenom}`}
                           </td>
                           {getStudentAtt(s.id).map((a, di) => {
                             const cfg = STATUS_CFG[a];
@@ -1663,30 +1589,32 @@ export function ElevesScreen() {
                                   display:"inline-flex", alignItems:"center", justifyContent:"center", gap:"1px",
                                   width:"34px", height:"28px", borderRadius:"6px",
                                   fontSize:"7.5px", fontWeight:800,
-                                  backgroundColor: a==="P" ? "#f0fdf4" : cfg.bg,
-                                  color: a==="P" ? "#86efac" : cfg.color,
-                                  border: `1px solid ${a==="P" ? "#bbf7d0" : cfg.color + "40"}`,
-                                  cursor:"pointer", userSelect:"none",
+                                  backgroundColor: isEmpty ? "#f1f5f9" : a==="P" ? "#f0fdf4" : cfg.bg,
+                                  color: isEmpty ? "#94a3b8" : a==="P" ? "#86efac" : cfg.color,
+                                  border: isEmpty ? "1px solid #cbd5e1" : `1px solid ${a==="P" ? "#bbf7d0" : cfg.color + "40"}`,
+                                  cursor:isEmpty ? "default" : "pointer", userSelect:"none",
                                 }}>
-                                  {a==="P" ? "✓" : cfg.label}
-                                  <ChevronDown style={{ width:"7px", height:"7px", opacity:0.7, flexShrink:0 }}/>
+                                  {isEmpty ? "-" : (a==="P" ? "✓" : cfg.label)}
+                                  {!isEmpty && <ChevronDown style={{ width:"7px", height:"7px", opacity:0.7, flexShrink:0 }}/>}
                                 </div>
                                 {/* Native select overlay — invisible but clickable */}
-                                <select
-                                  id={`eleves_status_${s.id}_${di}`}
-                                  name={`status_${s.id}`}
-                                  value={a}
-                                  onChange={e => setStudentStatus(s.id, di, e.target.value as AttendanceStatus)}
-                                  style={{
-                                    position:"absolute", inset:0, opacity:0,
-                                    cursor:"pointer", width:"100%", height:"100%",
-                                  }}
-                                >
-                                  <option value="P">P — Présent</option>
-                                  <option value="R">R — En Retard</option>
-                                  <option value="ANJ">ANJ — Absent Non Justifié</option>
-                                  <option value="AJ">AJ — Absent Justifié</option>
-                                </select>
+                                {!isEmpty && (
+                                  <select
+                                    id={`eleves_status_${s.id}_${di}`}
+                                    name={`status_${s.id}`}
+                                    value={a}
+                                    onChange={e => setStudentStatus(s.id, di, e.target.value as AttendanceStatus)}
+                                    style={{
+                                      position:"absolute", inset:0, opacity:0,
+                                      cursor:"pointer", width:"100%", height:"100%",
+                                    }}
+                                  >
+                                    <option value="P">P — Présent</option>
+                                    <option value="R">R — En Retard</option>
+                                    <option value="ANJ">ANJ — Absent Non Justifié</option>
+                                    <option value="AJ">AJ — Absent Justifié</option>
+                                  </select>
+                                )}
                               </td>
                             );
                           })}
@@ -1697,8 +1625,8 @@ export function ElevesScreen() {
                           }}>
                             <span style={{
                               fontSize:"12px", fontWeight:800,
-                              color: nj>3 ? "#dc2626" : nj>0 ? "#d97706" : "#059669",
-                            }}>{nj}</span>
+                              color: isEmpty ? "#cbd5e1" : nj>3 ? "#dc2626" : nj>0 ? "#d97706" : "#059669",
+                            }}>{isEmpty ? "-" : nj}</span>
                           </td>
                         </tr>
                       );
@@ -1723,9 +1651,13 @@ export function ElevesScreen() {
                              fontWeight:600, fontFamily:"'Plus Jakarta Sans',sans-serif",
                              borderRadius:"10px", border:"1.5px solid var(--border)",
                              backgroundColor:"var(--card)", color:"var(--foreground)", appearance:"none", cursor:"pointer" }}>
-                    {students.map(s => (
-                      <option key={s.id} value={s.id}>{s.nom} {s.prenom} ({s.matricule})</option>
-                    ))}
+                    {students.length === 0 ? (
+                      <option value="">Aucun élève — Ajouter un élève</option>
+                    ) : (
+                      students.map(s => (
+                        <option key={s.id} value={s.id}>{s.nom} {s.prenom} ({s.matricule})</option>
+                      ))
+                    )}
                   </select>
                   <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none w-4 h-4 text-gray-400"/>
                 </div>
@@ -1889,22 +1821,34 @@ export function ElevesScreen() {
               )}
 
               {/* ── A4 Bulletin Preview — interactive grade inputs ── */}
-                  <div className="no-print bg-card mx-auto"
-                   style={{ maxWidth:"794px", padding:"0 10px 10px",
-                            boxShadow:"0 4px 24px rgba(0,0,0,0.12)",
-                            fontFamily:"Arial, Helvetica, sans-serif",
-                       border:"1px solid var(--border)" }}>
-                <BulletinBody
-                  student={student} grades={grades} trimestre={trimestre}
-                  activeClass={activeClass}
-                  moyT3={moyT3} absNJ={absNJ} decision={decision}
-                  onGradeChange={(disc, t, v) => handleGradeChange(student.id, disc, t, v)}
-                  gradeSchema={gradeSchema}
-                  rank={computedRanks[student.id]}
-                  disciplineConfig={disciplineConfig}
-                  onToggle={handleToggleDiscipline}
-                />
-              </div>
+              {student ? (
+                <div className="no-print bg-card mx-auto"
+                 style={{ maxWidth:"794px", padding:"0 10px 10px",
+                          boxShadow:"0 4px 24px rgba(0,0,0,0.12)",
+                          fontFamily:"Arial, Helvetica, sans-serif",
+                     border:"1px solid var(--border)" }}>
+                  <BulletinBody
+                    student={student} grades={grades} trimestre={trimestre}
+                    activeClass={activeClass}
+                    moyT3={moyT3} absNJ={absNJ} decision={decision}
+                    onGradeChange={(disc, t, v) => handleGradeChange(student.id, disc, t, v)}
+                    gradeSchema={gradeSchema}
+                    rank={computedRanks[student.id]}
+                    disciplineConfig={disciplineConfig}
+                    onToggle={handleToggleDiscipline}
+                  />
+                </div>
+              ) : (
+                <div className="flex items-center justify-center rounded-2xl p-12 no-print"
+                     style={{ backgroundColor:"var(--muted)", minHeight:"400px" }}>
+                  <div className="text-center">
+                    <FileText className="w-12 h-12 mx-auto mb-3 text-gray-400"/>
+                    <p style={{ fontSize:"13px", color:"#64748b", fontWeight:600 }}>
+                      Aucun élève sélectionné — Ajoutez un élève pour voir le bulletin
+                    </p>
+                  </div>
+                </div>
+              )}
 
               {/* ══ SINGLE-STUDENT PRINT ROOT ════════════════════════════════
                   Always present (no conditional mount/unmount to avoid
@@ -1946,6 +1890,14 @@ export function ElevesScreen() {
               </div>
 
               {/* ── Statistiques & Performances (merged from stats view) ── */}
+              {students.length === 0 ? (
+                <div className="no-print mt-6 flex items-center justify-center rounded-2xl p-8"
+                     style={{ backgroundColor:"var(--muted)" }}>
+                  <p style={{ fontSize:"13px", color:"#64748b", fontWeight:600 }}>
+                    Les statistiques s'afficheront une fois les élèves ajoutés
+                  </p>
+                </div>
+              ) : (
               <div className="no-print no-print-stats mt-6">
                 <h2 className="font-bold text-[#1a365d] mb-4" style={{ fontSize:"15px" }}>
                   Statistiques &amp; Performances
@@ -2049,6 +2001,7 @@ export function ElevesScreen() {
                   </div>
                 </div>
               </div>
+              )}
             </div>
           )}
 

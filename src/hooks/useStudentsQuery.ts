@@ -16,11 +16,18 @@ import { useAppContext } from "../app/contexts/AppContext";
 
 const E2E_AUTH_STORAGE_KEY = "ecole2-e2e-auth";
 
+const E2E_STUDENTS_OVERRIDE_KEY = "ecole2-e2e-students-override";
+
 function isE2eAuthOverride() {
   return typeof window !== "undefined" && window.localStorage.getItem(E2E_AUTH_STORAGE_KEY) === "1";
 }
 
 function createE2eStudents(classId: string): StudentRow[] {
+  // Allow tests to inject a custom student list (e.g. empty array)
+  if (typeof window !== "undefined") {
+    const override = window.localStorage.getItem(E2E_STUDENTS_OVERRIDE_KEY);
+    if (override !== null) return JSON.parse(override) as StudentRow[];
+  }
   return [
     {
       id: "00000000-0000-4000-8000-000000000011",
