@@ -26,6 +26,8 @@ const AdminConsolePage = lazy(() => import("../modules/admin/pages/AdminConsoleP
 const AdminSaasPage = lazy(() => import("../modules/admin/pages/AdminSaasPage").then((mod) => ({ default: mod.AdminSaasPage })));
 const NotificationsPage = lazy(() => import("../modules/notifications/pages/NotificationsPage").then((mod) => ({ default: mod.NotificationsPage })));
 const ProgrammePage = lazy(() => import("../modules/programme/pages/ProgrammePage").then((mod) => ({ default: mod.ProgrammePage })));
+const AssistancePage = lazy(() => import("./components/AssistancePage").then((mod) => ({ default: mod.AssistancePage })));
+const PartenairesPage = lazy(() => import("./components/PartenairesPage").then((mod) => ({ default: mod.PartenairesPage })));
 
 function lazyRoute(element: React.ReactElement) {
   return <Suspense fallback={null}>{element}</Suspense>;
@@ -68,6 +70,8 @@ export const router = createBrowserRouter([
         ],
       },
       { path:    "programme",     element: lazyRoute(<ProgrammePage />),         errorElement: <ErrorBoundary /> },
+      { path:    "assistance",    element: lazyRoute(<AssistancePage />),         errorElement: <ErrorBoundary /> },
+      { path:    "partenaires",   element: lazyRoute(<PartenairesPage />),        errorElement: <ErrorBoundary /> },
     ],
   },
 ]);

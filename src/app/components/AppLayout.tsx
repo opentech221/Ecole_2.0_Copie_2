@@ -3,8 +3,8 @@ import { Outlet, useNavigate, useLocation, Navigate } from "react-router";
 import {
   LayoutDashboard, CalendarDays, BarChart3, BookOpenText,
   FileText, CreditCard, Settings, UserCircle,
-  LogOut, GraduationCap, Menu, X, AlertTriangle, ChevronRight,
-  Check, Plus, ShieldCheck, Bell,
+  LogOut, GraduationCap, Menu, X, AlertTriangle, ChevronRight, ChevronLeft,
+  Check, Plus, ShieldCheck, Bell, Headphones, Users2,
 } from "lucide-react";
 import { useAppContext, ALL_CLASSES, UserRole } from "../contexts/AppContext";
 import { useAuthContext }                        from "../contexts/AuthContext";
@@ -22,16 +22,21 @@ function getInitials(name: string) {
 // ─── Navigation definitions ───────────────────────────────────────────────────
 
 const MAIN_NAV = [
-  { path: "/",           Icon: LayoutDashboard, label: "Tableau de bord"       },
-  { path: "/planning",   Icon: CalendarDays,    label: "Planification"          },
-  { path: "/eleves",     Icon: BarChart3,       label: "Administration & Suivi" },
-  { path: "/cahier",     Icon: BookOpenText,    label: "Journal & Registre"     },
-  { path: "/documents",  Icon: FileText,        label: "Documents"              },
-  { path: "/notifications", Icon: Bell,         label: "Notifications"          },
-  { path: "/admin",       Icon: ShieldCheck,     label: "Administration"         },
-  { path: "/abonnement", Icon: CreditCard,      label: "Abonnement"             },
-  { path: "/parametres", Icon: Settings,        label: "Paramètres"             },
-  { path: "/profil",     Icon: UserCircle,      label: "Profil"                 },
+  { path: "/",              Icon: LayoutDashboard, label: "Tableau de bord"       },
+  { path: "/planning",      Icon: CalendarDays,    label: "Planification"          },
+  { path: "/cahier",        Icon: BookOpenText,    label: "Journal & Registre"     },
+  { path: "/eleves",        Icon: BarChart3,       label: "Administration & Suivi" },
+  { path: "/documents",     Icon: FileText,        label: "Documents"              },
+  { path: "/notifications", Icon: Bell,            label: "Notifications"          },
+  { path: "/admin",         Icon: ShieldCheck,     label: "Administration"         },
+  { path: "/abonnement",    Icon: CreditCard,      label: "Abonnement"             },
+  { path: "/parametres",    Icon: Settings,        label: "Param\u00e8tres"             },
+  { path: "/profil",        Icon: UserCircle,      label: "Profil"                 },
+];
+
+const SUPPORT_NAV = [
+  { path: "/assistance",  Icon: Headphones, label: "Assistance"      },
+  { path: "/partenaires", Icon: Users2,     label: "Nos Partenaires" },
 ];
 
 const BOTTOM_NAV = [
@@ -195,6 +200,18 @@ function DesktopSidebar({ profile, onLogout, unreadCount }: {
   const [classOpen, setClassOpen] = useState(false);
   const classRef = useRef<HTMLDivElement>(null);
 
+  // Persistent collapse state
+  const [collapsed, setCollapsed] = useState(() =>
+    typeof window !== "undefined" && localStorage.getItem("ecole2-sidebar-collapsed") === "1"
+  );
+  const toggleCollapsed = () => {
+    setCollapsed(c => {
+      const next = !c;
+      localStorage.setItem("ecole2-sidebar-collapsed", next ? "1" : "0");
+      return next;
+    });
+  };
+
   useEffect(() => {
     function handler(e: MouseEvent) {
       if (classRef.current && !classRef.current.contains(e.target as Node))
@@ -206,140 +223,177 @@ function DesktopSidebar({ profile, onLogout, unreadCount }: {
 
   return (
     <aside style={{
-      width: "260px", minWidth: "260px",
+      width: collapsed ? "64px" : "260px",
+      minWidth: collapsed ? "64px" : "260px",
       backgroundColor: "var(--card)", borderRight: "1px solid var(--border)",
       display: "flex", flexDirection: "column",
       height: "100vh", position: "sticky", top: 0, overflowY: "auto",
+      transition: "width 220ms ease, min-width 220ms ease",
+      overflowX: "hidden",
     }}>
-      {/* Header */}
+
+      {/* Header: logo + toggle button */}
       <div style={{
-        padding: "18px 16px 14px", borderBottom: "1px solid var(--border)",
-        display: "flex", alignItems: "center", gap: "10px",
+        padding: collapsed ? "18px 0 14px" : "18px 16px 14px",
+        borderBottom: "1px solid var(--border)",
+        display: "flex", alignItems: "center",
+        justifyContent: collapsed ? "center" : "space-between", gap: "10px",
       }}>
-        <div style={{
-          width: 32, height: 32, borderRadius: "8px", flexShrink: 0,
-          background: "linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)",
-          display: "flex", alignItems: "center", justifyContent: "center",
-        }}>
-          <GraduationCap style={{ width: 16, height: 16, color: "#fff" }} />
-        </div>
-        <div>
-          <p style={{ fontSize: "14px", fontWeight: 800, color: "var(--foreground)",
-                      margin: 0, letterSpacing: "-0.01em",
-                      fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-            École 2.0
-          </p>
-          <p style={{ fontSize: "10.5px", color: "var(--muted-foreground)", margin: 0,
-                      fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-            {profile?.ecoleName || "Plateforme scolaire"}
-          </p>
-        </div>
-      </div>
-
-      {/* Nouvelle Fiche CTA */}
-      <div style={{ padding: "12px 12px 4px" }}>
-        <button
-          onClick={() => navigate("/new-fiche")}
-          style={{
-            display: "flex", alignItems: "center", justifyContent: "center", gap: "7px",
-            width: "100%", padding: "10px 14px", borderRadius: "10px",
-            background: "linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)",
-            color: "#fff", fontWeight: 700, fontSize: "13px",
-            border: "none", cursor: "pointer",
-            boxShadow: "0 3px 10px color-mix(in srgb, var(--primary) 28%, transparent)",
-            fontFamily: "'Plus Jakarta Sans', sans-serif",
-          }}
-        >
-          <Plus style={{ width: 14, height: 14, strokeWidth: 2.5 }} />
-          Nouvelle Fiche
-        </button>
-      </div>
-
-      {/* Class selector */}
-      <div style={{ padding: "8px 12px 4px" }} ref={classRef}>
-        <button
-          onClick={() => setClassOpen(o => !o)}
-          aria-label="Choisir la classe active"
-          style={{
-            display: "flex", alignItems: "center", justifyContent: "space-between",
-            width: "100%", padding: "7px 11px", borderRadius: "8px",
-            backgroundColor: "var(--muted)", border: "1px solid var(--border)",
-            cursor: "pointer", fontFamily: "'Plus Jakarta Sans', sans-serif",
-          }}
-        >
-          <span style={{ fontSize: "11px", color: "var(--muted-foreground)", fontWeight: 500 }}>
-            Classe active :
-          </span>
-          <span style={{
-            fontSize: "12px", fontWeight: 800, color: "var(--primary-foreground)",
-            backgroundColor: "var(--primary)", border: "1px solid var(--primary)",
-            borderRadius: "5px", padding: "1px 8px",
-          }}>
-            {activeClass}
-          </span>
-        </button>
-        {classOpen && (
-          <div style={{
-            display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "5px",
-            marginTop: "6px", padding: "8px",
-            backgroundColor: "var(--muted)", borderRadius: "10px", border: "1px solid var(--border)",
-          }}>
-            {ALL_CLASSES.map(c => {
-              const a = activeClass === c;
-              return (
-                <button key={c} onClick={() => { setActiveClass(c); setClassOpen(false); }}
-                  style={{
-                    padding: "7px 4px", borderRadius: "7px",
-                    backgroundColor: a ? "var(--primary)" : "var(--card)",
-                    border: `1.5px solid ${a ? "var(--primary)" : "var(--border)"}`,
-                    color: a ? "#fff" : "var(--foreground)",
-                    fontSize: "12px", fontWeight: 700, cursor: "pointer",
-                    fontFamily: "'Plus Jakarta Sans', sans-serif",
-                  }}
-                >{c}</button>
-              );
-            })}
+        {!collapsed && (
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div style={{
+              width: 32, height: 32, borderRadius: "8px", flexShrink: 0,
+              background: "linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+            }}>
+              <GraduationCap style={{ width: 16, height: 16, color: "#fff" }} />
+            </div>
+            <div>
+              <p style={{ fontSize: "14px", fontWeight: 800, color: "var(--foreground)",
+                          margin: 0, letterSpacing: "-0.01em",
+                          fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                École 2.0
+              </p>
+              <p style={{ fontSize: "10.5px", color: "var(--muted-foreground)", margin: 0,
+                          fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                {profile?.ecoleName || "Plateforme scolaire"}
+              </p>
+            </div>
           </div>
         )}
+        {collapsed && (
+          <div style={{
+            width: 32, height: 32, borderRadius: "8px",
+            background: "linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}>
+            <GraduationCap style={{ width: 16, height: 16, color: "#fff" }} />
+          </div>
+        )}
+        <button
+          onClick={toggleCollapsed}
+          title={collapsed ? "Développer la barre latérale" : "Réduire la barre latérale"}
+          style={{
+            width: 26, height: 26, borderRadius: "6px", flexShrink: 0,
+            backgroundColor: "var(--muted)", border: "1px solid var(--border)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            cursor: "pointer",
+          }}>
+          {collapsed
+            ? <ChevronRight style={{ width: 13, height: 13, color: "var(--muted-foreground)" }} />
+            : <ChevronLeft  style={{ width: 13, height: 13, color: "var(--muted-foreground)" }} />}
+        </button>
       </div>
 
-      {/* Alert card */}
-      {schoolMissing && (
-        <div style={{ padding: "6px 0 0" }}>
-          <SchoolAlertCard onGo={() => navigate("/profil")} />
-        </div>
+      {!collapsed && (
+        <>
+          {/* Nouvelle Fiche CTA */}
+          <div style={{ padding: "12px 12px 4px" }}>
+            <button
+              onClick={() => navigate("/new-fiche")}
+              style={{
+                display: "flex", alignItems: "center", justifyContent: "center", gap: "7px",
+                width: "100%", padding: "10px 14px", borderRadius: "10px",
+                background: "linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)",
+                color: "#fff", fontWeight: 700, fontSize: "13px",
+                border: "none", cursor: "pointer",
+                boxShadow: "0 3px 10px color-mix(in srgb, var(--primary) 28%, transparent)",
+                fontFamily: "'Plus Jakarta Sans', sans-serif",
+              }}
+            >
+              <Plus style={{ width: 14, height: 14, strokeWidth: 2.5 }} />
+              Nouvelle Fiche
+            </button>
+          </div>
+
+          {/* Class selector */}
+          <div style={{ padding: "8px 12px 4px" }} ref={classRef}>
+            <button
+              onClick={() => setClassOpen(o => !o)}
+              aria-label="Choisir la classe active"
+              style={{
+                display: "flex", alignItems: "center", justifyContent: "space-between",
+                width: "100%", padding: "7px 11px", borderRadius: "8px",
+                backgroundColor: "var(--muted)", border: "1px solid var(--border)",
+                cursor: "pointer", fontFamily: "'Plus Jakarta Sans', sans-serif",
+              }}
+            >
+              <span style={{ fontSize: "11px", color: "var(--muted-foreground)", fontWeight: 500 }}>
+                Classe active :
+              </span>
+              <span style={{
+                fontSize: "12px", fontWeight: 800, color: "var(--primary-foreground)",
+                backgroundColor: "var(--primary)", border: "1px solid var(--primary)",
+                borderRadius: "5px", padding: "1px 8px",
+              }}>
+                {activeClass}
+              </span>
+            </button>
+            {classOpen && (
+              <div style={{
+                display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "5px",
+                marginTop: "6px", padding: "8px",
+                backgroundColor: "var(--muted)", borderRadius: "10px", border: "1px solid var(--border)",
+              }}>
+                {ALL_CLASSES.map(c => {
+                  const a = activeClass === c;
+                  return (
+                    <button key={c} onClick={() => { setActiveClass(c); setClassOpen(false); }}
+                      style={{
+                        padding: "7px 4px", borderRadius: "7px",
+                        backgroundColor: a ? "var(--primary)" : "var(--card)",
+                        border: `1.5px solid ${a ? "var(--primary)" : "var(--border)"}`,
+                        color: a ? "#fff" : "var(--foreground)",
+                        fontSize: "12px", fontWeight: 700, cursor: "pointer",
+                        fontFamily: "'Plus Jakarta Sans', sans-serif",
+                      }}
+                    >{c}</button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* Alert card */}
+          {schoolMissing && (
+            <div style={{ padding: "6px 0 0" }}>
+              <SchoolAlertCard onGo={() => navigate("/profil")} />
+            </div>
+          )}
+        </>
       )}
 
       {/* Navigation */}
-      <nav style={{ flex: 1, overflowY: "auto", padding: "8px 12px" }}>
-        <p style={{ fontSize: "10px", fontWeight: 700, color: "var(--muted-foreground)",
-                    textTransform: "uppercase", letterSpacing: "0.08em",
-                    margin: "6px 4px 6px",
-                    fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-          Navigation
-        </p>
+      <nav style={{ flex: 1, overflowY: "auto", padding: collapsed ? "8px 6px" : "8px 12px" }}>
+        {!collapsed && (
+          <p style={{ fontSize: "10px", fontWeight: 700, color: "var(--muted-foreground)",
+                      textTransform: "uppercase", letterSpacing: "0.08em",
+                      margin: "6px 4px 6px",
+                      fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            Navigation
+          </p>
+        )}
         {MAIN_NAV.map(({ path, Icon, label }) => {
           const active = path === "/" ? pathname === "/" : pathname.startsWith(path);
           const showDot = path === "/profil" && schoolMissing;
           const showUnreadBadge = path === "/notifications" && unreadCount > 0;
           return (
             <button key={path} onClick={() => navigate(path)}
-              style={{ ...navItemStyle(active), position: "relative", marginBottom: "1px" }}>
+              title={collapsed ? label : undefined}
+              style={{
+                ...navItemStyle(active),
+                position: "relative", marginBottom: "1px",
+                justifyContent: collapsed ? "center" : "flex-start",
+                padding: collapsed ? "10px" : "9px 12px 9px 14px",
+              }}>
               <Icon style={{ width: 15, height: 15, flexShrink: 0, strokeWidth: 1.75 }} />
-              {label}
-              {showUnreadBadge && (
+              {!collapsed && label}
+              {!collapsed && showUnreadBadge && (
                 <span style={{
-                  marginLeft: "auto",
-                  minWidth: 20,
-                  height: 20,
-                  borderRadius: 999,
-                  backgroundColor: "var(--primary)",
-                  color: "var(--primary-foreground)",
-                  fontSize: "11px",
-                  fontWeight: 700,
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
+                  marginLeft: "auto", minWidth: 20, height: 20, borderRadius: 999,
+                  backgroundColor: "var(--primary)", color: "var(--primary-foreground)",
+                  fontSize: "11px", fontWeight: 700,
+                  display: "inline-flex", alignItems: "center", justifyContent: "center",
                   padding: "0 6px",
                 }} aria-label={`${unreadCount} notifications non lues`}>
                   {unreadCount > 99 ? "99+" : unreadCount}
@@ -347,8 +401,10 @@ function DesktopSidebar({ profile, onLogout, unreadCount }: {
               )}
               {showDot && (
                 <span style={{
-                  position: "absolute", right: "12px", top: "50%",
-                  transform: "translateY(-50%)",
+                  position: "absolute",
+                  right: collapsed ? "6px" : "12px",
+                  top: collapsed ? "6px" : "50%",
+                  transform: collapsed ? "none" : "translateY(-50%)",
                   width: 6, height: 6, borderRadius: "50%",
                   backgroundColor: "#f59e0b",
                 }} />
@@ -357,12 +413,62 @@ function DesktopSidebar({ profile, onLogout, unreadCount }: {
           );
         })}
 
-        {/* Separator before logout */}
+        {/* Support section separator */}
+        <div style={{ height: "1px", backgroundColor: "var(--border)", margin: "8px 4px" }} />
+        {!collapsed && (
+          <p style={{ fontSize: "10px", fontWeight: 700, color: "var(--muted-foreground)",
+                      textTransform: "uppercase", letterSpacing: "0.08em",
+                      margin: "6px 4px 6px",
+                      fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            Support
+          </p>
+        )}
+        {SUPPORT_NAV.map(({ path, Icon, label }) => {
+          const active = pathname.startsWith(path);
+          return (
+            <button key={path} onClick={() => navigate(path)}
+              title={collapsed ? label : undefined}
+              style={{
+                ...navItemStyle(active),
+                marginBottom: "1px",
+                justifyContent: collapsed ? "center" : "flex-start",
+                padding: collapsed ? "10px" : "9px 12px 9px 14px",
+              }}>
+              <Icon style={{ width: 15, height: 15, flexShrink: 0, strokeWidth: 1.75 }} />
+              {!collapsed && label}
+            </button>
+          );
+        })}
+
         <div style={{ height: "1px", backgroundColor: "var(--border)", margin: "8px 4px" }} />
       </nav>
 
       {/* User card + logout */}
-      <UserCard profile={profile} onLogout={onLogout} />
+      {collapsed ? (
+        <div style={{ padding: "10px 0", display: "flex", flexDirection: "column", alignItems: "center", gap: 8, borderTop: "1px solid var(--border)" }}>
+          <div style={{
+            width: 32, height: 32, borderRadius: "50%",
+            background: "linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontSize: "11px", fontWeight: 700, color: "#fff", cursor: "pointer",
+          }}
+            title={profile?.fullName || "Profil"}
+            onClick={() => navigate("/profil")}
+          >
+            {profile?.fullName ? getInitials(profile.fullName) : "?"}
+          </div>
+          <button onClick={onLogout} title="Déconnexion"
+            style={{
+              width: 32, height: 32, borderRadius: "8px", border: "1px solid var(--border)",
+              backgroundColor: "var(--muted)", cursor: "pointer",
+              display: "flex", alignItems: "center", justifyContent: "center",
+            }}>
+            <LogOut style={{ width: 14, height: 14, color: "var(--muted-foreground)" }} />
+          </button>
+        </div>
+      ) : (
+        <UserCard profile={profile} onLogout={onLogout} />
+      )}
     </aside>
   );
 }
