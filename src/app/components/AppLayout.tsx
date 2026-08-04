@@ -35,8 +35,7 @@ const MAIN_NAV = [
 ];
 
 const SUPPORT_NAV = [
-  { path: "/assistance",  Icon: Headphones, label: "Assistance"      },
-  { path: "/partenaires", Icon: Users2,     label: "Nos Partenaires" },
+  { path: "/assistance", Icon: Headphones, label: "Assistance & À propos" },
 ];
 
 const BOTTOM_NAV = [
