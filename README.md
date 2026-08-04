@@ -133,12 +133,23 @@ Les clés de traçabilité (`page_source`, `document_ref`) sont stockées au niv
 - Schéma relationnel du programme officiel validé (UUID via `gen_random_uuid()`).
 - Lot de seeding asynchrone Node.js exécuté à 100% sur les 24 fichiers du référentiel officiel.
 - Endpoints de navigation curriculaire opérationnels côté fonction Supabase (`programme-nav`).
+- **Module Élèves** — interface 3 onglets toujours visible (0 à 120 élèves), 120 lignes fantômes en état vide.
+- **CRUD élèves complet** — ajout via modal (INSERT Supabase), édition de tous les champs, suppression avec annulation 5 s.
+- **Garde de capacité** — bouton Ajouter désactivé + toast d'avertissement à 120 élèves.
+- **Correction BulletinBody** — garde null évitant le crash quand aucun élève n'est sélectionné.
+- **Sidebar desktop collapsible** — bascule icônes (64 px) / labels (260 px), état persisté en localStorage.
+- **Réordonnancement navigation** — Journal & Registre avant Administration & Suivi.
+- **Page Assistance & À propos** — contacts Tech-Loxo, partenaires circulaires, bouton Se Déconnecter.
+- **Phase 4 QA validée** — scénarios 0 élève → ajout, 3 onglets, limite 120, persistance F5 (mode E2E + Supabase réel).
 
 ### 🔜 À finaliser court terme
 
 - Consolider la vue SQL de navigation aplatie côté backend pour les besoins de navigation/filtrage avancés.
 - Finaliser le câblage des sélecteurs en cascade dans les modales React restantes.
 - Intégrer le bouton de redirection vers le Storage PDF (avec ancre `#page=X`).
+- **Import CSV d'élèves** — bouton présent dans l'UI, logique de parsing et d'insertion à implémenter.
+- **Export PDF liste nominative** — génération côté client de la liste de classe imprimable.
+- **Tests utilisateurs en conditions réelles** — validation terrain avec des enseignants sur compte Supabase de production.
 
 ---
 
@@ -469,6 +480,11 @@ Ce projet est ouvert aux contributions !
 - [x] Design system unifié
 - [x] Dark mode
 - [x] Workflow migrations local/distant (Supabase CLI)
+- [x] Module Élèves complet (CRUD, bulletins, cahier de registre, 120 élèves max)
+- [x] Sidebar desktop collapsible
+- [x] Page Assistance & Partenaires
+- [ ] Import CSV élèves
+- [ ] Export PDF liste nominative
 - [ ] Tests utilisateurs en conditions réelles
 - [ ] Mode offline pour zones à faible connexion
 - [ ] Optimisations performances mobiles
