@@ -136,19 +136,42 @@ function Brand() {
   );
 }
 
-function MainCta({ compact = false }: { compact?: boolean }) {
+function MainCta({ mode = "hero", compact = false }: { mode?: "hero" | "demo" | "footer"; compact?: boolean }) {
+  if (mode === "demo") {
+    return (
+      <div className={`landing-cta-row${compact ? " compact" : ""}`}>
+        <Link className="landing-btn landing-btn-primary" to="/demo">
+          Regarder la démo
+          <PlayCircle size={16} />
+        </Link>
+      </div>
+    );
+  }
+
+  if (mode === "footer") {
+    return (
+      <div className={`landing-cta-row${compact ? " compact" : ""}`}>
+        <Link className="landing-btn landing-btn-primary" to="/login">
+          Retrouver mon temps maintenant
+          <ArrowRight size={16} />
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <div className={`landing-cta-row${compact ? " compact" : ""}`}>
       <Link className="landing-btn landing-btn-primary" to="/login">
-        Libérer mon temps maintenant
+        Retrouver mon temps maintenant
         <ArrowRight size={16} />
       </Link>
       <Link className="landing-btn landing-btn-secondary" to="/demo">
-        Regarder une démo
+        Regarder la démo
         <PlayCircle size={16} />
       </Link>
-      <Link className="landing-btn landing-btn-tertiary" to="/fonctionnalites">
+      <Link className="landing-btn landing-btn-ghost" to="/fonctionnalites">
         Découvrir les fonctionnalités
+        <ArrowRight size={16} />
       </Link>
     </div>
   );
@@ -193,6 +216,14 @@ function MarketingShell({ children }: { children: React.ReactNode }) {
       {children}
 
       <footer className="landing-footer">
+        <div className="landing-container landing-footer-banner">
+          <div>
+            <p>Prêt à retrouver du temps utile chaque semaine ?</p>
+            <h4>Accédez à votre espace enseignant et centralisez vos outils de préparation, de suivi et d’évaluation.</h4>
+          </div>
+          <MainCta mode="footer" compact />
+        </div>
+
         <div className="landing-container landing-footer-grid">
           <div>
             <h3>École 2.0</h3>
@@ -251,10 +282,10 @@ export function MarketingHomePage() {
               Pensé pour les enseignants du CI au CM2 au Sénégal
             </p>
             <h1>
-              Offrir aux enseignants un environnement numérique à la hauteur des exigences de l’école primaire sénégalaise.
+              Aider les enseignants à retrouver du temps pour eux en leur offrant les outils numériques qu'ils méritent.
             </h1>
             <p className="landing-lead">
-              Planifiez d’abord les apprentissages du mois, générez ensuite vos fiches à partir des séances prévues ou via le bouton Nouvelle fiche, puis renseignez votre cahier journal, le registre des présences et le suivi des évaluations jusqu’aux bulletins et propositions de passage.
+              Optimisez votre temps de travail hors classe et réinvestissez-le enfin là où il compte vraiment pour vous et vos élèves : une suite d'outils centralisés pour préparer vos séances, évaluer sans stress et gagner meilleurs résultats chaque semaine.
             </p>
             <MainCta />
 
@@ -357,7 +388,7 @@ export function MarketingFeaturesPage() {
 
         <section className="landing-container landing-feature-grid">
           {FEATURES.map((feature) => (
-            <article key={feature.title} className="landing-feature-card landing-tricolor-outline lift">
+            <article key={feature.title} className="landing-feature-card lift">
               <div>
                 <div className="landing-feature-icon" aria-hidden="true">
                   <feature.icon size={18} />
@@ -382,13 +413,13 @@ export function MarketingFeaturesPage() {
           <div className="landing-tricolor-divider" aria-hidden="true" />
         </div>
 
-        <section className="landing-container landing-demo-cta landing-tricolor-outline">
+        <section className="landing-container landing-demo-cta">
           <p>Démonstration</p>
           <h2>Voyez École 2.0 en action dans un scénario d’usage réaliste.</h2>
           <p>
             Regardez un parcours type: planification mensuelle, génération de fiche depuis une séance prévue ou via Nouvelle fiche, tenue du registre et génération des bulletins, avec des contenus déjà intégrés et des repères issus du guide officiel.
           </p>
-          <MainCta compact />
+          <MainCta mode="demo" compact />
         </section>
       </main>
     </MarketingShell>
@@ -408,7 +439,7 @@ export function MarketingDemoPage() {
         </section>
 
         <section className="landing-container landing-video-block">
-          <div className="landing-video-placeholder landing-tricolor-outline">
+          <div className="landing-video-placeholder">
             <PlayCircle size={72} />
             <h2>Lecteur de démonstration produit</h2>
             <p>Préparer une séance, suivre la classe et produire les documents essentiels dans une continuité de service claire, professionnelle et adaptée au contexte sénégalais.</p>
@@ -419,12 +450,12 @@ export function MarketingDemoPage() {
           <div className="landing-tricolor-divider" aria-hidden="true" />
         </div>
 
-        <section className="landing-container landing-convert landing-tricolor-outline">
+        <section className="landing-container landing-convert">
           <div>
             <h2>Prêt à passer à l’usage réel ?</h2>
             <p>Accédez à votre portail enseignant et poursuivez le travail dans un environnement déjà structuré pour vos fiches, vos planifications et vos suivis de classe.</p>
           </div>
-          <MainCta compact />
+          <MainCta mode="footer" compact />
         </section>
       </main>
     </MarketingShell>
