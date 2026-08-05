@@ -628,9 +628,6 @@ export function ContextSelector() {
   );
   const availableSousDomaines = useMemo(() => sousOpts, [sousOpts]);
   const availableDisciplines = useMemo(() => effectiveDiscOpts, [effectiveDiscOpts]);
-  const availablePaliers = useMemo(() => paliersOpts, [paliersOpts]);
-  const availableOas = useMemo(() => oaList, [oaList]);
-  const availableOs = useMemo(() => osOpts, [osOpts]);
 
   const cascadeState = useMemo(
     () => ({ niveau, domaine, sousDomaine, discipline, palier, oaIdx, selectedOS }),
@@ -696,6 +693,9 @@ export function ContextSelector() {
 
   const oaEntry    = oaIdx !== "" ? oaList[oaIdx] : undefined;
   const osOpts     = oaEntry?.os ?? [];
+  const availablePaliers = useMemo(() => paliersOpts, [paliersOpts]);
+  const availableOas = useMemo(() => oaList, [oaList]);
+  const availableOs = useMemo(() => osOpts, [osOpts]);
 
   // CORE FIX: contenus are now filtered strictly by the selected OS key.
   // If no OS is selected, the panier is empty — no orphan chips appear.
