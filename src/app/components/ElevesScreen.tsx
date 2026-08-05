@@ -46,6 +46,21 @@ function mapStudentRow(row: StudentRow): Student {
   };
 }
 
+function mapStudentToRow(student: Student, classId: string): StudentRow {
+  return {
+    id: student.id,
+    class_id: classId,
+    matricule: student.matricule,
+    nom: student.nom,
+    prenom: student.prenom,
+    genre: student.genre,
+    date_naissance: student.dateNaissance,
+    lieu_naissance: student.lieuNaissance,
+    tuteur_nom: student.tuteurNom,
+    tuteur_phone: student.tuteurPhone,
+  };
+}
+
 const E2E_GRADES_STORAGE_KEY = "ecole2-e2e-grades";
 const E2E_BULLETIN_OVERRIDE_KEY = "ecole2-e2e-bulletin-override";
 
@@ -1038,10 +1053,10 @@ export function ElevesScreen() {
               <td style={{ padding:"4px 7px", fontFamily:"monospace" }}>{s.matricule}</td>
               <td style={{ padding:"4px 7px", fontWeight:700 }}>{s.nom} {s.prenom}</td>
               <td style={{ padding:"4px 7px" }}>{s.genre}</td>
-              <td style={{ padding:"4px 7px" }}>{s.date_naissance}</td>
-              <td style={{ padding:"4px 7px" }}>{s.lieu_naissance}</td>
-              <td style={{ padding:"4px 7px" }}>{s.tuteur_nom}</td>
-              <td style={{ padding:"4px 7px", fontFamily:"monospace" }}>{s.tuteur_phone}</td>
+              <td style={{ padding:"4px 7px" }}>{s.dateNaissance}</td>
+              <td style={{ padding:"4px 7px" }}>{s.lieuNaissance}</td>
+              <td style={{ padding:"4px 7px" }}>{s.tuteurNom}</td>
+              <td style={{ padding:"4px 7px", fontFamily:"monospace" }}>{s.tuteurPhone}</td>
             </tr>
           ))}
         </tbody>
@@ -1511,7 +1526,7 @@ export function ElevesScreen() {
                                 <PermissionGuard ownerClassId={activeClass} fallback={<ReadOnlyBadge />}>
                                   {/* Edit icon */}
                                   <button
-                                    onClick={e=>{ e.stopPropagation(); setEditingStudent(s as StudentRow); }}
+                                    onClick={e=>{ e.stopPropagation(); setEditingStudent(mapStudentToRow(s, activeClass)); }}
                                     title="Modifier l'élève"
                                     style={{ border:"none", background:"none", cursor:"pointer",
                                              padding:"5px", borderRadius:"6px", color:"#3182ce",
