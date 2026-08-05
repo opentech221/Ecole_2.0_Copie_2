@@ -144,7 +144,7 @@ Les clés de traçabilité (`page_source`, `document_ref`) sont stockées au niv
 
 ### 🔜 À finaliser court terme
 
-- Consolider la vue SQL de navigation aplatie côté backend. ✅ `migration 022_programme_flat_os_view.sql`
+- Consolider la vue SQL de navigation aplatie côté backend. ✅ `migration 022_programme_flat_os_view.sql` (vue `programme_flat_os_v` ajoutée avec droits d'accès et `search_path` explicite)
 - Finaliser le câblage des sélecteurs en cascade dans les modales React. ✅ (ContextSelector + PlanningScreen)
 - Intégrer le bouton de redirection vers le Storage PDF (avec ancre `#page=X`). ✅ LessonEditor + ProgrammeNav
 - **Import CSV d'élèves** — modal de parsing avec aperçu, validation et insertion par lot. ✅

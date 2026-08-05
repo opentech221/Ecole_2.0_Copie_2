@@ -6,6 +6,7 @@ import { ProfileGuardLoader }          from "./ProfileGuardLoader";
 import { ChevronLeft, ChevronDown, ChevronRight, Info, HelpCircle, Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
 import { programmeNavFunctionApi }     from "../../services/programmeNavFunctionApi";
 import { QK }                          from "../../lib/queryClient";
+import { normalizeContextSelectorCascade } from "./contextSelectorCascade";
 
 // ─── APC Data ─────────────────────────────────────────────────────────────────
 
@@ -620,6 +621,35 @@ export function ContextSelector() {
 
   const effectiveDiscOpts = discOpts.length > 0 ? discOpts : allLangDisc;
 
+  const availableNiveaux = useMemo(() => (niveauxData.length ? niveauxData.map((n) => n.nom) : NIVEAUX), [niveauxData]);
+  const availableDomaines = useMemo(
+    () => (selectedNiveau ? domainesData.filter((d) => d.niveau_id === selectedNiveau.id).map((d) => d.nom) : DOMAINES),
+    [selectedNiveau, domainesData],
+  );
+  const availableSousDomaines = useMemo(() => sousOpts, [sousOpts]);
+  const availableDisciplines = useMemo(() => effectiveDiscOpts, [effectiveDiscOpts]);
+  const availablePaliers = useMemo(() => paliersOpts, [paliersOpts]);
+  const availableOas = useMemo(() => oaList, [oaList]);
+  const availableOs = useMemo(() => osOpts, [osOpts]);
+
+  const cascadeState = useMemo(
+    () => ({ niveau, domaine, sousDomaine, discipline, palier, oaIdx, selectedOS }),
+    [niveau, domaine, sousDomaine, discipline, palier, oaIdx, selectedOS],
+  );
+
+  const normalizedCascadeState = useMemo(
+    () => normalizeContextSelectorCascade(cascadeState, {
+      availableNiveaux,
+      availableDomaines,
+      availableSousDomaines,
+      availableDisciplines,
+      availablePaliers,
+      availableOas,
+      availableOs,
+    }),
+    [cascadeState, availableNiveaux, availableDomaines, availableSousDomaines, availableDisciplines, availablePaliers, availableOas, availableOs],
+  );
+
   // ── Loading step tracker — shows spinner on the field being repopulated ──
   const [loadingStep, setLoadingStep] = useState<
     "sousDomaine"|"discipline"|"palier"|"oa"|"os"|"contenus"|null
@@ -729,6 +759,28 @@ export function ContextSelector() {
   }
 
   // When OS changes, clear the chip basket and briefly show a contenus spinner
+  useEffect(() => {
+    const shouldUpdate =
+      normalizedCascadeState.niveau !== niveau ||
+      normalizedCascadeState.domaine !== domaine ||
+      normalizedCascadeState.sousDomaine !== sousDomaine ||
+      normalizedCascadeState.discipline !== discipline ||
+      normalizedCascadeState.palier !== palier ||
+      normalizedCascadeState.oaIdx !== oaIdx ||
+      normalizedCascadeState.selectedOS !== selectedOS;
+
+    if (!shouldUpdate) return;
+
+    setNiveau(normalizedCascadeState.niveau);
+    setDomaine(normalizedCascadeState.domaine);
+    setSousDomaine(normalizedCascadeState.sousDomaine);
+    setDiscipline(normalizedCascadeState.discipline);
+    setPalier(normalizedCascadeState.palier);
+    setOaIdx(normalizedCascadeState.oaIdx);
+    setSelectedOS(normalizedCascadeState.selectedOS);
+    setChecked(new Set());
+  }, [normalizedCascadeState, niveau, domaine, sousDomaine, discipline, palier, oaIdx, selectedOS]);
+
   useEffect(() => {
     setChecked(new Set());
     if (selectedOS) triggerLoad("contenus", 280);

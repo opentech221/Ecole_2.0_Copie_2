@@ -12,6 +12,7 @@ import { Skeleton } from "@/app/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/ui/tabs";
 import { useProgrammeNavigation } from "@/hooks/useProgrammeNavigation";
 import type { ProgrammeNavigationRow } from "@/services/programmeNavigationApi";
+import { normalizeProgrammeNavigationSelection } from "../utils/programmeNavigationSelection";
 
 type FlatDisplayRow = ProgrammeNavigationRow & {
   row_key: string;
@@ -82,6 +83,15 @@ export function ProgrammeNavigationWorkspace() {
     isLoadingFilters,
   } = useProgrammeNavigation(navParams);
 
+  const normalizedSelection = useMemo(
+    () => normalizeProgrammeNavigationSelection({ filters, niveauId, domaineId, sousDomaineId }),
+    [filters, niveauId, domaineId, sousDomaineId],
+  );
+
+  const effectiveNiveauId = normalizedSelection.niveauId;
+  const effectiveDomaineId = normalizedSelection.domaineId;
+  const effectiveSousDomaineId = normalizedSelection.sousDomaineId;
+
   const activeRows = useMemo(() => expandFlatRows(flat), [flat]);
 
   const sortedRows = useMemo(() => {
@@ -120,46 +130,28 @@ export function ProgrammeNavigationWorkspace() {
   useEffect(() => {
     if (!filters) return;
 
-    const nextNiveauId = filters.niveaux.some((niveau) => niveau.id === niveauId) ? niveauId : "all";
-    const nextDomaineId =
-      nextNiveauId === "all"
-        ? (filters.domaines.some((domaine) => domaine.id === domaineId) ? domaineId : "all")
-        : filters.domaines.some((domaine) => domaine.id === domaineId && domaine.niveau_id === nextNiveauId)
-          ? domaineId
-          : "all";
-    const nextSousDomaineId =
-      nextDomaineId === "all"
-        ? (filters.sous_domaines.some((sousDomaine) => sousDomaine.id === sousDomaineId) ? sousDomaineId : "all")
-        : filters.sous_domaines.some((sousDomaine) => sousDomaine.id === sousDomaineId && sousDomaine.domaine_id === nextDomaineId)
-          ? sousDomaineId
-          : "all";
-
-    if (nextNiveauId !== niveauId) setNiveauId(nextNiveauId);
-    if (nextDomaineId !== domaineId) setDomaineId(nextDomaineId);
-    if (nextSousDomaineId !== sousDomaineId) setSousDomaineId(nextSousDomaineId);
-
     const next = new URLSearchParams(searchParams);
     next.set("navView", tab);
-    if (nextNiveauId === "all") next.delete("niveauId"); else next.set("niveauId", nextNiveauId);
-    if (nextDomaineId === "all") next.delete("domaineId"); else next.set("domaineId", nextDomaineId);
-    if (nextSousDomaineId === "all") next.delete("sousDomaineId"); else next.set("sousDomaineId", nextSousDomaineId);
+    if (effectiveNiveauId === "all") next.delete("niveauId"); else next.set("niveauId", effectiveNiveauId);
+    if (effectiveDomaineId === "all") next.delete("domaineId"); else next.set("domaineId", effectiveDomaineId);
+    if (effectiveSousDomaineId === "all") next.delete("sousDomaineId"); else next.set("sousDomaineId", effectiveSousDomaineId);
     if (!search.trim()) next.delete("navSearch"); else next.set("navSearch", search.trim());
     if (page <= 1) next.delete("navPage"); else next.set("navPage", String(page));
 
     setSearchParams(next, { replace: true });
-  }, [filters, niveauId, domaineId, sousDomaineId, tab, search, page, searchParams, setSearchParams]);
+  }, [filters, effectiveNiveauId, effectiveDomaineId, effectiveSousDomaineId, tab, search, page, searchParams, setSearchParams]);
 
   const domainOptions = useMemo(() => {
     if (!filters?.domaines) return [];
-    if (niveauId === "all") return filters.domaines;
-    return filters.domaines.filter((d) => d.niveau_id === niveauId);
-  }, [filters?.domaines, niveauId]);
+    if (effectiveNiveauId === "all") return filters.domaines;
+    return filters.domaines.filter((d) => d.niveau_id === effectiveNiveauId);
+  }, [filters, effectiveNiveauId]);
 
   const sousDomainOptions = useMemo(() => {
     if (!filters?.sous_domaines) return [];
-    if (domaineId === "all") return filters.sous_domaines;
-    return filters.sous_domaines.filter((s) => s.domaine_id === domaineId);
-  }, [filters?.sous_domaines, domaineId]);
+    if (effectiveDomaineId === "all") return filters.sous_domaines;
+    return filters.sous_domaines.filter((s) => s.domaine_id === effectiveDomaineId);
+  }, [filters, effectiveDomaineId]);
 
   return (
     <Card className="border-slate-200/70 bg-white/90 shadow-sm dark:border-slate-800 dark:bg-slate-950/80">
@@ -185,7 +177,7 @@ export function ProgrammeNavigationWorkspace() {
               <Filter className="h-3.5 w-3.5" /> Niveau
             </label>
             <Select
-              value={niveauId}
+              value={effectiveNiveauId}
               onValueChange={(value) => {
                 setNiveauId(value);
                 setDomaineId("all");
@@ -210,7 +202,7 @@ export function ProgrammeNavigationWorkspace() {
           <div className="space-y-1">
             <label htmlFor="programme_domaineFilter" className="text-xs font-medium text-muted-foreground">Domaine</label>
             <Select
-              value={domaineId}
+              value={effectiveDomaineId}
               onValueChange={(value) => {
                 setDomaineId(value);
                 setSousDomaineId("all");
@@ -234,7 +226,7 @@ export function ProgrammeNavigationWorkspace() {
           <div className="space-y-1">
             <label htmlFor="programme_sousDomaineFilter" className="text-xs font-medium text-muted-foreground">Sous-domaine</label>
             <Select
-              value={sousDomaineId}
+              value={effectiveSousDomaineId}
               onValueChange={(value) => {
                 setSousDomaineId(value);
                 setPage(1);
