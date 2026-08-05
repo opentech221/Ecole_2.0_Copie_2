@@ -71,18 +71,19 @@ function SchoolAlertCard({ onGo }: { onGo: () => void }) {
   return (
     <div style={{
       margin: "0 12px 4px", padding: "10px 12px", borderRadius: "10px",
-      backgroundColor: "#fffbeb", border: "1px solid #fde68a",
+      backgroundColor: "color-mix(in srgb, var(--accent) 84%, white)",
+      border: "1px solid color-mix(in srgb, var(--ring) 45%, white)",
     }}>
       <div style={{ display: "flex", gap: "8px", alignItems: "flex-start" }}>
-        <AlertTriangle style={{ width: 13, height: 13, color: "#d97706",
+        <AlertTriangle style={{ width: 13, height: 13, color: "#a16207",
                                  flexShrink: 0, marginTop: "2px" }} />
         <div>
-          <p style={{ fontSize: "11.5px", fontWeight: 600, color: "#92400e",
+          <p style={{ fontSize: "11.5px", fontWeight: 600, color: "#7c5108",
                       margin: "0 0 4px", lineHeight: 1.4,
                       fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             Données école manquantes
           </p>
-          <p style={{ fontSize: "11px", color: "#b45309", margin: "0 0 7px",
+          <p style={{ fontSize: "11px", color: "#8d5f10", margin: "0 0 7px",
                       lineHeight: 1.45, fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             Configurez votre école pour générer vos fiches.
           </p>
@@ -90,8 +91,8 @@ function SchoolAlertCard({ onGo }: { onGo: () => void }) {
             onClick={onGo}
             style={{
               display: "inline-flex", alignItems: "center", gap: "3px",
-              fontSize: "11px", fontWeight: 700, color: "#92400e",
-              backgroundColor: "#fef3c7", border: "1px solid #fcd34d",
+              fontSize: "11px", fontWeight: 700, color: "#7c5108",
+              backgroundColor: "var(--accent)", border: "1px solid color-mix(in srgb, var(--ring) 38%, white)",
               borderRadius: "6px", padding: "3px 10px", cursor: "pointer",
               fontFamily: "'Plus Jakarta Sans', sans-serif",
             }}
@@ -482,6 +483,7 @@ function MobileTopBar({ activeClass, onMenuOpen }: {
       position: "fixed", top: 0, left: 0, right: 0, zIndex: 200,
       height: "48px", backgroundColor: "var(--card)", borderBottom: "1px solid var(--border)",
       display: "flex", alignItems: "center", padding: "0 16px", gap: "12px",
+      boxSizing: "border-box",
       fontFamily: "'Plus Jakarta Sans', sans-serif",
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: "6px", flex: 1 }}>
@@ -531,6 +533,7 @@ function MobileBottomNav() {
       height: "max(64px, calc(64px + env(safe-area-inset-bottom)))",
       backgroundColor: "var(--card)", borderTop: "1px solid var(--border)",
       display: "flex", alignItems: "center",
+      boxSizing: "border-box",
       fontFamily: "'Plus Jakarta Sans', sans-serif",
     }}>
       {BOTTOM_NAV.map(({ path, Icon, label }) => {
@@ -614,6 +617,7 @@ function MobileDrawer({ open, onClose, profile, onLogout, unreadCount }: {
           transform: open ? "translateY(0)" : "translateY(105%)",
           transition: "transform 280ms cubic-bezier(0.32,0.72,0,1)",
           maxHeight: "88vh", display: "flex", flexDirection: "column",
+          boxSizing: "border-box",
           fontFamily: "'Plus Jakarta Sans', sans-serif",
         }}
       >
@@ -861,7 +865,7 @@ export function AppLayout() {
         <div style={{ textAlign: "center" }}>
           <div style={{
             width: 44, height: 44, borderRadius: "12px", margin: "0 auto 12px",
-            background: "linear-gradient(135deg, #0d1f3c 0%, #3182ce 100%)",
+            background: "linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)",
             display: "flex", alignItems: "center", justifyContent: "center",
           }}>
             <GraduationCap style={{ width: 22, height: 22, color: "#fff" }} />

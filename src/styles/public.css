@@ -3,14 +3,14 @@
 :root {
   --font-sans: 'Manrope', 'Segoe UI', sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
-  --background: #f5f7fb;
-  --foreground: #0f172a;
+  --background: #f8faf5;
+  --foreground: #11243b;
   --card: #ffffff;
-  --secondary: #1d4ed8;
-  --muted: #e8edf5;
-  --muted-foreground: #3f4f68;
-  --border: rgba(15, 23, 42, 0.10);
-  --ring: #1d4ed8;
+  --secondary: #bf1e2e;
+  --muted: #edf3ea;
+  --muted-foreground: #466077;
+  --border: rgba(17, 36, 59, 0.10);
+  --ring: #f3c623;
 }
 
 html,

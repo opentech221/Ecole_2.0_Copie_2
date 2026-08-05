@@ -78,14 +78,16 @@ const AUTH_THEME = {
     shadow: "0 6px 18px rgba(22,163,74,0.28)",
   },
   email: {
-    border: "#bfdbfe",
-    bg: "#eff6ff",
-    fg: "#1e3a8a",
-    solid: "#1e3a8a",
-    solidHover: "#1e40af",
-    shadow: "0 6px 18px rgba(30,58,138,0.24)",
+    border: "#f7c4cb",
+    bg: "#fff1f2",
+    fg: "#8f2430",
+    solid: "var(--secondary)",
+    solidHover: "#b11828",
+    shadow: "0 6px 18px rgba(191,30,46,0.24)",
   },
 };
+
+const AUTH_BG = "linear-gradient(145deg, #0d1f3c 0%, #0f8d46 45%, #bf1e2e 100%)";
 
 export function LoginScreen() {
   const navigate                  = useNavigate();
@@ -212,13 +214,13 @@ export function LoginScreen() {
   return (
     <main style={{
       minHeight: "100vh",
-      background: "linear-gradient(145deg, #0d1f3c 0%, #1a365d 60%, #2d4a7a 100%)",
+      background: AUTH_BG,
       display: "flex", alignItems: "center", justifyContent: "center",
-      padding: "24px", fontFamily: "'Plus Jakarta Sans', sans-serif",
+      padding: "clamp(14px, 4vw, 24px)", fontFamily: "'Plus Jakarta Sans', sans-serif",
     }}>
       <div style={{
         width: "100%", maxWidth: "420px", backgroundColor: "var(--card)",
-        borderRadius: "20px", padding: "40px 32px",
+        borderRadius: "20px", padding: "clamp(24px, 4vw, 40px) clamp(18px, 4vw, 32px)",
         boxShadow: "0 24px 64px rgba(0,0,0,0.4)",
       }}>
 
@@ -248,7 +250,7 @@ export function LoginScreen() {
               }}
               style={{
                 padding: "10px", borderRadius: "10px",
-                border: authMethod === "whatsapp" ? `2px solid ${AUTH_THEME.whatsapp.border}` : "1px solid #b6c2d4",
+                border: authMethod === "whatsapp" ? `2px solid ${AUTH_THEME.whatsapp.border}` : "1px solid var(--border)",
                 backgroundColor: authMethod === "whatsapp" ? AUTH_THEME.whatsapp.bg : "#fff",
                 color: authMethod === "whatsapp" ? AUTH_THEME.whatsapp.fg : "#1e293b", fontWeight: 700,
                 cursor: "pointer", fontSize: "13px", fontFamily: "'Plus Jakarta Sans', sans-serif",
@@ -266,7 +268,7 @@ export function LoginScreen() {
               }}
               style={{
                 padding: "10px", borderRadius: "10px",
-                border: authMethod === "email" ? `2px solid ${AUTH_THEME.email.border}` : "1px solid #b6c2d4",
+                border: authMethod === "email" ? `2px solid ${AUTH_THEME.email.border}` : "1px solid var(--border)",
                 backgroundColor: authMethod === "email" ? AUTH_THEME.email.bg : "#fff",
                 color: authMethod === "email" ? AUTH_THEME.email.fg : "#1e293b", fontWeight: 700,
                 cursor: "pointer", fontSize: "13px", fontFamily: "'Plus Jakarta Sans', sans-serif",
@@ -294,8 +296,8 @@ export function LoginScreen() {
               value={phoneInput} onChange={e => setPhoneInput(e.target.value)}
               placeholder="+221771234567"
               style={INPUT}
-              onFocus={e  => (e.target.style.borderColor = "#3182ce")}
-              onBlur={e   => (e.target.style.borderColor = "#e2e8f0")}
+              onFocus={e  => (e.target.style.borderColor = "var(--ring)")}
+              onBlur={e   => (e.target.style.borderColor = "var(--border)")}
             />
             <p style={{ fontSize: "12px", color: "var(--muted-foreground)", margin: "8px 0 0" }}>
               Un code de connexion sera envoyé sur WhatsApp Business.
@@ -341,8 +343,8 @@ export function LoginScreen() {
               value={email} onChange={e => setEmail(e.target.value)}
               placeholder="vous@exemple.com"
               style={INPUT}
-              onFocus={e  => (e.target.style.borderColor = "#3182ce")}
-              onBlur={e   => (e.target.style.borderColor = "#e2e8f0")}
+              onFocus={e  => (e.target.style.borderColor = "var(--ring)")}
+              onBlur={e   => (e.target.style.borderColor = "var(--border)")}
             />
           </div>
           <div style={{ marginBottom: "16px" }}>
@@ -357,8 +359,8 @@ export function LoginScreen() {
               value={password} onChange={e => setPassword(e.target.value)}
               placeholder="••••••••"
               style={INPUT}
-              onFocus={e  => (e.target.style.borderColor = "#3182ce")}
-              onBlur={e   => (e.target.style.borderColor = "#e2e8f0")}
+              onFocus={e  => (e.target.style.borderColor = "var(--ring)")}
+              onBlur={e   => (e.target.style.borderColor = "var(--border)")}
             />
           </div>
 
@@ -411,8 +413,8 @@ export function LoginScreen() {
               onChange={e => setOtpCode(e.target.value.replace(/\D/g, ""))}
               placeholder="123456"
               style={INPUT}
-              onFocus={e  => (e.target.style.borderColor = "#3182ce")}
-              onBlur={e   => (e.target.style.borderColor = "#e2e8f0")}
+              onFocus={e  => (e.target.style.borderColor = "var(--ring)")}
+              onBlur={e   => (e.target.style.borderColor = "var(--border)")}
             />
           </div>
 
@@ -428,11 +430,11 @@ export function LoginScreen() {
             disabled={verifyingCode}
             style={{
               width: "100%", padding: "13px", borderRadius: "12px",
-              backgroundColor: verifyingCode ? "#7186a0" : "#1a365d",
+              backgroundColor: verifyingCode ? "var(--switch-background)" : "var(--primary)",
               color: "#fff", fontWeight: 700, fontSize: "14px",
               border: "none", cursor: verifyingCode ? "not-allowed" : "pointer",
               display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
-              boxShadow: "0 4px 16px rgba(26,54,93,0.28)",
+              boxShadow: "0 4px 16px rgba(15,141,70,0.28)",
               fontFamily: "'Plus Jakarta Sans', sans-serif",
             }}
           >
@@ -449,7 +451,7 @@ export function LoginScreen() {
             }}
             style={{
               width: "100%", marginTop: "10px", padding: "10px",
-              borderRadius: "10px", border: "1px solid #b6c2d4", backgroundColor: "var(--card)",
+              borderRadius: "10px", border: "1px solid var(--border)", backgroundColor: "var(--card)",
               color: "#334155", fontWeight: 600, fontSize: "13px", cursor: "pointer",
               fontFamily: "'Plus Jakarta Sans', sans-serif",
             }}
@@ -462,9 +464,9 @@ export function LoginScreen() {
         {!codeSent && (
           <>
             <div style={{ display: "flex", alignItems: "center", gap: "10px", margin: "18px 0" }}>
-              <div style={{ height: "1px", flex: 1, backgroundColor: "#e2e8f0" }} />
+              <div style={{ height: "1px", flex: 1, backgroundColor: "var(--border)" }} />
               <span style={{ fontSize: "12px", color: "var(--muted-foreground)" }}>ou</span>
-              <div style={{ height: "1px", flex: 1, backgroundColor: "#e2e8f0" }} />
+              <div style={{ height: "1px", flex: 1, backgroundColor: "var(--border)" }} />
             </div>
 
             <div style={{ display: "grid", gap: "10px" }}>
@@ -487,7 +489,7 @@ export function LoginScreen() {
                 disabled={oauthLoading !== null}
                 onClick={() => handleOAuthLogin("facebook")}
                 style={{
-                  width: "100%", padding: "11px", borderRadius: "10px", border: "1px solid #1458be",
+                  width: "100%", padding: "11px", borderRadius: "10px", border: "1px solid rgba(22,100,217,0.75)",
                   backgroundColor: "#1664d9", color: "#fff", fontWeight: 700, fontSize: "13px",
                   cursor: oauthLoading !== null ? "not-allowed" : "pointer", fontFamily: "'Plus Jakarta Sans', sans-serif",
                   display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",

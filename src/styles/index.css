@@ -8,29 +8,29 @@
   --font-size: 16px;
   --font-sans: 'Manrope', 'Segoe UI', sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
-  --background: #f5f7fb;
-  --foreground: #0f172a;
+  --background: #f8faf5;
+  --foreground: #11243b;
   --card: #ffffff;
-  --card-foreground: #0f172a;
+  --card-foreground: #11243b;
   --popover: #ffffff;
-  --popover-foreground: #0f172a;
-  --primary: #12345f;
+  --popover-foreground: #11243b;
+  --primary: #0f8d46;
   --primary-foreground: #ffffff;
-  --secondary: #1d4ed8;
+  --secondary: #bf1e2e;
   --secondary-foreground: #ffffff;
-  --muted: #e8edf5;
-  --muted-foreground: #3f4f68;
-  --accent: #e6f0ff;
-  --accent-foreground: #12345f;
+  --muted: #edf3ea;
+  --muted-foreground: #466077;
+  --accent: #fff4cf;
+  --accent-foreground: #355122;
   --destructive: #c81e48;
   --destructive-foreground: #ffffff;
-  --border: rgba(15, 23, 42, 0.14);
+  --border: rgba(17, 36, 59, 0.15);
   --input: transparent;
-  --input-background: #f2f5fa;
-  --switch-background: #c9d3e0;
+  --input-background: #f2f7f0;
+  --switch-background: #95a9ba;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-  --ring: #1d4ed8;
+  --ring: #f3c623;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -38,15 +38,15 @@
   --chart-5: oklch(0.769 0.188 70.08);
   --radius: 0.625rem;
   --sidebar: #ffffff;
-  --sidebar-foreground: #0f172a;
-  --sidebar-primary: #12345f;
+  --sidebar-foreground: #11243b;
+  --sidebar-primary: #0f8d46;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #edf2fb;
-  --sidebar-accent-foreground: #0f172a;
-  --sidebar-border: rgba(15, 23, 42, 0.10);
-  --sidebar-ring: #1d4ed8;
-  --ecole-deep-blue: #1a365d;
-  --ecole-sky-blue: #3182ce;
+  --sidebar-accent: #fff4cf;
+  --sidebar-accent-foreground: #355122;
+  --sidebar-border: rgba(17, 36, 59, 0.10);
+  --sidebar-ring: #f3c623;
+  --ecole-deep-blue: #0d1f3c;
+  --ecole-sky-blue: #2d4a7a;
   --ecole-slate-grey: #2d3748;
   --ecole-success-green: #10b981;
   --ecole-whatsapp-green: #25d366;
@@ -59,19 +59,19 @@
   --card-foreground: #f8fafc;
   --popover: #111827;
   --popover-foreground: #f8fafc;
-  --primary: #e2e8f0;
+  --primary: #4ade80;
   --primary-foreground: #0b1220;
-  --secondary: #60a5fa;
+  --secondary: #f87171;
   --secondary-foreground: #0b1220;
   --muted: #162033;
   --muted-foreground: #c4d0e3;
-  --accent: #172554;
-  --accent-foreground: #dbeafe;
+  --accent: #3f3205;
+  --accent-foreground: #fef9c3;
   --destructive: #fb7185;
   --destructive-foreground: #1f2937;
   --border: rgba(148, 163, 184, 0.20);
   --input: #162033;
-  --ring: #60a5fa;
+  --ring: #f3c623;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
   --chart-1: oklch(0.488 0.243 264.376);
@@ -81,12 +81,12 @@
   --chart-5: oklch(0.645 0.246 16.439);
   --sidebar: #111827;
   --sidebar-foreground: #f8fafc;
-  --sidebar-primary: #60a5fa;
+  --sidebar-primary: #4ade80;
   --sidebar-primary-foreground: #0b1220;
   --sidebar-accent: #162033;
   --sidebar-accent-foreground: #f8fafc;
   --sidebar-border: rgba(148, 163, 184, 0.16);
-  --sidebar-ring: #60a5fa;
+  --sidebar-ring: #f3c623;
 }
 
 @theme inline {
@@ -174,6 +174,13 @@
   label  { font-size: var(--text-base); font-weight: var(--font-weight-medium); line-height: 1.5; }
   button { font-size: var(--text-base); font-weight: var(--font-weight-medium); line-height: 1.5; }
   input  { font-size: var(--text-base); font-weight: var(--font-weight-normal); line-height: 1.5; }
+}
+
+html,
+body,
+#root {
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 /* ── A05 fix: focus-visible global ───────────────────────────────────────── */

@@ -22,11 +22,11 @@ const CONTACTS = [
 ];
 
 const PARTENAIRES = [
-  { initiales: "iN", bg: "#1a4e8f", label: "iNTech" },
-  { initiales: "DS", bg: "#4a7c59", label: "DEN Sénégal" },
-  { initiales: "BS", bg: "#2563eb", label: "BSSS" },
-  { initiales: "TG", bg: "#b45309", label: "TopGames" },
-  { initiales: "TL", bg: "#111827", label: "Tech-Loxo" },
+  { initiales: "iN", bg: "linear-gradient(135deg, #0f8d46, #0d1f3c)", label: "iNTech" },
+  { initiales: "DS", bg: "linear-gradient(135deg, #0f8d46, #2d4a7a)", label: "DEN Sénégal" },
+  { initiales: "BS", bg: "linear-gradient(135deg, #bf1e2e, #0d1f3c)", label: "BSSS" },
+  { initiales: "TG", bg: "linear-gradient(135deg, #f3c623, #bf1e2e)", label: "TopGames" },
+  { initiales: "TL", bg: "linear-gradient(135deg, #0d1f3c, #bf1e2e)", label: "Tech-Loxo" },
 ];
 
 const ROW: React.CSSProperties = {
@@ -113,7 +113,7 @@ export function AssistancePage() {
           {PARTENAIRES.map(p => (
             <div key={p.label} title={p.label} style={{
               width: 54, height: 54, borderRadius: "50%",
-              backgroundColor: p.bg,
+              background: p.bg,
               border: "2px solid var(--border)",
               display: "flex", alignItems: "center", justifyContent: "center",
               fontSize: 13, fontWeight: 800, color: "#fff",
@@ -134,13 +134,13 @@ export function AssistancePage() {
         style={{
           display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
           width: "100%", padding: "15px 20px",
-          borderRadius: 50, border: "2px solid #ef4444",
-          backgroundColor: "transparent", color: "#ef4444",
+          borderRadius: 50, border: "2px solid var(--destructive)",
+          backgroundColor: "transparent", color: "var(--destructive)",
           fontSize: 15, fontWeight: 700, cursor: "pointer",
           fontFamily: "'Plus Jakarta Sans', sans-serif",
           transition: "background 160ms",
         }}
-        onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#fef2f2")}
+        onMouseEnter={e => (e.currentTarget.style.backgroundColor = "color-mix(in srgb, var(--destructive) 10%, white)")}
         onMouseLeave={e => (e.currentTarget.style.backgroundColor = "transparent")}
       >
         <LogOut style={{ width: 17, height: 17 }} />

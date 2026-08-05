@@ -2,33 +2,33 @@ import { Link } from "react-router";
 
 const shell: React.CSSProperties = {
   minHeight: "100vh",
-  background: "linear-gradient(145deg, #0d1f3c 0%, #1a365d 60%, #2d4a7a 100%)",
+  background: "linear-gradient(145deg, #0d1f3c 0%, #0f8d46 45%, #bf1e2e 100%)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  padding: "24px",
+  padding: "clamp(14px, 4vw, 24px)",
   fontFamily: "'Plus Jakarta Sans', sans-serif",
 };
 
 const card: React.CSSProperties = {
   width: "100%",
   maxWidth: "860px",
-  backgroundColor: "#fff",
+  backgroundColor: "var(--card)",
   borderRadius: "20px",
-  padding: "32px",
+  padding: "clamp(20px, 4vw, 32px)",
   boxShadow: "0 24px 64px rgba(0,0,0,0.35)",
 };
 
 const h2: React.CSSProperties = {
   fontSize: "17px",
   fontWeight: 800,
-  color: "#1e3a8a",
+  color: "var(--secondary)",
   margin: "22px 0 8px",
 };
 
 const p: React.CSSProperties = {
   margin: "0 0 10px",
-  color: "#334155",
+  color: "var(--muted-foreground)",
   lineHeight: 1.7,
   fontSize: "14px",
 };
@@ -37,10 +37,10 @@ export function PrivacyPolicyPage() {
   return (
     <div style={shell}>
       <article style={card}>
-        <h1 style={{ margin: 0, color: "#0f172a", fontSize: "28px", fontWeight: 900 }}>
+        <h1 style={{ margin: 0, color: "var(--foreground)", fontSize: "28px", fontWeight: 900 }}>
           Politique de confidentialité
         </h1>
-        <p style={{ ...p, marginTop: "10px", color: "#64748b" }}>
+        <p style={{ ...p, marginTop: "10px" }}>
           Dernière mise à jour : 05 juillet 2026
         </p>
 
@@ -101,9 +101,9 @@ export function PrivacyPolicyPage() {
             style={{
               padding: "10px 14px",
               borderRadius: "10px",
-              backgroundColor: "#eff6ff",
-              border: "1px solid #bfdbfe",
-              color: "#1d4ed8",
+              backgroundColor: "var(--accent)",
+              border: "1px solid color-mix(in srgb, var(--secondary) 20%, transparent)",
+              color: "var(--secondary)",
               textDecoration: "none",
               fontSize: "13px",
               fontWeight: 700,
@@ -116,8 +116,8 @@ export function PrivacyPolicyPage() {
             style={{
               padding: "10px 14px",
               borderRadius: "10px",
-              backgroundColor: "#0f172a",
-              border: "1px solid #0f172a",
+              backgroundColor: "var(--primary)",
+              border: "1px solid var(--primary)",
               color: "#fff",
               textDecoration: "none",
               fontSize: "13px",
