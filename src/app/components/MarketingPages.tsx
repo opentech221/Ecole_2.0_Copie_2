@@ -165,7 +165,11 @@ function MainCta({ mode = "hero", compact = false }: { mode?: "hero" | "demo" | 
         Retrouver mon temps maintenant
         <ArrowRight size={16} />
       </Link>
-      <Link className="landing-btn landing-btn-secondary" to="/fonctionnalites">
+      <Link className="landing-btn landing-btn-secondary" to="/demo">
+        Regarder une démo
+        <PlayCircle size={16} />
+      </Link>
+      <Link className="landing-btn landing-btn-tertiary" to="/fonctionnalites">
         Découvrir les fonctionnalités
         <ArrowRight size={16} />
       </Link>
