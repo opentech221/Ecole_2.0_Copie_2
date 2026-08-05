@@ -22,9 +22,11 @@
 }
 
 .landing-container {
-  width: min(1160px, 92vw);
+  width: min(1280px, 92vw);
   margin: 0 auto;
   box-sizing: border-box;
+  padding-left: clamp(16px, 4vw, 40px);
+  padding-right: clamp(16px, 4vw, 40px);
 }
 
 .landing-header {
@@ -288,6 +290,11 @@
   box-shadow: 0 10px 22px rgba(0, 133, 57, 0.18);
 }
 
+.landing-btn-primary:hover {
+  background: #006b2e;
+  box-shadow: 0 14px 28px rgba(0, 133, 57, 0.28);
+}
+
 .landing-btn-ghost {
   color: var(--edu-blue);
   border: 1px solid rgba(15, 59, 99, 0.18);
@@ -312,6 +319,11 @@
   background: #fcd116;
   border: 1px solid rgba(252, 209, 22, 0.82);
   box-shadow: 0 10px 18px rgba(252, 209, 22, 0.22);
+}
+
+.landing-btn-secondary:hover {
+  background: #e0b80f;
+  box-shadow: 0 14px 24px rgba(252, 209, 22, 0.32);
 }
 
 .landing-btn-tertiary {
@@ -367,7 +379,7 @@
 .landing-stats-grid {
   margin-top: 12px;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   gap: 12px;
 }
 
@@ -420,9 +432,9 @@
   height: 2px;
   width: 100%;
   border-radius: 999px;
-  margin: 22px 0;
+  margin: 48px 0;
   background: linear-gradient(to right, #008539, #fcd116, #e31b23);
-  opacity: 0.3;
+  opacity: 0.4;
 }
 
 .landing-tricolor-outline {
@@ -446,7 +458,7 @@
 .landing-pillar-grid {
   margin-top: 18px;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   gap: 16px;
 }
 
@@ -484,12 +496,13 @@
 }
 
 .lift {
-  transition: transform 200ms ease, box-shadow 200ms ease;
+  transition: transform 300ms ease, box-shadow 300ms ease, border-color 300ms ease;
 }
 
 .lift:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 14px 26px rgba(15, 23, 42, 0.08);
+  transform: translateY(-4px);
+  box-shadow: 0 18px 32px rgba(15, 23, 42, 0.1);
+  border-color: rgba(0, 133, 57, 0.4);
 }
 
 .landing-intro {
@@ -846,17 +859,66 @@
   transform: translateY(-1px);
 }
 
-@media (max-width: 980px) {
-  .landing-hero,
-  .landing-feature-card,
-  .landing-proof-grid,
+/* ── tablette (≥ 640px) ── 2 colonnes pour les grilles cartes */
+@media (min-width: 640px) {
   .landing-stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .landing-pillar-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .landing-proof-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .landing-trust-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .landing-hero {
     grid-template-columns: 1fr;
   }
 
-  .landing-trust-strip,
-  .landing-pillar-grid,
   .landing-footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ── desktop (≥ 1024px) ── mise en page complète */
+@media (min-width: 1024px) {
+  .landing-hero {
+    grid-template-columns: 7fr 5fr;
+    gap: 48px;
+  }
+
+  .landing-stats-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .landing-pillar-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .landing-trust-strip {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  .landing-footer-grid {
+    grid-template-columns: 1fr 0.8fr 1fr;
+  }
+
+  .landing-cta-row {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 980px) {
+  .landing-hero,
+  .landing-feature-card {
     grid-template-columns: 1fr;
   }
 
