@@ -628,27 +628,6 @@ export function ContextSelector() {
   );
   const availableSousDomaines = useMemo(() => sousOpts, [sousOpts]);
   const availableDisciplines = useMemo(() => effectiveDiscOpts, [effectiveDiscOpts]);
-  const availablePaliers = useMemo(() => paliersOpts, [paliersOpts]);
-  const availableOas = useMemo(() => oaList, [oaList]);
-  const availableOs = useMemo(() => osOpts, [osOpts]);
-
-  const cascadeState = useMemo(
-    () => ({ niveau, domaine, sousDomaine, discipline, palier, oaIdx, selectedOS }),
-    [niveau, domaine, sousDomaine, discipline, palier, oaIdx, selectedOS],
-  );
-
-  const normalizedCascadeState = useMemo(
-    () => normalizeContextSelectorCascade(cascadeState, {
-      availableNiveaux,
-      availableDomaines,
-      availableSousDomaines,
-      availableDisciplines,
-      availablePaliers,
-      availableOas,
-      availableOs,
-    }),
-    [cascadeState, availableNiveaux, availableDomaines, availableSousDomaines, availableDisciplines, availablePaliers, availableOas, availableOs],
-  );
 
   // ── Loading step tracker — shows spinner on the field being repopulated ──
   const [loadingStep, setLoadingStep] = useState<
@@ -696,6 +675,27 @@ export function ContextSelector() {
 
   const oaEntry    = oaIdx !== "" ? oaList[oaIdx] : undefined;
   const osOpts     = oaEntry?.os ?? [];
+  const availablePaliers = useMemo(() => paliersOpts, [paliersOpts]);
+  const availableOas = useMemo(() => oaList, [oaList]);
+  const availableOs = useMemo(() => osOpts, [osOpts]);
+
+  const cascadeState = useMemo(
+    () => ({ niveau, domaine, sousDomaine, discipline, palier, oaIdx, selectedOS }),
+    [niveau, domaine, sousDomaine, discipline, palier, oaIdx, selectedOS],
+  );
+
+  const normalizedCascadeState = useMemo(
+    () => normalizeContextSelectorCascade(cascadeState, {
+      availableNiveaux,
+      availableDomaines,
+      availableSousDomaines,
+      availableDisciplines,
+      availablePaliers,
+      availableOas,
+      availableOs,
+    }),
+    [cascadeState, availableNiveaux, availableDomaines, availableSousDomaines, availableDisciplines, availablePaliers, availableOas, availableOs],
+  );
 
   // CORE FIX: contenus are now filtered strictly by the selected OS key.
   // If no OS is selected, the panier is empty — no orphan chips appear.
