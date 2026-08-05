@@ -140,8 +140,8 @@ function MainCta({ mode = "hero", compact = false }: { mode?: "hero" | "demo" | 
   if (mode === "demo") {
     return (
       <div className={`landing-cta-row${compact ? " compact" : ""}`}>
-        <Link className="landing-btn landing-btn-primary" to="/demo">
-          Regarder la démo
+        <Link className="landing-btn landing-btn-secondary" to="/demo">
+          Regarder une démo
           <PlayCircle size={16} />
         </Link>
       </div>
@@ -166,10 +166,10 @@ function MainCta({ mode = "hero", compact = false }: { mode?: "hero" | "demo" | 
         <ArrowRight size={16} />
       </Link>
       <Link className="landing-btn landing-btn-secondary" to="/demo">
-        Regarder la démo
+        Regarder une démo
         <PlayCircle size={16} />
       </Link>
-      <Link className="landing-btn landing-btn-ghost" to="/fonctionnalites">
+      <Link className="landing-btn landing-btn-tertiary" to="/fonctionnalites">
         Découvrir les fonctionnalités
         <ArrowRight size={16} />
       </Link>
@@ -183,6 +183,7 @@ function MarketingShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="landing-root">
       <header className="landing-header">
+        <div className="landing-institutional-strip" aria-hidden="true" />
         <div className="landing-container landing-header-row">
           <Brand />
 
@@ -212,6 +213,12 @@ function MarketingShell({ children }: { children: React.ReactNode }) {
           </nav>
         </div>
       </header>
+
+      <div className="landing-trust-badge-wrap">
+        <div className="landing-container">
+          <p className="landing-trust-badge">🇸🇳 Conforme au Programme National du Sénégal - CI au CM2</p>
+        </div>
+      </div>
 
       {children}
 
@@ -285,7 +292,7 @@ export function MarketingHomePage() {
               Aider les enseignants à retrouver du temps pour eux en leur offrant les outils numériques qu'ils méritent.
             </h1>
             <p className="landing-lead">
-              Optimisez votre temps de travail hors classe et réinvestissez-le enfin là où il compte vraiment pour vous et vos élèves : une suite d'outils centralisés pour préparer vos séances, évaluer sans stress et gagner meilleurs résultats chaque semaine.
+              Optimisez votre temps de travail hors classe et réinvestissez-le enfin là où il compte vraiment pour vous et vos élèves : une suite d'outils centralisés pour préparer vos séances, évaluer sans stress et gagner plusieurs heures chaque semaine.
             </p>
             <MainCta />
 
@@ -415,7 +422,7 @@ export function MarketingFeaturesPage() {
 
         <section className="landing-container landing-demo-cta">
           <p>Démonstration</p>
-          <h2>Voyez École 2.0 en action dans un scénario d’usage réaliste.</h2>
+          <h2>Voyez École 2.0 en action dans un scénario d'usage réel.</h2>
           <p>
             Regardez un parcours type: planification mensuelle, génération de fiche depuis une séance prévue ou via Nouvelle fiche, tenue du registre et génération des bulletins, avec des contenus déjà intégrés et des repères issus du guide officiel.
           </p>
