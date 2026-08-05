@@ -1038,10 +1038,10 @@ export function ElevesScreen() {
               <td style={{ padding:"4px 7px", fontFamily:"monospace" }}>{s.matricule}</td>
               <td style={{ padding:"4px 7px", fontWeight:700 }}>{s.nom} {s.prenom}</td>
               <td style={{ padding:"4px 7px" }}>{s.genre}</td>
-              <td style={{ padding:"4px 7px" }}>{s.date_naissance}</td>
-              <td style={{ padding:"4px 7px" }}>{s.lieu_naissance}</td>
-              <td style={{ padding:"4px 7px" }}>{s.tuteur_nom}</td>
-              <td style={{ padding:"4px 7px", fontFamily:"monospace" }}>{s.tuteur_phone}</td>
+              <td style={{ padding:"4px 7px" }}>{s.dateNaissance}</td>
+              <td style={{ padding:"4px 7px" }}>{s.lieuNaissance}</td>
+              <td style={{ padding:"4px 7px" }}>{s.tuteurNom}</td>
+              <td style={{ padding:"4px 7px", fontFamily:"monospace" }}>{s.tuteurPhone}</td>
             </tr>
           ))}
         </tbody>
