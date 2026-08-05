@@ -788,7 +788,7 @@ export function DocumentsScreen() {
 
             {/* Nav row */}
             <div className="flex items-center gap-3 pt-3 pb-2">
-              <button onClick={() => navigate("/")}
+              <button onClick={() => navigate("/app")}
                 className="inline-flex items-center gap-1.5 font-semibold text-primary hover:text-secondary transition-colors shrink-0"
                 style={{ fontSize: "13px", minHeight: "40px" }}>
                 <ArrowLeft className="w-4 h-4" />

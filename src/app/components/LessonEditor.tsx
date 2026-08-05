@@ -843,7 +843,7 @@ export function LessonEditor() {
   function handleBack() {
     try { sessionStorage.setItem(SESSION_KEY, JSON.stringify({ fiches, mergedFiche })); }
     catch(e){}
-    navigate("/new-fiche");
+    navigate("/app/new-fiche");
   }
 
   // ── OO generation ─────────────────────────────────────────────────────────
@@ -989,7 +989,7 @@ export function LessonEditor() {
     const missing = validateFiche();
     if (missing.length) { showValidationError(missing); return; }
     setInvalidSections(new Set());
-    navigate("/preview", { state: buildPreviewState(generatePDF) });
+    navigate("/app/preview", { state: buildPreviewState(generatePDF) });
   }
 
   // ── Cell render helper ────────────────────────────────────────────────────

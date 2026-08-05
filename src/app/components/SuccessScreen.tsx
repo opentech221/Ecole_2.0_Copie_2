@@ -7,7 +7,7 @@ export function SuccessScreen() {
   const { niveau, domaine, lesson } = location.state || {};
 
   if (!lesson) {
-    navigate("/");
+    navigate("/app");
     return null;
   }
 
@@ -79,7 +79,7 @@ export function SuccessScreen() {
 
             {/* Back to Dashboard */}
             <button
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/app")}
               className="w-full flex items-center justify-center gap-3 bg-card border-2 border-border text-foreground px-6 py-3 rounded-xl font-medium hover:bg-muted transition-all"
             >
               <Home className="w-5 h-5" />

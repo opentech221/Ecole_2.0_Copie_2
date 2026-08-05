@@ -103,7 +103,7 @@ export function LoginScreen() {
   const [oauthLoading, setOauthLoading] = useState<null | "google" | "facebook">(null);
   const [error, setError] = useState<string | null>(null);
 
-  if (!authLoading && user) return <Navigate to="/" replace />;
+  if (!authLoading && user) return <Navigate to="/app" replace />;
 
   async function routeAfterAuth(userId: string) {
     const { data: profile } = await supabase
@@ -113,7 +113,7 @@ export function LoginScreen() {
       .single();
 
     const hasSchool = !!profile?.ecole_nom?.trim();
-    navigate(hasSchool ? "/" : "/profil", { replace: true });
+    navigate(hasSchool ? "/app" : "/app/profil", { replace: true });
   }
 
   async function handleEmailLogin(e: React.FormEvent) {
@@ -141,7 +141,7 @@ export function LoginScreen() {
     try {
       const { error: oauthErr } = await supabase.auth.signInWithOAuth({
         provider,
-        options: { redirectTo: `${window.location.origin}/` },
+        options: { redirectTo: `${window.location.origin}/app` },
       });
       if (oauthErr) throw oauthErr;
     } catch (err) {

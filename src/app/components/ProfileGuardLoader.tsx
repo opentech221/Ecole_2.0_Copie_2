@@ -97,7 +97,7 @@ export function ProfileGuardLoader({ loading, blocked, onSkip }: Props) {
 
             {/* Primary CTA */}
             <button
-              onClick={() => navigate("/profil")}
+              onClick={() => navigate("/app/profil")}
               style={{
                 width: "100%", padding: "12px 16px", borderRadius: "12px",
                 backgroundColor: "var(--primary)", color: "#fff",

@@ -896,7 +896,7 @@ export function PlanningScreen() {
     //    pedagogical payload so every field is 100% pre-populated on arrival.
     //    The LessonEditor's Cadre Administratif reads these state values and
     //    displays them without any manual configuration by the teacher.
-    navigate("/select-lesson", {
+    navigate("/app/select-lesson", {
       state: {
         // ── Metadata flags ──
         prefilled:   true,
@@ -1019,7 +1019,7 @@ export function PlanningScreen() {
 
           {/* Nav */}
           <div className="flex items-center gap-3 pt-3.5 pb-2 border-b border-border">
-            <button onClick={() => navigate("/")}
+            <button onClick={() => navigate("/app")}
               className="no-print inline-flex items-center gap-1.5 font-semibold text-primary
                          hover:text-secondary transition-colors shrink-0"
               style={{ minHeight: "40px", fontSize: "13px" }}>

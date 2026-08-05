@@ -22,30 +22,30 @@ function getInitials(name: string) {
 // ─── Navigation definitions ───────────────────────────────────────────────────
 
 const MAIN_NAV = [
-  { path: "/",              Icon: LayoutDashboard, label: "Tableau de bord"       },
-  { path: "/planning",      Icon: CalendarDays,    label: "Planification"          },
-  { path: "/cahier",        Icon: BookOpenText,    label: "Journal & Registre"     },
-  { path: "/eleves",        Icon: BarChart3,       label: "Administration & Suivi" },
-  { path: "/documents",     Icon: FileText,        label: "Documents"              },
-  { path: "/notifications", Icon: Bell,            label: "Notifications"          },
-  { path: "/admin",         Icon: ShieldCheck,     label: "Administration"         },
-  { path: "/abonnement",    Icon: CreditCard,      label: "Abonnement"             },
-  { path: "/parametres",    Icon: Settings,        label: "Param\u00e8tres"             },
-  { path: "/profil",        Icon: UserCircle,      label: "Profil"                 },
+  { path: "/app",               Icon: LayoutDashboard, label: "Tableau de bord"       },
+  { path: "/app/planning",      Icon: CalendarDays,    label: "Planification"          },
+  { path: "/app/cahier",        Icon: BookOpenText,    label: "Journal & Registre"     },
+  { path: "/app/eleves",        Icon: BarChart3,       label: "Administration & Suivi" },
+  { path: "/app/documents",     Icon: FileText,        label: "Documents"              },
+  { path: "/app/notifications", Icon: Bell,            label: "Notifications"          },
+  { path: "/app/admin",         Icon: ShieldCheck,     label: "Administration"         },
+  { path: "/app/abonnement",    Icon: CreditCard,      label: "Abonnement"             },
+  { path: "/app/parametres",    Icon: Settings,        label: "Paramètres"             },
+  { path: "/app/profil",        Icon: UserCircle,      label: "Profil"                 },
 ];
 
 const SUPPORT_NAV = [
-  { path: "/assistance", Icon: Headphones, label: "Assistance & À propos" },
+  { path: "/app/assistance", Icon: Headphones, label: "Assistance & À propos" },
 ];
 
 const BOTTOM_NAV = [
-  { path: "/",          Icon: LayoutDashboard, label: "Accueil"   },
-  { path: "/eleves",    Icon: BarChart3,       label: "Admin"     },
-  { path: "/documents", Icon: FileText,        label: "Documents" },
+  { path: "/app",           Icon: LayoutDashboard, label: "Accueil"   },
+  { path: "/app/eleves",    Icon: BarChart3,       label: "Admin"     },
+  { path: "/app/documents", Icon: FileText,        label: "Documents" },
 ];
 
 // Routes exempt from the profile-completion guard
-const GUARD_EXEMPT = ["/profil", "/parametres", "/abonnement"];
+const GUARD_EXEMPT = ["/app/profil", "/app/parametres", "/app/abonnement"];
 
 // ─── Active nav style ─────────────────────────────────────────────────────────
 
@@ -289,7 +289,7 @@ function DesktopSidebar({ profile, onLogout, unreadCount }: {
           {/* Nouvelle Fiche CTA */}
           <div style={{ padding: "12px 12px 4px" }}>
             <button
-              onClick={() => navigate("/new-fiche")}
+              onClick={() => navigate("/app/new-fiche")}
               style={{
                 display: "flex", alignItems: "center", justifyContent: "center", gap: "7px",
                 width: "100%", padding: "10px 14px", borderRadius: "10px",
@@ -356,7 +356,7 @@ function DesktopSidebar({ profile, onLogout, unreadCount }: {
           {/* Alert card */}
           {schoolMissing && (
             <div style={{ padding: "6px 0 0" }}>
-              <SchoolAlertCard onGo={() => navigate("/profil")} />
+              <SchoolAlertCard onGo={() => navigate("/app/profil")} />
             </div>
           )}
         </>
@@ -373,9 +373,9 @@ function DesktopSidebar({ profile, onLogout, unreadCount }: {
           </p>
         )}
         {MAIN_NAV.map(({ path, Icon, label }) => {
-          const active = path === "/" ? pathname === "/" : pathname.startsWith(path);
-          const showDot = path === "/profil" && schoolMissing;
-          const showUnreadBadge = path === "/notifications" && unreadCount > 0;
+          const active = path === "/app" ? pathname === "/app" : pathname.startsWith(path);
+          const showDot = path === "/app/profil" && schoolMissing;
+          const showUnreadBadge = path === "/app/notifications" && unreadCount > 0;
           return (
             <button key={path} onClick={() => navigate(path)}
               title={collapsed ? label : undefined}
@@ -452,7 +452,7 @@ function DesktopSidebar({ profile, onLogout, unreadCount }: {
             fontSize: "11px", fontWeight: 700, color: "#fff", cursor: "pointer",
           }}
             title={profile?.fullName || "Profil"}
-            onClick={() => navigate("/profil")}
+            onClick={() => navigate("/app/profil")}
           >
             {profile?.fullName ? getInitials(profile.fullName) : "?"}
           </div>
@@ -534,7 +534,7 @@ function MobileBottomNav() {
       fontFamily: "'Plus Jakarta Sans', sans-serif",
     }}>
       {BOTTOM_NAV.map(({ path, Icon, label }) => {
-        const active = path === "/" ? pathname === "/" : pathname.startsWith(path);
+        const active = path === "/app" ? pathname === "/app" : pathname.startsWith(path);
         return (
           <button key={path} onClick={() => navigate(path)}
             aria-label={label}
@@ -659,13 +659,13 @@ function MobileDrawer({ open, onClose, profile, onLogout, unreadCount }: {
           {/* Alert */}
           {schoolMissing && (
             <div style={{ marginBottom: "12px" }}>
-              <SchoolAlertCard onGo={() => goTo("/profil")} />
+              <SchoolAlertCard onGo={() => goTo("/app/profil")} />
             </div>
           )}
 
           {/* Nouvelle Fiche */}
           <button
-            onClick={() => goTo("/new-fiche")}
+            onClick={() => goTo("/app/new-fiche")}
             style={{
               display: "flex", alignItems: "center", justifyContent: "center", gap: "7px",
               width: "100%", padding: "12px", borderRadius: "12px", marginBottom: "14px",
@@ -713,9 +713,9 @@ function MobileDrawer({ open, onClose, profile, onLogout, unreadCount }: {
           <div style={{ display: "flex", flexDirection: "column", gap: "2px",
                         marginBottom: "12px" }}>
             {MAIN_NAV.map(({ path, Icon, label }) => {
-              const active = path === "/" ? pathname === "/" : pathname.startsWith(path);
-              const showDot = path === "/profil" && schoolMissing;
-              const showUnreadBadge = path === "/notifications" && unreadCount > 0;
+              const active = path === "/app" ? pathname === "/app" : pathname.startsWith(path);
+              const showDot = path === "/app/profil" && schoolMissing;
+              const showUnreadBadge = path === "/app/notifications" && unreadCount > 0;
               return (
                 <button key={path} onClick={() => goTo(path)}
                   style={{ ...navItemStyle(active), position: "relative" }}>
@@ -879,7 +879,7 @@ export function AppLayout() {
     !profile?.ecoleName?.trim() &&
     !GUARD_EXEMPT.some(p => pathname.startsWith(p))
   ) {
-    return <Navigate to="/profil" replace />;
+    return <Navigate to="/app/profil" replace />;
   }
 
   async function handleLogout() {

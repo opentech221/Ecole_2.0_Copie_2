@@ -88,7 +88,7 @@ export function PartenairesPage() {
         fontSize: 12, color: "var(--muted-foreground)", textAlign: "center",
       }}>
         Vous souhaitez devenir partenaire ? Contactez-nous via la page{" "}
-        <a href="/assistance" style={{ color: "var(--primary)", textDecoration: "none", fontWeight: 600 }}>
+        <a href="/app/assistance" style={{ color: "var(--primary)", textDecoration: "none", fontWeight: 600 }}>
           Assistance
         </a>.
       </div>

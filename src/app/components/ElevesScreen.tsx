@@ -10,6 +10,7 @@ import { avg, computeWeightedAvg, totalAbsencesNJ, type GradeSet } from "./eleve
 import { AddStudentModal, type NewStudentForm } from "./eleves/components/AddStudentModal";
 import { BatchPreviewModal, type SortKey } from "./eleves/components/BatchPreviewModal";
 import { CsvImportModal } from "./eleves/components/CsvImportModal";
+import { getPrintableStudents } from "./eleves/utils/studentListExport";
 import { useAppContext } from "../contexts/AppContext";
 import {
   ArrowLeft, Users, UserCheck, UserX,
@@ -622,7 +623,23 @@ export function ElevesScreen() {
     }
   };
 
+  const [trimestre,     setTrimestre]    = useState<1|2|3>(3);
+  const [search,        setSearch]       = useState("");
+  const [selectedMonth, setSelectedMonth]= useState(5); // default: Mars (index 5)
+  const [printAllMode,     setPrintAllMode]     = useState(false);
+  const [batchPreviewOpen, setBatchPreviewOpen] = useState(false);
+  const [batchSortKey,     setBatchSortKey]     = useState<SortKey>("alpha");
+
   // ── Export PDF liste nominative ────────────────────────────────────────────
+  const printableStudents = useMemo(
+    () => getPrintableStudents(students, search),
+    [students, search],
+  );
+  const filtered = useMemo(
+    () => getPrintableStudents(students, search),
+    [students, search],
+  );
+
   const handleExportPdf = () => {
     const prev = document.title;
     document.title = `Liste élèves — ${activeClass} — École 2.0`;
@@ -663,12 +680,6 @@ export function ElevesScreen() {
       });
     });
   }, [deleteStudent]);
-  const [trimestre,     setTrimestre]    = useState<1|2|3>(3);
-  const [search,        setSearch]       = useState("");
-  const [selectedMonth, setSelectedMonth]= useState(5); // default: Mars (index 5)
-  const [printAllMode,     setPrintAllMode]     = useState(false);
-  const [batchPreviewOpen, setBatchPreviewOpen] = useState(false);
-  const [batchSortKey,     setBatchSortKey]     = useState<SortKey>("alpha");
 
   // ── Live Grade State ───────────────────────────────────────────────────────
   // Mutable map: studentId → discipline → { t1, t2, t3 }
@@ -924,12 +935,6 @@ export function ElevesScreen() {
   const garcons= students.filter(s => s.genre === "M").length;
   const tauxParite = students.length === 0 ? 0 : +((filles / students.length) * 100).toFixed(1);
 
-  const filtered = students.filter(s =>
-    s.nom.toLowerCase().includes(search.toLowerCase()) ||
-    s.prenom.toLowerCase().includes(search.toLowerCase()) ||
-    s.matricule.toLowerCase().includes(search.toLowerCase())
-  );
-
   const MAX_STUDENTS = 120;
   const atCapacity = students.length >= MAX_STUDENTS;
 
@@ -1030,13 +1035,24 @@ export function ElevesScreen() {
       BulletinBody={BulletinBody}
     />
 
-    {/* ── Hidden print root for liste nominative ── */}
-    <div id="liste-print-root" style={{ display:"none" }}>
+    {/* ── Off-screen print root for liste nominative ── */}
+    <div
+      id="liste-print-root"
+      aria-hidden="true"
+      style={{
+        position: "absolute",
+        left: "-200vw",
+        top: 0,
+        width: "210mm",
+        background: "#fff",
+        pointerEvents: "none",
+      }}
+    >
       <p style={{ fontSize:18, fontWeight:800, marginBottom:4 }}>
         Liste Nominative — Classe : {activeClass}
       </p>
       <p style={{ fontSize:11, color:"#64748b", marginBottom:12 }}>
-        École Ilyaou Mamadou SEYDI · IEF Kolda · Année scolaire 2025–2026 · {students.length} élève{students.length > 1 ? "s" : ""}
+        École Ilyaou Mamadou SEYDI · IEF Kolda · Année scolaire 2025–2026 · {printableStudents.length} élève{printableStudents.length > 1 ? "s" : ""}
       </p>
       <table style={{ borderCollapse:"collapse", width:"100%", fontSize:11 }}>
         <thead>
@@ -1047,7 +1063,7 @@ export function ElevesScreen() {
           </tr>
         </thead>
         <tbody>
-          {students.map((s, i) => (
+          {printableStudents.map((s, i) => (
             <tr key={s.id} style={{ backgroundColor: i%2===0?"#fff":"#f8fafc", borderBottom:"1px solid #e2e8f0" }}>
               <td style={{ padding:"4px 7px", color:"#64748b" }}>{i+1}</td>
               <td style={{ padding:"4px 7px", fontFamily:"monospace" }}>{s.matricule}</td>
@@ -1288,7 +1304,7 @@ export function ElevesScreen() {
 
           {/* Nav row */}
           <div className="flex items-center gap-3 pt-3 pb-2">
-            <button onClick={() => navigate("/")}
+            <button onClick={() => navigate("/app")}
               className="inline-flex items-center gap-1.5 font-semibold text-primary
                          hover:text-secondary transition-colors shrink-0"
               style={{ fontSize:"13px", minHeight:"40px" }}>

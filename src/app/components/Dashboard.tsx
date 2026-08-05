@@ -328,7 +328,7 @@ export function Dashboard() {
               title="Planification"
               description="Planifiez vos semaines, suivez le taux de couverture du programme et accédez au référentiel officiel du CEB."
               ctaLabel="Préparer ma semaine"
-              onClick={() => navigate("/planning")}
+              onClick={() => navigate("/app/planning")}
             />
 
             {/* Module 2: Performances & Administration */}
@@ -341,7 +341,7 @@ export function Dashboard() {
               title="Gestion administrative et suivi des performances"
               description="Gérez la liste des élèves, suivez les présences au quotidien et générez les bulletins de notes trimestriels."
               ctaLabel="Piloter ma classe"
-              onClick={() => navigate("/eleves")}
+              onClick={() => navigate("/app/eleves")}
             />
 
             {/* Module 3: Cahier Journal & Registre d'Appel */}
@@ -354,7 +354,7 @@ export function Dashboard() {
               title="Cahier Journal et Registre d'Appel"
               description="Renseignez votre journal de classe quotidien et évaluez vos élèves avec la grille de maîtrise intégrée."
               ctaLabel="Tenir mon journal"
-              onClick={() => navigate("/cahier")}
+              onClick={() => navigate("/app/cahier")}
             />
 
             {/* Module 4: Documents Générés */}
@@ -367,7 +367,7 @@ export function Dashboard() {
               title="Documents générés"
               description="Consultez, imprimez et partagez vos fiches de préparation, bulletins et rapports trimestriels générés."
               ctaLabel="Consulter mes archives"
-              onClick={() => navigate("/documents")}
+              onClick={() => navigate("/app/documents")}
             />
 
             {/* Module 5: Admin SaaS */}
@@ -380,7 +380,7 @@ export function Dashboard() {
               title="Admin SaaS"
               description="Centre d'administration pour le pilotage global : utilisateurs actifs, population pédagogique, sécurité et gouvernance de la plateforme."
               ctaLabel="Ouvrir le centre"
-              onClick={() => navigate("/admin")}
+              onClick={() => navigate("/app/admin")}
             />
 
             {/* Module 6: Programme Officiel */}
@@ -393,7 +393,7 @@ export function Dashboard() {
               title="Programme officiel"
               description="Naviguez le référentiel réel DEMSG (niveau, domaine, sous-domaine, activité) et connectez la préparation pédagogique aux données officielles." 
               ctaLabel="Ouvrir le module"
-              onClick={() => navigate("/programme")}
+              onClick={() => navigate("/app/programme")}
             />
 
           </div>
@@ -401,7 +401,7 @@ export function Dashboard() {
 
         {/* ── FAB "Nouvelle Fiche" — mobile only, floats above AppLayout's 64px bottom nav ── */}
         <button
-          onClick={() => navigate("/new-fiche")}
+          onClick={() => navigate("/app/new-fiche")}
           className="lg:hidden"
           style={{
             position:  "fixed",

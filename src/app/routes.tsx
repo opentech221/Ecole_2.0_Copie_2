@@ -28,12 +28,19 @@ const NotificationsPage = lazy(() => import("../modules/notifications/pages/Noti
 const ProgrammePage = lazy(() => import("../modules/programme/pages/ProgrammePage").then((mod) => ({ default: mod.ProgrammePage })));
 const AssistancePage = lazy(() => import("./components/AssistancePage").then((mod) => ({ default: mod.AssistancePage })));
 const PartenairesPage = lazy(() => import("./components/PartenairesPage").then((mod) => ({ default: mod.PartenairesPage })));
+const MarketingHomePage = lazy(() => import("./components/MarketingPages").then((mod) => ({ default: mod.MarketingHomePage })));
+const MarketingFeaturesPage = lazy(() => import("./components/MarketingPages").then((mod) => ({ default: mod.MarketingFeaturesPage })));
+const MarketingDemoPage = lazy(() => import("./components/MarketingPages").then((mod) => ({ default: mod.MarketingDemoPage })));
 
 function lazyRoute(element: React.ReactElement) {
   return <Suspense fallback={null}>{element}</Suspense>;
 }
 
 export const router = createBrowserRouter([
+  { path: "/", element: lazyRoute(<MarketingHomePage />), errorElement: <ErrorBoundary /> },
+  { path: "/fonctionnalites", element: lazyRoute(<MarketingFeaturesPage />), errorElement: <ErrorBoundary /> },
+  { path: "/demo", element: lazyRoute(<MarketingDemoPage />), errorElement: <ErrorBoundary /> },
+
   // ── Public auth routes ────────────────────────────────────────────────────
   { path: "/login",  element: lazyRoute(<LoginScreen  />), errorElement: <ErrorBoundary /> },
   { path: "/signup", element: lazyRoute(<SignupScreen />), errorElement: <ErrorBoundary /> },
@@ -42,7 +49,7 @@ export const router = createBrowserRouter([
 
   // ── Protected app routes (AppLayout contains auth + profile guards) ────────
   {
-    path:         "/",
+    path:         "/app",
     element:      lazyRoute(<ProtectedAppShell />),
     errorElement: <ErrorBoundary />,
     children: [

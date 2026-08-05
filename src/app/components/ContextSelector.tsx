@@ -620,7 +620,6 @@ export function ContextSelector() {
     : [];
 
   const effectiveDiscOpts = discOpts.length > 0 ? discOpts : allLangDisc;
-
   const availableNiveaux = useMemo(() => (niveauxData.length ? niveauxData.map((n) => n.nom) : NIVEAUX), [niveauxData]);
   const availableDomaines = useMemo(
     () => (selectedNiveau ? domainesData.filter((d) => d.niveau_id === selectedNiveau.id).map((d) => d.nom) : DOMAINES),
@@ -628,7 +627,6 @@ export function ContextSelector() {
   );
   const availableSousDomaines = useMemo(() => sousOpts, [sousOpts]);
   const availableDisciplines = useMemo(() => effectiveDiscOpts, [effectiveDiscOpts]);
-
   // ── Loading step tracker — shows spinner on the field being repopulated ──
   const [loadingStep, setLoadingStep] = useState<
     "sousDomaine"|"discipline"|"palier"|"oa"|"os"|"contenus"|null
@@ -819,7 +817,7 @@ export function ContextSelector() {
       return;
     }
     setShowMissingHints(false);
-    navigate("/select-lesson", {
+    navigate("/app/select-lesson", {
       state: { niveau, domaine, sousDomaine, discipline, palier,
                oa: oaEntry?.oa ?? "", os: selectedOS,
                contenus: [...checked], competence, merged },
@@ -845,7 +843,7 @@ export function ContextSelector() {
         >
           <div className="flex items-center gap-1 px-3 py-4 lg:px-6">
             <button
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/app")}
               className="p-2 rounded-xl transition-colors active:scale-95 shrink-0"
               style={{ backgroundColor: "var(--muted)" }}
               aria-label="Retour"

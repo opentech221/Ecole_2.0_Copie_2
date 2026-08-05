@@ -287,7 +287,7 @@ export function ParametresScreen() {
             Gérez les informations de votre établissement utilisées dans vos documents officiels.
           </p>
           <button
-            onClick={() => navigate("/profil")}
+            onClick={() => navigate("/app/profil")}
             style={{
               display:         "flex",
               alignItems:      "center",

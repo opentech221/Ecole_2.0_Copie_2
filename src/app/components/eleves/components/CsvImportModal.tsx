@@ -1,81 +1,7 @@
-import React, { useState, useRef } from "react";
-import { Upload, X, AlertTriangle, CheckCircle, Loader2, FileText } from "lucide-react";
+import React, { useState, useRef, useEffect } from "react";
+import { Upload, X, AlertTriangle, CheckCircle, Loader2, FileText, Download, Info } from "lucide-react";
 import type { NewStudentForm } from "./AddStudentModal";
-
-// Column aliases accepted in the CSV header (case-insensitive)
-const COL_MAP: Record<keyof NewStudentForm, string[]> = {
-  matricule:      ["matricule", "n° matricule", "numero", "id"],
-  nom:            ["nom", "name", "last name", "famille"],
-  prenom:         ["prénom", "prenom", "first name", "given name"],
-  genre:          ["genre", "sexe", "sex", "gender"],
-  dateNaissance:  ["date de naissance", "datenaissance", "date_naissance", "naissance", "birthday"],
-  lieuNaissance:  ["lieu de naissance", "lieunaissance", "lieu_naissance", "lieu"],
-  tuteurNom:      ["tuteur", "tuteur / parent", "tuteur_nom", "parent", "tuteurnom"],
-  tuteurPhone:    ["téléphone", "telephone", "tel", "phone", "tuteur_phone", "tuteurphone"],
-};
-
-interface ParseResult {
-  valid: NewStudentForm[];
-  errors: { row: number; msg: string }[];
-}
-
-function normalizeHeader(h: string): keyof NewStudentForm | null {
-  const clean = h.trim().toLowerCase();
-  for (const [field, aliases] of Object.entries(COL_MAP)) {
-    if (aliases.includes(clean)) return field as keyof NewStudentForm;
-  }
-  return null;
-}
-
-function parseCsv(text: string): ParseResult {
-  const lines = text.split(/\r?\n/).filter(l => l.trim());
-  if (lines.length < 2) return { valid: [], errors: [{ row: 0, msg: "Fichier vide ou sans données." }] };
-
-  // Detect separator (, or ;)
-  const sep = lines[0].includes(";") ? ";" : ",";
-  const headers = lines[0].split(sep).map(h => h.trim().replace(/^"|"$/g, ""));
-  const mapping = headers.map(normalizeHeader);
-
-  const valid: NewStudentForm[] = [];
-  const errors: { row: number; msg: string }[] = [];
-
-  for (let i = 1; i < lines.length; i++) {
-    const cells = lines[i].split(sep).map(c => c.trim().replace(/^"|"$/g, ""));
-    const row: Partial<NewStudentForm> = { genre: "M" };
-
-    mapping.forEach((field, idx) => {
-      if (field && cells[idx] !== undefined) {
-        const val = cells[idx].trim();
-        if (field === "genre") {
-          row.genre = val.toUpperCase().startsWith("F") ? "F" : "M";
-        } else {
-          (row as Record<string, string>)[field] = val;
-        }
-      }
-    });
-
-    if (!row.nom?.trim()) {
-      errors.push({ row: i + 1, msg: `Ligne ${i + 1} : Nom manquant.` });
-      continue;
-    }
-    if (!row.prenom?.trim()) {
-      errors.push({ row: i + 1, msg: `Ligne ${i + 1} : Prénom manquant.` });
-      continue;
-    }
-    valid.push({
-      matricule:     row.matricule     ?? "",
-      nom:           row.nom.toUpperCase(),
-      prenom:        row.prenom,
-      genre:         row.genre         ?? "M",
-      dateNaissance: row.dateNaissance ?? "",
-      lieuNaissance: row.lieuNaissance ?? "",
-      tuteurNom:     row.tuteurNom     ?? "",
-      tuteurPhone:   row.tuteurPhone   ?? "",
-    });
-  }
-
-  return { valid, errors };
-}
+import { parseCsv, type ParseResult } from "../utils/csvImport";
 
 interface CsvImportModalProps {
   open: boolean;
@@ -90,7 +16,24 @@ export function CsvImportModal({ open, onClose, onImport, currentCount, maxStude
   const [fileName, setFileName]       = useState("");
   const [importing, setImporting]     = useState(false);
   const [done, setDone]               = useState(false);
+  const [importedCount, setImportedCount] = useState(0);
   const fileRef = useRef<HTMLInputElement>(null);
+  const modelHref = "/samples/eleves_import_modele.csv";
+
+  const reset = React.useCallback(() => {
+    setParseResult(null);
+    setFileName("");
+    setDone(false);
+    setImporting(false);
+    setImportedCount(0);
+    if (fileRef.current) fileRef.current.value = "";
+  }, []);
+
+  useEffect(() => {
+    if (!open) {
+      reset();
+    }
+  }, [open, reset]);
 
   if (!open) return null;
 
@@ -117,18 +60,14 @@ export function CsvImportModal({ open, onClose, onImport, currentCount, maxStude
     setImporting(true);
     try {
       await onImport(toInsert);
+      setImportedCount(toInsert.length);
       setDone(true);
     } finally {
       setImporting(false);
     }
   };
 
-  const reset = () => {
-    setParseResult(null);
-    setFileName("");
-    setDone(false);
-    if (fileRef.current) fileRef.current.value = "";
-  };
+  const successCount = importedCount || toInsert.length;
 
   const inputStyle: React.CSSProperties = {
     fontFamily: "'Plus Jakarta Sans',sans-serif",
@@ -178,6 +117,15 @@ export function CsvImportModal({ open, onClose, onImport, currentCount, maxStude
             <br /><span style={{ fontSize:11 }}>* obligatoires — encodage UTF-8 recommandé</span>
           </div>
 
+          <a href={modelHref} download
+             style={{ display:"inline-flex", alignItems:"center", justifyContent:"center", gap:8,
+                      alignSelf:"flex-start", padding:"10px 14px", borderRadius:12,
+                      backgroundColor:"#1a365d", color:"#fff", fontSize:12, fontWeight:800,
+                      textDecoration:"none", boxShadow:"0 4px 14px rgba(26,54,93,0.22)" }}>
+            <Download style={{ width:14, height:14 }} />
+            Télécharger le modèle CSV
+          </a>
+
           {/* Drop zone / file picker */}
           {!parseResult && (
             <label style={{ display:"flex", flexDirection:"column", alignItems:"center",
@@ -206,6 +154,32 @@ export function CsvImportModal({ open, onClose, onImport, currentCount, maxStude
                 </button>
               </div>
 
+              {(parseResult.warnings.length > 0 || (!parseResult.valid.length && parseResult.errors.length > 0)) && (
+                <div style={{ backgroundColor:"#eff6ff", borderRadius:10, padding:"10px 14px",
+                              border:"1px solid #bfdbfe", display:"flex", flexDirection:"column", gap:6 }}>
+                  <div style={{ display:"flex", gap:8, alignItems:"flex-start" }}>
+                    <Info style={{ width:14, height:14, color:"#2563eb", flexShrink:0, marginTop:2 }} />
+                    <div style={{ fontSize:12, color:"#1e3a8a" }}>
+                      {parseResult.warnings.length > 0 && (
+                        <>
+                          <strong>Contrôle du fichier :</strong>
+                          <ul style={{ margin:"6px 0 0 16px", padding:0 }}>
+                            {parseResult.warnings.map((warning) => (
+                              <li key={warning}>{warning}</li>
+                            ))}
+                          </ul>
+                        </>
+                      )}
+                      {!parseResult.valid.length && parseResult.errors.length > 0 && (
+                        <p style={{ fontWeight:700, margin:"6px 0 0" }}>
+                          Aucune ligne valide n’a pu être importée.
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* Summary badges */}
               <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
                 <span style={{ fontSize:12, fontWeight:700, padding:"4px 10px", borderRadius:999,
@@ -224,6 +198,12 @@ export function CsvImportModal({ open, onClose, onImport, currentCount, maxStude
                     ⚠ {skippedCapacity} ignoré{skippedCapacity > 1 ? "s" : ""} (capacité max)
                   </span>
                 )}
+                {parseResult.detectedColumns.length > 0 && (
+                  <span style={{ fontSize:12, fontWeight:700, padding:"4px 10px", borderRadius:999,
+                                 backgroundColor:"#e0f2fe", color:"#0369a1" }}>
+                    Colonnes détectées : {parseResult.detectedColumns.length}
+                  </span>
+                )}
               </div>
 
               {/* Error list */}
@@ -240,18 +220,25 @@ export function CsvImportModal({ open, onClose, onImport, currentCount, maxStude
                 </div>
               )}
 
+              {parseResult.detectedColumns.length > 0 && (
+                <div style={{ backgroundColor:"var(--muted)", borderRadius:10, padding:"10px 14px",
+                              fontSize:12, color:"var(--muted-foreground)" }}>
+                  <strong style={{ color:"var(--foreground)" }}>Colonnes reconnues :</strong> {parseResult.detectedColumns.join(", ")}
+                </div>
+              )}
+
               {/* Preview table (first 5 rows) */}
               {toInsert.length > 0 && (
                 <div>
                   <p style={{ fontSize:11, fontWeight:700, color:"var(--muted-foreground)",
                                textTransform:"uppercase", letterSpacing:"0.06em", margin:"0 0 6px" }}>
-                    Aperçu ({Math.min(toInsert.length, 5)} sur {toInsert.length})
+                    Aperçu des lignes prêtes à importer ({Math.min(toInsert.length, 5)} sur {toInsert.length})
                   </p>
                   <div style={{ overflowX:"auto", borderRadius:10, border:"1px solid var(--border)" }}>
-                    <table style={{ borderCollapse:"collapse", width:"100%", fontSize:12 }}>
+                    <table style={{ borderCollapse:"collapse", width:"100%", fontSize:12, minWidth:620 }}>
                       <thead>
                         <tr style={{ backgroundColor:"var(--muted)" }}>
-                          {["Matricule","Nom","Prénom","Genre"].map(h => (
+                          {["Matricule","Nom","Prénom","Genre","Naissance","Tuteur"].map(h => (
                             <th key={h} style={{ padding:"6px 10px", textAlign:"left", fontWeight:700,
                                                   color:"var(--muted-foreground)" }}>{h}</th>
                           ))}
@@ -268,6 +255,8 @@ export function CsvImportModal({ open, onClose, onImport, currentCount, maxStude
                                              backgroundColor:r.genre==="F"?"#fce7f3":"#dbeafe",
                                              color:r.genre==="F"?"#be185d":"#1d4ed8" }}>{r.genre}</span>
                             </td>
+                            <td style={{ padding:"6px 10px", whiteSpace:"nowrap" }}>{r.dateNaissance || "—"}</td>
+                            <td style={{ padding:"6px 10px" }}>{r.tuteurNom || "—"}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -284,7 +273,7 @@ export function CsvImportModal({ open, onClose, onImport, currentCount, maxStude
                           gap:12, padding:"20px 0" }}>
               <CheckCircle style={{ width:40, height:40, color:"#059669" }} />
               <p style={{ fontSize:16, fontWeight:800, color:"var(--foreground)", margin:0 }}>
-                {toInsert.length} élève{toInsert.length > 1 ? "s importés" : " importé"} avec succès !
+                {successCount} élève{successCount > 1 ? "s importés" : " importé"} avec succès !
               </p>
               <button onClick={onClose}
                       style={{ marginTop:8, padding:"10px 24px", borderRadius:10, border:"none",

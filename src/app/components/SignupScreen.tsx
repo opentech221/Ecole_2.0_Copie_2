@@ -106,7 +106,7 @@ export function SignupScreen() {
   const [codeSent,  setCodeSent]       = useState(false);
   const [emailSent, setEmailSent]      = useState(false);
 
-  if (!authLoading && user) return <Navigate to="/" replace />;
+  if (!authLoading && user) return <Navigate to="/app" replace />;
 
   async function handleSendCode(e: React.FormEvent) {
     e.preventDefault();
@@ -166,7 +166,7 @@ export function SignupScreen() {
       });
       if (verifyErr) throw verifyErr;
 
-      navigate("/profil", { replace: true });
+      navigate("/app/profil", { replace: true });
     } catch (err) {
       setError(toFrenchFromError(err));
     } finally {
@@ -201,13 +201,13 @@ export function SignupScreen() {
             role,
             full_name: fullName.trim(),
           },
-          emailRedirectTo: `${window.location.origin}/`,
+          emailRedirectTo: `${window.location.origin}/app`,
         },
       });
 
       if (signUpErr) throw signUpErr;
       if (data.session) {
-        navigate("/profil", { replace: true });
+        navigate("/app/profil", { replace: true });
       } else {
         setEmailSent(true);
       }
@@ -224,7 +224,7 @@ export function SignupScreen() {
     try {
       const { error: oauthErr } = await supabase.auth.signInWithOAuth({
         provider,
-        options: { redirectTo: `${window.location.origin}/` },
+        options: { redirectTo: `${window.location.origin}/app` },
       });
       if (oauthErr) throw oauthErr;
     } catch (err) {

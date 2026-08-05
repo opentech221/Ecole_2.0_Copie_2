@@ -1231,7 +1231,7 @@ export function CahierRoulementScreen() {
             style={{ paddingTop: "12px", paddingBottom: "6px", borderBottom: "1px solid var(--border)" }}
           >
             <button
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/app")}
               className="no-print inline-flex items-center gap-1.5 font-semibold"
               style={{
                 minHeight: "44px", fontSize: "13px",

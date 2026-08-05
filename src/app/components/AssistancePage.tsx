@@ -7,10 +7,10 @@ import {
 import { signOut } from "../../hooks/useAuth";
 
 const MENU_ITEMS = [
-  { Icon: HelpCircle, label: "Aide & Support",       path: "/assistance#aide" },
-  { Icon: FileText,   label: "Conditions Générales", path: "/assistance#cgu"  },
+  { Icon: HelpCircle, label: "Aide & Support",       path: "/app/assistance#aide" },
+  { Icon: FileText,   label: "Conditions Générales", path: "/app/assistance#cgu"  },
   { Icon: Shield,     label: "Confidentialité",      path: "/privacy-policy"  },
-  { Icon: Info,       label: "À propos",             path: "/assistance#about"},
+  { Icon: Info,       label: "À propos",             path: "/app/assistance#about"},
 ];
 
 const CONTACTS = [
