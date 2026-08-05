@@ -46,6 +46,21 @@ function mapStudentRow(row: StudentRow): Student {
   };
 }
 
+function mapStudentToRow(student: Student, classId: string): StudentRow {
+  return {
+    id: student.id,
+    class_id: classId,
+    matricule: student.matricule,
+    nom: student.nom,
+    prenom: student.prenom,
+    genre: student.genre,
+    date_naissance: student.dateNaissance,
+    lieu_naissance: student.lieuNaissance,
+    tuteur_nom: student.tuteurNom,
+    tuteur_phone: student.tuteurPhone,
+  };
+}
+
 const E2E_GRADES_STORAGE_KEY = "ecole2-e2e-grades";
 const E2E_BULLETIN_OVERRIDE_KEY = "ecole2-e2e-bulletin-override";
 
@@ -1511,7 +1526,7 @@ export function ElevesScreen() {
                                 <PermissionGuard ownerClassId={activeClass} fallback={<ReadOnlyBadge />}>
                                   {/* Edit icon */}
                                   <button
-                                    onClick={e=>{ e.stopPropagation(); setEditingStudent(s as StudentRow); }}
+                                    onClick={e=>{ e.stopPropagation(); setEditingStudent(mapStudentToRow(s, activeClass)); }}
                                     title="Modifier l'élève"
                                     style={{ border:"none", background:"none", cursor:"pointer",
                                              padding:"5px", borderRadius:"6px", color:"#3182ce",
